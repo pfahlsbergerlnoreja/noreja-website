@@ -5,6 +5,14 @@ import { X, Linkedin, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { getPartnersForGrid, type Partner } from "@/lib/partners";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+  type CarouselApi,
+} from "@/components/ui/carousel";
 
 export function PartnerPhotosGrid() {
   const ref = useRef(null);
@@ -27,6 +35,7 @@ export function PartnerPhotosGrid() {
   }, []);
   
   const [selectedPartner, setSelectedPartner] = useState<Partner | null>(null);
+  const [api, setApi] = useState<CarouselApi>();
 
   // Get all partners with photos and quotes for the grid, randomized on every reload
   const gridPartners = useMemo(() => {
@@ -42,6 +51,33 @@ export function PartnerPhotosGrid() {
     // Show all partners, not limited to 12
     return shuffled;
   }, [loadedPartners]);
+
+  // Group partners into slides of 4 for mobile carousel
+  const partnerSlides = useMemo(() => {
+    const slides: Partner[][] = [];
+    for (let i = 0; i < gridPartners.length; i += 4) {
+      slides.push(gridPartners.slice(i, i + 4));
+    }
+    return slides;
+  }, [gridPartners]);
+
+  // Auto-advance carousel every 1.5 seconds on mobile
+  useEffect(() => {
+    if (!api) {
+      return;
+    }
+
+    const interval = setInterval(() => {
+      if (api.canScrollNext()) {
+        api.scrollNext();
+      } else {
+        // Loop back to start
+        api.scrollTo(0);
+      }
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, [api]);
 
   const getPartnerLogo = (partner: Partner) => {
     if (partner.preferOriginalLogo) {
@@ -59,7 +95,7 @@ export function PartnerPhotosGrid() {
   };
 
   return (
-    <section ref={ref} className="relative py-32 overflow-hidden z-10">
+    <section ref={ref} className="relative py-16 md:py-32 overflow-hidden z-10">
       <div className="container mx-auto px-4 lg:px-8 overflow-hidden">
         <motion.div
           initial={{ opacity: 0, y: 32 }}
@@ -78,12 +114,74 @@ export function PartnerPhotosGrid() {
           </p>
         </motion.div>
 
-        {/* Partner Photos Grid */}
+        {/* Mobile: Partner Photos Carousel (2x2 grid) */}
+        <div className="lg:hidden overflow-hidden">
+          <Carousel
+            setApi={setApi}
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+            className="w-full max-w-sm mx-auto"
+          >
+            <CarouselContent>
+              {partnerSlides.map((slide, slideIndex) => (
+                <CarouselItem key={slideIndex}>
+                  <motion.div
+                    initial={{ opacity: 0, y: 24 }}
+                    animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+                    transition={{ duration: 0.8, delay: 0.4 }}
+                    className="grid grid-cols-2 gap-3 w-full py-8"
+                  >
+                    {slide.map((partner, index) => (
+                      <motion.div
+                        key={partner.id}
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
+                        transition={{ duration: 0.6, delay: 0.1 * index }}
+                        className="group cursor-pointer overflow-hidden relative z-20"
+                        onClick={() => openModal(partner)}
+                      >
+                        <div className="relative overflow-hidden rounded-xl bg-gray-800 shadow-lg hover:shadow-xl transition-all duration-300">
+                          <div className="aspect-square p-3">
+                            <div className="relative h-full w-full overflow-hidden rounded-lg transition-transform duration-500 group-hover:scale-105">
+                              {partner.personPhotoUrl ? (
+                                <img
+                                  src={partner.personPhotoUrl}
+                                  alt={partner.quoteAuthor || partner.name}
+                                  className="w-full h-full object-cover relative z-10"
+                                  loading="lazy"
+                                  onError={(e) => {
+                                    console.error('Failed to load partner image:', partner.personPhotoUrl, partner.name);
+                                    const target = e.currentTarget as HTMLImageElement;
+                                    target.style.display = 'none';
+                                  }}
+                                />
+                              ) : (
+                                <div className="w-full h-full bg-gray-700 flex items-center justify-center">
+                                  <span className="text-gray-400 text-xs">No image</span>
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </motion.div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="left-0" />
+            <CarouselNext className="right-0" />
+          </Carousel>
+        </div>
+
+        {/* Desktop: Partner Photos Grid */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6 w-full mx-auto py-8 overflow-hidden"
+          className="hidden lg:grid grid-cols-4 gap-6 w-full mx-auto py-8 overflow-hidden"
         >
           {gridPartners.map((partner, index) => (
             <motion.div
@@ -95,7 +193,7 @@ export function PartnerPhotosGrid() {
               onClick={() => openModal(partner)}
             >
               <div className="relative overflow-hidden rounded-xl bg-gray-800 shadow-lg hover:shadow-xl transition-all duration-300">
-                <div className="aspect-square p-3 sm:p-4">
+                <div className="aspect-square p-4">
                   <div className="relative h-full w-full overflow-hidden rounded-lg transition-transform duration-500 group-hover:scale-105">
                     {partner.personPhotoUrl ? (
                       <img

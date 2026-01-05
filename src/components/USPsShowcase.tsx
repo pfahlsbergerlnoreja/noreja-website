@@ -9,6 +9,14 @@ import realityIcon from "@/assets/icons/reality.png";
 import multidimensionalIcon from "@/assets/icons/multidimensional.png";
 import contextIcon from "@/assets/icons/context.png";
 import { getRoutePath } from "@/lib/routes";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+  type CarouselApi,
+} from "@/components/ui/carousel";
 
 export function USPsShowcase() {
   const ref = useRef(null);
@@ -18,6 +26,7 @@ export function USPsShowcase() {
   const [selectedCard, setSelectedCard] = useState<number | null>(null);
   const [flippedCards, setFlippedCards] = useState<Set<number>>(new Set());
   const [isResizing, setIsResizing] = useState(false);
+  const [api, setApi] = useState<CarouselApi>();
 
   // Disable body scroll when a card is selected
   useEffect(() => {
@@ -53,6 +62,24 @@ export function USPsShowcase() {
       clearTimeout(resizeTimeout);
     };
   }, []);
+
+  // Auto-advance carousel every 2 seconds on mobile
+  useEffect(() => {
+    if (!api || !isMobile) {
+      return;
+    }
+
+    const interval = setInterval(() => {
+      if (api.canScrollNext()) {
+        api.scrollNext();
+      } else {
+        // Loop back to start
+        api.scrollTo(0);
+      }
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, [api, isMobile]);
 
   const usps = [
     {
@@ -125,7 +152,7 @@ export function USPsShowcase() {
   };
 
   return (
-    <section ref={ref} className="py-20 overflow-hidden">
+    <section ref={ref} className="py-12 md:py-20 overflow-hidden">
       <div className="container mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 32 }}
@@ -230,14 +257,65 @@ export function USPsShowcase() {
             </AnimatePresence>
           )}
           
+          {/* Mobile: Carousel */}
+          <div className="lg:hidden overflow-hidden">
+            <Carousel
+              setApi={setApi}
+              opts={{
+                align: "start",
+                loop: true,
+              }}
+              className="w-full max-w-sm mx-auto"
+            >
+              <CarouselContent>
+                {usps.map((usp, index) => (
+                  <CarouselItem key={usp.title}>
+                    <motion.div
+                      initial={{ opacity: 0, y: 24 }}
+                      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+                      transition={{ duration: 0.8, delay: 0.4 }}
+                      className="w-full py-4"
+                    >
+                      <div className="relative h-80 w-full border border-primary/50 rounded-2xl overflow-visible bg-gradient-to-br from-background/90 via-primary/20 to-secondary/40">
+                        {/* Icon positioned above card - half on card, half above */}
+                        <img 
+                          src={usp.icon} 
+                          alt="" 
+                          className="absolute w-24 h-24 z-20"
+                          style={{ 
+                            top: 0,
+                            left: '50%',
+                            transform: 'translateX(-50%) translateY(-50%)'
+                          }}
+                        />
+                        
+                        {/* Content */}
+                        <div className="relative z-10 h-full flex flex-col justify-center items-center p-6 pt-12">
+                          <h3 className="text-2xl font-bold text-foreground text-center mb-4">
+                            {usp.title}
+                          </h3>
+                          <p className="text-muted-foreground text-center leading-relaxed text-sm">
+                            {usp.description}
+                          </p>
+                        </div>
+                      </div>
+                    </motion.div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="left-0" />
+              <CarouselNext className="right-0" />
+            </Carousel>
+          </div>
+
+          {/* Desktop: Grid */}
           <div 
             data-cards-container
-            className="grid grid-cols-1 md:grid-cols-2 gap-6 overflow-visible py-4 px-2 transition-all duration-300 ease-in-out"
+            className="hidden lg:grid grid-cols-2 gap-6 overflow-visible py-4 px-2 transition-all duration-300 ease-in-out"
           >
             {usps.map((usp, index) => {
               const isSelected = selectedCard === index;
               const isBackground = selectedCard !== null && selectedCard !== index;
-              const isFlipped = flippedCards.has(index);
               
               return (
                 <motion.div
@@ -253,85 +331,28 @@ export function USPsShowcase() {
                     delay: isSelected ? 0 : 0.6, // Same delay for all cards - matches the bottom right timing
                     ease: "easeOut" // Consistent easing for all cards
                   }}
-                  whileHover={!isMobile && selectedCard === null && !isResizing ? { 
+                  whileHover={selectedCard === null && !isResizing ? { 
                     scale: 1.02,
                     transition: { duration: 0.2 }
                   } : {}}
                   onClick={() => handleCardClick(index)}
                   className="group cursor-pointer"
                 >
-                  {/* Mobile: Flip card container */}
-                  {isMobile ? (
-                    <div className="relative h-64 w-full perspective-1000">
-                      <motion.div
-                        className="relative w-full h-full preserve-3d"
-                        animate={{ rotateY: isFlipped ? 180 : 0 }}
-                        transition={{ duration: 0.6, ease: "easeInOut" }}
-                      >
-                        {/* Front of card */}
-                        <div className={`absolute inset-0 w-full h-full backface-hidden ${
-                          isFlipped ? 'opacity-0' : 'opacity-100'
-                        }`}>
-                          <div className="relative h-full border border-border rounded-2xl overflow-hidden group-hover:border-primary/50 group-hover:shadow-lg group-hover:shadow-primary/10 bg-gradient-to-br from-primary/10 to-primary/20">
-                            {/* Content */}
-                            <div className="relative z-10 h-full flex flex-col justify-center items-center p-6">
-                              <h3 className="text-2xl font-bold text-foreground text-center mb-4">
-                                {usp.title}
-                              </h3>
-                              <div className="text-muted-foreground text-sm text-center">
-                                {t.usps.tapToLearnMore}
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Back of card */}
-                        <div className={`absolute inset-0 w-full h-full backface-hidden rotate-y-180 ${
-                          isFlipped ? 'opacity-100' : 'opacity-0'
-                        }`}>
-                          <div className="relative h-full border border-primary/50 rounded-2xl overflow-visible bg-gradient-to-br from-background/90 via-primary/20 to-secondary/40">
-                            {/* Icon positioned above card - half on card, half above */}
-                            <img 
-                              src={usp.icon} 
-                              alt="" 
-                              className="absolute w-24 h-24 z-20"
-                              style={{ 
-                                top: 0,
-                                left: '50%',
-                                transform: 'translateX(-50%) translateY(-50%)'
-                              }}
-                            />
-                            
-                            {/* Content */}
-                            <div className="relative z-10 h-full flex flex-col justify-center items-center p-6">
-                              <h3 className="text-2xl font-bold text-foreground text-center mb-4">
-                                {usp.title}
-                              </h3>
-                              <p className="text-muted-foreground text-center leading-relaxed text-sm">
-                                {usp.description}
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                      </motion.div>
+                  {/* Desktop: Regular card */}
+                  <div 
+                    className={`relative h-64 border border-border rounded-2xl overflow-hidden transition-all duration-500 bg-gradient-to-br from-primary/10 to-primary/20 ${
+                      isBackground 
+                        ? 'opacity-60 blur-sm' 
+                        : 'group-hover:border-primary/50 group-hover:shadow-lg group-hover:shadow-primary/10'
+                    }`}
+                  >
+                    {/* Content */}
+                    <div className="relative z-10 h-full flex flex-col justify-center items-center p-6">
+                      <h3 className="text-2xl font-bold text-foreground text-center mb-4">
+                        {usp.title}
+                      </h3>
                     </div>
-                  ) : (
-                    /* Desktop: Regular card */
-                    <div 
-                      className={`relative h-64 border border-border rounded-2xl overflow-hidden transition-all duration-500 bg-gradient-to-br from-primary/10 to-primary/20 ${
-                        isBackground 
-                          ? 'opacity-60 blur-sm' 
-                          : 'group-hover:border-primary/50 group-hover:shadow-lg group-hover:shadow-primary/10'
-                      }`}
-                    >
-                      {/* Content */}
-                      <div className="relative z-10 h-full flex flex-col justify-center items-center p-6">
-                        <h3 className="text-2xl font-bold text-foreground text-center mb-4">
-                          {usp.title}
-                        </h3>
-                      </div>
-                    </div>
-                  )}
+                  </div>
                 </motion.div>
               );
             })}

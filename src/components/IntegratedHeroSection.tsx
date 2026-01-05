@@ -7,15 +7,21 @@ import { Link } from "react-router-dom";
 import graphThreeNodes from "@/assets/graph_three_nodes.png";
 import { AnimatedHeading } from "@/components/AnimatedHeading";
 import { getRoutePath } from "@/lib/routes";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 export function IntegratedHeroSection() {
   const { t, language } = useLanguage();
+  const isMobile = useIsMobile();
   
   // Typing animation for words
   const rotatingWords = ["Transparent", "Understandable", "Efficient", "Compliant"];
 
+  // Split subtitle - show only first part on mobile
+  const subtitleParts = t.hero.subtitle.split('\n');
+  const displaySubtitle = isMobile ? subtitleParts[0] : t.hero.subtitle;
+
   return (
-    <section className="relative pt-20 md:pt-32 pb-0 flex flex-col justify-center items-center overflow-hidden w-full max-w-full">
+    <section className="relative pt-12 md:pt-32 pb-0 flex flex-col justify-center items-center overflow-hidden w-full max-w-full">
       {/* Background Effects */}
       <div className="absolute inset-0">
         <div className="absolute top-1/4 left-1/4 w-48 h-48 md:w-96 md:h-96 bg-noreja-main/10 rounded-full blur-3xl" />
@@ -35,7 +41,7 @@ export function IntegratedHeroSection() {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2, duration: 0.6 }}
-            className="inline-flex items-center px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-4 md:mb-8"
+            className="inline-flex items-center px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-2 md:mb-8"
           >
             <Zap className="w-4 h-4 mr-2 text-noreja-tertiary" />
             <span className="text-sm font-medium">{t.hero.badge}</span>
@@ -57,7 +63,7 @@ export function IntegratedHeroSection() {
             transition={{ delay: 0.6, duration: 0.8 }}
             className="text-lg sm:text-xl md:text-2xl text-muted-foreground mb-6 md:mb-8 max-w-5xl xl:max-w-6xl mx-auto whitespace-pre-line px-4"
           >
-            {t.hero.subtitle}
+            {displaySubtitle}
           </motion.p>
 
           {/* CTA Buttons */}

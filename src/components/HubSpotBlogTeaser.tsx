@@ -270,7 +270,7 @@ export function HubSpotBlogTeaser({ maxItems = 3 }: HubSpotBlogTeaserProps) {
   };
 
   return (
-    <section className="py-12 md:py-16 lg:py-20" aria-labelledby="blog-teaser-heading">
+    <section className="py-8 md:py-16 lg:py-20" aria-labelledby="blog-teaser-heading">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-8 md:mb-12">
           <h2 id="blog-teaser-heading" className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 md:mb-4 px-4">

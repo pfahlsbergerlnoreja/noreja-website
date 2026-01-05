@@ -11,7 +11,7 @@ export function FinalCTA() {
   const { t } = useLanguage();
 
   return (
-    <section ref={ref} className="py-20 relative overflow-hidden">
+    <section ref={ref} className="py-12 md:py-20 relative overflow-hidden">
 
       <div className="relative z-0 container mx-auto px-4 lg:px-8 text-center overflow-hidden">
         <motion.div
