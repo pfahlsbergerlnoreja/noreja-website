@@ -24,13 +24,14 @@ export default function BlogCategory() {
 
   // Map category parameter to category key
   const categoryMap: Record<string, string> = {
-    'innovation': 'innovation',
-    'technical': 'technical', 
-    'analysis': 'analysis',
-    'case-studies': 'caseStudies'
+    'quick tips': 'quickTips',
+    'two for one': 'twoForOne',
+    'news round up': 'newsRoundUp',
+    'business case': 'businessCase',
+    'feature highlight': 'featureHighlight'
   };
 
-  const categoryKey = categoryMap[category || ''] || 'innovation';
+  const categoryKey = categoryMap[category?.toLowerCase() || ''] || 'quickTips';
 
   // Mock data - in a real implementation, this would come from an API
   const mockPosts: BlogPost[] = [
@@ -107,28 +108,33 @@ export default function BlogCategory() {
 
   const getCategoryInfo = () => {
     const categoryInfo = {
-      innovation: {
-        title: t.blog.features.innovation.title,
-        description: t.blog.features.innovation.description,
-        icon: "🚀"
+      quickTips: {
+        title: t.blog.features.quickTips.title,
+        description: t.blog.features.quickTips.description,
+        icon: "💡"
       },
-      technical: {
-        title: t.blog.features.technical.title,
-        description: t.blog.features.technical.description,
-        icon: "🛠️"
+      twoForOne: {
+        title: t.blog.features.twoForOne.title,
+        description: t.blog.features.twoForOne.description,
+        icon: "🔀"
       },
-      analysis: {
-        title: t.blog.features.analysis.title,
-        description: t.blog.features.analysis.description,
-        icon: "📊"
+      newsRoundUp: {
+        title: t.blog.features.newsRoundUp.title,
+        description: t.blog.features.newsRoundUp.description,
+        icon: "📰"
       },
-      caseStudies: {
-        title: t.blog.features.caseStudies.title,
-        description: t.blog.features.caseStudies.description,
-        icon: "📄"
+      businessCase: {
+        title: t.blog.features.businessCase.title,
+        description: t.blog.features.businessCase.description,
+        icon: "💼"
+      },
+      featureHighlight: {
+        title: t.blog.features.featureHighlight.title,
+        description: t.blog.features.featureHighlight.description,
+        icon: "✨"
       }
     };
-    return categoryInfo[categoryKey as keyof typeof categoryInfo] || categoryInfo.innovation;
+    return categoryInfo[categoryKey as keyof typeof categoryInfo] || categoryInfo.quickTips;
   };
 
   const categoryInfo = getCategoryInfo();
@@ -154,12 +160,16 @@ export default function BlogCategory() {
             transition={{ duration: 0.8 }}
             className="mb-8"
           >
-            <Link to={getRoutePath('blog', language)}>
+            <a 
+              href={language === 'de' ? 'https://blog.noreja.com/de-de' : 'https://blog.noreja.com/en'}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <Button variant="ghost" className="mb-6 text-noreja-main hover:bg-noreja-main/10">
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Back to Blog
               </Button>
-            </Link>
+            </a>
             
             <div className="text-center">
               <div className="text-6xl mb-4">{categoryInfo.icon}</div>

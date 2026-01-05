@@ -1,11 +1,9 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
 import { ExternalLink } from 'lucide-react';
-import { getRoutePath } from '@/lib/routes';
 
 interface BlogPost {
   title: string;
@@ -381,9 +379,14 @@ export function HubSpotBlogTeaser({ maxItems = 3 }: HubSpotBlogTeaserProps) {
                 className="min-h-[44px] w-full sm:w-auto"
                 asChild
               >
-                <Link to={getRoutePath('blog', language)} className="inline-flex items-center gap-2">
+                <a 
+                  href={language === 'de' ? 'https://blog.noreja.com/de-de' : 'https://blog.noreja.com/en'}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2"
+                >
                   {t.blog.openBlog}
-                </Link>
+                </a>
               </Button>
             </div>
           </>

@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ArrowRight, BookOpen, TrendingUp, Code, BarChart3, FileText, ExternalLink } from "lucide-react";
+import { ArrowRight, BookOpen, Lightbulb, Layers, Newspaper, Briefcase, Sparkles, ExternalLink } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -44,38 +44,82 @@ export default function Blog() {
     window.scrollTo(0, 0);
   }, []);
 
+  // Normalize category names from RSS feed to our internal format
+  // RSS feed uses formats like "News Round-Up (English)", "Two-For-One (German - Germany)", etc.
+  const normalizeCategory = (categoryText: string): string | null => {
+    if (!categoryText) return null;
+    
+    const normalized = categoryText.toLowerCase().trim();
+    
+    // Match variations of Quick Tips (handles "Quick Tips", "Quick Tips (English)", etc.)
+    if (normalized.includes('quick tip')) {
+      return 'quick tips';
+    }
+    // Match variations of Two-For-One (handles "Two-For-One", "Two For One", etc.)
+    if (normalized.includes('two-for-one') || normalized.includes('two for one')) {
+      return 'two for one';
+    }
+    // Match variations of News Round-Up (handles "News Round-Up", "News Round Up", etc.)
+    if (normalized.includes('news round-up') || normalized.includes('news round up')) {
+      return 'news round up';
+    }
+    // Match variations of Business Case
+    if (normalized.includes('business case')) {
+      return 'business case';
+    }
+    // Match variations of Feature Highlight
+    if (normalized.includes('feature highlight')) {
+      return 'feature highlight';
+    }
+    
+    return null;
+  };
+
   const categories = [
     {
-      key: 'innovation',
-      icon: TrendingUp,
-      title: t.blog.features.innovation.title,
-      description: t.blog.features.innovation.description,
+      key: 'quickTips',
+      icon: Lightbulb,
+      title: t.blog.features.quickTips.title,
+      description: t.blog.features.quickTips.description,
       color: 'bg-gradient-to-br from-noreja-main to-noreja-secondary',
-      category: 'innovation'
+      category: 'quick tips',
+      displayName: 'Quick Tips'
     },
     {
-      key: 'technical',
-      icon: Code,
-      title: t.blog.features.technical.title,
-      description: t.blog.features.technical.description,
+      key: 'twoForOne',
+      icon: Layers,
+      title: t.blog.features.twoForOne.title,
+      description: t.blog.features.twoForOne.description,
       color: 'bg-gradient-to-br from-noreja-secondary to-noreja-tertiary',
-      category: 'technical'
+      category: 'two for one',
+      displayName: 'Two for One'
     },
     {
-      key: 'analysis',
-      icon: BarChart3,
-      title: t.blog.features.analysis.title,
-      description: t.blog.features.analysis.description,
+      key: 'newsRoundUp',
+      icon: Newspaper,
+      title: t.blog.features.newsRoundUp.title,
+      description: t.blog.features.newsRoundUp.description,
       color: 'bg-gradient-to-br from-noreja-main to-noreja-tertiary',
-      category: 'analysis'
+      category: 'news round up',
+      displayName: 'News Round Up'
     },
     {
-      key: 'caseStudies',
-      icon: FileText,
-      title: t.blog.features.caseStudies.title,
-      description: t.blog.features.caseStudies.description,
+      key: 'businessCase',
+      icon: Briefcase,
+      title: t.blog.features.businessCase.title,
+      description: t.blog.features.businessCase.description,
       color: 'bg-gradient-to-br from-noreja-tertiary to-noreja-secondary',
-      category: 'case-studies'
+      category: 'business case',
+      displayName: 'Business Case'
+    },
+    {
+      key: 'featureHighlight',
+      icon: Sparkles,
+      title: t.blog.features.featureHighlight.title,
+      description: t.blog.features.featureHighlight.description,
+      color: 'bg-gradient-to-br from-noreja-main to-noreja-secondary',
+      category: 'feature highlight',
+      displayName: 'Feature Highlight'
     }
   ];
 
@@ -212,12 +256,50 @@ export default function Blog() {
         }
         
         const items = xmlDoc.querySelectorAll('item');
-        const blogPosts: BlogPost[] = Array.from(items).slice(0, 12).map(item => {
+        // Remove limit to get all articles from RSS feed
+        const blogPosts: BlogPost[] = Array.from(items).map(item => {
           const title = item.querySelector('title')?.textContent || 'Untitled';
           const link = item.querySelector('link')?.textContent || '#';
           const pubDate = item.querySelector('pubDate')?.textContent || '';
           const description = item.querySelector('description')?.textContent || '';
           const authorRaw = item.querySelector('author, dc\\:creator')?.textContent;
+          
+          // Extract category from RSS feed
+          // Check all category tags and collect valid ones
+          const categoryElements = item.querySelectorAll('category');
+          const validCategories: string[] = [];
+          for (const catEl of Array.from(categoryElements)) {
+            const categoryText = catEl.textContent?.trim();
+            const normalized = normalizeCategory(categoryText);
+            if (normalized) {
+              validCategories.push(normalized);
+            }
+          }
+          
+          let postCategory: string | undefined;
+          
+          // If multiple valid categories found, check title for disambiguation
+          if (validCategories.length > 1) {
+            const titleLower = title.toLowerCase();
+            // Check title for category indicators (check more specific patterns first)
+            // Check for "Quick Tips:" or "Quick Tip:" at the start
+            if (titleLower.match(/^quick tips?:/i) || titleLower.includes('quick tips') || titleLower.includes('quick tip')) {
+              postCategory = 'quick tips';
+            } else if (titleLower.match(/^two[- ]for[- ]one:/i) || titleLower.includes('two-for-one') || titleLower.includes('two for one')) {
+              postCategory = 'two for one';
+            } else if (titleLower.match(/^news round[- ]?up:/i) || titleLower.includes('news round-up') || titleLower.includes('news round up')) {
+              postCategory = 'news round up';
+            } else if (titleLower.match(/^business case:/i) || titleLower.includes('business case')) {
+              postCategory = 'business case';
+            } else if (titleLower.match(/^feature highlight:/i) || titleLower.includes('feature highlight')) {
+              postCategory = 'feature highlight';
+            } else {
+              // If title doesn't help, use first valid category
+              postCategory = validCategories[0];
+            }
+          } else if (validCategories.length === 1) {
+            postCategory = validCategories[0];
+          }
           
           // Extract image from description HTML
           let imageUrl: string | undefined;
@@ -238,6 +320,7 @@ export default function Blog() {
             description: cleanDescription,
             author: authorRaw?.replace(/<[^>]*>/g, '').trim(),
             imageUrl,
+            category: postCategory,
           };
         });
         
@@ -300,10 +383,17 @@ export default function Blog() {
     }
   };
 
-  // Distribute posts across categories (for now, we'll use all posts for each category)
-  // In the future, this would be filtered by actual categories from HubSpot
+  // Filter posts by category from RSS feed
   const getPostsForCategory = (categoryKey: string) => {
-    return posts.slice(0, 3); // Show latest 3 posts for each category
+    const categoryConfig = categories.find(cat => cat.key === categoryKey);
+    if (!categoryConfig) return [];
+    
+    const categoryPosts = posts.filter(post => {
+      if (!post.category) return false;
+      return post.category.toLowerCase() === categoryConfig.category.toLowerCase();
+    });
+    
+    return categoryPosts.slice(0, 3); // Show latest 3 posts for each category
   };
 
   return (
@@ -331,76 +421,6 @@ export default function Blog() {
         {/* Gradient fade to next section */}
         <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-background pointer-events-none z-0" />
       </section>
-
-      {/* Categories Section with gradient background */}
-      <div className="relative" style={{
-        background: `
-          linear-gradient(135deg, hsl(var(--background)) 0%, hsl(var(--noreja-main) / 0.14) 50%, hsl(var(--background)) 100%),
-          radial-gradient(ellipse 1000px 800px at 50% 50%, hsl(var(--noreja-secondary) / 0.10) 0%, transparent 60%)
-        `
-      }}>
-        {/* Gradient fade from previous section */}
-        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-background to-transparent pointer-events-none z-0" />
-        {/* Gradient fade to next section */}
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-background pointer-events-none z-0" />
-        <div className="relative z-10 pb-20">
-          <div className="w-full max-w-7xl mx-auto px-4 lg:px-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-              className="text-center mb-16"
-            >
-              <h2 className="text-3xl lg:text-4xl font-bold mb-4 text-foreground">
-                {t.blog.whatYouFind}
-              </h2>
-              <p className="text-lg text-muted-foreground">
-                Explore our content organized by category
-              </p>
-            </motion.div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
-              {categories.map((category, index) => (
-                <motion.div
-                  key={category.key}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                >
-                  <Card className="h-full text-center border-border/40 hover:border-noreja-main/30 transition-all duration-300 hover:shadow-lg group bg-background/80 backdrop-blur-sm flex flex-col">
-                    <CardHeader className="flex-grow">
-                      <div className={`w-16 h-16 mx-auto mb-4 rounded-full ${category.color} flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
-                        <category.icon className="w-8 h-8 text-white" />
-                      </div>
-                      <CardTitle className="text-xl font-bold">
-                        {category.title}
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="flex flex-col flex-grow">
-                      <p className="text-muted-foreground leading-relaxed mb-6 flex-grow">
-                        {category.description}
-                      </p>
-                      <div className="mt-auto">
-                        <Link to={getRoutePath('blogCategory', language, { category: category.category })}>
-                          <Button 
-                            variant="outline" 
-                            className="w-full border-noreja-main/30 hover:bg-noreja-main/10 group-hover:border-noreja-main/50"
-                          >
-                            {t.blog.viewAllPosts}
-                            <ArrowRight className="w-4 h-4 ml-2" />
-                          </Button>
-                        </Link>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
 
       {/* Latest Posts by Category */}
       <div className="relative" style={{
@@ -446,10 +466,11 @@ export default function Blog() {
             </div>
           )}
 
-          {!loading && !error && posts.length > 0 && (
+          {!loading && !error && (
             <div className="space-y-16">
               {categories.map((category, categoryIndex) => {
                 const categoryPosts = getPostsForCategory(category.key);
+                // Always show all categories, even if empty
                 return (
                   <motion.div
                     key={category.key}
@@ -466,11 +487,11 @@ export default function Blog() {
                         <h3 className="text-2xl font-bold text-foreground">
                           {t.blog.latestFrom}{' '}
                           <span className="bg-gradient-primary bg-clip-text text-transparent">
-                            {t.blog.categories[category.key as keyof typeof t.blog.categories]}
+                            {category.displayName}
                           </span>
                         </h3>
                       </div>
-                      <Link to={category.href}>
+                      <Link to={getRoutePath('blogCategory', language, { category: category.category })}>
                         <Button variant="ghost" className="text-noreja-main hover:bg-noreja-main/10">
                           {t.blog.viewAllPosts}
                           <ArrowRight className="w-4 h-4 ml-2" />
@@ -478,66 +499,72 @@ export default function Blog() {
                       </Link>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                      {categoryPosts.map((post, postIndex) => (
-                        <motion.div
-                          key={`${category.key}-${postIndex}`}
-                          initial={{ opacity: 0, y: 20 }}
-                          whileInView={{ opacity: 1, y: 0 }}
-                          transition={{ duration: 0.4, delay: postIndex * 0.1 }}
-                          viewport={{ once: true }}
-                        >
-                          <Card className="h-full hover:shadow-lg transition-all duration-300 hover:border-noreja-main/30 group bg-background/80 backdrop-blur-sm flex flex-col">
-                            {post.imageUrl && (
-                              <div className="w-full aspect-video overflow-hidden bg-muted">
-                                <img 
-                                  src={post.imageUrl} 
-                                  alt={post.title}
-                                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                                  loading="lazy"
-                                />
-                              </div>
-                            )}
-                            <CardHeader className="flex-grow">
-                              <div className="flex items-center justify-between mb-2">
-                                <Badge variant="secondary" className="text-xs">
-                                  {Math.ceil(Math.random() * 8) + 2} min read
-                                </Badge>
-                                <span className="text-xs text-muted-foreground">
-                                  {formatDate(post.pubDate)}
-                                </span>
-                              </div>
-                              <CardTitle className="text-lg line-clamp-2 group-hover:text-noreja-main transition-colors">
-                                {post.title}
-                              </CardTitle>
-                            </CardHeader>
-                            <CardContent className="flex flex-col flex-grow">
-                              <p className="text-sm text-muted-foreground line-clamp-3 mb-4 flex-grow">
-                                {post.description}
-                              </p>
-                              <div className="flex items-center justify-between mt-auto">
-                                {post.author && (
+                    {categoryPosts.length > 0 ? (
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {categoryPosts.map((post, postIndex) => (
+                          <motion.div
+                            key={`${category.key}-${postIndex}`}
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.4, delay: postIndex * 0.1 }}
+                            viewport={{ once: true }}
+                          >
+                            <Card className="h-full hover:shadow-lg transition-all duration-300 hover:border-noreja-main/30 group bg-background/80 backdrop-blur-sm flex flex-col">
+                              {post.imageUrl && (
+                                <div className="w-full aspect-video overflow-hidden bg-muted">
+                                  <img 
+                                    src={post.imageUrl} 
+                                    alt={post.title}
+                                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                    loading="lazy"
+                                  />
+                                </div>
+                              )}
+                              <CardHeader className="flex-grow">
+                                <div className="flex items-center justify-between mb-2">
+                                  <Badge variant="secondary" className="text-xs">
+                                    {Math.ceil(Math.random() * 8) + 2} min read
+                                  </Badge>
                                   <span className="text-xs text-muted-foreground">
-                                    {extractAuthorName(post.author)}
+                                    {formatDate(post.pubDate)}
                                   </span>
-                                )}
-                                <Button 
-                                  variant="ghost" 
-                                  size="sm" 
-                                  className="p-0 h-auto text-noreja-main hover:bg-noreja-main/10"
-                                  asChild
-                                >
-                                  <a href={post.link}>
-                                    {t.blog.readMore}
-                                    <ExternalLink className="w-3 h-3 ml-1" />
-                                  </a>
-                                </Button>
-                              </div>
-                            </CardContent>
-                          </Card>
-                        </motion.div>
-                      ))}
-                    </div>
+                                </div>
+                                <CardTitle className="text-lg line-clamp-2 group-hover:text-noreja-main transition-colors">
+                                  {post.title}
+                                </CardTitle>
+                              </CardHeader>
+                              <CardContent className="flex flex-col flex-grow">
+                                <p className="text-sm text-muted-foreground line-clamp-3 mb-4 flex-grow">
+                                  {post.description}
+                                </p>
+                                <div className="flex items-center justify-between mt-auto">
+                                  {post.author && (
+                                    <span className="text-xs text-muted-foreground">
+                                      {extractAuthorName(post.author)}
+                                    </span>
+                                  )}
+                                  <Button 
+                                    variant="ghost" 
+                                    size="sm" 
+                                    className="p-0 h-auto text-noreja-main hover:bg-noreja-main/10"
+                                    asChild
+                                  >
+                                    <a href={post.link}>
+                                      {t.blog.readMore}
+                                      <ExternalLink className="w-3 h-3 ml-1" />
+                                    </a>
+                                  </Button>
+                                </div>
+                              </CardContent>
+                            </Card>
+                          </motion.div>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="text-center py-12 text-muted-foreground">
+                        <p>No posts available in this category yet.</p>
+                      </div>
+                    )}
                   </motion.div>
                 );
               })}

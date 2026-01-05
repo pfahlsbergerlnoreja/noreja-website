@@ -415,19 +415,23 @@ export interface Translations {
     placeholder: string;
     configNote: string;
     features: {
-      innovation: {
+      quickTips: {
         title: string;
         description: string;
       };
-      technical: {
+      twoForOne: {
         title: string;
         description: string;
       };
-      analysis: {
+      newsRoundUp: {
         title: string;
         description: string;
       };
-      caseStudies: {
+      businessCase: {
+        title: string;
+        description: string;
+      };
+      featureHighlight: {
         title: string;
         description: string;
       };
@@ -438,10 +442,11 @@ export interface Translations {
     latestPostsPreview: string;
     getGlimpse: string;
     categories: {
-      innovation: string;
-      technical: string;
-      analysis: string;
-      caseStudies: string;
+      quickTips: string;
+      twoForOne: string;
+      newsRoundUp: string;
+      businessCase: string;
+      featureHighlight: string;
     };
     viewAllPosts: string;
     latestFrom: string;
@@ -1098,28 +1103,33 @@ export const translations: Record<Language, Translations> = {
       placeholder: "Blog posts will appear here",
       configNote: "Configure HubSpot embed or RSS feed in useEffect",
       features: {
-        innovation: {
-          title: "Innovation Insights",
-          description: "Latest trends and breakthrough technologies shaping the future of business.",
+        quickTips: {
+          title: "Quick Tips",
+          description: "Practical tips and quick insights to improve your processes and workflows.",
         },
-        technical: {
-          title: "Technical Deep-Dives",
-          description: "In-depth technical articles and tutorials from our engineering team.",
+        twoForOne: {
+          title: "Two for One",
+          description: "Articles that deliver double value with combined insights and practical applications.",
         },
-        analysis: {
-          title: "Industry Analysis",
-          description: "Data-driven analysis and expert commentary on market developments.",
+        newsRoundUp: {
+          title: "News Round Up",
+          description: "Curated summaries of the latest news and developments in process management.",
         },
-        caseStudies: {
-          title: "Case Studies",
-          description: "Real-world implementations and success stories from our clients.",
+        businessCase: {
+          title: "Business Case",
+          description: "Real-world business scenarios and case studies demonstrating process improvements.",
+        },
+        featureHighlight: {
+          title: "Feature Highlight",
+          description: "In-depth looks at platform features and how they solve real business challenges.",
         },
       },
       categories: {
-        innovation: "Innovation",
-        technical: "Technical",
-        analysis: "Analysis", 
-        caseStudies: "Case Studies",
+        quickTips: "Quick Tips",
+        twoForOne: "Two for One",
+        newsRoundUp: "News Round Up",
+        businessCase: "Business Case",
+        featureHighlight: "Feature Highlight",
       },
       viewAllPosts: "View All Posts",
       latestFrom: "Latest from",
@@ -1791,28 +1801,33 @@ export const translations: Record<Language, Translations> = {
       placeholder: "Blog-Beiträge werden hier erscheinen",
       configNote: "HubSpot-Einbettung oder RSS-Feed in useEffect konfigurieren",
       features: {
-        innovation: {
-          title: "Innovationseinblicke",
-          description: "Neueste Trends und bahnbrechende Technologien, die die Zukunft der Geschäftswelt prägen.",
+        quickTips: {
+          title: "Quick Tips",
+          description: "Praktische Tipps und schnelle Einblicke zur Verbesserung Ihrer Prozesse und Workflows.",
         },
-        technical: {
-          title: "Technische Tiefenanalysen",
-          description: "Detaillierte technische Artikel und Tutorials von unserem Engineering-Team.",
+        twoForOne: {
+          title: "Two for One",
+          description: "Artikel, die doppelten Wert bieten mit kombinierten Einblicken und praktischen Anwendungen.",
         },
-        analysis: {
-          title: "Branchenanalyse",
-          description: "Datengetriebene Analysen und Expertenkommentare zu Marktentwicklungen.",
+        newsRoundUp: {
+          title: "News Round Up",
+          description: "Kuratierte Zusammenfassungen der neuesten Nachrichten und Entwicklungen im Prozessmanagement.",
         },
-        caseStudies: {
-          title: "Fallstudien",
-          description: "Reale Implementierungen und Erfolgsgeschichten unserer Kunden.",
+        businessCase: {
+          title: "Business Case",
+          description: "Reale Geschäftsszenarien und Fallstudien, die Prozessverbesserungen demonstrieren.",
+        },
+        featureHighlight: {
+          title: "Feature Highlight",
+          description: "Detaillierte Einblicke in Plattformfunktionen und wie sie echte Geschäftsherausforderungen lösen.",
         },
       },
       categories: {
-        innovation: "Innovation",
-        technical: "Technisch",
-        analysis: "Analyse", 
-        caseStudies: "Fallstudien",
+        quickTips: "Quick Tips",
+        twoForOne: "Two for One",
+        newsRoundUp: "News Round Up",
+        businessCase: "Business Case",
+        featureHighlight: "Feature Highlight",
       },
       viewAllPosts: "Alle Beiträge anzeigen",
       latestFrom: "Neueste aus",

@@ -61,16 +61,25 @@ export function Header() {
   const { t, language } = useLanguage();
 
   const isActive = (routeKey: keyof typeof import('@/lib/routes').routes) => {
+    // Blog is now external, so it's never active
+    if (routeKey === 'blog') return false;
     const routePath = getRoutePath(routeKey, language);
     return location.pathname === routePath || location.pathname.startsWith(routePath + '/');
   };
 
-  const navigationItems = [
+  // External blog URLs
+  const blogUrl = language === 'de' ? 'https://blog.noreja.com/de-de' : 'https://blog.noreja.com/en';
+  
+  const navigationItems: Array<{
+    name: string;
+    routeKey: keyof typeof import('@/lib/routes').routes;
+    external?: boolean;
+  }> = [
     { name: t.navigation.functionalities, routeKey: 'functionalities' as const },
     { name: t.navigation.pricing, routeKey: 'pricing' as const },
     { name: t.navigation.successStories, routeKey: 'successStories' as const },
     { name: t.navigation.partners, routeKey: 'partners' as const },
-    { name: t.navigation.blog, routeKey: 'blog' as const }
+    { name: t.navigation.blog, routeKey: 'blog' as const, external: true }
   ];
 
   return (
@@ -91,6 +100,19 @@ export function Header() {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
             {navigationItems.map((item) => {
+              if (item.external && item.routeKey === 'blog') {
+                return (
+                  <a
+                    key={item.routeKey}
+                    href={blogUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm font-medium transition-fast text-muted-foreground hover:text-[hsl(256,77%,72%)]"
+                  >
+                    {item.name}
+                  </a>
+                );
+              }
               const href = getRoutePath(item.routeKey, language);
               return (
                 <Link
@@ -139,6 +161,20 @@ export function Header() {
           >
             <nav className="flex flex-col space-y-4">
               {navigationItems.map((item) => {
+                if (item.external && item.routeKey === 'blog') {
+                  return (
+                    <a
+                      key={item.routeKey}
+                      href={blogUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm font-medium transition-fast text-muted-foreground hover:text-[hsl(256,77%,72%)]"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      {item.name}
+                    </a>
+                  );
+                }
                 const href = getRoutePath(item.routeKey, language);
                 return (
                   <Link
