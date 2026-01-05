@@ -21,9 +21,7 @@ const Index = () => {
     <>
       {/* Sections with animated grid background */}
       <div className="relative overflow-hidden">
-        <div className="hidden md:block">
-          <AnimatedGridBackground key="animated-grid-v2" />
-        </div>
+        <AnimatedGridBackground key="animated-grid-v2" />
         <IntegratedHeroSection />
         <LogoBanner />
         {/* <SimpleRectangleAnimation /> 
@@ -52,9 +50,7 @@ const Index = () => {
       
       {/* PartnerPhotosGrid with animated grid background */}
       <div className="relative overflow-hidden">
-        <div className="hidden md:block">
-          <AnimatedGridBackground key="animated-grid-partners" />
-        </div>
+        <AnimatedGridBackground key="animated-grid-partners" />
         {/* Gradient fade from previous section */}
         <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-background to-transparent pointer-events-none z-0" />
         {/* Gradient fade to next section */}
@@ -83,9 +79,7 @@ const Index = () => {
       
       {/* IntegrationsShowcase with animated grid background */}
       <div className="relative overflow-hidden">
-        <div className="hidden md:block">
-          <AnimatedGridBackground key="animated-grid-integrations" />
-        </div>
+        <AnimatedGridBackground key="animated-grid-integrations" />
         {/* Gradient fade from previous section */}
         <div className="absolute top-0 left-0 right-0 h-40 bg-gradient-to-b from-background to-transparent pointer-events-none z-0" />
         {/* Gradient fade to next section */}
