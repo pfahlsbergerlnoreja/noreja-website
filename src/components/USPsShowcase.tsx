@@ -27,6 +27,8 @@ export function USPsShowcase() {
   const [flippedCards, setFlippedCards] = useState<Set<number>>(new Set());
   const [isResizing, setIsResizing] = useState(false);
   const [api, setApi] = useState<CarouselApi>();
+  const [isPaused, setIsPaused] = useState(false);
+  const isAutoAdvancingRef = useRef(false);
 
   // Disable body scroll when a card is selected
   useEffect(() => {
@@ -63,13 +65,49 @@ export function USPsShowcase() {
     };
   }, []);
 
-  // Auto-advance carousel every 2 seconds on mobile
+  // Handle manual navigation - pause auto-advance
   useEffect(() => {
     if (!api || !isMobile) {
       return;
     }
 
+    let resumeTimeout: NodeJS.Timeout;
+
+    const handleSelect = () => {
+      // Only pause if this was manual navigation (not auto-advance)
+      if (!isAutoAdvancingRef.current) {
+        setIsPaused(true);
+        // Clear any existing timeout
+        if (resumeTimeout) {
+          clearTimeout(resumeTimeout);
+        }
+        // Resume after 10 seconds of inactivity
+        resumeTimeout = setTimeout(() => {
+          setIsPaused(false);
+        }, 10000);
+      }
+      // Reset the flag
+      isAutoAdvancingRef.current = false;
+    };
+
+    api.on('select', handleSelect);
+
+    return () => {
+      api.off('select', handleSelect);
+      if (resumeTimeout) {
+        clearTimeout(resumeTimeout);
+      }
+    };
+  }, [api, isMobile]);
+
+  // Auto-advance carousel every 2 seconds on mobile (only when not paused)
+  useEffect(() => {
+    if (!api || !isMobile || isPaused) {
+      return;
+    }
+
     const interval = setInterval(() => {
+      isAutoAdvancingRef.current = true;
       if (api.canScrollNext()) {
         api.scrollNext();
       } else {
@@ -79,7 +117,7 @@ export function USPsShowcase() {
     }, 2000);
 
     return () => clearInterval(interval);
-  }, [api, isMobile]);
+  }, [api, isMobile, isPaused]);
 
   const usps = [
     {
@@ -274,20 +312,17 @@ export function USPsShowcase() {
                       initial={{ opacity: 0, y: 24 }}
                       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
                       transition={{ duration: 0.8, delay: 0.4 }}
-                      className="w-full py-4"
+                      className="w-full py-4 pt-16"
                     >
                       <div className="relative h-80 w-full border border-primary/50 rounded-2xl overflow-visible bg-gradient-to-br from-background/90 via-primary/20 to-secondary/40">
                         {/* Icon positioned above card - half on card, half above */}
-                        <img 
-                          src={usp.icon} 
-                          alt="" 
-                          className="absolute w-24 h-24 z-20"
-                          style={{ 
-                            top: 0,
-                            left: '50%',
-                            transform: 'translateX(-50%) translateY(-50%)'
-                          }}
-                        />
+                        <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
+                          <img 
+                            src={usp.icon} 
+                            alt="" 
+                            className="w-24 h-24"
+                          />
+                        </div>
                         
                         {/* Content */}
                         <div className="relative z-10 h-full flex flex-col justify-center items-center p-6 pt-12">

@@ -36,6 +36,8 @@ export function PartnerPhotosGrid() {
   
   const [selectedPartner, setSelectedPartner] = useState<Partner | null>(null);
   const [api, setApi] = useState<CarouselApi>();
+  const [isPaused, setIsPaused] = useState(false);
+  const isAutoAdvancingRef = useRef(false);
 
   // Get all partners with photos and quotes for the grid, randomized on every reload
   const gridPartners = useMemo(() => {
@@ -61,13 +63,49 @@ export function PartnerPhotosGrid() {
     return slides;
   }, [gridPartners]);
 
-  // Auto-advance carousel every 1.5 seconds on mobile
+  // Handle manual navigation - pause auto-advance
   useEffect(() => {
     if (!api) {
       return;
     }
 
+    let resumeTimeout: NodeJS.Timeout;
+
+    const handleSelect = () => {
+      // Only pause if this was manual navigation (not auto-advance)
+      if (!isAutoAdvancingRef.current) {
+        setIsPaused(true);
+        // Clear any existing timeout
+        if (resumeTimeout) {
+          clearTimeout(resumeTimeout);
+        }
+        // Resume after 10 seconds of inactivity
+        resumeTimeout = setTimeout(() => {
+          setIsPaused(false);
+        }, 10000);
+      }
+      // Reset the flag
+      isAutoAdvancingRef.current = false;
+    };
+
+    api.on('select', handleSelect);
+
+    return () => {
+      api.off('select', handleSelect);
+      if (resumeTimeout) {
+        clearTimeout(resumeTimeout);
+      }
+    };
+  }, [api]);
+
+  // Auto-advance carousel every 2 seconds (only when not paused)
+  useEffect(() => {
+    if (!api || isPaused) {
+      return;
+    }
+
     const interval = setInterval(() => {
+      isAutoAdvancingRef.current = true;
       if (api.canScrollNext()) {
         api.scrollNext();
       } else {
@@ -77,7 +115,7 @@ export function PartnerPhotosGrid() {
     }, 2000);
 
     return () => clearInterval(interval);
-  }, [api]);
+  }, [api, isPaused]);
 
   const getPartnerLogo = (partner: Partner) => {
     if (partner.preferOriginalLogo) {

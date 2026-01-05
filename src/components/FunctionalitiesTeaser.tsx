@@ -1,5 +1,5 @@
 import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { ArrowRight, Brain, Search, LayoutDashboard, Wrench, Code } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -9,6 +9,7 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
+  type CarouselApi,
 } from "@/components/ui/carousel";
 import { Link } from "react-router-dom";
 import { getRoutePath } from "@/lib/routes";
@@ -17,6 +18,9 @@ export function FunctionalitiesTeaser() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const { t, language } = useLanguage();
+  const [api, setApi] = useState<CarouselApi>();
+  const [isPaused, setIsPaused] = useState(false);
+  const isAutoAdvancingRef = useRef(false);
 
   const features = [
     {
@@ -45,6 +49,60 @@ export function FunctionalitiesTeaser() {
       description: t.functionalities.teaserFeatures.workbench.description
     }
   ];
+
+  // Handle manual navigation - pause auto-advance
+  useEffect(() => {
+    if (!api) {
+      return;
+    }
+
+    let resumeTimeout: NodeJS.Timeout;
+
+    const handleSelect = () => {
+      // Only pause if this was manual navigation (not auto-advance)
+      if (!isAutoAdvancingRef.current) {
+        setIsPaused(true);
+        // Clear any existing timeout
+        if (resumeTimeout) {
+          clearTimeout(resumeTimeout);
+        }
+        // Resume after 10 seconds of inactivity
+        resumeTimeout = setTimeout(() => {
+          setIsPaused(false);
+        }, 10000);
+      }
+      // Reset the flag
+      isAutoAdvancingRef.current = false;
+    };
+
+    api.on('select', handleSelect);
+
+    return () => {
+      api.off('select', handleSelect);
+      if (resumeTimeout) {
+        clearTimeout(resumeTimeout);
+      }
+    };
+  }, [api]);
+
+  // Auto-advance carousel every 2 seconds (only when not paused)
+  useEffect(() => {
+    if (!api || isPaused) {
+      return;
+    }
+
+    const interval = setInterval(() => {
+      isAutoAdvancingRef.current = true;
+      if (api.canScrollNext()) {
+        api.scrollNext();
+      } else {
+        // Loop back to start
+        api.scrollTo(0);
+      }
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, [api, isPaused]);
 
   return (
     <section ref={ref} className="py-20 overflow-hidden">
@@ -75,6 +133,7 @@ export function FunctionalitiesTeaser() {
         {/* Mobile: Carousel */}
         <div className="lg:hidden overflow-hidden">
           <Carousel
+            setApi={setApi}
             opts={{
               align: "start",
               loop: true,
