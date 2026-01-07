@@ -46,9 +46,6 @@ http://www.noreja.com/* https://noreja.com/:splat 301!
 /en/noreja-features/ https://noreja.com/en/platform 301
 /de/veranstaltungen/ https://noreja.com/de/veranstaltungen 301
 /en/events/ https://noreja.com/en/events 301
-/de/neuigkeiten/ https://noreja.com/de/blog 301
-/en/news/ https://noreja.com/en/blog 301
-/blog https://noreja.com/de/blog 301
 
 # ----------------------------
 # Old success stories / references -> new success story routes
