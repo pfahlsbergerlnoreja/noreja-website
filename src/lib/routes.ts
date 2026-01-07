@@ -58,14 +58,6 @@ export const routes = {
     de: '/de/datenschutz',
     en: '/en/privacy',
   },
-  blog: {
-    de: '/de/blog',
-    en: '/en/blog',
-  },
-  blogCategory: {
-    de: '/de/blog/:category',
-    en: '/en/blog/:category',
-  },
   terms: {
     de: '/de/nutzungsbedingungen',
     en: '/en/terms',
@@ -100,8 +92,6 @@ const pathToRouteKey: Record<string, keyof typeof routes> = {
   '/en/imprint': 'imprint',
   '/de/datenschutz': 'privacy',
   '/en/privacy': 'privacy',
-  '/de/blog': 'blog',
-  '/en/blog': 'blog',
   '/de/nutzungsbedingungen': 'terms',
   '/en/terms': 'terms',
   '/de/download-vielen-dank': 'downloadThankYou',
@@ -182,12 +172,6 @@ export function translateRoute(pathname: string, targetLang: Language): string {
     return getRoutePath('successStoryDetail', targetLang, { companyName: successStoryMatch[1] });
   }
   
-  // Blog category: /de/blog/:category or /en/blog/:category
-  const blogCategoryMatch = pathname.match(/^\/(?:de|en)\/blog\/(.+)$/);
-  if (blogCategoryMatch) {
-    return getRoutePath('blogCategory', targetLang, { category: blogCategoryMatch[1] });
-  }
-  
   // Use cases: /de/use-cases/:useCaseName or /en/use-cases/:useCaseName
   const useCaseMatch = pathname.match(/^\/(?:de|en)\/use-cases\/(.+)$/);
   if (useCaseMatch) {
@@ -227,9 +211,6 @@ export function getRouteKeyFromPath(pathname: string): keyof typeof routes | nul
   // Check for dynamic routes first
   if (pathname.match(/^\/(?:de|en)\/success-story\//)) {
     return 'successStoryDetail';
-  }
-  if (pathname.match(/^\/(?:de|en)\/blog\//) && pathname.split('/').length > 3) {
-    return 'blogCategory';
   }
   if (pathname.match(/^\/(?:de|en)\/use-cases\//)) {
     return 'useCases';

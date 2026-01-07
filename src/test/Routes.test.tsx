@@ -52,11 +52,6 @@ describe('Route Presence Tests', () => {
     expect(document.body).toBeInTheDocument()
   })
 
-  test('renders blog page', () => {
-    renderApp('/blog')
-    expect(document.body).toBeInTheDocument()
-  })
-
   test('renders downloads page', () => {
     renderApp('/downloads')
     expect(document.body).toBeInTheDocument()

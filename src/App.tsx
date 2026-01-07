@@ -12,8 +12,6 @@ import SuccessStoryDetail from "./pages/SuccessStoryDetail";
 import UseCase from "./pages/UseCase";
 import Team from "./pages/Team";
 import Partners from "./pages/Partners";
-import Blog from "./pages/Blog";
-import BlogCategory from "./pages/BlogCategory";
 import Downloads from "./pages/Downloads";
 import DownloadThankYou from "./pages/DownloadThankYou";
 import Events from "./pages/Events";
@@ -94,14 +92,6 @@ const App = () => (
               {/* Privacy */}
               <Route path="/de/datenschutz" element={<PrivacyPolicy />} />
               <Route path="/en/privacy" element={<PrivacyPolicy />} />
-              
-              {/* Blog */}
-              <Route path="/de/blog" element={<Blog />} />
-              <Route path="/en/blog" element={<Blog />} />
-              
-              {/* Blog Category */}
-              <Route path="/de/blog/:category" element={<BlogCategory />} />
-              <Route path="/en/blog/:category" element={<BlogCategory />} />
               
               {/* Terms */}
               <Route path="/de/nutzungsbedingungen" element={<TermsOfService />} />

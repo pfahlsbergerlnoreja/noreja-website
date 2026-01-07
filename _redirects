@@ -80,8 +80,10 @@ http://www.noreja.com/* https://noreja.com/:splat 301!
 # ----------------------------
 # Blog redirects to Hubspot
 # ----------------------------
-
-/de/blog-de/ https://noreja.com/de/blog/	301
+/blog https://blog.noreja.com/de-de/ 301
+/blog/ https://blog.noreja.com/de-de/ 301 
+/en/blog/ https://blog.noreja.com/en/ 301 
+/de/blog-de/ https://blog.noreja.com/de-de/	301
 /de/bpm-news-februar-2024/ https://blog.noreja.com/de-de/bpm-news-februar-2024/ 301
 /en/bpm-news-february-2024/	https://blog.noreja.com/en/bpm-news-february-2024/ 301
 /en/process-management-news-round-up-march-2024-edition/ https://blog.noreja.com/en/process-management-news-round-up-march-2024-edition/ 301

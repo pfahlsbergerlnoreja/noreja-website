@@ -51,8 +51,6 @@ function extractUseCaseIds(): string[] {
   return useCaseIds;
 }
 
-// Blog categories
-const blogCategories = ['innovation', 'technical', 'analysis', 'case-studies'];
 
 interface SitemapEntry {
   url: string;
@@ -96,8 +94,6 @@ function generateSitemap() {
   addEntry('/en/downloads', 0.8, 'weekly');
   addEntry('/de/kontakt', 0.8, 'weekly');
   addEntry('/en/contact', 0.8, 'weekly');
-  addEntry('/de/blog', 0.8, 'weekly');
-  addEntry('/en/blog', 0.8, 'weekly');
 
   // Legal pages (lower priority)
   addEntry('/de/impressum', 0.5, 'monthly');
@@ -119,12 +115,6 @@ function generateSitemap() {
   useCaseIds.forEach((useCaseId) => {
     addEntry(`/de/use-cases/${useCaseId}`, 0.7, 'monthly');
     addEntry(`/en/use-cases/${useCaseId}`, 0.7, 'monthly');
-  });
-
-  // Blog category pages
-  blogCategories.forEach((category) => {
-    addEntry(`/de/blog/${category}`, 0.6, 'weekly');
-    addEntry(`/en/blog/${category}`, 0.6, 'weekly');
   });
 
   // Write entries to sitemap stream
