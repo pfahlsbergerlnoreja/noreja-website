@@ -129,16 +129,16 @@ const FeatureSection = ({ feature, Icon, layout, index, animationStyle }: Featur
     <motion.section
       ref={sectionRef}
       id={feature.id}
-      className="scroll-mt-24 py-8"
+      className="scroll-mt-24 py-0 lg:py-8"
       initial={{ opacity: 0 }}
       animate={isInView ? { opacity: 1 } : { opacity: 0 }}
       transition={{ duration: 0.3 }}
     >
-      <div className={`grid ${layout.gridCols} gap-8 lg:gap-12 items-stretch overflow-hidden`}>
+      <div className={`grid ${layout.gridCols} gap-16 lg:gap-12 items-stretch overflow-hidden`}>
         {/* Image Section with Parallax */}
         <motion.div
           ref={imageRef}
-          className={`${layout.imageOrder === 1 ? "lg:order-1" : "lg:order-2"} ${layout.imageOffset} h-full`}
+          className={`${layout.imageOrder === 1 ? "order-2 lg:order-1" : "order-2 lg:order-2"} ${layout.imageOffset} h-full`}
           style={{ y: imageY, opacity: imageOpacity, scale: imageScale }}
         >
           <motion.div
@@ -189,16 +189,16 @@ const FeatureSection = ({ feature, Icon, layout, index, animationStyle }: Featur
         {/* Text Section with Staggered Animations */}
         <motion.div
           ref={textRef}
-          className={`${layout.imageOrder === 1 ? "lg:order-2" : "lg:order-1"}`}
+          className={`${layout.imageOrder === 1 ? "order-1 lg:order-2" : "order-1 lg:order-1"}`}
           style={{ y: textY }}
           variants={textVariants}
           initial="initial"
           animate="animate"
           transition={textTransition}
         >
-          <div className="space-y-6 lg:py-4 pb-8">
+          <div className="space-y-4 lg:space-y-6 lg:py-4 pb-4 lg:pb-8">
             <motion.div
-              className="flex items-center gap-4 mb-6"
+              className="flex items-center gap-4 mb-4 lg:mb-6"
               initial={{ opacity: 0 }}
               animate={textInView ? { opacity: 1 } : { opacity: 0 }}
               transition={{ duration: 0.3 }}
@@ -305,13 +305,13 @@ const Functionalities = () => {
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
       <div className="relative">
-        <section className="relative py-20 lg:py-24">
+        <section className="relative py-12 lg:py-24">
           <div className="relative z-10 w-full max-w-7xl mx-auto px-4 lg:px-8">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="text-center mb-16"
+              className="text-center mb-8 lg:mb-16"
             >
               <AnimatedHeading 
                 fixedText={currentHeading.fixedText}
@@ -339,8 +339,8 @@ const Functionalities = () => {
         {/* Gradient fade to next section */}
         <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-background pointer-events-none z-0" />
         
-        <div className="relative z-10 w-full max-w-[90rem] mx-auto px-6 lg:px-12 py-20">
-          <div className="space-y-32 lg:space-y-40">
+        <div className="relative z-10 w-full max-w-[90rem] mx-auto px-6 lg:px-12 py-2 lg:py-20">
+          <div className="space-y-8 lg:space-y-40">
             {features.map((feature, index) => {
               const Icon = feature.icon;
               
@@ -475,7 +475,7 @@ const Functionalities = () => {
       }}>
         {/* Gradient fade from previous section */}
         <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-background to-transparent pointer-events-none z-0" />
-        <section className="relative z-10 py-20">
+        <section className="relative z-10 py-2 lg:py-20">
           <div className="w-full max-w-7xl mx-auto px-4 lg:px-8">
             <motion.div
               initial={{ opacity: 0, y: 20 }}

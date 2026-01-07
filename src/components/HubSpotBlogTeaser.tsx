@@ -1,9 +1,18 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
 import { ExternalLink } from 'lucide-react';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+  type CarouselApi,
+} from '@/components/ui/carousel';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface BlogPost {
   title: string;
@@ -20,9 +29,13 @@ interface HubSpotBlogTeaserProps {
 
 export function HubSpotBlogTeaser({ maxItems = 3 }: HubSpotBlogTeaserProps) {
   const { t, language } = useLanguage();
+  const isMobile = useIsMobile();
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [api, setApi] = useState<CarouselApi>();
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const isAutoAdvancingRef = useRef(false);
 
   // HubSpot RSS Feed URLs - adjust based on language
   const RSS_FEED_URL = language === 'de' 
@@ -267,6 +280,63 @@ export function HubSpotBlogTeaser({ maxItems = 3 }: HubSpotBlogTeaserProps) {
     }
   };
 
+  // Handle manual navigation - pause auto-advance
+  useEffect(() => {
+    if (!api) {
+      return;
+    }
+
+    let resumeTimeout: NodeJS.Timeout;
+
+    const handleSelect = () => {
+      // Only pause if this was manual navigation (not auto-advance)
+      if (!isAutoAdvancingRef.current) {
+        setIsAutoPlaying(false);
+        // Clear any existing timeout
+        if (resumeTimeout) {
+          clearTimeout(resumeTimeout);
+        }
+        // Resume after 5 seconds of inactivity
+        resumeTimeout = setTimeout(() => {
+          setIsAutoPlaying(true);
+        }, 5000);
+      }
+      // Reset the flag
+      isAutoAdvancingRef.current = false;
+    };
+
+    api.on('select', handleSelect);
+
+    return () => {
+      api.off('select', handleSelect);
+      if (resumeTimeout) {
+        clearTimeout(resumeTimeout);
+      }
+    };
+  }, [api]);
+
+  // Auto-advance carousel every 3 seconds (only when not paused and on mobile)
+  useEffect(() => {
+    if (!api || !isAutoPlaying || !isMobile) {
+      return;
+    }
+
+    const interval = setInterval(() => {
+      isAutoAdvancingRef.current = true;
+      if (api.canScrollNext()) {
+        api.scrollNext();
+      } else {
+        // Loop back to start
+        api.scrollTo(0);
+      }
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [api, isAutoPlaying, isMobile]);
+
+  const handleMouseEnter = () => setIsAutoPlaying(false);
+  const handleMouseLeave = () => setIsAutoPlaying(true);
+
   return (
     <section className="py-8 md:py-16 lg:py-20" aria-labelledby="blog-teaser-heading">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -282,25 +352,48 @@ export function HubSpotBlogTeaser({ maxItems = 3 }: HubSpotBlogTeaserProps) {
           </p>
         </div>
         
-        {/* Blog Posts Grid */}
+        {/* Blog Posts Loading State */}
         {loading && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-            {Array.from({ length: maxItems }).map((_, i) => (
-              <Card key={i} className="overflow-hidden">
-                <Skeleton className="w-full aspect-video" />
-                <CardHeader>
-                  <Skeleton className="h-6 w-3/4 mb-2" />
-                  <Skeleton className="h-4 w-1/2" />
-                </CardHeader>
-                <CardContent>
-                  <Skeleton className="h-4 w-full mb-2" />
-                  <Skeleton className="h-4 w-full mb-2" />
-                  <Skeleton className="h-4 w-2/3 mb-4" />
-                  <Skeleton className="h-10 w-full" />
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+          <>
+            {/* Mobile: Carousel skeleton */}
+            <div className="lg:hidden">
+              <div className="grid grid-cols-1 gap-4 sm:gap-6">
+                {Array.from({ length: 1 }).map((_, i) => (
+                  <Card key={i} className="overflow-hidden">
+                    <Skeleton className="w-full aspect-video" />
+                    <CardHeader>
+                      <Skeleton className="h-6 w-3/4 mb-2" />
+                      <Skeleton className="h-4 w-1/2" />
+                    </CardHeader>
+                    <CardContent>
+                      <Skeleton className="h-4 w-full mb-2" />
+                      <Skeleton className="h-4 w-full mb-2" />
+                      <Skeleton className="h-4 w-2/3 mb-4" />
+                      <Skeleton className="h-10 w-full" />
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+            {/* Desktop: Grid skeleton */}
+            <div className="hidden lg:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+              {Array.from({ length: maxItems }).map((_, i) => (
+                <Card key={i} className="overflow-hidden">
+                  <Skeleton className="w-full aspect-video" />
+                  <CardHeader>
+                    <Skeleton className="h-6 w-3/4 mb-2" />
+                    <Skeleton className="h-4 w-1/2" />
+                  </CardHeader>
+                  <CardContent>
+                    <Skeleton className="h-4 w-full mb-2" />
+                    <Skeleton className="h-4 w-full mb-2" />
+                    <Skeleton className="h-4 w-2/3 mb-4" />
+                    <Skeleton className="h-10 w-full" />
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </>
         )}
 
         {error && (
@@ -327,7 +420,73 @@ export function HubSpotBlogTeaser({ maxItems = 3 }: HubSpotBlogTeaserProps) {
 
         {!loading && !error && posts.length > 0 && (
           <>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-6 md:mb-8">
+            {/* Mobile: Carousel */}
+            <div 
+              className="lg:hidden mb-6"
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+            >
+              <Carousel
+                setApi={setApi}
+                opts={{
+                  align: "start",
+                  loop: true,
+                }}
+                className="w-full max-w-sm mx-auto"
+              >
+                <CarouselContent>
+                  {posts.map((post, index) => (
+                    <CarouselItem key={index}>
+                      <Card className="flex flex-col hover:shadow-lg transition-shadow overflow-hidden">
+                        {post.imageUrl && (
+                          <div className="w-full aspect-video overflow-hidden bg-muted">
+                            <img 
+                              src={post.imageUrl} 
+                              alt={post.title}
+                              className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                              loading="lazy"
+                            />
+                          </div>
+                        )}
+                        <CardHeader className="pb-3">
+                          <CardTitle className="text-lg sm:text-xl line-clamp-2 leading-snug">
+                            {post.title}
+                          </CardTitle>
+                          <CardDescription className="text-xs sm:text-sm">
+                            {formatDate(post.pubDate)}
+                            {post.author && ` • ${post.author}`}
+                          </CardDescription>
+                        </CardHeader>
+                        <CardContent className="flex-grow pt-0">
+                          <p className="text-muted-foreground text-sm line-clamp-3 mb-4">
+                            {post.description}
+                          </p>
+                          <Button 
+                            variant="outline" 
+                            size="lg"
+                            className="w-full min-h-[44px]"
+                            asChild
+                          >
+                            <a 
+                              href={post.link} 
+                              className="inline-flex items-center justify-center gap-2"
+                            >
+                              {t.blog.readMore}
+                              <ExternalLink className="h-4 w-4" />
+                            </a>
+                          </Button>
+                        </CardContent>
+                      </Card>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                <CarouselPrevious className="left-0" />
+                <CarouselNext className="right-0" />
+              </Carousel>
+            </div>
+
+            {/* Desktop: Grid */}
+            <div className="hidden lg:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-6 md:mb-8">
               {posts.map((post, index) => (
                 <Card key={index} className="flex flex-col hover:shadow-lg transition-shadow overflow-hidden">
                   {post.imageUrl && (
