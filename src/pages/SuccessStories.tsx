@@ -11,9 +11,11 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import { useEffect, useState } from "react";
 import { AnimatedHeading } from "@/components/AnimatedHeading";
 import { getRoutePath } from "@/lib/routes";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const SuccessStories = () => {
   const { t, language } = useLanguage();
+  const isMobile = useIsMobile();
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
   const [count, setCount] = useState(0);
@@ -82,13 +84,13 @@ const SuccessStories = () => {
       
       <div className="relative z-10">
       {/* Hero Section */}
-      <section className="relative py-20 lg:py-24">
+      <section className="relative py-12 md:py-20 lg:py-24">
         <div className="relative z-10 w-full max-w-7xl mx-auto px-4 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-center mb-16"
+            className="text-center mb-8 md:mb-16"
           >
             <AnimatedHeading 
               fixedText={currentHeading.fixedText}
@@ -144,7 +146,7 @@ const SuccessStories = () => {
                       transition={{ duration: 0.6, delay: index * 0.1 }}
                       className="h-full"
                     >
-                      <Card className="h-full group hover:shadow-md transition-all duration-300 cursor-pointer border-border/30 hover:border-noreja-main/20 max-w-4xl mx-auto overflow-hidden aspect-video relative">
+                      <Card className="h-full group hover:shadow-md transition-all duration-300 cursor-pointer border-border/30 hover:border-noreja-main/20 max-w-4xl mx-auto overflow-hidden aspect-[45/44] md:aspect-video relative">
                         {/* Background Image */}
                         <div 
                           className="absolute inset-0 bg-cover bg-center"
@@ -158,8 +160,8 @@ const SuccessStories = () => {
                         {/* Dark Overlay */}
                         <div className="absolute inset-0 bg-black/60" />
                         
-                        {/* Company Logo - Top Right */}
-                        <div className="absolute top-4 right-4 z-20 w-20 h-auto">
+                        {/* Company Logo - Top Right (hidden on mobile) */}
+                        <div className="absolute top-4 right-4 z-20 w-20 h-auto hidden md:block">
                           <img
                             src={story.logoUrl}
                             alt={`${story.companyName} logo`}
@@ -179,10 +181,10 @@ const SuccessStories = () => {
                             </div>
                           </CardHeader>
                           
-                          <CardContent className="pt-0 px-6">
+                          <CardContent className="pt-0 px-4 max-w-3xl md:px-6 md:max-w-none">
                             {/* Summary */}
                             <CardDescription className="text-base leading-relaxed mb-6 text-center text-white/90">
-                              {story.summary[language]}
+                              {isMobile ? story.subtitle[language] : story.summary[language]}
                             </CardDescription>
                             
                             {/* Read More Button */}
