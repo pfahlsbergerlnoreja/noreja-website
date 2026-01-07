@@ -90,6 +90,7 @@ const Pricing = () => {
   const [privateLLMPro, setPrivateLLMPro] = useState(false);
   const [privateLLMExcellence, setPrivateLLMExcellence] = useState(false);
   const [selectedPlanIndex, setSelectedPlanIndex] = useState(1); // Default to middle package (Pro)
+  const [openAccordion, setOpenAccordion] = useState<string | undefined>(undefined); // Track which accordion is open
   const currentPerspectives = perspectivesLabels[perspectivesIndex];
   const currentDataAmount = dataAmountLabels[dataAmountIndex];
   const pricing = calculatePricing(perspectivesIndex, dataAmountIndex);
@@ -569,10 +570,18 @@ const Pricing = () => {
                 </CardContent>
 
                 {/* Mobile: Accordion with CardContent */}
-                <Accordion type="single" collapsible className="md:hidden w-full">
+                <Accordion 
+                  type="single" 
+                  collapsible 
+                  value={openAccordion}
+                  onValueChange={(value) => setOpenAccordion(value)}
+                  className="md:hidden w-full"
+                >
                   <AccordionItem value={`details-${index}`} className="border-0">
                     <AccordionTrigger className="px-6 py-4 text-left font-medium text-foreground hover:no-underline">
-                      {t.pages.events?.viewDetails || "View Details"}
+                      {openAccordion === `details-${index}` 
+                        ? (language === 'de' ? "Details ausblenden" : "Hide Details")
+                        : (t.pages.events?.viewDetails || "View Details")}
                     </AccordionTrigger>
                     <AccordionContent className="px-6 pb-4">
                       <div className="flex flex-col flex-grow pt-0 min-h-0">
@@ -784,7 +793,7 @@ const Pricing = () => {
 
           {/* Statistics Explanation Note */}
           {t.pages.pricing.statisticsNote && (
-            <div className="max-w-6xl mx-auto mt-12 text-center">
+            <div className="max-w-6xl mx-auto mt-6 md:mt-12 text-center">
               <p className="text-xs text-muted-foreground">
                 {t.pages.pricing.statisticsNote}
               </p>
@@ -793,7 +802,7 @@ const Pricing = () => {
         </div>
         
         {/* Gradient fade to FAQ section */}
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-background pointer-events-none z-0" />
+        <div className="absolute bottom-0 left-0 right-0 h-16 md:h-32 bg-gradient-to-b from-transparent to-background pointer-events-none z-0" />
       </div>
 
       {/* FAQ Section with gradient background */}
@@ -804,11 +813,11 @@ const Pricing = () => {
         `
       }}>
         {/* Gradient fade from previous section */}
-        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-background to-transparent pointer-events-none z-0" />
+        <div className="absolute top-0 left-0 right-0 h-16 md:h-32 bg-gradient-to-b from-background to-transparent pointer-events-none z-0" />
         
         <div className="container mx-auto px-4 py-16 relative z-10">
           {/* FAQ Section */}
-          <div className="max-w-4xl mx-auto mt-16">
+          <div className="max-w-4xl mx-auto mt-8 md:mt-16">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold mb-4 text-foreground">
                 {t.pages.pricing.faq.title}
