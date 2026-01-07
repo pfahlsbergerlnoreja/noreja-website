@@ -183,16 +183,14 @@ const Pricing = () => {
               {/* Data Amount Slider - LEFT */}
               <div className="bg-card rounded-lg p-8 border">
                 <div className="flex items-center justify-center gap-2 mb-6">
-                  <div className="flex items-center gap-0">
-                    <h3 className="text-lg font-semibold text-foreground">
-                      {t.pages.pricing.dataAmount ?? t.pages.pricing.dataVolume}
-                    </h3>
+                  <h3 className="text-lg font-semibold text-foreground text-center md:text-left">
+                    {t.pages.pricing.dataAmount ?? t.pages.pricing.dataVolume}
                     {t.pages.pricing.dataAmountSuffix && (
                       <span className="text-lg text-foreground">
                         {t.pages.pricing.dataAmountSuffix}
                       </span>
                     )}
-                  </div>
+                  </h3>
                   {t.pages.pricing.dataAmountTooltip && (
                     <Popover>
                       <PopoverTrigger asChild>
@@ -235,16 +233,14 @@ const Pricing = () => {
               {/* Perspectives Slider - RIGHT */}
               <div className="bg-card rounded-lg p-8 border">
                 <div className="flex items-center justify-center gap-2 mb-6">
-                  <div className="flex items-center gap-0">
-                    <h3 className="text-lg font-semibold text-foreground">
-                      {t.pages.pricing.perspectives ?? t.pages.pricing.teamSize}
-                    </h3>
+                  <h3 className="text-lg font-semibold text-foreground text-center md:text-left">
+                    {t.pages.pricing.perspectives ?? t.pages.pricing.teamSize}
                     {t.pages.pricing.perspectivesSuffix && (
                       <span className="text-lg text-foreground">
                         {t.pages.pricing.perspectivesSuffix}
                       </span>
                     )}
-                  </div>
+                  </h3>
                   {t.pages.pricing.perspectivesTooltip && (
                     <Popover>
                       <PopoverTrigger asChild>
@@ -369,7 +365,8 @@ const Pricing = () => {
                   </CardDescription>
                 </CardHeader>
                 
-                <CardContent className="flex flex-col flex-grow pt-0 min-h-0">
+                {/* Desktop: Full CardContent */}
+                <CardContent className="hidden md:flex flex-col flex-grow pt-0 min-h-0">
                   {/* Top section - Feature and Service - allows flexible growth */}
                   <div className="flex-grow flex flex-col">
                     {/* Feature Category - fixed height to ensure Service alignment */}
@@ -570,6 +567,216 @@ const Pricing = () => {
                     </div>
                   </div>
                 </CardContent>
+
+                {/* Mobile: Accordion with CardContent */}
+                <Accordion type="single" collapsible className="md:hidden w-full">
+                  <AccordionItem value={`details-${index}`} className="border-0">
+                    <AccordionTrigger className="px-6 py-4 text-left font-medium text-foreground hover:no-underline">
+                      {t.pages.events?.viewDetails || "View Details"}
+                    </AccordionTrigger>
+                    <AccordionContent className="px-6 pb-4">
+                      <div className="flex flex-col flex-grow pt-0 min-h-0">
+                        {/* Top section - Feature and Service - allows flexible growth */}
+                        <div className="flex-grow flex flex-col">
+                          {/* Feature Category */}
+                          <div className="mb-4 h-auto">
+                            <h4 className="font-semibold text-foreground mb-4 text-base leading-tight">{t.pages.pricing.categories.feature}</h4>
+                            <ul className="space-y-2">
+                              {plan.features.map((feature, idx) => {
+                                const normalizedFeature = feature.toLowerCase();
+                                const isItalic = normalizedFeature === 'alles aus core' ||
+                                                  normalizedFeature === 'alles aus pro' ||
+                                                  normalizedFeature === 'all from core' ||
+                                                  normalizedFeature === 'all from pro';
+                                return (
+                                  <li key={idx} className="flex text-foreground text-sm">
+                                    <span className="mr-2 text-primary flex-shrink-0 leading-none mt-[0.1em]">•</span>
+                                    <span className={isItalic ? 'italic' : ''}>{feature}</span>
+                                  </li>
+                                );
+                              })}
+                            </ul>
+                          </div>
+
+                          {/* Users Category */}
+                          {plan.users && (
+                            <div className="mb-4">
+                              <div className="flex items-center gap-2 mb-4">
+                                <h4 className="font-semibold text-foreground text-base leading-tight">
+                                  {t.pages.pricing.categories.users}
+                                </h4>
+                                {t.pages.pricing.usersTooltip && (
+                                  <Popover>
+                                    <PopoverTrigger asChild>
+                                      <button
+                                        type="button"
+                                        className="inline-flex items-center justify-center rounded-full hover:bg-muted transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+                                        aria-label="Information about users"
+                                        onClick={(e) => e.stopPropagation()}
+                                      >
+                                        <Info className="h-4 w-4 text-muted-foreground hover:text-foreground" />
+                                      </button>
+                                    </PopoverTrigger>
+                                    <PopoverContent className="w-auto max-w-xs p-3" side="top" align="center">
+                                      <p className="text-sm leading-relaxed">{t.pages.pricing.usersTooltip}</p>
+                                    </PopoverContent>
+                                  </Popover>
+                                )}
+                              </div>
+                              <ul className="space-y-2">
+                                <li className="flex text-foreground text-sm">
+                                  <span className="mr-2 text-primary flex-shrink-0 leading-none mt-[0.1em]">•</span>
+                                  <span>{plan.users}</span>
+                                </li>
+                                <li className="flex text-foreground text-sm">
+                                  <span className="mr-2 text-primary flex-shrink-0 leading-none mt-[0.1em]">•</span>
+                                  <span>{t.pages.pricing.extraPowerUserPrice.replace('{value}', extraPowerUserMonthlyPrice.toString())}</span>
+                                </li>
+                                <li className="flex text-foreground text-sm">
+                                  <span className="mr-2 text-primary flex-shrink-0 leading-none mt-[0.1em]">•</span>
+                                  <span>
+                                    {(() => {
+                                      if (plan.name === t.pages.pricing.plans.core.name) {
+                                        return t.pages.pricing.readingUsers.replace('{count}', '20');
+                                      }
+                                      if (plan.name === t.pages.pricing.plans.pro.name) {
+                                        return t.pages.pricing.readingUsers.replace('{count}', '50');
+                                      }
+                                      return t.pages.pricing.readingUsers.replace('{count}', '100');
+                                    })()}
+                                  </span>
+                                </li>
+                              </ul>
+                            </div>
+                          )}
+
+                          {/* LLM + AI Category */}
+                          <div className="mb-4 h-auto flex flex-col">
+                            {plan.name !== t.pages.pricing.plans.core.name ? (
+                              <>
+                                <h4 className="font-semibold text-foreground mb-4 text-base leading-tight ml-0">{t.pages.pricing.categories.llmAi}</h4>
+                                {plan.llmAi.length > 0 && (
+                                  <ul className="space-y-2 mb-4">
+                                    {plan.llmAi.map((item, idx) => {
+                                      const normalizedItem = item.toLowerCase();
+                                      const isItalic = normalizedItem === 'alles aus core' ||
+                                                        normalizedItem === 'alles aus pro' ||
+                                                        normalizedItem === 'all from core' ||
+                                                        normalizedItem === 'all from pro';
+                                      return (
+                                        <li key={idx} className="flex text-foreground text-sm">
+                                          <span className="mr-2 text-primary flex-shrink-0 leading-none mt-[0.1em]">•</span>
+                                          <span className={isItalic ? 'italic' : ''}>{item}</span>
+                                        </li>
+                                      );
+                                    })}
+                                  </ul>
+                                )}
+                                <div 
+                                  className="flex items-center gap-3 border rounded-md p-3"
+                                  onClick={(e) => e.stopPropagation()}
+                                >
+                                  <Checkbox
+                                    id={`private-llm-mobile-${plan.name}`}
+                                    checked={plan.name === t.pages.pricing.plans.pro.name ? privateLLMPro : privateLLMExcellence}
+                                    onCheckedChange={(checked) => {
+                                      if (plan.name === t.pages.pricing.plans.pro.name) {
+                                        setPrivateLLMPro(!!checked);
+                                      } else {
+                                        setPrivateLLMExcellence(!!checked);
+                                      }
+                                      setSelectedPlanIndex(index);
+                                    }}
+                                  />
+                                  <label htmlFor={`private-llm-mobile-${plan.name}`} className="text-sm text-foreground">
+                                    {t.pages.pricing.privateLLMHosting}
+                                  </label>
+                                </div>
+                              </>
+                            ) : null}
+                          </div>
+
+                          {/* Service Category */}
+                          <div className="mb-4 min-h-0">
+                            <h4 className="font-semibold text-foreground mb-4 text-base leading-tight">{t.pages.pricing.categories.service}</h4>
+                            <ul className="space-y-2">
+                              {plan.services
+                                .filter(service => {
+                                  const lowerService = service.toLowerCase();
+                                  return !lowerService.includes('rate for') && 
+                                         !lowerService.includes('tagessatz') &&
+                                         !lowerService.includes('rate for on');
+                                })
+                                .map((service, idx) => {
+                                  const isIndented = service.startsWith('  ');
+                                  const displayText = isIndented ? service.trimStart() : service;
+                                  return (
+                                    <li key={idx} className={`flex text-foreground text-sm ${isIndented ? 'pl-6' : ''}`}>
+                                      <span className="mr-2 text-primary flex-shrink-0 leading-none mt-[0.1em]">•</span>
+                                      <span>{displayText}</span>
+                                    </li>
+                                  );
+                                })}
+                            </ul>
+                          </div>
+
+                          {/* Support Rate Category */}
+                          {(() => {
+                            const rateService = plan.services.find(service => {
+                              const lowerService = service.toLowerCase();
+                              return lowerService.includes('rate for') || 
+                                     lowerService.includes('tagessatz') ||
+                                     lowerService.includes('rate for on');
+                            });
+                            
+                            return rateService ? (
+                              <div className="mb-4">
+                                <h4 className="font-semibold text-foreground mb-4 text-base leading-tight">{t.pages.pricing.categories.supportRate}</h4>
+                                <ul className="space-y-2">
+                                  <li className="flex text-foreground text-sm">
+                                    <span className="mr-2 text-primary flex-shrink-0 leading-none mt-[0.1em]">•</span>
+                                    <span>{rateService}</span>
+                                  </li>
+                                </ul>
+                              </div>
+                            ) : null;
+                          })()}
+                        </div>
+
+                        {/* Bottom section - Statistics/Button */}
+                        <div className="flex flex-col -mt-2">
+                          <div className="space-y-4">
+                            {/* Statistics Box / ROI Box */}
+                            {plan.statistics && (
+                              <div className="px-0 pb-0 flex items-center">
+                                <AnimatedGradientBox
+                                  costDriverPercent={plan.statistics.costDriverPercent}
+                                  ftePercent={plan.statistics.ftePercent}
+                                  className="w-full"
+                                />
+                              </div>
+                            )}
+
+                            <Button 
+                              variant={isSelected ? "default" : "outline"}
+                              className={`w-full ${isSelected ? 'gradient-primary glow-primary hover:opacity-90 text-white' : 'border-border text-foreground hover:bg-secondary hover:text-foreground'}`}
+                              size="lg"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                const formElement = document.getElementById('hubspot-contact-form');
+                                if (formElement) {
+                                  formElement.scrollIntoView({ behavior: 'smooth' });
+                                }
+                              }}
+                            >
+                              {t.pages.pricing.contactUs}
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
               </Card>
               );
             })}
