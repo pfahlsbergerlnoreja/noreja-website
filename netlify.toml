@@ -88,27 +88,8 @@
   force = true
 
 # ----------------------------
-# Comprehensive trailing-slash cleanup
-# Redirect all URLs with trailing slashes to version without trailing slash
-# ----------------------------
-[[redirects]]
-  from = "/*/"
-  to = "/:splat"
-  status = 301
-
-# Explicit redirects for root language paths (handled by wildcard above, but kept for clarity)
-[[redirects]]
-  from = "/de/"
-  to = "/de"
-  status = 301
-
-[[redirects]]
-  from = "/en/"
-  to = "/en"
-  status = 301
-
-# ----------------------------
 # Specific trailing-slash redirects (explicit from old sitemap)
+# Note: Netlify handles trailing slashes automatically, so we only need specific redirects for old URLs
 # ----------------------------
 [[redirects]]
   from = "/de/impressum/"
