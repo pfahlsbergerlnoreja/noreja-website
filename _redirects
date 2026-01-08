@@ -4,13 +4,11 @@
 # ----------------------------
 https://www.noreja.com/* https://noreja.com/:splat 301!
 
-
 # ----------------------------
 # Force HTTPS
 # ----------------------------
 http://noreja.com/* https://noreja.com/:splat 301!
 http://www.noreja.com/* https://noreja.com/:splat 301!
-
 
 # ----------------------------
 # Trailing-slash cleanup (claimed explicit from old sitemap)
