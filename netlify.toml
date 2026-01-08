@@ -58,3 +58,8 @@
   [headers.values]
     Cache-Control = "public, max-age=3600"
     Content-Type = "application/xml"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
