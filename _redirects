@@ -39,10 +39,12 @@ http://www.noreja.com/* https://noreja.com/:splat 301!
 /de/preise/ https://noreja.com/de/preise 301
 /en/pricing/ https://noreja.com/en/pricing 301
 /de/plattform/ https://noreja.com/de/plattform 301
+/de/platform/ https://noreja.com/de/plattform 301
 /en/platform/ https://noreja.com/en/platform 301
 /de/noreja-funktionen/ https://noreja.com/de/plattform 301
 /en/noreja-features/ https://noreja.com/en/platform 301
 /de/veranstaltungen/ https://noreja.com/de/veranstaltungen 301
+/de/events/ https://noreja.com/de/veranstaltungen 301
 /en/events/ https://noreja.com/en/events 301
 
 # ----------------------------
