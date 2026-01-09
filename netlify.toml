@@ -82,15 +82,20 @@
   conditions = {Host = ["www.noreja.com"]}
 
 # ----------------------------
-# Force HTTPS
-# Using scheme condition to avoid loops
+# Force HTTPS (HTTP -> HTTPS)
+# Using fully qualified URLs to avoid loops
 # ----------------------------
 [[redirects]]
-  from = "/*"
+  from = "http://noreja.com/*"
   to = "https://noreja.com/:splat"
   status = 301
   force = true
-  conditions = {Scheme = ["http"]}
+
+[[redirects]]
+  from = "http://www.noreja.com/*"
+  to = "https://noreja.com/:splat"
+  status = 301
+  force = true
 
 # ----------------------------
 # Specific trailing-slash redirects (explicit from old sitemap)
