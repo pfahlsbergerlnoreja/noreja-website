@@ -59,6 +59,161 @@
   status = 301
   force = true
 
+# ----------------------------
+# Explicit trailing-slash cleanup for old URLs
+# Keep only the explicit ones you really need.
+# (With pretty_urls=false, Netlify should not auto-flip slash/no-slash.)
+# ----------------------------
+[[redirects]]
+  from = "/de/impressum/"
+  to = "/de/impressum"
+  status = 301
+
+[[redirects]]
+  from = "/en/imprint/"
+  to = "/en/imprint"
+  status = 301
+
+[[redirects]]
+  from = "/de/datenschutz/"
+  to = "/de/datenschutz"
+  status = 301
+
+[[redirects]]
+  from = "/en/privacy/"
+  to = "/en/privacy"
+  status = 301
+
+[[redirects]]
+  from = "/en/privacy-policy/"
+  to = "/en/privacy"
+  status = 301
+
+[[redirects]]
+  from = "/de/nutzungsbedingungen/"
+  to = "/de/nutzungsbedingungen"
+  status = 301
+
+[[redirects]]
+  from = "/en/terms/"
+  to = "/en/terms"
+  status = 301
+
+[[redirects]]
+  from = "/de/kontakt/"
+  to = "/de/kontakt"
+  status = 301
+
+[[redirects]]
+  from = "/en/contact/"
+  to = "/en/contact"
+  status = 301
+
+[[redirects]]
+  from = "/de/beratung/"
+  to = "/de/kontakt"
+  status = 301
+
+[[redirects]]
+  from = "/en/consulting/"
+  to = "/en/contact"
+  status = 301
+
+[[redirects]]
+  from = "/de/downloads/"
+  to = "/de/downloads"
+  status = 301
+
+[[redirects]]
+  from = "/en/downloads/"
+  to = "/en/downloads"
+  status = 301
+
+[[redirects]]
+  from = "/de/partner/"
+  to = "/de/partner"
+  status = 301
+
+[[redirects]]
+  from = "/en/partners/"
+  to = "/en/partners"
+  status = 301
+
+[[redirects]]
+  from = "/de/team/"
+  to = "/de/team"
+  status = 301
+
+[[redirects]]
+  from = "/de/team_de/"
+  to = "/de/team"
+  status = 301
+
+[[redirects]]
+  from = "/en/team/"
+  to = "/en/team"
+  status = 301
+
+[[redirects]]
+  from = "/de/success-stories/"
+  to = "/de/success-stories"
+  status = 301
+
+[[redirects]]
+  from = "/en/success-stories/"
+  to = "/en/success-stories"
+  status = 301
+
+[[redirects]]
+  from = "/de/preise/"
+  to = "/de/preise"
+  status = 301
+
+[[redirects]]
+  from = "/en/pricing/"
+  to = "/en/pricing"
+  status = 301
+
+[[redirects]]
+  from = "/de/plattform/"
+  to = "/de/plattform"
+  status = 301
+
+[[redirects]]
+  from = "/de/platform/"
+  to = "/de/plattform"
+  status = 301
+
+[[redirects]]
+  from = "/en/platform/"
+  to = "/en/platform"
+  status = 301
+
+[[redirects]]
+  from = "/de/noreja-funktionen/"
+  to = "/de/plattform"
+  status = 301
+
+[[redirects]]
+  from = "/en/noreja-features/"
+  to = "/en/platform"
+  status = 301
+
+[[redirects]]
+  from = "/de/veranstaltungen/"
+  to = "/de/veranstaltungen"
+  status = 301
+
+[[redirects]]
+  from = "/de/events/"
+  to = "/de/veranstaltungen"
+  status = 301
+
+[[redirects]]
+  from = "/en/events/"
+  to = "/en/events"
+  status = 301
+
 # SPA fallback (LAST)
 [[redirects]]
   from = "/*"
