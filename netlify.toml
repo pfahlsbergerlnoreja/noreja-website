@@ -41,6 +41,12 @@
 # Redirects
 # ============================================
 
+[[redirects]]
+  from = "/__debug"
+  to = "/index.html"
+  status = 200
+
+
 # ----------------------------
 # Canonical host (www -> non-www)
 # ----------------------------
