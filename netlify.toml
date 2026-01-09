@@ -186,6 +186,1000 @@
   to = "/en/use-cases/banking"
   status = 301
 
+
+# ----------------------------
+# Blog redirects to HubSpot
+# ----------------------------
+[[redirects]]
+  from = "/blog"
+  to = "https://blog.noreja.com/de-de"
+  status = 301
+
+[[redirects]]
+  from = "/blog"
+  to = "https://blog.noreja.com/de-de"
+  status = 301
+
+[[redirects]]
+  from = "/en/blog"
+  to = "https://blog.noreja.com/en"
+  status = 301
+
+[[redirects]]
+  from = "/de/blog-de"
+  to = "https://blog.noreja.com/de-de"
+  status = 301
+
+[[redirects]]
+  from = "/de/bpm-news-februar-2024"
+  to = "https://blog.noreja.com/de-de/bpm-news-februar-2024"
+  status = 301
+
+[[redirects]]
+  from = "/en/bpm-news-february-2024"
+  to = "https://blog.noreja.com/en/bpm-news-february-2024"
+  status = 301
+
+[[redirects]]
+  from = "/en/process-management-news-round-up-march-2024-edition"
+  to = "https://blog.noreja.com/en/process-management-news-round-up-march-2024-edition"
+  status = 301
+
+[[redirects]]
+  from = "/en/process-management-news-april-2024"
+  to = "https://blog.noreja.com/en/process-management-news-april-2024"
+  status = 301
+
+[[redirects]]
+  from = "/de/bpm-news-april-2024"
+  to = "https://blog.noreja.com/de-de/bpm-news-april-2024"
+  status = 301
+
+[[redirects]]
+  from = "/de/bpm-news-round-up-mai-2024-ausgabe"
+  to = "https://blog.noreja.com/de-de/bpm-news-round-up-mai-2024-ausgabe"
+  status = 301
+
+[[redirects]]
+  from = "/en/causal-process-mining"
+  to = "https://blog.noreja.com/en/causal-process-mining-replaces-event-logs"
+  status = 301
+
+[[redirects]]
+  from = "/de/process-oriented-decision-making"
+  to = "https://blog.noreja.com/de-de/process-oriented-decision-making"
+  status = 301
+
+[[redirects]]
+  from = "/de/bpm-news-round-up-december-2024"
+  to = "https://blog.noreja.com/de-de/bpm-news-round-up-december-2024"
+  status = 301
+
+[[redirects]]
+  from = "/en/insights-from-jan"
+  to = "https://blog.noreja.com/en/insights-from-jan"
+  status = 301
+
+[[redirects]]
+  from = "/de/interview-mit-jan"
+  to = "https://blog.noreja.com/de-de/interview-mit-jan"
+  status = 301
+
+[[redirects]]
+  from = "/en/process-management-news-round-up-november-2024-edition"
+  to = "https://blog.noreja.com/en/process-management-news-round-up-november-2024-edition"
+  status = 301
+
+[[redirects]]
+  from = "/de/bpm-news-round-up-november-2024-ausgabe"
+  to = "https://blog.noreja.com/de-de/bpm-news-round-up-november-2024-ausgabe"
+  status = 301
+
+[[redirects]]
+  from = "/en/omitted-activities"
+  to = "https://blog.noreja.com/en/omitted-activities"
+  status = 301
+
+[[redirects]]
+  from = "/de/two-for-one-wie-fehlende-prozessdokumentation"
+  to = "https://blog.noreja.com/de-de/fehlende-prozessdokumentation"
+  status = 301
+
+[[redirects]]
+  from = "/de/ausgelassene-aktivitaeten"
+  to = "https://blog.noreja.com/de-de/ausgelassene-aktivitaeten"
+  status = 301
+
+[[redirects]]
+  from = "/en/strategic-business-growth"
+  to = "https://blog.noreja.com/en/strategic-business-growth"
+  status = 301
+
+[[redirects]]
+  from = "/de/die-vielseitigen-rollen"
+  to = "https://blog.noreja.com/de-de/die-rollen-von-daten"
+  status = 301
+
+[[redirects]]
+  from = "/en/strategies-consistent-due-diligence"
+  to = "https://blog.noreja.com/en/strategies-consistent-due-diligence"
+  status = 301
+
+[[redirects]]
+  from = "/de/funf-strategien-fur-konsistente-due-diligence"
+  to = "https://blog.noreja.com/de-de/funf-strategien-fur-konsistente-due-diligence"
+  status = 301
+
+[[redirects]]
+  from = "/en/approval-bottlenecks"
+  to = "https://blog.noreja.com/en/approval-bottlenecks"
+  status = 301
+
+[[redirects]]
+  from = "/en/news-october-2024"
+  to = "https://blog.noreja.com/en/news-october-2024"
+  status = 301
+
+[[redirects]]
+  from = "/en/icpm-2024"
+  to = "https://blog.noreja.com/en/icpm-2024"
+  status = 301
+
+[[redirects]]
+  from = "/de/icpm-2024-2"
+  to = "https://blog.noreja.com/de-de/icpm-2024"
+  status = 301
+
+[[redirects]]
+  from = "/en/hypothetical-activities"
+  to = "https://blog.noreja.com/en/hypothetical-activities"
+  status = 301
+
+[[redirects]]
+  from = "/de/hypothetische-aktivitaeten"
+  to = "https://blog.noreja.com/de-de/hypothetische-aktivitaeten"
+  status = 301
+
+[[redirects]]
+  from = "/en/policy-issuance"
+  to = "https://blog.noreja.com/en/policy-issuance"
+  status = 301
+
+[[redirects]]
+  from = "/en/process-management-news-september-2024"
+  to = "https://blog.noreja.com/en/process-management-news-september-2024"
+  status = 301
+
+[[redirects]]
+  from = "/de/bpm-news-september-2024"
+  to = "https://blog.noreja.com/de-de/bpm-news-september-2024"
+  status = 301
+
+[[redirects]]
+  from = "/en/two-for-one_overcoming_resistance_to_change"
+  to = "https://blog.noreja.com/en/overcoming-resistance-to-change"
+  status = 301
+
+[[redirects]]
+  from = "/de/bewaltigung-des-widerstands"
+  to = "https://blog.noreja.com/de-de/bewaeltigung-des-widerstands"
+  status = 301
+
+[[redirects]]
+  from = "/en/bottlenecks"
+  to = "https://blog.noreja.com/en/production-bottlenecks"
+  status = 301
+
+[[redirects]]
+  from = "/de/zulassungsengpaesse"
+  to = "https://blog.noreja.com/de-de/engpaesse-in-freigabeprozessen"
+  status = 301
+
+[[redirects]]
+  from = "/en/value-prioritisation"
+  to = "https://blog.noreja.com/en/value-prioritisation"
+  status = 301
+
+[[redirects]]
+  from = "/de/bpm-news-august-2024-ausgabe"
+  to = "https://blog.noreja.com/de-de/bpm-news-august-2024-ausgabe"
+  status = 301
+
+[[redirects]]
+  from = "/de/entity-builder"
+  to = "https://blog.noreja.com/de-de/entity-builder"
+  status = 301
+
+[[redirects]]
+  from = "/en/product-agility"
+  to = "https://blog.noreja.com/en/product-agility"
+  status = 301
+
+[[redirects]]
+  from = "/de/produkt-agilitaet"
+  to = "https://blog.noreja.com/de-de/produkt-agilitaet"
+  status = 301
+
+[[redirects]]
+  from = "/en/communication"
+  to = "https://blog.noreja.com/en/communication"
+  status = 301
+
+[[redirects]]
+  from = "/de/kommunikation"
+  to = "https://blog.noreja.com/de-de/kommunikation"
+  status = 301
+
+[[redirects]]
+  from = "/en/context-framework"
+  to = "https://blog.noreja.com/en/context-framework"
+  status = 301
+
+[[redirects]]
+  from = "/de/prozessdynamik"
+  to = "https://blog.noreja.com/de-de/prozessdynamik"
+  status = 301
+
+[[redirects]]
+  from = "/en/negative-time"
+  to = "https://blog.noreja.com/en/negative-time"
+  status = 301
+
+[[redirects]]
+  from = "/de/negative-zeiten"
+  to = "https://blog.noreja.com/de-de/negative-zeiten"
+  status = 301
+
+[[redirects]]
+  from = "/en/customer-relationships"
+  to = "https://blog.noreja.com/en/customer-relationships"
+  status = 301
+
+[[redirects]]
+  from = "/de/kundenbeziehungen"
+  to = "https://blog.noreja.com/de-de/kundenbeziehungen-retten"
+  status = 301
+
+[[redirects]]
+  from = "/en/addressing-poor-data-quality"
+  to = "https://blog.noreja.com/en/addressing-poor-data-quality"
+  status = 301
+
+[[redirects]]
+  from = "/de/mangelnde-datenqualitat-beheben"
+  to = "https://blog.noreja.com/de-de/mangelnde-datenqualitat-beheben"
+  status = 301
+
+[[redirects]]
+  from = "/de/policenausstellung"
+  to = "https://blog.noreja.com/de-de/policenausstellung"
+  status = 301
+
+[[redirects]]
+  from = "/en/bpm-news-june-2024"
+  to = "https://blog.noreja.com/en/bpm-news-june-2024"
+  status = 301
+
+[[redirects]]
+  from = "/de/bpm-news-juni-2024"
+  to = "https://blog.noreja.com/de-de/bpm-news-juni-2024"
+  status = 301
+
+[[redirects]]
+  from = "/en/process-management-news-round-up-december-2024"
+  to = "https://blog.noreja.com/en/bpm-news-round-up-december-2024"
+  status = 301
+
+[[redirects]]
+  from = "/de/impact-priorisierung"
+  to = "https://blog.noreja.com/de-de/impact-priorisierung"
+  status = 301
+
+[[redirects]]
+  from = "/en/hiring-process"
+  to = "https://blog.noreja.com/en/hiring-process"
+  status = 301
+
+[[redirects]]
+  from = "/de/einstellungsprozess"
+  to = "https://blog.noreja.com/de-de/einstellungsprozess"
+  status = 301
+
+[[redirects]]
+  from = "/en/bpm-news-round-up-may-2024-edition"
+  to = "https://blog.noreja.com/en/bpm-news-round-up-may-2024-edition"
+  status = 301
+
+[[redirects]]
+  from = "/en/regulatory-adherence"
+  to = "https://blog.noreja.com/en/regulatory-adherence"
+  status = 301
+
+[[redirects]]
+  from = "/de/produktionsengpaesse"
+  to = "https://blog.noreja.com/de-de/produktionsengpaesse"
+  status = 301
+
+[[redirects]]
+  from = "/en/iot-in-business-management"
+  to = "https://blog.noreja.com/en/iot-in-business-management"
+  status = 301
+
+[[redirects]]
+  from = "/de/geschaftsprozessorientierung"
+  to = "https://blog.noreja.com/de-de/geschaeftsprozessorientierung"
+  status = 301
+
+[[redirects]]
+  from = "/de/marktwandel"
+  to = "https://blog.noreja.com/de-de/marktwandel"
+  status = 301
+
+[[redirects]]
+  from = "/de/kundenfeedback-loops"
+  to = "https://blog.noreja.com/de-de/kundenfeedback-loops"
+  status = 301
+
+[[redirects]]
+  from = "/en/idm-warmepumpen-not-just-more-ecologically-efficient"
+  to = "https://blog.noreja.com/en/idm-warmepumpen-not-just-more-ecologically-efficient"
+  status = 301
+
+[[redirects]]
+  from = "/de/idm-warmepumpen-nicht-nur-okologisch-effizienter"
+  to = "https://blog.noreja.com/de-de/idm-waermepumpen-nicht-nur-oekologisch-effizienter"
+  status = 301
+
+[[redirects]]
+  from = "/en/quick-tips-elevating-digital-literacy"
+  to = "https://blog.noreja.com/en/elevating-digital-literacy"
+  status = 301
+
+[[redirects]]
+  from = "/de/regulierungstreue"
+  to = "https://blog.noreja.com/de-de/regulierungstreue"
+  status = 301
+
+[[redirects]]
+  from = "/de/iot-in-der-unternehmensfuhrung"
+  to = "https://blog.noreja.com/de-de/iot-in-der-unternehmensfuhrung"
+  status = 301
+
+[[redirects]]
+  from = "/de/news-oktober-2024"
+  to = "https://blog.noreja.com/de-de/news-oktober-2024"
+  status = 301
+
+[[redirects]]
+  from = "/en/bpm-news-august-2024"
+  to = "https://blog.noreja.com/en/bpm-news-august-2024"
+  status = 301
+
+[[redirects]]
+  from = "/en/pattern-view"
+  to = "https://blog.noreja.com/en/pattern-view"
+  status = 301
+
+[[redirects]]
+  from = "/en/entity-builder-2"
+  to = "https://blog.noreja.com/en/entity-builder"
+  status = 301
+
+[[redirects]]
+  from = "/de/change-management-fuer-automatisierung"
+  to = "https://blog.noreja.com/de-de/change-management-fur-automatisierung"
+  status = 301
+
+[[redirects]]
+  from = "/de/prozessstandardisierung-in-wachsenden-unternehmen-meistern"
+  to = "https://blog.noreja.com/de-de/prozessstandardisierung-in-wachsenden-unternehmen-meistern"
+  status = 301
+
+[[redirects]]
+  from = "/de/integration-digitaler-werkzeuge-in-geschaftsprozesse"
+  to = "https://blog.noreja.com/de-de/integration-digitaler-werkzeuge-in-geschaftsprozesse"
+  status = 301
+
+[[redirects]]
+  from = "/de/process-management-news-round-up-februar-2025"
+  to = "https://blog.noreja.com/de-de/process-management-news-round-up-februar-2025"
+  status = 301
+
+[[redirects]]
+  from = "/de/prozessvarianten-die-realitat-ihres-unternehmens-aufdecken"
+  to = "https://blog.noreja.com/de-de/prozessvarianten-die-realitat-ihres-unternehmens-aufdecken"
+  status = 301
+
+[[redirects]]
+  from = "/en/organizational-goals"
+  to = "https://blog.noreja.com/en/organizational-goals"
+  status = 301
+
+[[redirects]]
+  from = "/de/batching-2"
+  to = "https://blog.noreja.com/de-de/batching"
+  status = 301
+
+[[redirects]]
+  from = "/en/timelines"
+  to = "https://blog.noreja.com/en/timelines"
+  status = 301
+
+[[redirects]]
+  from = "/en/process-oriented-decision-making-2"
+  to = "https://blog.noreja.com/en/process-oriented-decision-making"
+  status = 301
+
+[[redirects]]
+  from = "/de/kardinalitaeten"
+  to = "https://blog.noreja.com/de-de/kardinalitaeten"
+  status = 301
+
+[[redirects]]
+  from = "/de/muster-ansicht"
+  to = "https://blog.noreja.com/de-de/muster-ansicht"
+  status = 301
+
+[[redirects]]
+  from = "/de/ressourcenallokation-2"
+  to = "https://blog.noreja.com/de-de/ressourcenallokation"
+  status = 301
+
+[[redirects]]
+  from = "/de/organisationsziele"
+  to = "https://blog.noreja.com/de-de/organisationsziele"
+  status = 301
+
+[[redirects]]
+  from = "/de/quick-tips-steigerung-der-digitalen-kompetenz-deines-teams"
+  to = "https://blog.noreja.com/de-de/steigerung-der-digitalen-kompetenz-deines-teams"
+  status = 301
+
+[[redirects]]
+  from = "/de/timelines-2"
+  to = "https://blog.noreja.com/de-de/timelines"
+  status = 301
+
+[[redirects]]
+  from = "/en/market-change"
+  to = "https://blog.noreja.com/en/market-change"
+  status = 301
+
+[[redirects]]
+  from = "/en/batching"
+  to = "https://blog.noreja.com/en/batching"
+  status = 301
+
+[[redirects]]
+  from = "/de/bpm-news-round-up-marz-2024-ausgabe"
+  to = "https://blog.noreja.com/de-de/bpm-news-round-up-marz-2024-ausgabe"
+  status = 301
+
+[[redirects]]
+  from = "/en/customer-feedback"
+  to = "https://blog.noreja.com/en/customer-feedback"
+  status = 301
+
+[[redirects]]
+  from = "/en/change-management-for-automation"
+  to = "https://blog.noreja.com/en/change-management-for-automation"
+  status = 301
+
+[[redirects]]
+  from = "/en/integrating-technology-in-business-processes"
+  to = "https://blog.noreja.com/en/integrating-technology-in-business-processes"
+  status = 301
+
+[[redirects]]
+  from = "/en/process-variants-uncovering-the-reality-of-your-business-2"
+  to = "https://blog.noreja.com/en/process-variants-uncovering-the-reality-of-your-business"
+  status = 301
+
+[[redirects]]
+  from = "/en/cardinalities"
+  to = "https://blog.noreja.com/en/cardinalities"
+  status = 301
+
+[[redirects]]
+  from = "/en/business-process-orientation-2"
+  to = "https://blog.noreja.com/en/business-process-orientation"
+  status = 301
+
+[[redirects]]
+  from = "/en/process-standardization"
+  to = "https://blog.noreja.com/en/process-standardization"
+  status = 301
+
+[[redirects]]
+  from = "/de/bpm-news-round-up-december-2023-ausgabe"
+  to = "https://blog.noreja.com/de-de/bpm-news-round-up-dezember-2023-ausgabe"
+  status = 301
+
+[[redirects]]
+  from = "/en/process-variants-uncovering-the-reality-of-your-business"
+  to = "https://blog.noreja.com/en/process-variants-uncovering-the-reality-of-your-business"
+  status = 301
+
+[[redirects]]
+  from = "/en/process-management-news-round-up-december-2023-edition"
+  to = "https://blog.noreja.com/en/process-management-news-round-up-december-2023-edition"
+  status = 301
+
+[[redirects]]
+  from = "/en/resource-allocation"
+  to = "https://blog.noreja.com/en/resource-allocation"
+  status = 301
+
+[[redirects]]
+  from = "/de/ressourcenallokation"
+  to = "https://blog.noreja.com/de-de/ressourcenallokation"
+  status = 301
+
+[[redirects]]
+  from = "/en/quick-tips-scaling-your-business-processes"
+  to = "https://blog.noreja.com/en/scaling-your-business-processes"
+  status = 301
+
+[[redirects]]
+  from = "/en/process-management-news-round-up-january-2024-edition"
+  to = "https://blog.noreja.com/en/process-management-news-round-up-january-2024-edition"
+  status = 301
+
+[[redirects]]
+  from = "/de/bpm-news-round-up-janner-2024-ausgabe"
+  to = "https://blog.noreja.com/de-de/bpm-news-round-up-janner-2024-ausgabe"
+  status = 301
+
+[[redirects]]
+  from = "/de/quick-tips-skalierung-deiner-geschaftsprozesse"
+  to = "https://blog.noreja.com/de-de/quick-tips-skalierung-deiner-geschaftsprozesse"
+  status = 301
+
+[[redirects]]
+  from = "/en/process-management-news-round-up-february-2025-edition"
+  to = "https://blog.noreja.com/en/process-management-news-round-up-february-2025-edition"
+  status = 301
+
+[[redirects]]
+  from = "/en/process-management-news-round-up-march-2025-edition"
+  to = "https://blog.noreja.com/en/process-management-news-round-up-march-2025-edition"
+  status = 301
+
+[[redirects]]
+  from = "/de/process-management-news-round-up-marz-2025-edition"
+  to = "https://blog.noreja.com/de-de/process-management-news-round-up-marz-2025-edition"
+  status = 301
+
+[[redirects]]
+  from = "/de/process-management-news-round-up-april-2025-edition"
+  to = "https://blog.noreja.com/de-de/process-management-news-round-up-april-2025-edition"
+  status = 301
+
+[[redirects]]
+  from = "/en/unlocking-value-with-process-analytics-beyond-process-mining-adoption"
+  to = "https://blog.noreja.com/en/unlocking-value-with-process-analytics-beyond-process-mining-adoption"
+  status = 301
+
+[[redirects]]
+  from = "/de/wertschoepfung-durch-process-analytics"
+  to = "https://blog.noreja.com/de-de/wertschoepfung-durch-process-analytics"
+  status = 301
+
+[[redirects]]
+  from = "/de/healthcare-claims-kosten-verzug"
+  to = "https://blog.noreja.com/de-de/healthcare-claims-kosten-verzug"
+  status = 301
+
+[[redirects]]
+  from = "/en/healthcare-claims-backlog"
+  to = "https://blog.noreja.com/en/healthcare-claims-backlog"
+  status = 301
+
+[[redirects]]
+  from = "/en/organizational-goal-setting-improvements"
+  to = "https://blog.noreja.com/en/organizational-goal-setting-improvements"
+  status = 301
+
+[[redirects]]
+  from = "/de/zielsetzung-fuer-unternehmen-effektiv-machen"
+  to = "https://blog.noreja.com/de-de/zielsetzung-fuer-unternehmen-effektiv-machen"
+  status = 301
+
+[[redirects]]
+  from = "/en/hybrid-intelligence-in-business-process-management"
+  to = "https://blog.noreja.com/en/hybrid-intelligence-in-business-process-management"
+  status = 301
+
+[[redirects]]
+  from = "/de/hybrid-intelligence-im-business-process-management"
+  to = "https://blog.noreja.com/de-de/hybrid-intelligence-im-business-process-management"
+  status = 301
+
+[[redirects]]
+  from = "/en/process-intelligence-success-factors"
+  to = "https://blog.noreja.com/en/process-intelligence-success-factors"
+  status = 301
+
+[[redirects]]
+  from = "/de/process-intelligence-erfolgsfaktoren"
+  to = "https://blog.noreja.com/de-de/process-intelligence-erfolgsfaktoren"
+  status = 301
+
+[[redirects]]
+  from = "/de/schattenprozesse-in-automobilzulieferung"
+  to = "https://blog.noreja.com/de-de/schattenprozesse-in-automobilzulieferung"
+  status = 301
+
+[[redirects]]
+  from = "/en/shadow-processes-in-automotive-supply"
+  to = "https://blog.noreja.com/en/shadow-processes-in-automotive-supply"
+  status = 301
+
+[[redirects]]
+  from = "/de/ai-agents-mit-process-intelligence-skalierbar-machen"
+  to = "https://blog.noreja.com/de-de/ai-agents-mit-process-intelligence-skalierbar-machen"
+  status = 301
+
+[[redirects]]
+  from = "/en/scalable-ai-agents-with-process-intelligence"
+  to = "https://blog.noreja.com/en/scalable-ai-agents-with-process-intelligence"
+  status = 301
+
+[[redirects]]
+  from = "/de/it-investitionen-produktivitaet"
+  to = "https://blog.noreja.com/de-de/it-investitionen-produktivitaet"
+  status = 301
+
+[[redirects]]
+  from = "/en/it-investments-fail-productivity"
+  to = "https://blog.noreja.com/en/it-investments-fail-productivity"
+  status = 301
+
+[[redirects]]
+  from = "/de/ressourcen-effizient-allokieren"
+  to = "https://blog.noreja.com/de-de/ressourcen-effizient-allokieren"
+  status = 301
+
+[[redirects]]
+  from = "/en/allocate-resources-effectively"
+  to = "https://blog.noreja.com/en/allocate-resources-effectively"
+  status = 301
+
+[[redirects]]
+  from = "/en/cost-of-delayed-processes"
+  to = "https://blog.noreja.com/en/cost-of-delayed-processes"
+  status = 301
+
+[[redirects]]
+  from = "/de/cost-of-inaction-verzoegerte-prozesse"
+  to = "https://blog.noreja.com/de-de/cost-of-inaction-verzoegerte-prozesse"
+  status = 301
+
+[[redirects]]
+  from = "/de/process-management-news-round-up-juni-2025-edition"
+  to = "https://blog.noreja.com/de-de/process-management-news-round-up-juni-2025-edition"
+  status = 301
+
+[[redirects]]
+  from = "/en/process-management-news-round-up-june-2025-edition"
+  to = "https://blog.noreja.com/en/process-management-news-round-up-june-2025-edition"
+  status = 301
+
+[[redirects]]
+  from = "/en/bad-processes-burnout-talent-loss"
+  to = "https://blog.noreja.com/en/bad-processes-burnout-talent-loss"
+  status = 301
+
+[[redirects]]
+  from = "/de/schlechte-prozesse-burnout-talentverlust"
+  to = "https://blog.noreja.com/de-de/schlechte-prozesse-burnout-talentverlust"
+  status = 301
+
+[[redirects]]
+  from = "/en/causal-process-mining-replaces-event-logs"
+  to = "https://blog.noreja.com/en/causal-process-mining-replaces-event-logs"
+  status = 301
+
+[[redirects]]
+  from = "/de/kausales-process-mining-statt-event-logs"
+  to = "https://blog.noreja.com/de-de/kausales-process-mining-statt-event-logs"
+  status = 301
+
+[[redirects]]
+  from = "/de/change-management-scheitert-und-gelingt"
+  to = "https://blog.noreja.com/de-de/change-management-scheitert-und-gelingt"
+  status = 301
+
+[[redirects]]
+  from = "/en/poor-change-management-low-adoption"
+  to = "https://blog.noreja.com/en/poor-change-management-low-adoption"
+  status = 301
+
+[[redirects]]
+  from = "/de/prozessoptimierungen-priorisieren"
+  to = "https://blog.noreja.com/de-de/prozessoptimierungen-priorisieren"
+  status = 301
+
+[[redirects]]
+  from = "/en/prioritise-process-optimisation"
+  to = "https://blog.noreja.com/en/prioritise-process-optimisation"
+  status = 301
+
+[[redirects]]
+  from = "/en/process-mining-data-quality"
+  to = "https://blog.noreja.com/en/process-mining-data-quality"
+  status = 301
+
+[[redirects]]
+  from = "/de/bessere-daten-besseres-process-mining"
+  to = "https://blog.noreja.com/de-de/bessere-daten-besseres-process-mining"
+  status = 301
+
+[[redirects]]
+  from = "/en/process-management-news-round-up-april-2025-edition-2"
+  to = "https://blog.noreja.com/en/process-management-news-round-up-april-2025-edition"
+  status = 301
+
+[[redirects]]
+  from = "/de/ki-optimal-nutzen-business-prozesse"
+  to = "https://blog.noreja.com/de-de/ki-optimal-nutzen-business-prozesse"
+  status = 301
+
+[[redirects]]
+  from = "/en/ai-integration-business-processes"
+  to = "https://blog.noreja.com/en/ai-integration-business-processes"
+  status = 301
+
+[[redirects]]
+  from = "/en/cognitive-overload-from-automation"
+  to = "https://blog.noreja.com/en/cognitive-overload-from-automation"
+  status = 301
+
+[[redirects]]
+  from = "/de/wenn-automation-uberfordert"
+  to = "https://blog.noreja.com/de-de/wenn-automation-uberfordert"
+  status = 301
+
+[[redirects]]
+  from = "/de/vertrauensproblem-hybrid-intelligence"
+  to = "https://blog.noreja.com/de-de/vertrauensproblem-hybrid-intelligence"
+  status = 301
+
+[[redirects]]
+  from = "/en/hybrid-intelligence-trust-gap"
+  to = "https://blog.noreja.com/en/hybrid-intelligence-trust-gap"
+  status = 301
+
+[[redirects]]
+  from = "/de/effektive-erfolgsmessung-tipps"
+  to = "https://blog.noreja.com/de-de/effektive-erfolgsmessung-tipps"
+  status = 301
+
+[[redirects]]
+  from = "/de/kontextualisierte-daten-prozessoptimierung"
+  to = "https://blog.noreja.com/de-de/kontextualisierte-daten-prozessoptimierung"
+  status = 301
+
+[[redirects]]
+  from = "/en/contextualised-data-process-optimisation"
+  to = "https://blog.noreja.com/en/contextualised-data-process-optimisation"
+  status = 301
+
+[[redirects]]
+  from = "/en/breaking-down-data-silos"
+  to = "https://blog.noreja.com/en/breaking-down-data-silos"
+  status = 301
+
+[[redirects]]
+  from = "/de/datenintegration-fuer-echtzeit-einblicke"
+  to = "https://blog.noreja.com/de-de/datenintegration-fuer-echtzeit-einblicke"
+  status = 301
+
+[[redirects]]
+  from = "/de/strategien-effiziente-zusammenarbeit"
+  to = "https://blog.noreja.com/de-de/strategien-effiziente-zusammenarbeit"
+  status = 301
+
+[[redirects]]
+  from = "/de/kundenbeschwerden-loesen"
+  to = "https://blog.noreja.com/de-de/kundenbeschwerden-loesen"
+  status = 301
+
+[[redirects]]
+  from = "/en/speeding-up-customer-responses"
+  to = "https://blog.noreja.com/en/speeding-up-customer-responses"
+  status = 301
+
+[[redirects]]
+  from = "/de/ineffizienz-erkennen-und-beseitigen"
+  to = "https://blog.noreja.com/de-de/ineffizienz-erkennen-und-beseitigen"
+  status = 301
+
+[[redirects]]
+  from = "/en/reduce-high-process-costs"
+  to = "https://blog.noreja.com/en/reduce-high-process-costs"
+  status = 301
+
+[[redirects]]
+  from = "/en/missing-process-documentation-challenges"
+  to = "https://blog.noreja.com/en/missing-process-documentation-challenges"
+  status = 301
+
+[[redirects]]
+  from = "/en/ai-integration-into-business-processes"
+  to = "https://blog.noreja.com/en/ai-integration-into-business-processes"
+  status = 301
+
+[[redirects]]
+  from = "/de/ai-in-geschaftsprozesse-integrieren"
+  to = "https://blog.noreja.com/de-de/ai-in-geschaftsprozesse-integrieren"
+  status = 301
+
+[[redirects]]
+  from = "/de/prozesse-ohne-buerokratie-standardisieren"
+  to = "https://blog.noreja.com/de-de/prozesse-ohne-buerokratie-standardisieren"
+  status = 301
+
+[[redirects]]
+  from = "/en/standardize-processes-without-bureaucracy"
+  to = "https://blog.noreja.com/en/standardize-processes-without-bureaucracy"
+  status = 301
+
+[[redirects]]
+  from = "/de/entscheidungsprozesse-in-unternehmen-optimieren"
+  to = "https://blog.noreja.com/de-de/entscheidungsprozesse-in-unternehmen-optimieren"
+  status = 301
+
+[[redirects]]
+  from = "/en/optimize-decision-making-in-organizations"
+  to = "https://blog.noreja.com/en/optimize-decision-making-in-organizations"
+  status = 301
+
+[[redirects]]
+  from = "/en/four-decision-types-in-bpm"
+  to = "https://blog.noreja.com/en/four-decision-types-in-bpm"
+  status = 301
+
+[[redirects]]
+  from = "/de/vier-entscheidungsarten-in-bpm"
+  to = "https://blog.noreja.com/de-de/vier-entscheidungsarten-in-bpm"
+  status = 301
+
+[[redirects]]
+  from = "/de/first-contact-resolution-verbessern"
+  to = "https://blog.noreja.com/de-de/first-contact-resolution-verbessern"
+  status = 301
+
+[[redirects]]
+  from = "/en/improve-first-contact-resolution"
+  to = "https://blog.noreja.com/en/improve-first-contact-resolution"
+  status = 301
+
+[[redirects]]
+  from = "/en/break-down-department-silos"
+  to = "https://blog.noreja.com/en/break-down-department-silos"
+  status = 301
+
+[[redirects]]
+  from = "/en/manual-data-entry-and-reconciliation"
+  to = "https://blog.noreja.com/en/manual-data-entry-and-reconciliation"
+  status = 301
+
+[[redirects]]
+  from = "/de/manuelle-dateneingabe-und-datenabgleich"
+  to = "https://blog.noreja.com/de-de/manuelle-dateneingabe-und-datenabgleich"
+  status = 301
+
+[[redirects]]
+  from = "/en/process-management-news-round-up-october-2025-edition"
+  to = "https://blog.noreja.com/en/process-management-news-round-up-october-2025-edition"
+  status = 301
+
+[[redirects]]
+  from = "/de/process-management-news-round-up-oktober-2025-edition"
+  to = "https://blog.noreja.com/de-de/process-management-news-round-up-oktober-2025-edition"
+  status = 301
+
+[[redirects]]
+  from = "/en/compliance-data-to-strategic-insight"
+  to = "https://blog.noreja.com/en/compliance-data-to-strategic-insight"
+  status = 301
+
+[[redirects]]
+  from = "/de/compliance-daten-als-strategischer-vorteil"
+  to = "https://blog.noreja.com/de-de/compliance-daten-als-strategischer-vorteil"
+  status = 301
+
+[[redirects]]
+  from = "/en/when-managing-your-team-becomes-too-much"
+  to = "https://blog.noreja.com/en/when-managing-your-team-becomes-too-much"
+  status = 301
+
+[[redirects]]
+  from = "/de/wenn-teamfuehrung-zu-viel-wird"
+  to = "https://blog.noreja.com/de-de/wenn-teamfuehrung-zu-viel-wird"
+  status = 301
+
+[[redirects]]
+  from = "/de/maschinenbauer-mit-effizienzverlust-order-to-cash-prozess"
+  to = "https://blog.noreja.com/de-de/maschinenbauer-mit-effizienzverlust-order-to-cash-prozess"
+  status = 301
+
+[[redirects]]
+  from = "/en/efficiency-lost-in-order-to-cash-process"
+  to = "https://blog.noreja.com/en/hidden-costs-in-mostly-automated-machine-manufacturer"
+  status = 301
+
+[[redirects]]
+  from = "/en/solid-due-diligence-through-standardized-procedures"
+  to = "https://blog.noreja.com/en/solid-due-diligence-through-standardized-procedures"
+  status = 301
+
+[[redirects]]
+  from = "/de/standardisierte-ablaeufe-fuer-due-diligence"
+  to = "https://blog.noreja.com/de-de/standardisierte-ablaeufe-fuer-due-diligence"
+  status = 301
+
+[[redirects]]
+  from = "/de/process-management-news-round-up-november-2025-edition"
+  to = "https://blog.noreja.com/de-de/process-management-news-round-up-november-2025-edition"
+  status = 301
+
+[[redirects]]
+  from = "/en/process-management-news-round-up-november-2025-edition-2"
+  to = "https://blog.noreja.com/en/process-management-news-round-up-november-2025-edition"
+  status = 301
+
+[[redirects]]
+  from = "/de/versteckte-kosten-in-groesstenteils-automatisierten-maschinenbauer"
+  to = "https://blog.noreja.com/de-de/maschinenbauer-mit-effizienzverlust-order-to-cash-prozess"
+  status = 301
+
+[[redirects]]
+  from = "/en/hidden-costs-in-mostly-automated-machine-manufacturer"
+  to = "https://blog.noreja.com/en/hidden-costs-in-mostly-automated-machine-manufacturer"
+  status = 301
+
+[[redirects]]
+  from = "/de/geschaeftsprozessoptimierung-beginnen"
+  to = "https://blog.noreja.com/de-de/geschaeftsprozessoptimierung-beginnen"
+  status = 301
+
+[[redirects]]
+  from = "/en/where-to-start-business-process-optimization"
+  to = "https://blog.noreja.com/en/where-to-start-business-process-optimization"
+  status = 301
+
+[[redirects]]
+  from = "/de/klareres-prozessdesign"
+  to = "https://blog.noreja.com/de-de/klareres-prozessdesign"
+  status = 301
+
+[[redirects]]
+  from = "/en/better-process-design"
+  to = "https://blog.noreja.com/en/better-process-design"
+  status = 301
+
+[[redirects]]
+  from = "/en/how-hidden-process-deviations-erode-performance-in-pharma"
+  to = "https://blog.noreja.com/en/how-hidden-process-deviations-erode-performance-in-pharma"
+  status = 301
+
+[[redirects]]
+  from = "/de/wie-versteckte-prozessabweichungen-die-performance-in-der-pharmaindustrie-untergraben"
+  to = "https://blog.noreja.com/de-de/wie-versteckte-prozessabweichungen-die-performance-in-der-pharmaindustrie-untergraben"
+  status = 301
+
+[[redirects]]
+  from = "/en/cost-cutting-without-process-insight"
+  to = "https://blog.noreja.com/en/cost-cutting-without-process-insight"
+  status = 301
+
+[[redirects]]
+  from = "/de/cost-cutting-ohne-prozesseinblick"
+  to = "https://blog.noreja.com/de-de/cost-cutting-ohne-prozesseinblick"
+  status = 301
+
 # SPA fallback (LAST)
 [[redirects]]
   from = "/*"
