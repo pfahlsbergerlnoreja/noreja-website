@@ -300,14 +300,14 @@ export function USPsShowcase() {
             <Carousel
               setApi={setApi}
               opts={{
-                align: "start",
+                align: "center",
                 loop: true,
               }}
               className="w-full max-w-sm mx-auto"
             >
-              <CarouselContent>
+              <CarouselContent className="-ml-0">
                 {usps.map((usp, index) => (
-                  <CarouselItem key={usp.title}>
+                  <CarouselItem key={usp.title} className="pl-0">
                     <motion.div
                       initial={{ opacity: 0, y: 24 }}
                       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
@@ -338,8 +338,8 @@ export function USPsShowcase() {
                   </CarouselItem>
                 ))}
               </CarouselContent>
-              <CarouselPrevious className="left-0" />
-              <CarouselNext className="right-0" />
+              <CarouselPrevious className="left-2 h-6 w-6 opacity-60 hover:opacity-100 bg-background/80" />
+              <CarouselNext className="right-2 h-6 w-6 opacity-60 hover:opacity-100 bg-background/80" />
             </Carousel>
           </div>
 

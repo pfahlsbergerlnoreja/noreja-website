@@ -429,14 +429,14 @@ export function HubSpotBlogTeaser({ maxItems = 3 }: HubSpotBlogTeaserProps) {
               <Carousel
                 setApi={setApi}
                 opts={{
-                  align: "start",
+                  align: "center",
                   loop: true,
                 }}
                 className="w-full max-w-sm mx-auto"
               >
-                <CarouselContent>
+                <CarouselContent className="-ml-0">
                   {posts.map((post, index) => (
-                    <CarouselItem key={index}>
+                    <CarouselItem key={index} className="pl-0">
                       <Card className="flex flex-col hover:shadow-lg transition-shadow overflow-hidden">
                         {post.imageUrl && (
                           <div className="w-full aspect-video overflow-hidden bg-muted">
@@ -480,8 +480,8 @@ export function HubSpotBlogTeaser({ maxItems = 3 }: HubSpotBlogTeaserProps) {
                     </CarouselItem>
                   ))}
                 </CarouselContent>
-                <CarouselPrevious className="left-0" />
-                <CarouselNext className="right-0" />
+                <CarouselPrevious className="left-2 h-6 w-6 opacity-60 hover:opacity-100 bg-background/80" />
+                <CarouselNext className="right-2 h-6 w-6 opacity-60 hover:opacity-100 bg-background/80" />
               </Carousel>
             </div>
 

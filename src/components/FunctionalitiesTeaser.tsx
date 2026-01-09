@@ -3,6 +3,7 @@ import { useRef, useState, useEffect } from "react";
 import { ArrowRight, Brain, Search, LayoutDashboard, Wrench, Code } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useIsMobile } from "@/hooks/use-mobile";
 import {
   Carousel,
   CarouselContent,
@@ -18,6 +19,7 @@ export function FunctionalitiesTeaser() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const { t, language } = useLanguage();
+  const isMobile = useIsMobile();
   const [api, setApi] = useState<CarouselApi>();
   const [isPaused, setIsPaused] = useState(false);
   const isAutoAdvancingRef = useRef(false);
@@ -115,9 +117,18 @@ export function FunctionalitiesTeaser() {
         >
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-6 leading-tight">
             <span className="whitespace-nowrap">{t.functionalities.title}</span>{" "}
-            <span className="bg-gradient-primary bg-clip-text text-transparent whitespace-nowrap">
-              {t.functionalities.titleHighlight}
-            </span>
+            {isMobile ? (
+              <span className="bg-gradient-primary bg-clip-text text-transparent">
+                {language === 'de' 
+                  ? <>mit KI-gestützer<br />Process Intelligence</>
+                  : <>with AI-powered<br />Process Intelligence</>
+                }
+              </span>
+            ) : (
+              <span className="bg-gradient-primary bg-clip-text text-transparent whitespace-nowrap">
+                {t.functionalities.titleHighlight}
+              </span>
+            )}
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
             {t.functionalities.subtitle}
@@ -135,16 +146,16 @@ export function FunctionalitiesTeaser() {
           <Carousel
             setApi={setApi}
             opts={{
-              align: "start",
+              align: "center",
               loop: true,
             }}
             className="w-full max-w-sm mx-auto"
           >
-            <CarouselContent>
+            <CarouselContent className="-ml-0">
               {features.map((feature, index) => {
                 const Icon = feature.icon;
                 return (
-                  <CarouselItem key={feature.title}>
+                  <CarouselItem key={feature.title} className="pl-0">
                     <motion.div
                       initial={{ opacity: 0, y: 32 }}
                       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 32 }}
@@ -164,8 +175,8 @@ export function FunctionalitiesTeaser() {
                 );
               })}
             </CarouselContent>
-            <CarouselPrevious className="left-0" />
-            <CarouselNext className="right-0" />
+            <CarouselPrevious className="left-2 h-6 w-6 opacity-60 hover:opacity-100 bg-background/80" />
+            <CarouselNext className="right-2 h-6 w-6 opacity-60 hover:opacity-100 bg-background/80" />
           </Carousel>
         </div>
 
