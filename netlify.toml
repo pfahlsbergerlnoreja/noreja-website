@@ -3,6 +3,13 @@
   publish = "dist"
   command = "npm run build"
 
+# Disable automatic trailing-slash handling to prevent conflicts with explicit redirects
+[build.processing]
+  skip_processing = false
+
+[build.processing.html]
+  pretty_urls = false
+
 # Headers for static assets (images, fonts, etc.)
 [[headers]]
   for = "/assets/*"
@@ -65,27 +72,25 @@
 
 # ----------------------------
 # Canonical host (www -> non-www)
+# Using conditions to avoid protocol-based loops
 # ----------------------------
 [[redirects]]
-  from = "https://www.noreja.com/*"
+  from = "/*"
   to = "https://noreja.com/:splat"
   status = 301
   force = true
+  conditions = {Host = ["www.noreja.com"]}
 
 # ----------------------------
 # Force HTTPS
+# Using scheme condition to avoid loops
 # ----------------------------
 [[redirects]]
-  from = "http://noreja.com/*"
+  from = "/*"
   to = "https://noreja.com/:splat"
   status = 301
   force = true
-
-[[redirects]]
-  from = "http://www.noreja.com/*"
-  to = "https://noreja.com/:splat"
-  status = 301
-  force = true
+  conditions = {Scheme = ["http"]}
 
 # ----------------------------
 # Specific trailing-slash redirects (explicit from old sitemap)
