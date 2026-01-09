@@ -99,6 +99,93 @@
   to = "/de/veranstaltungen"
   status = 301
 
+# ----------------------------
+# Old success stories / references -> new success story routes
+# ----------------------------
+[[redirects]]
+  from = "/en/idm-optimizing-order-to-cash"
+  to = "/en/success-story/idm"
+  status = 301
+
+[[redirects]]
+  from = "/de/idm-optimierung-des-o2c-prozesses"
+  to = "/de/success-story/idm"
+  status = 301
+
+[[redirects]]
+  from = "/de/hector-claiming-success"
+  to = "/de/success-story/hector"
+  status = 301
+
+[[redirects]]
+  from = "/en/hector-success-story"
+  to = "/en/success-story/hector"
+  status = 301
+
+[[redirects]]
+  from = "/en/megatron-scm-scoping"
+  to = "/en/success-story/megatron"
+  status = 301
+
+[[redirects]]
+  from = "/de/megatron-scm-scoping-2"
+  to = "/de/success-story/megatron"
+  status = 301
+
+[[redirects]]
+  from = "/en/cib-transparency-in-hiring"
+  to = "/en/success-story/CIB"
+  status = 301
+
+[[redirects]]
+  from = "/de/cib-transparenz-im-hiring"
+  to = "/de/success-story/CIB"
+  status = 301
+
+
+# ----------------------------
+# Old industry-focus pages -> new use-cases routes
+# ----------------------------
+[[redirects]]
+  from = "/de/branchenfokus-versicherung"
+  to = "/de/use-cases/insurance"
+  status = 301
+
+[[redirects]]
+  from = "/en/industry-focus-reshaping-insurance"
+  to = "/en/use-cases/insurance"
+  status = 301
+
+[[redirects]]
+  from = "/de/branchenfokus-supply-chain"
+  to = "/de/use-cases/supply-chain"
+  status = 301
+
+[[redirects]]
+  from = "/en/industry-focus-redefining-supply-chain"
+  to = "/en/use-cases/supply-chain"
+  status = 301
+
+[[redirects]]
+  from = "/de/branchenfokus-manufacturing"
+  to = "/de/use-cases/manufacturing"
+  status = 301
+
+[[redirects]]
+  from = "/en/industry-focus-transforming-manufacturing"
+  to = "/en/use-cases/manufacturing"
+  status = 301
+
+[[redirects]]
+  from = "/de/branchenfokus-banking"
+  to = "/de/use-cases/banking"
+  status = 301
+
+[[redirects]]
+  from = "/en/industry-focus-streamlining-banking"
+  to = "/en/use-cases/banking"
+  status = 301
+
 # SPA fallback (LAST)
 [[redirects]]
   from = "/*"
