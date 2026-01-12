@@ -2,7 +2,8 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { useEffect } from "react";
 import { ConditionalLayout } from "@/components/ConditionalLayout";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import Index from "./pages/Index";
@@ -25,12 +26,29 @@ import Maintenance from "./pages/Maintenance";
 
 const queryClient = new QueryClient();
 
+// Component to track HubSpot page views on route changes for SPA
+function HubSpotPageViewTracker() {
+  const location = useLocation();
+
+  useEffect(() => {
+    // Wait for HubSpot script to load and track page view for SPA navigation
+    if (typeof window !== 'undefined' && window._hsq) {
+      // Set the path and track page view
+      window._hsq.push(['setPath', location.pathname + location.search]);
+      window._hsq.push(['trackPageView']);
+    }
+  }, [location]);
+
+  return null;
+}
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <HubSpotPageViewTracker />
         <LanguageProvider>
           <ConditionalLayout>
             <Routes>
