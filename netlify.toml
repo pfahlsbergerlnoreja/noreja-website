@@ -211,6 +211,36 @@
   status = 301
 
 [[redirects]]
+  from = "/de/category/*"
+  to = "https://blog.noreja.com/de-de"
+  status = 301
+
+[[redirects]]
+  from = "/en/category/*"
+  to = "https://blog.noreja.com/en"
+  status = 301
+
+[[redirects]]
+  from = "/de/author/pfahlsbergerlukas_h7887jaj/"
+  to = "https://blog.noreja.com/de-de/author/lukas-pfahlsberger"
+  status = 301
+
+[[redirects]]
+  from = "/en/author/pfahlsbergerlukas_h7887jaj/"
+  to = "https://blog.noreja.com/en/author/lukas-pfahlsberger"
+  status = 301
+
+[[redirects]]
+  from = "/de/author/julian_weiss/"
+  to = "https://blog.noreja.com/de-de/author/julian-weiß"
+  status = 301
+
+[[redirects]]
+  from = "/en/author/julian_weiss/"
+  to = "https://blog.noreja.com/en/author/julian-weiß"
+  status = 301
+
+[[redirects]]
   from = "/de/bpm-news-februar-2024"
   to = "https://blog.noreja.com/de-de/bpm-news-februar-2024"
   status = 301
