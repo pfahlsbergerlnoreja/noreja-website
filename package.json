@@ -9,8 +9,9 @@
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview",
+    "compress-images": "tsx scripts/compress-images.ts",
     "generate-sitemap": "tsx scripts/generate-sitemap.ts",
-    "prebuild": "npm run generate-sitemap"
+    "prebuild": "npm run compress-images && npm run generate-sitemap"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
@@ -62,6 +63,7 @@
     "react-resizable-panels": "^2.1.9",
     "react-router-dom": "^6.30.1",
     "recharts": "^2.15.4",
+    "sharp": "^0.34.5",
     "sonner": "^1.7.4",
     "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7",

@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
-import logo from "@/assets/noreja_logo_white.png";
-import marmot from "@/assets/maintenance/marmot.png";
+import logo from "@/assets/noreja_logo_white.webp";
+import marmot from "@/assets/maintenance/marmot.webp";
 
 const Maintenance = () => {
   const { t } = useLanguage();

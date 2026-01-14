@@ -1,6 +1,6 @@
 // Dynamically import all team images (lazy loading)
 const teamImages = import.meta.glob<{ default: string }>(
-  '../assets/team/*.{png,jpg,jpeg}',
+  '../assets/team/*.{png,jpg,jpeg,webp}',
   { eager: false }
 );
 
@@ -78,7 +78,7 @@ const teamMembersBase: TeamMemberBase[] = [
     role: "Chief Executive Officer",
     oneLiner: "Visionary leader driving digital transformation across industries.",
     linkedInUrl: "https://www.linkedin.com/in/lukas-pfahlsberger/",
-    imageFilename: "Pfahlsberger.jpg",
+    imageFilename: "Pfahlsberger.webp",
     isFounder: true,
     personalIntro: {
       en: "As CEO at Noreja, Lukas is responsible for operations, sales, and strategy. At the same time, Lukas is a guest lecturer at Humboldt University in Berlin, WU Vienna and Salzburg University of Applied Sciences. He completed his doctorate with a research focus on the organizational context of process mining in relation to dynamic and improvisational capabilities. Before that, Lukas worked several years as a senior consultant at EY in the area of analytics & AI, data architecture, and -integration with an industry focus on automotive and manufacturing. He started his professional career as an IT-system-designer and BPM engineer at Deutsche Post DHL Group.",
@@ -91,7 +91,7 @@ const teamMembersBase: TeamMemberBase[] = [
     role: "Chief Technology Officer",
     oneLiner: "Engineering excellence through innovative cloud-native solutions.",
     linkedInUrl: "https://www.linkedin.com/in/philipp-w-a09018100/",
-    imageFilename: "Waibel.jpg",
+    imageFilename: "Waibel.webp",
     isFounder: true,
     personalIntro: {
       en: "As CTO, Philipp is mainly responsible for software development and its architecture. Philipp has a long track record in academic project execution for the Vienna University of Economics and Business as well as the Vienna University of Technology. He studied Software Engineering at the Vienna University of Technology and is an expert at cloud-based business processes execution. He developed our process mining algorithm based on conflict-free prime event structures.",
@@ -104,7 +104,7 @@ const teamMembersBase: TeamMemberBase[] = [
     role: "Head of Partnerships & Knowledge",
     oneLiner: "Engineering excellence through innovative cloud-native solutions.",
     linkedInUrl: "https://www.linkedin.com/in/janmendling/",
-    imageFilename: "Mendling.jpg",
+    imageFilename: "Mendling.webp",
     isFounder: true,
     personalIntro: {
       en: "Jan is a Einstein professor at the Humboldt University Berlin. Previously, he worked as a full professor and department head at Vienna University of Economics and Business. Also, he is a co-author of seminal textbooks on the Fundamentals of Business Process Management and on Business Information Systems are used in more than 250 universities in 70 countries. He is one of the founders of the Berliner BPM-Offensive, a board member of the Austrian Society for Process Management, a member of the IEEE Task Force on Process Mining, and one of the initiators of the international Business Process Management Association.",
@@ -117,7 +117,7 @@ const teamMembersBase: TeamMemberBase[] = [
     role: "Senior Product Manager",
     oneLiner: "Building scalable platforms that power enterprise growth.",
     linkedInUrl: "https://www.linkedin.com/in/julian-weiss/",
-    imageFilename: "Julian-Weiss.jpg",
+    imageFilename: "Julian-Weiss.webp",
     isFounder: false,
     personalIntro: {
       en: "Julian is a Product Manager with a strong focus on data-driven product development and scalable digital solutions. \n\n At Noreja, he is responsible for the continuous development of key product areas, ensuring that data-driven decisions and user-centric approaches are integrated into the product strategy. Previously, he worked at several scale-ups, where he supported growth phases by developing and optimizing digital products and implementing efficient processes. Through close collaboration with cross-functional teams, he drove innovative solutions and actively shaped strategic scaling projects. \n\n His academic background is in business informatics, where he focused on process optimization and analysis during his studies and continued this work during his tenure at TU Wien.",
@@ -130,7 +130,7 @@ const teamMembersBase: TeamMemberBase[] = [
     role: "Head of Frontend",
     oneLiner: "Ensuring our clients achieve transformational outcomes.",
     linkedInUrl: "https://www.linkedin.com/in/florian-eichin-92ba57106/",
-    imageFilename: "Florian-Eichin.jpg",
+    imageFilename: "Florian-Eichin.webp",
     isFounder: false,
     personalIntro: {
       en: "Florian is an experienced software developer and IT consultant with over 8 years of practical experience. He studied business informatics at the dual university in Lörrach in cooperation with Coop. In his professional career he worked mainly for small and medium-sized companies as a web developer at the internet agency Brainson, but also as a CRM consultant at Allgeier Enterprise Service AG in the SAP environment. At Noreja, Florian takes the role ‘Frontend Lead’. In this context, he takes care of the design of the user interface, the performance optimization and the provision of interfaces to the backend.",
@@ -143,7 +143,7 @@ const teamMembersBase: TeamMemberBase[] = [
     role: "Head of Backend",
     oneLiner: "Connecting innovative solutions with forward-thinking organizations.",
     linkedInUrl: "https://www.linkedin.com/in/daniel-bauer-485954199/",
-    imageFilename: "Daniel-Bauer.jpg",
+    imageFilename: "Daniel-Bauer.webp",
     isFounder: false,
     personalIntro: {
       en: "Daniel is an experienced developer with over 10 years of experience specialising in backend development and leading software teams in early-stage start ups. He has a strong background in JAVA and various backend technologies, which he has applied in multiple roles, including his previous position as Head of Development. Now, as the Head of Backend at Noreja, Daniel oversees the architecture, scalability, and integration of backend systems, ensuring robust and efficient data flow across all platforms. His leadership and technical expertise are pivotal in driving the backend team’s success and aligning it with the company’s strategic objectives.",
@@ -156,7 +156,7 @@ const teamMembersBase: TeamMemberBase[] = [
     role: "Senior Software Developer",
     oneLiner: "Telling stories that inspire digital transformation journeys.",
     linkedInUrl: "https://www.linkedin.com/in/violeta-petkova-298287136/",
-    imageFilename: "Violeta-Petkova.jpg",
+    imageFilename: "Violeta-Petkova.webp",
     isFounder: false,
     personalIntro: {
       en: "Violeta is a software developer with experience in web development. In her bachelor thesis ‘Interactive Process Visualization of Correlation Based Customer Journey Processes in the Tourism Domain’ she already dealt with the application of complex process mining and data science algorithms.",
@@ -169,7 +169,7 @@ const teamMembersBase: TeamMemberBase[] = [
     role: "Software Developer",
     oneLiner: "Optimizing processes that scale with our growing global impact.",
     linkedInUrl: "https://www.linkedin.com/in/temucin-damdinjamts-kintaert/",
-    imageFilename: "Temu-new.jpg",
+    imageFilename: "Temu-new.webp",
     isFounder: false,
     personalIntro: {
       en: "Temuçin is a full-stack developer with a diverse professional background. Before transitioning into software development, he gained experience in B2B sales and project management, which continues to shape his pragmatic, product-oriented approach to engineering.\n\nAt Noreja, Temuçin works across frontend and backend on AI-driven services for process intelligence. He is deeply involved in developing Minerva, Noreja’s AI-based process analysis service, where he helps build scalable backend architectures and intelligent workflows that enable organizations to derive actionable insights from their process data.",
@@ -183,25 +183,25 @@ const advisoryMembersBase: AdvisoryMemberBase[] = [
     id: "adv-1",
     name: "Markus Neumayr",
     linkedInUrl: "https://www.linkedin.com/in/markus-neumayr-110a71104/",
-    imageFilename: "Markus-Neumayr.jpeg"
+    imageFilename: "Markus-Neumayr.webp"
   },
   {
     id: "adv-2", 
     name: "Christian Riffner",
     linkedInUrl: "https://www.linkedin.com/in/christian-riffner-0119b233/",
-    imageFilename: "Christian-Riffner.jpeg"
+    imageFilename: "Christian-Riffner.webp"
   },
   {
     id: "adv-3",
     name: "Gordana McNamara",
     linkedInUrl: "https://www.linkedin.com/in/gordana-mcnamara/",
-    imageFilename: "Gordana-McNamara.jpeg"
+    imageFilename: "Gordana-McNamara.webp"
   },
   {
     id: "adv-4",
     name: "Steven Knoblich",
     linkedInUrl: "https://www.linkedin.com/in/steven-knoblich-72bb53173/",
-    imageFilename: "Steven-Knoblich.jpeg"
+    imageFilename: "Steven-Knoblich.webp"
   }
 ];
 

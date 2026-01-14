@@ -38,10 +38,10 @@ const getSuccessStoryImagePath = (filename: string): string => {
 const getCoverImagePath = (industryEn: string): string => {
   // Map English industry names to cover image filenames
   const industryToImageMap: Record<string, string> = {
-    'Insurance': 'Insurance.png',
-    'Supply Chain': 'Supply-Chain.png',
-    'Manufacturing': 'Manufacturing.png',
-    'Software Development': 'Software-Development.png',
+    'Insurance': 'Insurance.webp',
+    'Supply Chain': 'Supply-Chain.webp',
+    'Manufacturing': 'Manufacturing.webp',
+    'Software Development': 'Software-Development.webp',
   };
   
   const imageFilename = industryToImageMap[industryEn] || '';
@@ -110,7 +110,7 @@ export const successStories: SuccessStory[] = [
   {
     id: "hector",
     companyName: "Hector",
-    logoUrl: getImagePath(customerLogoImages, "hector_logo_white.png"),
+    logoUrl: getImagePath(customerLogoImages, "hector_logo_white.webp"),
     coverImageUrl: getCoverImagePath("Insurance"),
     summary: {
       en: "Hector identified critical blind spots in their insurance claims processing, including high rates of reopened claims and bottlenecks from delayed repair invoices. Through Process Mining, they reduced processing time by 75% while improving accuracy across all departments.",
@@ -280,7 +280,7 @@ export const successStories: SuccessStory[] = [
   {
     id: "megatron",
     companyName: "Megatron",
-    logoUrl: getImagePath(customerLogoImages, "megatron_logo_white_xlarge.png"),
+    logoUrl: getImagePath(customerLogoImages, "megatron_logo_white_xlarge.webp"),
     coverImageUrl: getCoverImagePath("Supply Chain"),
     summary: {
       en: "Megatron uncovered critical blind spots in their supply chain and production processes, identifying optimization opportunities in order assignment and work step recording. The analysis revealed potential for $2.3M in annual cost savings through improved process transparency.",
@@ -444,7 +444,7 @@ export const successStories: SuccessStory[] = [
   {
     id: "idm",
     companyName: "IDM Wärmepumpen",
-    logoUrl: getImagePath(customerLogoImages, "idm_logo_white.png"),
+    logoUrl: getImagePath(customerLogoImages, "idm_logo_white.webp"),
     coverImageUrl: getCoverImagePath("Manufacturing"),
     summary: {
       en: "IDM gained complete visibility into their Order-to-Cash process within three weeks, identifying critical bottlenecks in manual data entry and invoice processing. The analysis achieved 99.9% accuracy in process detection while significantly reducing manual workload.",
@@ -589,7 +589,7 @@ export const successStories: SuccessStory[] = [
   {
     id: "CIB",
     companyName: "CIB",
-    logoUrl: getImagePath(customerLogoImages, "cib_logo_white.png"),
+    logoUrl: getImagePath(customerLogoImages, "cib_logo_white.webp"),
     coverImageUrl: getCoverImagePath("Software Development"),
     summary: {
       en: "CIB mapped their entire hiring process in just one month, identifying delays in initial applicant contact and bottlenecks in decision-making. The analysis revealed opportunities to reduce hiring time by up to one week and improve candidate experience, achieving 40% faster diagnosis of process issues.",
@@ -680,17 +680,17 @@ Keine **Nachverfolgung der Prozess-Conformance** für die Bewerber-Experience.
         items: [
           {
             title: "High Degree of Flexibility",
-            imagePath: getSuccessStoryImagePath("cib_flexiblity_de.jpg"),
+            imagePath: getSuccessStoryImagePath("cib_flexiblity_de.webp"),
             content: "The application process is designed with many structural freedoms, making it flexible but also more expensive and more complex to manage due to low standardization. It might be worthwhile to streamline the process more to act faster and more cost-effectively."
           },
           {
             title: "Long Decision Times",
-            imagePath: getSuccessStoryImagePath("cib_decisions_de.jpg"),
+            imagePath: getSuccessStoryImagePath("cib_decisions_de.webp"),
             content: "The decision time of responsible managers took longer than expected, while self-rejections occur relatively quickly (after 1W 3D). More feedback to candidates during the hiring process could keep them informed and prevent their self-rejection. Additionally, setting up an AI-supported pre-qualification assistant that prioritizes promising applicants and automatically invites them to preliminary interviews if needed could ensure that highly qualified candidates are contacted on the day of their application."
           },
           {
             title: "Personal Contact",
-            imagePath: getSuccessStoryImagePath("cib_contact_de.jpg"),
+            imagePath: getSuccessStoryImagePath("cib_contact_de.webp"),
             content: "The process step \"Invite applicant to telephone preliminary interview\" was used very rarely (namely 11 times). This step could be used as pre-qualification within a week after the potential candidate's application to prevent early self-rejections from high-potentials."
           }
         ]
@@ -701,17 +701,17 @@ Keine **Nachverfolgung der Prozess-Conformance** für die Bewerber-Experience.
         items: [
             {
               title: "Hoher Grad an Flexibilität",
-              imagePath: getSuccessStoryImagePath("cib_flexiblity_de.jpg"),
+              imagePath: getSuccessStoryImagePath("cib_flexiblity_de.webp"),
               content: "Der Bewerbungsprozess ist mit vielen strukturellen Freiheiten konzipiert, was ihn flexibel macht, aber aufgrund einer geringen Standardisierung auch teurer und aufwendiger zu managen. Möglicherweise könnte es sich lohnen den Prozess stärker zu streamlinen, um schneller und kostengünstiger zu agieren."
             },
             {
               title: "Lange Entscheidungszeiten",
-              imagePath: getSuccessStoryImagePath("cib_decisions_de.jpg"),
+              imagePath: getSuccessStoryImagePath("cib_decisions_de.webp"),
               content: "Die Entscheidungszeit der verantwortlichen Manager dauerte länger als erwartet, während Selbstabsagen relativ schnell erfolgen (nach 1W 3D). Mehr Feedback an die Kandidaten während des Einstellungsprozesses könnte sie auf dem Laufenden halten und ihre Selbstabsage verhindern. Zusätzlich könnte die Einrichtung eines KI-unterstützten Vorqualifizierungsassistenten, der vielversprechende Bewerber priorisiert und sie bei Bedarf automatisch zu Vorabinterviews einlädt, dafür sorgen, dass hochqualifizierte Kandidaten bereits am Tag ihrer Bewerbung kontaktiert werden."
             },
             {
               title: "Persönlicher Kontakt",
-              imagePath: getSuccessStoryImagePath("cib_contact_de.jpg"),
+              imagePath: getSuccessStoryImagePath("cib_contact_de.webp"),
               content: "Der Prozessschritt „Bewerber zum telefonischen Vorgespräch einladen“ wurde nur sehr selten genutzt (nämlich 11 mal). Dieser Durchführung dieses Schrittes könnte als Vorqualifikation innerhalb einer Woche nach der Bewerbung des potenziellen Kandidaten eingesetzt werden, um frühzeitige Selbstabsagen von High-Potentials zu verhindern."
             }
         ]

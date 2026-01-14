@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { getRoutePath } from "@/lib/routes";
-import logo from "@/assets/noreja_logo_white.png";
+import logo from "@/assets/noreja_logo_white.webp";
 
 // Compact mobile language switcher
 function MobileLanguageSwitcher() {

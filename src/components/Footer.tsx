@@ -4,9 +4,9 @@ import { Linkedin, Twitter, Youtube } from "lucide-react";
 import { siteConfig } from "@/lib/config";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { getRoutePath } from "@/lib/routes";
-import logo from "@/assets/noreja_logo_white.png";
-import isoBadge from "@/assets/privacy/iso_white.png";
-import gdprBadge from "@/assets/privacy/gdpr_white.png";
+import logo from "@/assets/noreja_logo_white.webp";
+import isoBadge from "@/assets/privacy/iso_white.webp";
+import gdprBadge from "@/assets/privacy/gdpr_white.webp";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();

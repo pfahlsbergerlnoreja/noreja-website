@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { useEffect, useState, useRef } from "react";
 import { AnimatedGridBackground } from "@/components/AnimatedGridBackground";
-import noreja_logo_white from "@/assets/noreja_logo_white.png";
+import noreja_logo_white from "@/assets/noreja_logo_white.webp";
 
 const SimpleRectangleAnimation = () => {
   // Animation state: tracks which step of the 4-card cycle we're in (0, 1, 2, 3)
