@@ -8,7 +8,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 // Configuration
-const SOURCE_DIR = resolve(__dirname, '../src/assets_raw');
+const SOURCE_DIR = resolve(__dirname, '../assets_raw');
 const DEST_DIR = resolve(__dirname, '../src/assets');
 const WEBP_QUALITY = 80;
 const DEFAULT_EXCLUDED_FOLDERS = ['icons', 'platform'];
