@@ -156,13 +156,6 @@
   to = "/de/success-story/CIB"
   status = 301
 
-[[redirects]]
-  from = "/de/impressum/"
-  to = "/de/impressum"
-  status = 301
-  force = true
-
-
 # ----------------------------
 # Old industry-focus pages -> new use-cases routes
 # ----------------------------
