@@ -12,7 +12,7 @@ const partnerLogoImagesWhite = import.meta.glob<{ default: string }>(
 
 // Dynamically import all partner face photos (lazy loading)
 const partnerFaceImages = import.meta.glob<{ default: string }>(
-  '../assets/partnerFaces/*.{png,jpg,jpeg}',
+  '../assets/partnerFaces/*.{png,jpg,jpeg,webp}',
   { eager: false }
 );
 
