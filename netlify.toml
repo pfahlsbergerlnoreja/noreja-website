@@ -42,6 +42,20 @@
 # ============================================
 
 [[redirects]]
+  from = "/*"
+  query = { trk = ":any" }
+  to = "/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/*"
+  query = { et_blog = ":any" }
+  to = "/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "https://www.noreja.com/*"
   to = "https://noreja.com/:splat"
   status = 301
@@ -141,6 +155,12 @@
   from = "/de/cib-transparenz-im-hiring"
   to = "/de/success-story/CIB"
   status = 301
+
+[[redirects]]
+  from = "/de/impressum/"
+  to = "/de/impressum"
+  status = 301
+  force = true
 
 
 # ----------------------------
