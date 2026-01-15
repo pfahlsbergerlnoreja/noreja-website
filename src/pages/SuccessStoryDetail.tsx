@@ -297,7 +297,7 @@ const SuccessStoryDetail = () => {
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ duration: 0.6 }}
-                className="scroll-mt-24 min-h-[600px]"
+                className="scroll-mt-24 min-h-[600px] overflow-hidden"
               >
                 <div className="max-w-6xl mx-auto">
                   <h2 className="text-3xl lg:text-4xl font-bold text-foreground leading-tight mb-12 text-center">
@@ -340,7 +340,7 @@ const SuccessStoryDetail = () => {
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ duration: 0.6 }}
-                className="scroll-mt-24 min-h-[600px]"
+                className="scroll-mt-24 min-h-[600px] overflow-hidden"
               >
                 <div className="max-w-6xl mx-auto">
                   <h2 className="text-3xl lg:text-4xl font-bold text-foreground leading-tight mb-12 text-center">
