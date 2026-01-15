@@ -131,7 +131,7 @@ export function getRoutePath(routeKey: keyof typeof routes, lang: Language, para
   }
   
   // Replace dynamic parameters
-  let path = route;
+  let path: string = route;
   for (const [key, value] of Object.entries(params)) {
     path = path.replace(`:${key}`, value);
   }
@@ -218,4 +218,3 @@ export function getRouteKeyFromPath(pathname: string): keyof typeof routes | nul
   
   return pathToRouteKey[normalizedPath] || null;
 }
-

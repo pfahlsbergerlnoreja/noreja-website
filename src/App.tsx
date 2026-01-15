@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { ConditionalLayout } from "@/components/ConditionalLayout";
+import { CanonicalUrl } from "@/components/CanonicalUrl";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import Index from "./pages/Index";
 import Functionalities from "./pages/Functionalities";
@@ -54,6 +55,7 @@ const App = () => (
         }}
       >
         <HubSpotPageViewTracker />
+        <CanonicalUrl />
         <LanguageProvider>
           <ConditionalLayout>
             <Routes>
