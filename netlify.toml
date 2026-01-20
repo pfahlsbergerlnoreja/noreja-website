@@ -56,6 +56,13 @@
   force = true
 
 [[redirects]]
+  from = "/*"
+  query = { hs_amp = "true" }
+  to = "/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "https://www.noreja.com/*"
   to = "https://noreja.com/:splat"
   status = 301
