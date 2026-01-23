@@ -123,8 +123,28 @@ export function HubSpotContactForm({
           reject(new Error("Failed to load HubSpot form script"));
 
         if (script) {
+          // Check again if HubSpot is available (script may have already loaded)
+          const hbsptCheck = (window as unknown as { hbspt?: HubSpot }).hbspt;
+          if (hbsptCheck?.forms?.create) {
+            resolve();
+            return;
+          }
+          
+          // Script exists but still loading - wait for it
           script.addEventListener("load", handleLoad, { once: true });
           script.addEventListener("error", handleError, { once: true });
+          
+          // Add a polling fallback in case load event already fired
+          const checkInterval = setInterval(() => {
+            const hbsptPoll = (window as unknown as { hbspt?: HubSpot }).hbspt;
+            if (hbsptPoll?.forms?.create) {
+              clearInterval(checkInterval);
+              resolve();
+            }
+          }, 100);
+          
+          // Clear interval after timeout to prevent memory leak
+          setTimeout(() => clearInterval(checkInterval), 10000);
           return;
         }
 

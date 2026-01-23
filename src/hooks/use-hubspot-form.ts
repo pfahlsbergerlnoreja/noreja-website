@@ -125,20 +125,55 @@ export function useHubSpotForm({
     );
 
     if (existingScript) {
-      // Script exists but not loaded yet, wait for it
+      // Check again if HubSpot is available (script may have already loaded)
+      const hbsptCheck = window.hbspt;
+      if (hbsptCheck?.forms?.create) {
+        const resolvedPromise = Promise.resolve();
+        scriptLoadPromiseRef.current = resolvedPromise;
+        return resolvedPromise;
+      }
+      
+      // Script exists but not loaded yet, wait for it with polling fallback
       const promise = new Promise<void>((resolve, reject) => {
+        let resolved = false;
+        
         const handleLoad = () => {
-          resolve();
-          existingScript.removeEventListener("load", handleLoad);
-          existingScript.removeEventListener("error", handleError);
+          if (!resolved) {
+            resolved = true;
+            clearInterval(checkInterval);
+            resolve();
+            existingScript.removeEventListener("load", handleLoad);
+            existingScript.removeEventListener("error", handleError);
+          }
         };
         const handleError = () => {
-          reject(new Error("Failed to load HubSpot form script"));
-          existingScript.removeEventListener("load", handleLoad);
-          existingScript.removeEventListener("error", handleError);
+          if (!resolved) {
+            resolved = true;
+            clearInterval(checkInterval);
+            reject(new Error("Failed to load HubSpot form script"));
+            existingScript.removeEventListener("load", handleLoad);
+            existingScript.removeEventListener("error", handleError);
+          }
         };
         existingScript.addEventListener("load", handleLoad, { once: true });
         existingScript.addEventListener("error", handleError, { once: true });
+        
+        // Add polling fallback in case load event already fired
+        const checkInterval = setInterval(() => {
+          const hbsptPoll = window.hbspt;
+          if (hbsptPoll?.forms?.create && !resolved) {
+            resolved = true;
+            clearInterval(checkInterval);
+            existingScript.removeEventListener("load", handleLoad);
+            existingScript.removeEventListener("error", handleError);
+            resolve();
+          }
+        }, 100);
+        
+        // Clear interval after timeout to prevent memory leak
+        setTimeout(() => {
+          clearInterval(checkInterval);
+        }, 10000);
       });
       scriptLoadPromiseRef.current = promise;
       return promise;
