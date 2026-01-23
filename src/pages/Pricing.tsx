@@ -1,4 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
+import { motion } from "framer-motion";
+import { ArrowRight, Info } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -6,10 +9,10 @@ import { Slider } from "@/components/ui/slider";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Info } from "lucide-react";
 import { AnimatedGradientBox } from "@/components/AnimatedGradientBox";
 import { AnimatedGridBackground } from "@/components/AnimatedGridBackground";
 import { AnimatedHeading } from "@/components/AnimatedHeading";
+import { getRoutePath } from "@/lib/routes";
 
 // --- Factors: Fill these in as needed ---
 const dataAmountLabels = [
@@ -870,6 +873,41 @@ const Pricing = () => {
               </div>
             </div>
           </div>
+
+          {/* Success Stories CTA */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            viewport={{ once: true }}
+            className="max-w-4xl mx-auto mt-16"
+          >
+            <div className="relative overflow-hidden rounded-3xl border border-border/60 bg-background/95 px-8 py-12 text-center shadow-xl shadow-noreja-main/10">
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-noreja-main/10 via-transparent to-noreja-secondary/20 opacity-70" />
+              <div className="relative z-10 space-y-6">
+                <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+                  {t.pages.pricing.successStoriesCta.title}{" "}
+                  <span className="bg-gradient-primary bg-clip-text text-transparent">
+                    {t.pages.pricing.successStoriesCta.highlight}
+                  </span>
+                </h2>
+                <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+                  {t.pages.pricing.successStoriesCta.description}
+                </p>
+                <Button
+                  size="lg"
+                  variant="secondary"
+                  className="group"
+                  asChild
+                >
+                  <Link to={getRoutePath('successStories', language)}>
+                    {t.pages.pricing.successStoriesCta.buttonLabel}
+                    <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+                  </Link>
+                </Button>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </div>
     </div>

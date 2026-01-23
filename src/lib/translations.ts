@@ -207,6 +207,12 @@ export interface Translations {
           cta: string;
         };
         };
+      successStoriesCta: {
+        title: string;
+        highlight: string;
+        description: string;
+        buttonLabel: string;
+      };
       };
       contact: {
         title: string;
@@ -894,6 +900,12 @@ export const translations: Record<Language, Translations> = {
             ],
             cta: "Contact us"
           }
+        },
+        successStoriesCta: {
+          title: "What Does Noreja Mean",
+          highlight: "in Practice?",
+          description: "Discover through real projects what effects Process Intelligence actually delivers—beyond feature lists.",
+          buttonLabel: "View Successful Projects"
         }
       },
       contact: {
@@ -1592,6 +1604,12 @@ export const translations: Record<Language, Translations> = {
             ],
             cta: "Kontakt aufnehmen"
           }
+        },
+        successStoriesCta: {
+          title: "Was heißt Noreja",
+          highlight: "in der Praxis?",
+          description: "Erfahre anhand konkreter Projekte, welche Effekte Process Intelligence wirklich bringt, jenseits von Feature-Listen.",
+          buttonLabel: "Erfolgreiche Projekte ansehen"
         }
       },
       contact: {
