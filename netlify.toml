@@ -80,11 +80,6 @@
   status = 301
   force = true
 
-# ----------------------------
-# Explicit trailing-slash cleanup for old URLs
-# Keep only the explicit ones you really need.
-# (With pretty_urls=false, Netlify should not auto-flip slash/no-slash.)
-# ----------------------------
 [[redirects]]
   from = "/en/privacy-policy"
   to = "/en/privacy"
@@ -106,6 +101,11 @@
   status = 301
 
 [[redirects]]
+  from = "/team"
+  to = "/de/team"
+  status = 301
+
+[[redirects]]
   from = "/de/noreja-funktionen"
   to = "/de/plattform"
   status = 301
@@ -118,6 +118,46 @@
 [[redirects]]
   from = "/de/events"
   to = "/de/veranstaltungen"
+  status = 301
+
+[[redirects]]
+  from = "/impressum"
+  to = "/de/impressum"
+  status = 301
+
+[[redirects]]
+  from = "/imprint"
+  to = "/en/imprint"
+  status = 301
+
+[[redirects]]
+  from = "/kontakt"
+  to = "/de/kontakt"
+  status = 301
+
+[[redirects]]
+  from = "/partner"
+  to = "/de/partner"
+  status = 301
+
+[[redirects]]
+  from = "/partners"
+  to = "/en/partners"
+  status = 301
+
+[[redirects]]
+  from = "/preise"
+  to = "/de/preise"
+  status = 301
+
+[[redirects]]
+  from = "/datenschutz"
+  to = "/de/datenschutz"
+  status = 301
+
+[[redirects]]
+  from = "/blog-de"
+  to = "/de/datenschutz"
   status = 301
 
 # ----------------------------
@@ -206,6 +246,25 @@
   to = "/en/use-cases/banking"
   status = 301
 
+# ----------------------------
+# Remove old blog pages - 410
+# ----------------------------
+
+[[redirects]]
+  from = "/blog/page/*"
+  status = 410
+
+[[redirects]]
+  from = "/category/*"
+  status = 410
+
+[[redirects]]
+  from = "/tag/*"
+  status = 410
+
+[[redirects]]
+  from = "/en/page/*"
+  status = 410
 
 # ----------------------------
 # Blog redirects to HubSpot
