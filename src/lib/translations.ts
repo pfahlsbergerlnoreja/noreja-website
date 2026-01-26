@@ -223,6 +223,29 @@ export interface Translations {
         formLoading: string;
         formError: string;
       };
+      aiAgents: {
+        title: string;
+        subtitle: string;
+        cards: {
+          card1: {
+            title: string;
+            description: string;
+          };
+          card2: {
+            title: string;
+            description: string;
+          };
+          card3: {
+            title: string;
+            description: string;
+          };
+        };
+        waitlistCta: {
+          title: string;
+          subtitle: string;
+          buttonLabel: string;
+        };
+      };
     };
   hero: {
     badge: string;
@@ -916,6 +939,29 @@ export const translations: Record<Language, Translations> = {
         responseNote: "We typically respond within 24 hours.",
         formLoading: "Loading contact form…",
         formError: "We couldn't load the contact form. Please reload the page or reach us at hello@noreja.com."
+      },
+      aiAgents: {
+        title: "AI Agents",
+        subtitle: "Discover the next generation of intelligent automation. Our AI Agents work alongside your team to streamline processes, enhance decision-making, and unlock new possibilities.",
+        cards: {
+          card1: {
+            title: "Intelligent Automation",
+            description: "AI Agents that understand your business context and automate complex workflows with precision and adaptability."
+          },
+          card2: {
+            title: "Seamless Integration",
+            description: "Connect AI capabilities directly to your existing systems and processes without disruption."
+          },
+          card3: {
+            title: "Continuous Learning",
+            description: "Agents that evolve with your business, learning from interactions to deliver increasingly accurate results."
+          }
+        },
+        waitlistCta: {
+          title: "Be Among the First",
+          subtitle: "Join the waitlist to get early access to our AI Agents platform.",
+          buttonLabel: "Join the Waitlist"
+        }
       }
     },
     hero: {
@@ -1620,6 +1666,29 @@ export const translations: Record<Language, Translations> = {
         responseNote: "Wir antworten in der Regel innerhalb von 24 Stunden.",
         formLoading: "Kontaktformular wird geladen…",
         formError: "Das Kontaktformular konnte nicht geladen werden. Bitte lade die Seite neu oder schreibe uns an hello@noreja.com."
+      },
+      aiAgents: {
+        title: "KI-Agenten",
+        subtitle: "Entdecke die nächste Generation intelligenter Automatisierung. Unsere KI-Agenten arbeiten mit deinem Team zusammen, um Prozesse zu optimieren, Entscheidungen zu verbessern und neue Möglichkeiten zu erschließen.",
+        cards: {
+          card1: {
+            title: "Intelligente Automatisierung",
+            description: "KI-Agenten, die deinen Geschäftskontext verstehen und komplexe Workflows mit Präzision und Anpassungsfähigkeit automatisieren."
+          },
+          card2: {
+            title: "Nahtlose Integration",
+            description: "Verbinde KI-Fähigkeiten direkt mit deinen bestehenden Systemen und Prozessen ohne Unterbrechung."
+          },
+          card3: {
+            title: "Kontinuierliches Lernen",
+            description: "Agenten, die sich mit deinem Unternehmen weiterentwickeln und aus Interaktionen lernen, um immer genauere Ergebnisse zu liefern."
+          }
+        },
+        waitlistCta: {
+          title: "Sei unter den Ersten",
+          subtitle: "Trag dich auf die Warteliste ein und erhalte frühzeitig Zugang zu unserer KI-Agenten-Plattform.",
+          buttonLabel: "Auf die Warteliste"
+        }
       }
     },
     hero: {

@@ -24,6 +24,7 @@ import TermsOfService from "./pages/TermsOfService";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import NotFound from "./pages/NotFound";
 import Maintenance from "./pages/Maintenance";
+import AIAgents from "./pages/AIAgents";
 
 const queryClient = new QueryClient();
 
@@ -121,6 +122,10 @@ const App = () => (
               {/* Terms */}
               <Route path="/de/nutzungsbedingungen" element={<TermsOfService />} />
               <Route path="/en/terms" element={<TermsOfService />} />
+              
+              {/* AI Agents */}
+              <Route path="/de/ki-agenten" element={<AIAgents />} />
+              <Route path="/en/ai-agents" element={<AIAgents />} />
               
               {/* Maintenance (same for both) */}
               <Route path="/maintenance" element={<Maintenance />} />

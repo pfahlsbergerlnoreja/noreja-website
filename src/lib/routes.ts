@@ -62,6 +62,10 @@ export const routes = {
     de: '/de/nutzungsbedingungen',
     en: '/en/terms',
   },
+  aiAgents: {
+    de: '/de/ki-agenten',
+    en: '/en/ai-agents',
+  },
   maintenance: {
     de: '/maintenance',
     en: '/maintenance',
@@ -96,6 +100,8 @@ const pathToRouteKey: Record<string, keyof typeof routes> = {
   '/en/terms': 'terms',
   '/de/download-vielen-dank': 'downloadThankYou',
   '/en/download-thank-you': 'downloadThankYou',
+  '/de/ki-agenten': 'aiAgents',
+  '/en/ai-agents': 'aiAgents',
   '/maintenance': 'maintenance',
 };
 
