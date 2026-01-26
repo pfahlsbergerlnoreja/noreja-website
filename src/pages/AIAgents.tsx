@@ -31,7 +31,7 @@ function AgentCard({ image, title, description, index }: AgentCardProps) {
       className="group relative overflow-hidden rounded-2xl border border-border/50 bg-card/80 backdrop-blur-sm hover:border-noreja-main/50 transition-all duration-300"
     >
       {/* Card Image */}
-      <div className="relative aspect-[3/4] overflow-hidden bg-muted">
+      <div className="relative aspect-[1/1] overflow-hidden bg-muted">
         <img
           src={image}
           alt={title}

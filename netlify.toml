@@ -43,7 +43,7 @@
 
 [[redirects]]
   from = "/*"
-  query = { trk = ":any" }
+  query = { hs_amp = ":any" }
   to = "/:splat"
   status = 301
   force = true
@@ -57,7 +57,7 @@
 
 [[redirects]]
   from = "/*"
-  query = { hs_amp = "true" }
+  query = { trk = ":any" }
   to = "/:splat"
   status = 301
   force = true
