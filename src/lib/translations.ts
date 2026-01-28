@@ -945,21 +945,21 @@ export const translations: Record<Language, Translations> = {
         subtitle: "Discover the next generation of intelligent automation. Our AI Agents work alongside your team to streamline processes, enhance decision-making, and unlock new possibilities.",
         cards: {
           card1: {
-            title: "Intelligent Automation",
-            description: "AI Agents that understand your business context and automate complex workflows with precision and adaptability."
+            title: "Builder Benny",
+            description: "Creates and maintains process models in the background – structured, consistent, and always up to date."
           },
           card2: {
-            title: "Seamless Integration",
-            description: "Connect AI capabilities directly to your existing systems and processes without disruption."
+            title: "Analyst Andy",
+            description: "Continuously analyzes your processes, detects deviations early, and delivers clear insights into the current state."
           },
           card3: {
-            title: "Continuous Learning",
-            description: "Agents that evolve with your business, learning from interactions to deliver increasingly accurate results."
+            title: "Compliance Conny",
+            description: "Keeps an eye on internal guidelines and requirements, automatically alerting you to risks and rule violations."
           }
         },
         waitlistCta: {
           title: "Be Among the First",
-          subtitle: "Join the waitlist to get early access to our AI Agents platform.",
+          subtitle: "Join the waitlist to get early access to our AI Agents.",
           buttonLabel: "Join the Waitlist"
         }
       }
@@ -1673,20 +1673,20 @@ export const translations: Record<Language, Translations> = {
         cards: {
           card1: {
             title: "Builder Benny",
-            description: "KI-Agenten, die deinen Geschäftskontext verstehen und komplexe Workflows mit Präzision und Anpassungsfähigkeit automatisieren."
+            description: "Erstellt und pflegt Prozessmodelle im Hintergrund – strukturiert, konsistent und immer auf dem neuesten Stand."
           },
           card2: {
             title: "Analyst Andy",
-            description: "Verbinde KI-Fähigkeiten direkt mit deinen bestehenden Systemen und Prozessen ohne Unterbrechung."
+            description: "Analysiert laufend deine Prozesse, erkennt Abweichungen frühzeitig und liefert dir klare Insights zum aktuellen Zustand."
           },
           card3: {
             title: "Compliance Conny",
-            description: "Agenten, die sich mit deinem Unternehmen weiterentwickeln und aus Interaktionen lernen, um immer genauere Ergebnisse zu liefern."
+            description: "Behält interne Richtlinien und Vorgaben im Blick und weist automatisch auf Risiken und Regelverstöße hin."
           }
         },
         waitlistCta: {
           title: "Sei unter den Ersten",
-          subtitle: "Trag dich auf die Warteliste ein und erhalte frühzeitig Zugang zu unserer KI-Agenten-Plattform.",
+          subtitle: "Trag dich auf die Warteliste ein und erhalte frühzeitig Zugang zu unseren KI-Agenten.",
           buttonLabel: "Auf die Warteliste"
         }
       }

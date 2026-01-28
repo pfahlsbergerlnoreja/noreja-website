@@ -1,9 +1,11 @@
 import { motion } from "framer-motion";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { AnimatedGridBackground } from "@/components/AnimatedGridBackground";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { ArrowRight } from "lucide-react";
+import { config } from "@/lib/config";
 
 // Agent card images
 import builderImage from "@/assets/agents/builder.webp";
@@ -11,9 +13,36 @@ import complianceImage from "@/assets/agents/compliance.webp";
 import analystImage from "@/assets/agents/analyst.webp";
 
 const cardImages = {
-  card1: builderImage,
-  card2: analystImage,
+  card1: analystImage,
+  card2: builderImage,
   card3: complianceImage,
+};
+
+// HubSpot form script URL - use iframe embed
+const HUBSPOT_FORM_SCRIPT = "https://js-eu1.hsforms.net/forms/embed/144242473.js";
+const HUBSPOT_FORM_REGION = "eu1";
+const HUBSPOT_PORTAL_ID = "144242473";
+const HUBSPOT_FORM_ID = "cba179f6-530c-43a4-9d41-4bc0a459953b";
+
+// Load HubSpot form script globally (only once) - using exact HubSpot pattern
+let scriptLoaded = false;
+const loadHubSpotFormScript = (): void => {
+  // Check if script already exists
+  const existingScript = document.querySelector<HTMLScriptElement>(
+    `script[src="${HUBSPOT_FORM_SCRIPT}"]`
+  );
+  if (existingScript || scriptLoaded) {
+    return;
+  }
+
+  // Create script with defer attribute exactly as HubSpot specifies
+  const script = document.createElement("script");
+  script.src = HUBSPOT_FORM_SCRIPT;
+  script.defer = true;
+  script.onload = () => {
+    scriptLoaded = true;
+  };
+  document.head.appendChild(script);
 };
 
 interface AgentCardProps {
@@ -63,22 +92,33 @@ function AgentCard({ image, title, description, index }: AgentCardProps) {
 
 export default function AIAgents() {
   const { t } = useLanguage();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Scroll to top when component mounts
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
+  // Load HubSpot form script once on component mount
+  useEffect(() => {
+    loadHubSpotFormScript();
+  }, []);
+
+  // Handle waitlist button click
+  const handleWaitlistClick = () => {
+    setIsModalOpen(true);
+  };
+
   const cards = [
     {
       image: cardImages.card1,
-      title: t.pages.aiAgents.cards.card1.title,
-      description: t.pages.aiAgents.cards.card1.description,
+      title: t.pages.aiAgents.cards.card2.title,
+      description: t.pages.aiAgents.cards.card2.description,
     },
     {
       image: cardImages.card2,
-      title: t.pages.aiAgents.cards.card2.title,
-      description: t.pages.aiAgents.cards.card2.description,
+      title: t.pages.aiAgents.cards.card1.title,
+      description: t.pages.aiAgents.cards.card1.description,
     },
     {
       image: cardImages.card3,
@@ -149,6 +189,7 @@ export default function AIAgents() {
                 <Button
                   size="lg"
                   className="gradient-primary glow-primary group"
+                  onClick={handleWaitlistClick}
                 >
                   {t.pages.aiAgents.waitlistCta.buttonLabel}
                   <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
@@ -158,6 +199,31 @@ export default function AIAgents() {
           </div>
         </section>
       </div>
+
+      {/* Waitlist Form Modal */}
+      <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle className="flex items-center">
+              <ArrowRight className="w-5 h-5 mr-2 text-noreja-main" />
+              {t.pages.aiAgents.waitlistCta.title}
+            </DialogTitle>
+          </DialogHeader>
+          <div className="py-4">
+            <p className="text-muted-foreground mb-6">
+              {t.pages.aiAgents.waitlistCta.subtitle}
+            </p>
+            
+            {/* HubSpot form - exact structure as specified */}
+            <div 
+              className="hs-form-frame" 
+              data-region={HUBSPOT_FORM_REGION}
+              data-form-id={config.hubspot.defaultFormGuid || HUBSPOT_FORM_ID}
+              data-portal-id={config.hubspot.portalId || HUBSPOT_PORTAL_ID}
+            />
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
