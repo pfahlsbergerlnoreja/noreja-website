@@ -1668,19 +1668,19 @@ export const translations: Record<Language, Translations> = {
         formError: "Das Kontaktformular konnte nicht geladen werden. Bitte lade die Seite neu oder schreibe uns an hello@noreja.com."
       },
       aiAgents: {
-        title: "KI-Agenten",
+        title: "KI-Agenten bei Noreja",
         subtitle: "Entdecke die nächste Generation intelligenter Automatisierung. Unsere KI-Agenten arbeiten mit deinem Team zusammen, um Prozesse zu optimieren, Entscheidungen zu verbessern und neue Möglichkeiten zu erschließen.",
         cards: {
           card1: {
-            title: "Intelligente Automatisierung",
+            title: "Builder Benny",
             description: "KI-Agenten, die deinen Geschäftskontext verstehen und komplexe Workflows mit Präzision und Anpassungsfähigkeit automatisieren."
           },
           card2: {
-            title: "Nahtlose Integration",
+            title: "Analyst Andy",
             description: "Verbinde KI-Fähigkeiten direkt mit deinen bestehenden Systemen und Prozessen ohne Unterbrechung."
           },
           card3: {
-            title: "Kontinuierliches Lernen",
+            title: "Compliance Conny",
             description: "Agenten, die sich mit deinem Unternehmen weiterentwickeln und aus Interaktionen lernen, um immer genauere Ergebnisse zu liefern."
           }
         },

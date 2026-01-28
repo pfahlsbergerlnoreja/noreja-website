@@ -8,10 +8,11 @@ import { ArrowRight } from "lucide-react";
 // Agent card images
 import builderImage from "@/assets/agents/builder.webp";
 import complianceImage from "@/assets/agents/compliance.webp";
+import analystImage from "@/assets/agents/analyst.webp";
 
 const cardImages = {
   card1: builderImage,
-  card2: "/placeholder.svg", // Placeholder until image is added
+  card2: analystImage,
   card3: complianceImage,
 };
 
