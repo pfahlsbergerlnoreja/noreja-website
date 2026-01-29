@@ -941,20 +941,20 @@ export const translations: Record<Language, Translations> = {
         formError: "We couldn't load the contact form. Please reload the page or reach us at hello@noreja.com."
       },
       aiAgents: {
-        title: "AI Agents",
-        subtitle: "Discover the next generation of intelligent automation. Our AI Agents work alongside your team to streamline processes, enhance decision-making, and unlock new possibilities.",
+        title: "Minerva Frontier Agents",
+        subtitle: "Autonomous AI Agents that operate independently on your process and contextual data. Continuously analyzing, deciding, and optimizing workflows alongside your team.",
         cards: {
           card1: {
             title: "Builder Benny",
-            description: "Creates and maintains process models in the background – structured, consistent, and always up to date."
+            description: "Suggests changes to the process model. Helps detect schema changes in your data sources and supervises data imports and their performance."
           },
           card2: {
             title: "Analyst Andy",
-            description: "Continuously analyzes your processes, detects deviations early, and delivers clear insights into the current state."
+            description: "Keeps an eye on your process performance, identifies root causes of deviations, and suggests optimization opportunities."
           },
           card3: {
             title: "Compliance Conny",
-            description: "Keeps an eye on internal guidelines and requirements, automatically alerting you to risks and rule violations."
+            description: "Monitors compliance issues and validates process execution based on contextual data. Creates compliance reports for stakeholders."
           }
         },
         waitlistCta: {
@@ -1668,20 +1668,20 @@ export const translations: Record<Language, Translations> = {
         formError: "Das Kontaktformular konnte nicht geladen werden. Bitte lade die Seite neu oder schreibe uns an hello@noreja.com."
       },
       aiAgents: {
-        title: "KI-Agenten bei Noreja",
-        subtitle: "Entdecke die nächste Generation intelligenter Automatisierung. Unsere KI-Agenten arbeiten mit deinem Team zusammen, um Prozesse zu optimieren, Entscheidungen zu verbessern und neue Möglichkeiten zu erschließen.",
+        title: "Minerva Frontier Agents",
+        subtitle: "Autonome KI-Agenten, die unabhängig auf deinen Prozess- und Kontextdaten arbeiten. Sie analysieren, entscheiden und optimieren Workflows kontinuierlich – gemeinsam mit deinem Team.",
         cards: {
           card1: {
             title: "Builder Benny",
-            description: "Erstellt und pflegt Prozessmodelle im Hintergrund – strukturiert, konsistent und immer auf dem neuesten Stand."
+            description: "Schlägt Änderungen am Prozessmodell vor. Hilft, Schemaänderungen in deinen Datenquellen zu erkennen, und überwacht Datenimporte sowie deren Performance."
           },
           card2: {
             title: "Analyst Andy",
-            description: "Analysiert laufend deine Prozesse, erkennt Abweichungen frühzeitig und liefert dir klare Insights zum aktuellen Zustand."
+            description: "Behält deine Prozess-Performance im Blick, identifiziert Ursachen für Abweichungen und schlägt Optimierungspotenziale vor."
           },
           card3: {
             title: "Compliance Conny",
-            description: "Behält interne Richtlinien und Vorgaben im Blick und weist automatisch auf Risiken und Regelverstöße hin."
+            description: "Überwacht Compliance-Themen und validiert die Prozessausführung anhand von Kontextdaten. Erstellt Compliance-Reports für Stakeholder."
           }
         },
         waitlistCta: {
