@@ -598,6 +598,16 @@ export interface Translations {
     subtitle: string;
     message: string;
   };
+  metaDescriptions: {
+    functionalities: string;
+    pricing: string;
+    successStories: string;
+    partners: string;
+    team: string;
+    events: string;
+    downloads: string;
+    contact: string;
+  };
 }
 
 export const translations: Record<Language, Translations> = {
@@ -1317,6 +1327,16 @@ export const translations: Record<Language, Translations> = {
       title: "Under Maintenance",
       subtitle: "We're currently performing scheduled maintenance",
       message: "Our platform is temporarily unavailable while we deploy updates and improvements. We'll be back online shortly. Thank you for your patience."
+    },
+    metaDescriptions: {
+      functionalities: "Gain full real-time process transparency with Noreja – data-driven, AI-powered, and designed to support well-founded decisions for optimizing your business processes.",
+      pricing: "Discover Noreja’s pricing models – flexible packages for data-driven, AI-powered process analysis and transparent decision-making, tailored to your organization.",
+      successStories: "Learn from real projects: Noreja success stories show how companies achieve faster, more transparent, and more efficient operations through data-driven, AI-powered process analysis.",
+      partners: "Noreja’s partner ecosystem supports consulting, implementation, and the journey toward data-driven, AI-powered Process Intelligence – enabling transparency and operational impact.",
+      team: "Meet the Noreja team – experienced experts in data-driven process analysis and AI-powered Process Intelligence, working together to create transparency and value.",
+      events: "Stay informed about Noreja events focused on AI-powered process analysis and data-driven process optimization – practical formats for insights, exchange, and real-world learnings.",
+      downloads: "Download whitepapers, product briefs, and practical resources on data-driven, AI-powered Process Intelligence from Noreja – for deeper understanding and better decisions.",
+      contact: "Get in touch with Noreja – we support you with questions around data-driven, AI-powered Process Intelligence, solutions, and implementation."
     }
   },
   de: {
@@ -2042,6 +2062,16 @@ export const translations: Record<Language, Translations> = {
     },
     buttons: {
       contactUs: "Kontakt"
+    },
+    metaDescriptions: {
+      functionalities: "Erhalte mit Noreja vollständige Prozess-Transparenz in Echtzeit – datenbasiert, KI-gestützt und für fundierte Entscheidungen zur Optimierung deiner Geschäftsprozesse.",
+      pricing: "Entdecke die Preismodelle von Noreja – flexible Pakete für datenbasierte, KI-gestützte Prozessanalyse und transparente Entscheidungen, abgestimmt auf deine Organisation.",
+      successStories: "Lerne aus echten Projekten: Unsere Noreja Success Stories zeigen, wie Unternehmen mit datenbasierter, KI-gestützter Prozessanalyse schneller, transparenter und effizienter arbeiten.",
+      partners: "Unser Partner-Ecosystem bei Noreja unterstützt Beratung, Implementierung und den Weg zu datenbasierter, KI-gestützter Process Intelligence – für mehr Transparenz und operativen Erfolg.",
+      team: "Lerne das Noreja-Team kennen – erfahrene Experten für datenbasierte Prozessanalyse und KI-gestützte Process Intelligence, die gemeinsam Transparenz und Wert schaffen.",
+      events: "Bleib informiert über Noreja-Veranstaltungen zu KI-gestützter Prozessanalyse und datenbasierter Prozessoptimierung – praxisnahe Formate für Wissen, Austausch und echte Einblicke.",
+      downloads: "Lade Whitepaper, Produkt-Briefs und praxisrelevante Ressourcen zu datenbasierter, KI-gestützter Process Intelligence von Noreja herunter – für fundiertes Wissen und bessere Entscheidungen.",
+      contact: "Nimm Kontakt mit Noreja auf – wir unterstützen dich bei Fragen zu datenbasierter, KI-gestützter Process Intelligence, Lösungen und Implementierung."
     }
   }
 };

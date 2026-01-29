@@ -104,6 +104,7 @@ export interface SuccessStory {
   externalUrl: string;
   industry: Record<Language, string>;
   company_size: Record<Language, string>;
+  metaDescription?: Record<Language, string>;
 }
 
 export const successStories: SuccessStory[] = [
@@ -275,6 +276,10 @@ export const successStories: SuccessStory[] = [
     company_size: {
       en: "1000+ employees",
       de: "1000+ Mitarbeiter"
+    },
+    metaDescription: {
+      en: "Hector identified critical blind spots in their insurance claims processing, including high rates of reopened claims and bottlenecks from delayed repair invoices. Through Process Mining, they reduced processing time by 75% while improving accuracy across all departments.",
+      de: "Hector identifizierte kritische Blind-Spots in der Schadensabwicklung, darunter hohe Raten an wiedereröffneten Schadenfällen und Engpässe durch verzögerte Reparaturrechnungen. Durch Process Mining reduzierten sie die Verarbeitungszeit um 75% und verbesserten gleichzeitig die Genauigkeit in allen Abteilungen."
     }
   },
   {
@@ -439,6 +444,10 @@ export const successStories: SuccessStory[] = [
     company_size: {
       en: "500-1000 employees",
       de: "500-1000 Mitarbeiter"
+    },
+    metaDescription: {
+      en: "Megatron uncovered critical blind spots in their supply chain and production processes, identifying optimization opportunities in order assignment and work step recording. The analysis revealed potential for $2.3M in annual cost savings through improved process transparency.",
+      de: "Megatron deckte kritische Blind-Spots in der Supply Chain und Produktion auf und identifizierte Optimierungspotenziale bei der Auftragszuordnung und Arbeitsschritterfassung. Die Analyse ergab ein Potenzial von 2,3 Mio. € jährlicher Kosteneinsparungen durch verbesserte Prozesstransparenz."
     }
   },
   {
@@ -584,6 +593,10 @@ export const successStories: SuccessStory[] = [
     company_size: {
       en: "5000+ employees",
       de: "5000+ Mitarbeiter"
+    },
+    metaDescription: {
+      en: "IDM gained complete visibility into their Order-to-Cash process within three weeks, identifying critical bottlenecks in manual data entry and invoice processing. The analysis achieved 99.9% accuracy in process detection while significantly reducing manual workload.",
+      de: "IDM gewann innerhalb von drei Wochen vollständige Transparenz über ihren Order-to-Cash-Prozess und identifizierte kritische Engpässe bei der manuellen Dateneingabe und Rechnungsstellung. Die Analyse erreichte 99,9% Genauigkeit bei der Prozesserfassung und reduzierte den manuellen Arbeitsaufwand erheblich."
     }
   },
   {
@@ -774,6 +787,10 @@ Keine **Nachverfolgung der Prozess-Conformance** für die Bewerber-Experience.
     company_size: {
       en: "100-500 employees",
       de: "100-500 Mitarbeiter"
+    },
+    metaDescription: {
+      en: "CIB mapped their entire hiring process in just one month, identifying delays in initial applicant contact and bottlenecks in decision-making. The analysis revealed opportunities to reduce hiring time by up to one week and improve candidate experience, achieving 40% faster diagnosis of process issues.",
+      de: "CIB bildete ihren gesamten Einstellungsprozess in nur einem Monat ab und identifizierte Verzögerungen beim ersten Kontakt mit Bewerbern und Engpässe bei Entscheidungen. Die Analyse ergab Möglichkeiten, die Einstellungszeit um bis zu einer Woche zu verkürzen und die Kandidatenerfahrung zu verbessern, was zu 40% schnellerer Diagnose von Prozessproblemen führte."
     }
   }
 ];
