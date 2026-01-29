@@ -62,9 +62,9 @@ function AgentCard({ image, title, description, efficiencyTag, index }: AgentCar
       className="group relative overflow-hidden rounded-2xl border border-border/50 bg-card/80 backdrop-blur-sm hover:border-noreja-main/50 transition-all duration-300"
     >
       {/* Efficiency Tag */}
-      <div className="absolute top-4 left-4 z-20 inline-flex items-center px-4 py-2 rounded-full bg-primary/10 border border-primary/20">
-        <Zap className="w-4 h-4 mr-2 text-noreja-tertiary" />
-        <span className="text-sm font-medium">{efficiencyTag}</span>
+      <div className="absolute top-4 left-4 z-20 inline-flex items-center px-2.5 py-1 rounded-full bg-primary/10 border border-primary/20">
+        <Zap className="w-3 h-3 mr-1.5 text-noreja-tertiary" />
+        <span className="text-xs font-medium">{efficiencyTag}</span>
       </div>
 
       {/* Card Image */}

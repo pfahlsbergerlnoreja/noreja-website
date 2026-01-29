@@ -960,17 +960,17 @@ export const translations: Record<Language, Translations> = {
           card1: {
             title: "Builder Benny",
             description: "Suggests changes to the process model. Helps detect schema changes in your data sources and supervises data imports and their performance.",
-            efficiencyTag: "44% Efficiency"
+            efficiencyTag: "~40% faster model adjustments"
           },
           card2: {
             title: "Analyst Andy",
             description: "Keeps an eye on your process performance, identifies root causes of deviations, and suggests optimization opportunities.",
-            efficiencyTag: "32% Efficiency"
+            efficiencyTag: "~35% less analysis effort"
           },
           card3: {
             title: "Compliance Conny",
             description: "Monitors compliance issues and validates process execution based on contextual data. Creates compliance reports for stakeholders.",
-            efficiencyTag: "38% Efficiency"
+            efficiencyTag: "~30% lower compliance review effort"
           }
         },
         waitlistCta: {
@@ -1700,17 +1700,17 @@ export const translations: Record<Language, Translations> = {
           card1: {
             title: "Builder Benny",
             description: "Schlägt Änderungen am Prozessmodell vor. Hilft, Schemaänderungen in deinen Datenquellen zu erkennen, und überwacht Datenimporte sowie deren Performance.",
-            efficiencyTag: "44% Effizienz"
+            efficiencyTag: "~40% schnellere Modellanpassungen"
           },
           card2: {
             title: "Analyst Andy",
             description: "Behält deine Prozess-Performance im Blick, identifiziert Ursachen für Abweichungen und schlägt Optimierungspotenziale vor.",
-            efficiencyTag: "32% Effizienz"
+            efficiencyTag: "~35% weniger Analyseaufwand"
           },
           card3: {
             title: "Compliance Conny",
             description: "Überwacht Compliance-Themen und validiert die Prozessausführung anhand von Kontextdaten. Erstellt Compliance-Reports für Stakeholder.",
-            efficiencyTag: "38% Effizienz"
+            efficiencyTag: "~30% geringere Compliance-Review-Aufwände"
           }
         },
         waitlistCta: {
