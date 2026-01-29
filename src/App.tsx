@@ -124,8 +124,8 @@ const App = () => (
               <Route path="/en/terms" element={<TermsOfService />} />
               
               {/* AI Agents */}
-              <Route path="/de/ki-agenten" element={<AIAgents />} />
-              <Route path="/en/ai-agents" element={<AIAgents />} />
+              <Route path="/de/frontier-agents" element={<AIAgents />} />
+              <Route path="/en/frontier-agents" element={<AIAgents />} />
               
               {/* Maintenance (same for both) */}
               <Route path="/maintenance" element={<Maintenance />} />

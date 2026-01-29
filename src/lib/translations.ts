@@ -230,14 +230,17 @@ export interface Translations {
           card1: {
             title: string;
             description: string;
+            efficiencyTag: string;
           };
           card2: {
             title: string;
             description: string;
+            efficiencyTag: string;
           };
           card3: {
             title: string;
             description: string;
+            efficiencyTag: string;
           };
         };
         waitlistCta: {
@@ -946,15 +949,18 @@ export const translations: Record<Language, Translations> = {
         cards: {
           card1: {
             title: "Builder Benny",
-            description: "Suggests changes to the process model. Helps detect schema changes in your data sources and supervises data imports and their performance."
+            description: "Suggests changes to the process model. Helps detect schema changes in your data sources and supervises data imports and their performance.",
+            efficiencyTag: "44% Efficiency"
           },
           card2: {
             title: "Analyst Andy",
-            description: "Keeps an eye on your process performance, identifies root causes of deviations, and suggests optimization opportunities."
+            description: "Keeps an eye on your process performance, identifies root causes of deviations, and suggests optimization opportunities.",
+            efficiencyTag: "32% Efficiency"
           },
           card3: {
             title: "Compliance Conny",
-            description: "Monitors compliance issues and validates process execution based on contextual data. Creates compliance reports for stakeholders."
+            description: "Monitors compliance issues and validates process execution based on contextual data. Creates compliance reports for stakeholders.",
+            efficiencyTag: "38% Efficiency"
           }
         },
         waitlistCta: {
@@ -1673,15 +1679,18 @@ export const translations: Record<Language, Translations> = {
         cards: {
           card1: {
             title: "Builder Benny",
-            description: "Schlägt Änderungen am Prozessmodell vor. Hilft, Schemaänderungen in deinen Datenquellen zu erkennen, und überwacht Datenimporte sowie deren Performance."
+            description: "Schlägt Änderungen am Prozessmodell vor. Hilft, Schemaänderungen in deinen Datenquellen zu erkennen, und überwacht Datenimporte sowie deren Performance.",
+            efficiencyTag: "44% Effizienz"
           },
           card2: {
             title: "Analyst Andy",
-            description: "Behält deine Prozess-Performance im Blick, identifiziert Ursachen für Abweichungen und schlägt Optimierungspotenziale vor."
+            description: "Behält deine Prozess-Performance im Blick, identifiziert Ursachen für Abweichungen und schlägt Optimierungspotenziale vor.",
+            efficiencyTag: "32% Effizienz"
           },
           card3: {
             title: "Compliance Conny",
-            description: "Überwacht Compliance-Themen und validiert die Prozessausführung anhand von Kontextdaten. Erstellt Compliance-Reports für Stakeholder."
+            description: "Überwacht Compliance-Themen und validiert die Prozessausführung anhand von Kontextdaten. Erstellt Compliance-Reports für Stakeholder.",
+            efficiencyTag: "38% Effizienz"
           }
         },
         waitlistCta: {

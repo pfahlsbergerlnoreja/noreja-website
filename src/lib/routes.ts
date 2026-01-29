@@ -63,8 +63,8 @@ export const routes = {
     en: '/en/terms',
   },
   aiAgents: {
-    de: '/de/ki-agenten',
-    en: '/en/ai-agents',
+    de: '/de/frontier-agents',
+    en: '/en/frontier-agents',
   },
   maintenance: {
     de: '/maintenance',
@@ -100,8 +100,8 @@ const pathToRouteKey: Record<string, keyof typeof routes> = {
   '/en/terms': 'terms',
   '/de/download-vielen-dank': 'downloadThankYou',
   '/en/download-thank-you': 'downloadThankYou',
-  '/de/ki-agenten': 'aiAgents',
-  '/en/ai-agents': 'aiAgents',
+  '/de/frontier-agents': 'aiAgents',
+  '/en/frontier-agents': 'aiAgents',
   '/maintenance': 'maintenance',
 };
 

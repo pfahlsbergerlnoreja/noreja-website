@@ -4,7 +4,7 @@ import { AnimatedGridBackground } from "@/components/AnimatedGridBackground";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Zap } from "lucide-react";
 import { config } from "@/lib/config";
 
 // Agent card images
@@ -49,10 +49,11 @@ interface AgentCardProps {
   image: string;
   title: string;
   description: string;
+  efficiencyTag: string;
   index: number;
 }
 
-function AgentCard({ image, title, description, index }: AgentCardProps) {
+function AgentCard({ image, title, description, efficiencyTag, index }: AgentCardProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
@@ -60,6 +61,12 @@ function AgentCard({ image, title, description, index }: AgentCardProps) {
       transition={{ duration: 0.6, delay: 0.2 + index * 0.15 }}
       className="group relative overflow-hidden rounded-2xl border border-border/50 bg-card/80 backdrop-blur-sm hover:border-noreja-main/50 transition-all duration-300"
     >
+      {/* Efficiency Tag */}
+      <div className="absolute top-4 left-4 z-20 inline-flex items-center px-4 py-2 rounded-full bg-primary/10 border border-primary/20">
+        <Zap className="w-4 h-4 mr-2 text-noreja-tertiary" />
+        <span className="text-sm font-medium">{efficiencyTag}</span>
+      </div>
+
       {/* Card Image */}
       <div className="relative aspect-[1/1] overflow-hidden bg-muted">
         <img
@@ -114,16 +121,19 @@ export default function AIAgents() {
       image: cardImages.card1,
       title: t.pages.aiAgents.cards.card2.title,
       description: t.pages.aiAgents.cards.card2.description,
+      efficiencyTag: t.pages.aiAgents.cards.card2.efficiencyTag,
     },
     {
       image: cardImages.card2,
       title: t.pages.aiAgents.cards.card1.title,
       description: t.pages.aiAgents.cards.card1.description,
+      efficiencyTag: t.pages.aiAgents.cards.card1.efficiencyTag,
     },
     {
       image: cardImages.card3,
       title: t.pages.aiAgents.cards.card3.title,
       description: t.pages.aiAgents.cards.card3.description,
+      efficiencyTag: t.pages.aiAgents.cards.card3.efficiencyTag,
     },
   ];
 
@@ -154,7 +164,7 @@ export default function AIAgents() {
         </section>
 
         {/* Cards Section */}
-        <section className="pb-20 lg:pb-28">
+        <section className="pb-12 lg:pb-16">
           <div className="w-full max-w-7xl mx-auto px-4 lg:px-8">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
               {cards.map((card, index) => (
@@ -163,6 +173,7 @@ export default function AIAgents() {
                   image={card.image}
                   title={card.title}
                   description={card.description}
+                  efficiencyTag={card.efficiencyTag}
                   index={index}
                 />
               ))}
@@ -171,7 +182,7 @@ export default function AIAgents() {
         </section>
 
         {/* Waitlist CTA Section */}
-        <section className="py-20 lg:py-28">
+        <section className="pt-12 lg:pt-16 pb-20 lg:pb-28">
           <div className="w-full max-w-7xl mx-auto px-4 lg:px-8">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
