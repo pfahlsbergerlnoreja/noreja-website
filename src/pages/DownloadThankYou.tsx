@@ -4,6 +4,7 @@ import { CheckCircle, Download, FileText, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { getRoutePath } from "@/lib/routes";
 import { useNavigate } from "react-router-dom";
 
 const PENDING_DOWNLOAD_KEY = "pendingDownload";
@@ -162,7 +163,7 @@ export default function DownloadThankYou() {
                       </Button>
                     )}
                     <Button
-                      onClick={() => navigate("/downloads")}
+                      onClick={() => navigate(getRoutePath('downloads', language))}
                       variant="outline"
                       className="border-noreja-main/30 hover:bg-noreja-main/10"
                     >
