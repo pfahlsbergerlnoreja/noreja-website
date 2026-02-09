@@ -3,6 +3,7 @@ import { Shield } from "lucide-react";
 import { MarkdownBlock } from "@/components/MarkdownBlock";
 import { useEffect } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { getRoutePath } from "@/lib/routes";
 
 const privacyContent = `# Datenschutzerklärung
 
@@ -20,7 +21,7 @@ Bruck 12
 **Email:** info@noreja.com
 **Telefon:** +43 69010149533
 
-**Impressum:** www.noreja.com/impressum
+**Impressum:** [Impressum]({{IMPRINT_PATH}})
 
 ## Maßgebliche Rechtsgrundlagen
 
@@ -279,7 +280,7 @@ export default function PrivacyPolicy() {
     window.scrollTo(0, 0);
   }, []);
 
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   const gradientStyle = {
     background: `
@@ -323,7 +324,7 @@ export default function PrivacyPolicy() {
             className="bg-card/50 border border-border/40 rounded-lg p-8"
           >
             <MarkdownBlock 
-              content={privacyContent}
+              content={privacyContent.replace('{{IMPRINT_PATH}}', getRoutePath('imprint', language))}
               className="text-foreground"
             />
           </motion.div>
