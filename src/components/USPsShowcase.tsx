@@ -190,7 +190,7 @@ export function USPsShowcase() {
   };
 
   return (
-    <section ref={ref} className="py-12 md:py-20 overflow-hidden">
+    <section ref={ref} className="pt-12 md:pt-20 pb-16 md:pb-24 overflow-hidden">
       <div className="container mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 32 }}
