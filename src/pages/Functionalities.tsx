@@ -45,6 +45,7 @@ interface FeatureSectionProps {
 }
 
 const FeatureSection = ({ feature, Icon, layout, index, animationStyle }: FeatureSectionProps) => {
+  const { t } = useLanguage();
   const sectionRef = useRef<HTMLElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
@@ -234,6 +235,29 @@ const FeatureSection = ({ feature, Icon, layout, index, animationStyle }: Featur
                 <p key={index}>{paragraph.trim()}</p>
               ))}
             </motion.div>
+            {feature.id === "ai-analytics" && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={textInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                transition={{ duration: 0.6, delay: index * 0.1 + 0.6 }}
+                className="mt-6"
+              >
+                <Button
+                  variant="secondary"
+                  size="lg"
+                  onClick={() => {
+                    const element = document.getElementById("minerva-videos");
+                    if (element) {
+                      element.scrollIntoView({ behavior: "smooth", block: "start" });
+                    }
+                  }}
+                  className="group"
+                >
+                  {t.pages.functionalities.discoverVideoSeries}
+                  <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+                </Button>
+              </motion.div>
+            )}
           </div>
         </motion.div>
       </div>
@@ -477,6 +501,53 @@ const Functionalities = () => {
         <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-background to-transparent pointer-events-none z-0" />
         <section className="relative z-10 py-2 lg:py-20">
           <div className="w-full max-w-7xl mx-auto px-4 lg:px-8">
+            {/* YouTube Video Section */}
+            <div id="minerva-videos" className="mb-12 scroll-mt-24">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                viewport={{ once: true }}
+                className="w-full"
+              >
+                <div className="relative overflow-hidden rounded-3xl border border-border/60 bg-background/95 shadow-xl shadow-noreja-main/10">
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-noreja-main/10 via-transparent to-noreja-secondary/20 opacity-70 z-10" />
+                  
+                  <div className="relative z-20 p-4 lg:p-8">
+                    <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-6 text-center">
+                      {(() => {
+                        const headline = t.pages.functionalities.videoHeadline;
+                        // Highlight "im Detail" or "in Detail"
+                        const parts = headline.split(/(im Detail|in Detail)/i);
+                        return parts.map((part, index) => 
+                          /^(im Detail|in Detail)$/i.test(part) ? (
+                            <span key={index} className="bg-gradient-primary bg-clip-text text-transparent">
+                              {part}
+                            </span>
+                          ) : (
+                            <span key={index}>{part}</span>
+                          )
+                        );
+                      })()}
+                    </h3>
+                    
+                    {/* Responsive iframe container with 16:9 aspect ratio */}
+                    <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
+                      <iframe
+                        className="absolute top-0 left-0 w-full h-full rounded-lg"
+                        src="https://www.youtube.com/embed/_ZjG8y1s-os?list=PLOV__tuMtsoB3bmkSGmh3wI6PonkG8x7d"
+                        title="YouTube video player"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerPolicy="strict-origin-when-cross-origin"
+                        allowFullScreen
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+            
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}

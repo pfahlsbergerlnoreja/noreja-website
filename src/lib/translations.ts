@@ -24,6 +24,8 @@ export interface Translations {
       learnMoreHighlight: string;
       learnMoreSubtitle: string;
       learnMoreCta: string;
+      videoHeadline: string;
+      discoverVideoSeries: string;
       capabilities: {
         dataCollection: {
           title: string;
@@ -638,6 +640,8 @@ export const translations: Record<Language, Translations> = {
         learnMoreHighlight: "Find out what Noreja costs",
         learnMoreSubtitle: "Compare transparent packages and pick the setup that fits your team.",
         learnMoreCta: "View Pricing",
+        videoHeadline: "Minerva AI in detail",
+        discoverVideoSeries: "Discover Minerva in our video series",
         capabilities: {
           dataCollection: {
             title: "Data Collection",
@@ -1371,6 +1375,8 @@ export const translations: Record<Language, Translations> = {
         learnMoreHighlight: "Erfahre was Noreja kostet",
         learnMoreSubtitle: "Vergleiche transparente Pakete und finde das Setup, das zu deinem Team passt.",
         learnMoreCta: "Zu den Preisen",
+        videoHeadline: "Minerva AI im Detail",
+        discoverVideoSeries: "Entdecke Minerva in unserer Videoreihe",
         capabilities: {
           dataCollection: {
             title: "Datenerfassung",
