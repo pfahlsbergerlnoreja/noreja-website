@@ -14,9 +14,9 @@ import {
 } from "@/components/ui/carousel";
 import { Link } from "react-router-dom";
 import { getRoutePath } from "@/lib/routes";
-import analystImage from "@/assets/agents/analyst.webp";
-import builderImage from "@/assets/agents/builder.webp";
-import complianceImage from "@/assets/agents/compliance.webp";
+import analystImage from "@/assets/agents/agents_small/analyst_small.webp";
+import builderImage from "@/assets/agents/agents_small/builder_small.webp";
+import complianceImage from "@/assets/agents/agents_small/compliance_small.webp";
 
 const agentImages = [
   { src: analystImage, alt: "Analyst Agent" },
