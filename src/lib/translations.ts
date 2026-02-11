@@ -342,6 +342,11 @@ export interface Translations {
         description: string;
       };
     };
+    frontierAgentsCta: {
+      title: string;
+      subtitle: string;
+      buttonLabel: string;
+    };
   };
   usps: {
     title: string;
@@ -1071,6 +1076,11 @@ export const translations: Record<Language, Translations> = {
           title: "Workbench",
           description: "Extend your analyses with custom scripts in the integrated Jupyter Notebook, without leaving the application. Your data always stays with you."
         }
+      },
+      frontierAgentsCta: {
+        title: "Discover the Minerva Frontier Agents",
+        subtitle: "Autonomous AI agents that analyze, decide, and optimize your workflows alongside your team.",
+        buttonLabel: "Learn more"
       }
     },
     usps: {
@@ -1811,6 +1821,11 @@ export const translations: Record<Language, Translations> = {
           title: "Workbench",
           description: "Erweitere deine Analysen mit individuellen Skripten im integrierten Jupyter Notebook – ohne die Anwendung zu verlassen. Deine Daten bleiben immer bei dir."
         }
+      },
+      frontierAgentsCta: {
+        title: "Entdecke die Minerva Frontier Agents",
+        subtitle: "Autonome KI-Agenten, die deine Abläufe analysieren, entscheiden und gemeinsam mit deinem Team optimieren.",
+        buttonLabel: "Mehr erfahren"
       }
     },
     usps: {

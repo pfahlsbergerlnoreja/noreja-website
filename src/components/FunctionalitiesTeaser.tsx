@@ -14,6 +14,15 @@ import {
 } from "@/components/ui/carousel";
 import { Link } from "react-router-dom";
 import { getRoutePath } from "@/lib/routes";
+import analystImage from "@/assets/agents/analyst.webp";
+import builderImage from "@/assets/agents/builder.webp";
+import complianceImage from "@/assets/agents/compliance.webp";
+
+const agentImages = [
+  { src: analystImage, alt: "Analyst Agent" },
+  { src: builderImage, alt: "Builder Agent" },
+  { src: complianceImage, alt: "Compliance Agent" },
+] as const;
 
 export function FunctionalitiesTeaser() {
   const ref = useRef(null);
@@ -232,6 +241,62 @@ export function FunctionalitiesTeaser() {
             })}
           </div>
         </div>
+
+        {/* Frontier Agents CTA subsection */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="mt-10 rounded-xl bg-noreja-tertiary/5 pt-5 pb-6 sm:pt-6 sm:pb-8 text-center overflow-hidden"
+        >
+          <h3 className="text-xl sm:text-2xl font-semibold bg-gradient-tertiary bg-clip-text text-transparent mb-2">
+            {t.functionalities.frontierAgentsCta.title}
+          </h3>
+          <p className="text-base text-muted-foreground max-w-2xl mx-auto mb-6">
+            {t.functionalities.frontierAgentsCta.subtitle}
+          </p>
+          
+        </motion.div>
+
+        {/* Agent miniatures - single link to Frontier Agents page, one overlay button on hover */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="mt-8"
+        >
+          <Link
+            to={getRoutePath('aiAgents', language)}
+            className="group relative flex justify-center gap-8 w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-lg"
+            aria-label={t.functionalities.frontierAgentsCta.title}
+          >
+            {agentImages.map(({ src, alt }) => (
+              <div
+                key={alt}
+                className="w-24 h-24 rounded-full ring-2 ring-noreja-tertiary shadow-[0_0_16px_hsl(var(--noreja-tertiary)/0.4)] group-hover:shadow-[0_0_24px_hsl(var(--noreja-tertiary)/0.6)] transition-all duration-200 group-hover:scale-110"
+              >
+                <div className="w-full h-full rounded-full overflow-hidden relative">
+                  <img
+                    src={src}
+                    alt={alt}
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                  />
+                  <span
+                    className="absolute inset-0 bg-neutral-500/50 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+                    aria-hidden
+                  />
+                </div>
+              </div>
+            ))}
+            <span
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 px-6 py-3 rounded-xl font-semibold text-white whitespace-nowrap min-w-[240px] text-center gradient-tertiary border border-border/80 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none"
+              aria-hidden
+            >
+              {t.functionalities.frontierAgentsCta.title}
+            </span>
+          </Link>
+        </motion.div>
       </div>
     </section>
   );
