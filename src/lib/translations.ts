@@ -973,7 +973,7 @@ export const translations: Record<Language, Translations> = {
           },
           card2: {
             title: "Analyst Andy",
-            description: "Keeps an eye on your process performance, identifies root causes of deviations, and suggests optimization opportunities.",
+            description: "Keeps an eye on your process performance, identifies root causes of deviations, and suggests optimization opportunities for your processes.",
             efficiencyTag: "~35% less analysis effort"
           },
           card3: {
@@ -1720,7 +1720,7 @@ export const translations: Record<Language, Translations> = {
           },
           card2: {
             title: "Analyst Andy",
-            description: "Behält deine Prozess-Performance im Blick, identifiziert Ursachen für Abweichungen und schlägt Optimierungspotenziale vor.",
+            description: "Behält deine Prozess-Performance im Blick, identifiziert Ursachen für Abweichungen und schlägt Optimierungspotenziale in den Prozessen vor.",
             efficiencyTag: "~35% weniger Analyseaufwand"
           },
           card3: {
