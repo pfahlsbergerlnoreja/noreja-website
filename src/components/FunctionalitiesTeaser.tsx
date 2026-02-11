@@ -247,7 +247,7 @@ export function FunctionalitiesTeaser() {
           initial={{ opacity: 0, y: 24 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="mt-10 rounded-xl bg-noreja-tertiary/5 pt-5 pb-6 sm:pt-6 sm:pb-8 text-center overflow-hidden"
+          className="mt-6 rounded-xl bg-noreja-tertiary/5 pt-5 pb-4 sm:pt-6 sm:pb-4 text-center overflow-hidden"
         >
           <h3 className="text-xl sm:text-2xl font-semibold bg-gradient-tertiary bg-clip-text text-transparent mb-2">
             {t.functionalities.frontierAgentsCta.title}
@@ -263,7 +263,7 @@ export function FunctionalitiesTeaser() {
           initial={{ opacity: 0, y: 16 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="mt-8"
+          className="mt-4 pb-12"
         >
           <Link
             to={getRoutePath('aiAgents', language)}
@@ -273,24 +273,24 @@ export function FunctionalitiesTeaser() {
             {agentImages.map(({ src, alt }) => (
               <div
                 key={alt}
-                className="w-24 h-24 rounded-full ring-2 ring-noreja-tertiary shadow-[0_0_16px_hsl(var(--noreja-tertiary)/0.4)] group-hover:shadow-[0_0_24px_hsl(var(--noreja-tertiary)/0.6)] transition-all duration-200 group-hover:scale-110"
+                className="w-36 h-36 rounded-full ring-2 ring-noreja-tertiary shadow-[0_0_16px_hsl(var(--noreja-tertiary)/0.4)] group-hover:shadow-[0_0_24px_hsl(var(--noreja-tertiary)/0.6)] transition-all duration-200 group-hover:scale-110"
               >
                 <div className="w-full h-full rounded-full overflow-hidden relative">
                   <img
                     src={src}
                     alt={alt}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-contain scale-75"
                     loading="lazy"
                   />
                   <span
-                    className="absolute inset-0 bg-neutral-500/50 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+                    className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
                     aria-hidden
                   />
                 </div>
               </div>
             ))}
             <span
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 px-6 py-3 rounded-xl font-semibold text-white whitespace-nowrap min-w-[240px] text-center gradient-tertiary border border-border/80 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none"
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 px-6 py-3 rounded-xl font-semibold text-white whitespace-nowrap min-w-[240px] text-center gradient-tertiary backdrop-blur-sm opacity-0 group-hover:opacity-90 transition-opacity duration-200 pointer-events-none"
               aria-hidden
             >
               {t.functionalities.frontierAgentsCta.title}

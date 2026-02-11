@@ -964,7 +964,7 @@ export const translations: Record<Language, Translations> = {
       },
       aiAgents: {
         title: "Minerva Frontier Agents",
-        subtitle: "Autonomous AI Agents that operate independently on your process and contextual data. Continuously analyzing, deciding, and optimizing workflows alongside your team.",
+        subtitle: "AI agents that independently understand and evolve your processes — data-driven, context-aware, and continuously aligned with your organization.",
         cards: {
           card1: {
             title: "Builder Benny",
@@ -1711,7 +1711,7 @@ export const translations: Record<Language, Translations> = {
       },
       aiAgents: {
         title: "Minerva Frontier Agents",
-        subtitle: "Autonome KI-Agenten, die unabhängig auf deinen Prozess- und Kontextdaten arbeiten. Sie analysieren, entscheiden und optimieren Workflows kontinuierlich – gemeinsam mit deinem Team.",
+        subtitle: "KI-Agenten, die deine Prozesse eigenständig verstehen und kontinuierlich weiterentwickeln – datenbasiert, kontextsensitiv und immer am Puls deiner Organisation.",
         cards: {
           card1: {
             title: "Builder Benny",
