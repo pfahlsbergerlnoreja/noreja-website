@@ -116,7 +116,7 @@ export function FunctionalitiesTeaser() {
   }, [api, isPaused]);
 
   return (
-    <section ref={ref} className="py-20 overflow-hidden">
+    <section ref={ref} className="py-28 overflow-hidden">
       <div className="container mx-auto px-4 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 32 }}
@@ -247,7 +247,7 @@ export function FunctionalitiesTeaser() {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="mt-6 mx-auto w-fit rounded-xl shine-border-wrapper"
+          className="mt-16 mx-auto w-fit rounded-xl shine-border-wrapper"
         >
           <div className="animated-border-box-glow" />
           <div className="animated-border-box">
@@ -256,7 +256,7 @@ export function FunctionalitiesTeaser() {
             initial={{ opacity: 0, y: 24 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="rounded-t-[calc(0.75rem-2px)] bg-gradient-to-b from-noreja-main/12 via-noreja-main/6 to-noreja-secondary/8 pt-5 pb-4 sm:pt-6 sm:pb-4 text-center"
+            className="rounded-t-[calc(0.75rem-2px)] bg-gradient-to-b from-noreja-main/12 via-noreja-main/6 to-noreja-secondary/8 pt-5 pb-4 sm:pt-6 sm:pb-4 px-6 sm:px-8 text-center"
           >
             <h3 className="text-xl sm:text-2xl font-semibold bg-gradient-tertiary bg-clip-text text-transparent mb-2">
               {t.functionalities.frontierAgentsCta.title}
