@@ -242,27 +242,23 @@ export function FunctionalitiesTeaser() {
           </div>
         </div>
 
-        {/* Frontier Agents CTA and Agent Miniatures - Wrapped with single border */}
+        {/* Frontier Agents CTA and Agent Miniatures - Shine border effect */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="mt-6 mx-auto w-fit rounded-xl border-2 border-[hsl(var(--noreja-tertiary))] border-glow-tertiary relative overflow-hidden"
+          className="mt-6 mx-auto w-fit rounded-xl shine-border-wrapper"
         >
-          {/* Animated glowing dots */}
-          <div className="border-glow-dots">
-            <div className="border-glow-dot" />
-            <div className="border-glow-dot" />
-            <div className="border-glow-dot" />
-            <div className="border-glow-dot" />
-          </div>
+          {/* Rotating conic gradient border */}
+          <div className="shine-border-gradient" />
           
+          <div className="shine-border-content">
           {/* Frontier Agents CTA subsection */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="rounded-t-xl bg-noreja-tertiary/5 pt-5 pb-4 sm:pt-6 sm:pb-4 text-center"
+            className="rounded-t-[calc(0.75rem-2px)] bg-noreja-tertiary/5 pt-5 pb-4 sm:pt-6 sm:pb-4 text-center"
           >
             <h3 className="text-xl sm:text-2xl font-semibold bg-gradient-tertiary bg-clip-text text-transparent mb-2">
               {t.functionalities.frontierAgentsCta.title}
@@ -316,6 +312,7 @@ export function FunctionalitiesTeaser() {
             </span>
           </Link>
           </motion.div>
+          </div>
         </motion.div>
       </div>
     </section>

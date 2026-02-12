@@ -181,6 +181,28 @@ export default function AIAgents() {
           </div>
         </section>
 
+        {/* Frontier Agents Explainer */}
+        <section className="py-12 lg:py-16">
+          <div className="w-full max-w-7xl mx-auto px-4 lg:px-8">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="max-w-3xl mx-auto text-center"
+            >
+              <h2 className="text-2xl md:text-3xl font-bold mb-6 text-foreground">
+                {t.pages.aiAgents.frontierAgentsExplainer.title}
+              </h2>
+              <p className="text-muted-foreground leading-relaxed mb-4">
+                {t.pages.aiAgents.frontierAgentsExplainer.paragraph1}
+              </p>
+              <p className="text-muted-foreground leading-relaxed">
+                {t.pages.aiAgents.frontierAgentsExplainer.paragraph2}
+              </p>
+            </motion.div>
+          </div>
+        </section>
+
         {/* Waitlist CTA Section */}
         <section className="pt-12 lg:pt-16 pb-20 lg:pb-28">
           <div className="w-full max-w-7xl mx-auto px-4 lg:px-8">

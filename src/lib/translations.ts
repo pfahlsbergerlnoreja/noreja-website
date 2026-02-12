@@ -250,6 +250,11 @@ export interface Translations {
           subtitle: string;
           buttonLabel: string;
         };
+        frontierAgentsExplainer: {
+          title: string;
+          paragraph1: string;
+          paragraph2: string;
+        };
       };
     };
   hero: {
@@ -986,6 +991,11 @@ export const translations: Record<Language, Translations> = {
           title: "Be Among the First",
           subtitle: "Join the waitlist to get early access to our AI Agents.",
           buttonLabel: "Join the Waitlist"
+        },
+        frontierAgentsExplainer: {
+          title: "What are frontier agents?",
+          paragraph1: "Frontier Agents are autonomous, AI-powered agents within Noreja that work continuously in the background on a specific task or question. Rather than merely responding to individual, manual analyses, they pursue a goal over a longer period: They observe developments, detect changes, test hypotheses, and deliver results proactively—always in relation to the process and knowledge context available in Noreja.",
+          paragraph2: "An important point: Frontier Agents are not one-off \"queries\" but rather digital team members that stay engaged over time. They continuously analyze data and models, keep defined KPIs or rules in view, and report back as soon as something relevant arises—for example, when process performance deviates, when data sources change, or when compliance risks emerge."
         }
       }
     },
@@ -1733,6 +1743,11 @@ export const translations: Record<Language, Translations> = {
           title: "Sei unter den Ersten",
           subtitle: "Trag dich auf die Warteliste ein und erhalte frühzeitig Zugang zu unseren KI-Agenten.",
           buttonLabel: "Auf die Warteliste"
+        },
+        frontierAgentsExplainer: {
+          title: "Was sind Frontier Agents?",
+          paragraph1: "Frontier Agents sind autonom arbeitende, KI-gestützte Agents innerhalb von Noreja, die im Hintergrund kontinuierlich an einer konkreten Fragestellung arbeiten. Statt nur auf einzelne, manuelle Analysen zu reagieren, verfolgen sie ein Ziel über längere Zeit hinweg: Sie beobachten Entwicklungen, erkennen Veränderungen, prüfen Hypothesen und liefern proaktiv Ergebnisse – immer bezogen auf den Prozess- und Wissenskontext, der in Noreja verfügbar ist.",
+          paragraph2: "Ein wichtiger Punkt dabei: Frontier Agents sind keine einmaligen „Abfragen\", sondern eher digitale Teammitglieder, die dauerhaft „dranbleiben\". Sie analysieren fortlaufend Daten und Modelle, behalten definierte Kennzahlen oder Regeln im Blick und melden sich, sobald sich etwas Relevantes ergibt – z. B. wenn die Prozess-Performance abweicht, wenn sich Datenquellen verändern oder wenn Compliance-Risiken entstehen."
         }
       }
     },

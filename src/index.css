@@ -254,114 +254,40 @@
     transform: rotateY(180deg);
   }
 
-  /* Animated glowing dot border effect - four stretched dots */
-  @keyframes borderDotTravel {
-    0% {
-      top: -1px;
-      left: -1px;
-      width: 40px;
-      height: 4px;
-      transform: translateX(-50%);
+  /* Shine border - rotating conic gradient effect */
+  @keyframes shineSpin {
+    from {
+      transform: rotate(0deg);
     }
-    24.99% {
-      top: -1px;
-      left: calc(100% + 1px);
-      width: 40px;
-      height: 4px;
-      transform: translateX(-50%);
-    }
-    25% {
-      top: -1px;
-      left: calc(100% + 1px);
-      width: 4px;
-      height: 40px;
-      transform: translate(-50%, -50%);
-    }
-    49.99% {
-      top: calc(100% + 1px);
-      left: calc(100% + 1px);
-      width: 4px;
-      height: 40px;
-      transform: translate(-50%, -50%);
-    }
-    50% {
-      top: calc(100% + 1px);
-      left: calc(100% + 1px);
-      width: 40px;
-      height: 4px;
-      transform: translateX(-50%);
-    }
-    74.99% {
-      top: calc(100% + 1px);
-      left: -1px;
-      width: 40px;
-      height: 4px;
-      transform: translateX(-50%);
-    }
-    75% {
-      top: calc(100% + 1px);
-      left: -1px;
-      width: 4px;
-      height: 40px;
-      transform: translate(-50%, -50%);
-    }
-    99.99% {
-      top: -1px;
-      left: -1px;
-      width: 4px;
-      height: 40px;
-      transform: translate(-50%, -50%);
-    }
-    100% {
-      top: -1px;
-      left: -1px;
-      width: 40px;
-      height: 4px;
-      transform: translateX(-50%);
+    to {
+      transform: rotate(360deg);
     }
   }
 
-  .border-glow-tertiary {
+  .shine-border-wrapper {
     position: relative;
-    isolation: isolate;
+    overflow: hidden;
   }
 
-  .border-glow-dots {
+  .shine-border-gradient {
     position: absolute;
-    inset: 0;
+    inset: -2px;
+    border-radius: calc(0.75rem + 2px);
+    background: conic-gradient(
+      from 0deg,
+      transparent,
+      hsl(var(--noreja-tertiary)) 10%,
+      transparent 20%
+    );
+    animation: shineSpin 14s linear infinite;
     pointer-events: none;
-    z-index: 1;
   }
 
-  .border-glow-dot {
-    position: absolute;
-    border-radius: 12px;
-    background: hsl(var(--noreja-tertiary));
-    box-shadow: 
-      0 0 8px hsl(var(--noreja-tertiary)),
-      0 0 16px hsl(var(--noreja-tertiary) / 0.8),
-      0 0 24px hsl(var(--noreja-tertiary) / 0.6);
-    animation: borderDotTravel 18s linear infinite;
-  }
-
-  .border-glow-dot:nth-child(1) {
-    animation-delay: 0s;
-  }
-
-  .border-glow-dot:nth-child(2) {
-    animation-delay: -4.5s;
-  }
-
-  .border-glow-dot:nth-child(3) {
-    animation-delay: -9s;
-  }
-
-  .border-glow-dot:nth-child(4) {
-    animation-delay: -13.5s;
-  }
-
-  .border-glow-tertiary > *:not(.border-glow-dots) {
+  .shine-border-content {
     position: relative;
     z-index: 1;
+    margin: 2px;
+    border-radius: calc(0.75rem - 2px);
+    background: hsl(var(--background));
   }
 }
