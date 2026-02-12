@@ -116,8 +116,8 @@ export function FunctionalitiesTeaser() {
   }, [api, isPaused]);
 
   return (
-    <section ref={ref} className="py-28 overflow-hidden">
-      <div className="container mx-auto px-4 lg:px-8">
+    <section ref={ref} className="py-36 lg:py-40 overflow-hidden">
+      <div className="container mx-auto px-4 lg:px-8 overflow-hidden min-h-[800px] lg:min-h-[900px]">
         <motion.div
           initial={{ opacity: 0, y: 32 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 32 }}
