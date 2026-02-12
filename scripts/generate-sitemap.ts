@@ -94,6 +94,8 @@ function generateSitemap() {
   addEntry('/en/downloads', 0.8, 'weekly');
   addEntry('/de/kontakt', 0.8, 'weekly');
   addEntry('/en/contact', 0.8, 'weekly');
+  addEntry('/de/frontier-agents', 0.8, 'weekly');
+  addEntry('/en/frontier-agents', 0.8, 'weekly');
 
   // Legal pages (lower priority)
   addEntry('/de/impressum', 0.5, 'monthly');

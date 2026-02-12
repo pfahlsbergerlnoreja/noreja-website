@@ -242,23 +242,21 @@ export function FunctionalitiesTeaser() {
           </div>
         </div>
 
-        {/* Frontier Agents CTA and Agent Miniatures - Shine border effect */}
+        {/* Frontier Agents CTA and Agent Miniatures - CodePen-style shine border */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.6, delay: 0.3 }}
           className="mt-6 mx-auto w-fit rounded-xl shine-border-wrapper"
         >
-          {/* Rotating conic gradient border */}
-          <div className="shine-border-gradient" />
-          
-          <div className="shine-border-content">
+          <div className="animated-border-box-glow" />
+          <div className="animated-border-box">
           {/* Frontier Agents CTA subsection */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="rounded-t-[calc(0.75rem-2px)] bg-noreja-tertiary/5 pt-5 pb-4 sm:pt-6 sm:pb-4 text-center"
+            className="rounded-t-[calc(0.75rem-2px)] bg-gradient-to-b from-noreja-main/12 via-noreja-main/6 to-noreja-secondary/8 pt-5 pb-4 sm:pt-6 sm:pb-4 text-center"
           >
             <h3 className="text-xl sm:text-2xl font-semibold bg-gradient-tertiary bg-clip-text text-transparent mb-2">
               {t.functionalities.frontierAgentsCta.title}
@@ -268,49 +266,93 @@ export function FunctionalitiesTeaser() {
             </p>
           </motion.div>
 
-          {/* Agent miniatures - single link to Frontier Agents page, one overlay button on hover */}
+          {/* Agent miniatures - mobile: carousel + button, desktop: grid with hover overlay */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
             transition={{ duration: 0.5, delay: 0.2 }}
             className="pb-12"
           >
-          <Link
-            to={getRoutePath('aiAgents', language)}
-            className="group relative flex justify-center gap-8 w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-lg"
-            aria-label={t.functionalities.frontierAgentsCta.title}
-          >
-            {agentImages.map(({ src, alt, label, name }) => (
-              <div key={alt} className="flex flex-col items-center">
-                <div
-                  className="w-36 h-36 rounded-full ring-2 ring-noreja-tertiary shadow-[0_0_16px_hsl(var(--noreja-tertiary)/0.4)] group-hover:shadow-[0_0_24px_hsl(var(--noreja-tertiary)/0.6)] transition-all duration-200 group-hover:scale-110"
-                >
-                  <div className="w-full h-full rounded-full overflow-hidden relative">
-                    <img
-                      src={src}
-                      alt={alt}
-                      className="w-full h-full object-contain scale-75"
-                      loading="lazy"
-                    />
-                    <span
-                      className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
-                      aria-hidden
-                    />
+            {/* Mobile: Carousel of agents + visible CTA button */}
+            <div className="lg:hidden flex flex-col items-center gap-6">
+              <Carousel
+                opts={{ align: "center", loop: true }}
+                className="w-full max-w-[280px] mx-auto"
+              >
+                <CarouselContent className="-ml-0">
+                  {agentImages.map(({ src, alt, label, name }) => (
+                    <CarouselItem key={alt} className="pl-0">
+                      <Link
+                        to={getRoutePath('aiAgents', language)}
+                        className="flex flex-col items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-lg active:scale-[0.98] transition-transform"
+                        aria-label={t.functionalities.frontierAgentsCta.title}
+                      >
+                        <div className="w-36 h-36 rounded-full ring-2 ring-noreja-tertiary shadow-[0_0_16px_hsl(var(--noreja-tertiary)/0.4)] transition-all duration-200">
+                          <div className="w-full h-full rounded-full overflow-hidden">
+                            <img
+                              src={src}
+                              alt={alt}
+                              className="w-full h-full object-contain scale-75"
+                              loading="lazy"
+                            />
+                          </div>
+                        </div>
+                        <div className="mt-3 text-center">
+                          <div className="text-sm font-semibold text-foreground">{label}</div>
+                          <div className="text-sm text-muted-foreground">{name}</div>
+                        </div>
+                      </Link>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                <CarouselPrevious className="left-2 h-8 w-8 opacity-60 hover:opacity-100 bg-background/80" />
+                <CarouselNext className="right-2 h-8 w-8 opacity-60 hover:opacity-100 bg-background/80" />
+              </Carousel>
+              <Button asChild size="lg" className="gradient-tertiary glow-primary group">
+                <Link to={getRoutePath('aiAgents', language)}>
+                  {t.functionalities.frontierAgentsCta.title}
+                  <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                </Link>
+              </Button>
+            </div>
+
+            {/* Desktop: Original layout with hover overlay */}
+            <Link
+              to={getRoutePath('aiAgents', language)}
+              className="hidden lg:flex group relative justify-center gap-8 w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-lg"
+              aria-label={t.functionalities.frontierAgentsCta.title}
+            >
+              {agentImages.map(({ src, alt, label, name }) => (
+                <div key={alt} className="flex flex-col items-center">
+                  <div
+                    className="w-36 h-36 rounded-full ring-2 ring-noreja-tertiary shadow-[0_0_16px_hsl(var(--noreja-tertiary)/0.4)] group-hover:shadow-[0_0_24px_hsl(var(--noreja-tertiary)/0.6)] transition-all duration-200 group-hover:scale-110"
+                  >
+                    <div className="w-full h-full rounded-full overflow-hidden relative">
+                      <img
+                        src={src}
+                        alt={alt}
+                        className="w-full h-full object-contain scale-75"
+                        loading="lazy"
+                      />
+                      <span
+                        className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+                        aria-hidden
+                      />
+                    </div>
+                  </div>
+                  <div className="mt-3 text-center">
+                    <div className="text-sm font-semibold text-foreground">{label}</div>
+                    <div className="text-sm text-muted-foreground">{name}</div>
                   </div>
                 </div>
-                <div className="mt-3 text-center">
-                  <div className="text-sm font-semibold text-foreground">{label}</div>
-                  <div className="text-sm text-muted-foreground">{name}</div>
-                </div>
-              </div>
-            ))}
-            <span
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 px-6 py-3 rounded-xl font-semibold text-white whitespace-nowrap min-w-[240px] text-center gradient-tertiary backdrop-blur-sm opacity-0 group-hover:opacity-90 transition-opacity duration-200 pointer-events-none"
-              aria-hidden
-            >
-              {t.functionalities.frontierAgentsCta.title}
-            </span>
-          </Link>
+              ))}
+              <span
+                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 px-6 py-3 rounded-xl font-semibold text-white whitespace-nowrap min-w-[240px] text-center gradient-tertiary backdrop-blur-sm opacity-0 group-hover:opacity-90 transition-opacity duration-200 pointer-events-none"
+                aria-hidden
+              >
+                {t.functionalities.frontierAgentsCta.title}
+              </span>
+            </Link>
           </motion.div>
           </div>
         </motion.div>
