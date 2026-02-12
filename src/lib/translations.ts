@@ -641,7 +641,7 @@ export const translations: Record<Language, Translations> = {
         title: "Product",
         titleHighlight: "Functionalities",
         subtitle: "Gain complete transparency into your processes—clear, data-driven, and in real time. AI guides you to the biggest opportunities and helps you implement lasting improvements.",
-        learnMore: "Clear options –",
+        learnMore: "Clear options —",
         learnMoreHighlight: "Find out what Noreja costs",
         learnMoreSubtitle: "Compare transparent packages and pick the setup that fits your team.",
         learnMoreCta: "View Pricing",
@@ -704,7 +704,7 @@ export const translations: Record<Language, Translations> = {
           buttonLabel: "View Pricing"
         },
         partnerSection: {
-          title: "Trusted Partners –",
+          title: "Trusted Partners —",
           highlight: "real value",
           subtitle: "Our consulting and implementation partners help you unlock even more from Noreja Process Intelligence. See how they move your initiatives forward with precision.",
           buttonLabel: "Explore Partners"
@@ -735,7 +735,7 @@ export const translations: Record<Language, Translations> = {
         learnMore: "Learn More",
         partnerSubtitle: "Join our ecosystem of innovative partners and unlock new opportunities for growth, collaboration, and shared success.",
         successStoriesCta: {
-          title: "Successful Projects –",
+          title: "Successful Projects —",
           highlight: "real results",
           description: "Discover how organizations use Noreja Process Intelligence to work more efficiently—and what you can apply to your own processes.",
           buttonLabel: "Explore Success Stories"
@@ -1019,7 +1019,7 @@ export const translations: Record<Language, Translations> = {
       }
     },
     functionalities: {
-      title: "One platform –",
+      title: "One platform —",
       titleHighlight: "with AI-powered Process Intelligence",
       subtitle: "Our platform unifies every process data point, analysis, and insight in one place. AI helps you understand workflows, uncover bottlenecks, and make better decisions faster.",
       exploreFeatures: "Explore All Features",
@@ -1098,7 +1098,7 @@ export const translations: Record<Language, Translations> = {
       }
     },
     usps: {
-      title: "Four strengths –",
+      title: "Four strengths —",
       highlight: "one clear advantage",
       subtitle: "These capabilities give you full transparency, greater efficiency, and more control over your processes. Discover the four core areas that make the decisive difference.",
       tapToLearnMore: "Tap to learn more",
@@ -1123,7 +1123,7 @@ export const translations: Record<Language, Translations> = {
     },
     integrations: {
       badge: "Integrations",
-      title: "Flexible connectivity –",
+      title: "Flexible connectivity —",
       titleHighlight: "limitless data integration",
       subtitle: "With numerous connectors you can link data from diverse source systems in no time. This creates an end-to-end, reliable foundation for your process analyses. Noreja connects virtually every well-known relational database technology and can also ingest data via common REST APIs. Individual data sources can then be combined to map entire end-to-end process chains.",
       discoverIntegrations: "Discover integrations"
@@ -1179,7 +1179,7 @@ export const translations: Record<Language, Translations> = {
       },
     },
     partners: {
-      title: "Real insights –",
+      title: "Real insights —",
       titleHighlight: "voices from the field",
       subtitle: "Our customers and partners share how they achieve tangible improvements with Process Intelligence. Let their experiences and successes inspire you.",
       viewAll: "View All Partners",
@@ -1191,7 +1191,7 @@ export const translations: Record<Language, Translations> = {
       }
     },
     blog: {
-      title: "Relevant topics –",
+      title: "Relevant topics —",
       titleHighlight: "curated for you",
       subtitle: "Our blog shares best practices, trends, and well-founded insights on modern process management. Stay up to date and deepen your expertise.",
       latestPosts: "Latest Posts",
@@ -1306,7 +1306,7 @@ export const translations: Record<Language, Translations> = {
     },
     finalCta: {
       badge: "Ready to Start",
-      title: "Take the Next Step – ",
+      title: "Take the Next Step — ",
       titleHighlight: "with Noreja",
       subtitle: "Join companies that are redefining growth and efficiency with intelligent process analysis.",
       ctaPrimary: "Get Started Today",
@@ -1771,7 +1771,7 @@ export const translations: Record<Language, Translations> = {
       }
     },
     functionalities: {
-      title: "Eine Plattform -",
+      title: "Eine Plattform —",
       titleHighlight: "mit KI-gestützer Process Intelligence",
       subtitle: "Mit unserer Plattform erhältst du vollständige Transparenz über deine Prozesse – übersichtlich, datenbasiert und in Echtzeit. KI unterstützt dich dabei, Potenziale zu erkennen und nachhaltige Verbesserungen umzusetzen.",
       exploreFeatures: "Alle Features erkunden",
@@ -1850,7 +1850,7 @@ export const translations: Record<Language, Translations> = {
       }
     },
     usps: {
-      title: "Vier Stärken -",
+      title: "Vier Stärken —",
       highlight: "ein klarer Vorteil",
       subtitle: "Leistungsmerkmale geben dir volle Transparenz, höhere Effizienz und mehr Kontrolle über deine Prozesse. Entdecke die vier Kernbereiche, die für dich den entscheidenden Unterschied machen.",
       tapToLearnMore: "Tippen, um mehr zu erfahren",
@@ -1875,7 +1875,7 @@ export const translations: Record<Language, Translations> = {
     },
     integrations: {
       badge: "Integrationen",
-      title: "Flexible Anbindung -",
+      title: "Flexible Anbindung —",
       titleHighlight: "grenzenlose Datenintegration",
       subtitle: "Dank zahlreicher Connectoren bindest du Daten aus verschiedensten Quellsystemen im Handumdrehen an. So schaffst du dir eine durchgängige und verlässliche Basis für deine Prozessanalysen. Noreja bindet quasi alle bekannten relationalen Datenbanktechnologien an. Zudem können Daten über gängige REST-APIs angebunden werden. Einzelnen Datenquellen können anschließend miteinander verbunden werden, um ganze Ende-zu-Ende Prozessketten abbilden zu können.",
       discoverIntegrations: "Integrationen entdecken"
@@ -1931,7 +1931,7 @@ export const translations: Record<Language, Translations> = {
       },
     },
     partners: {
-      title: "Echte Einblicke -",
+      title: "Echte Einblicke —",
       titleHighlight: "Stimmen aus der Praxis",
       subtitle: "Unsere Kunden und Partner berichten, wie sie mit Process Intelligence echte Verbesserungen erzielen. Lass dich von ihren Erfahrungen und Erfolgen inspirieren.",
       viewAll: "Alle Partner anzeigen",
@@ -1943,7 +1943,7 @@ export const translations: Record<Language, Translations> = {
       }
     },
     blog: {
-      title: "Relevante Themen -",
+      title: "Relevante Themen —",
       titleHighlight: "kompakt aufbereitet",
       subtitle: "In unserem Blog findest du Best Practices, Trends und fundierte Einblicke rund um modernes Prozessmanagement. Bleib auf dem neuesten Stand und vertiefe dein Wissen.",
       latestPosts: "Neueste Beiträge",

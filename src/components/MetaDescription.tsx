@@ -1,6 +1,6 @@
-import { useEffect } from 'react';
+import { useEffect, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useLanguage } from '@/contexts/LanguageContext';
+import { LanguageContext } from '@/contexts/LanguageContext';
 import { getRouteKeyFromPath } from '@/lib/routes';
 import { successStories } from '@/lib/successStories';
 
@@ -11,7 +11,14 @@ import { successStories } from '@/lib/successStories';
  */
 export function MetaDescription() {
   const location = useLocation();
-  const { language, t } = useLanguage();
+  const context = useContext(LanguageContext);
+  
+  // Gracefully skip if provider isn't ready (avoids crash during router transitions/HMR)
+  if (!context) {
+    return null;
+  }
+  
+  const { language, t } = context;
 
   useEffect(() => {
     const routeKey = getRouteKeyFromPath(location.pathname);
