@@ -18,6 +18,10 @@ const cardImages = {
   card3: complianceImage,
 };
 
+// Convert **text** to <strong> for bold rendering
+const formatBold = (text: string) =>
+  text.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+
 // HubSpot form script URL - use iframe embed
 const HUBSPOT_FORM_SCRIPT = "https://js-eu1.hsforms.net/forms/embed/144242473.js";
 const HUBSPOT_FORM_REGION = "eu1";
@@ -193,12 +197,22 @@ export default function AIAgents() {
               <h2 className="text-2xl md:text-3xl font-bold mb-6 text-foreground">
                 {t.pages.aiAgents.frontierAgentsExplainer.title}
               </h2>
-              <p className="text-muted-foreground leading-relaxed mb-4">
-                {t.pages.aiAgents.frontierAgentsExplainer.paragraph1}
-              </p>
-              <p className="text-muted-foreground leading-relaxed">
-                {t.pages.aiAgents.frontierAgentsExplainer.paragraph2}
-              </p>
+              <p
+                className="text-muted-foreground leading-relaxed mb-4"
+                dangerouslySetInnerHTML={{
+                  __html: formatBold(
+                    t.pages.aiAgents.frontierAgentsExplainer.paragraph1
+                  ),
+                }}
+              />
+              <p
+                className="text-muted-foreground leading-relaxed"
+                dangerouslySetInnerHTML={{
+                  __html: formatBold(
+                    t.pages.aiAgents.frontierAgentsExplainer.paragraph2
+                  ),
+                }}
+              />
             </motion.div>
           </div>
         </section>
