@@ -1072,7 +1072,7 @@ export const translations: Record<Language, Translations> = {
       teaserFeatures: {
         aiAnalytics: {
           title: "Minerva",
-          description: "Your AI-powered process analyst. Minerva combines process data with contextual knowledge to identify causes, explain relationships, and provide well-founded recommendations for action."
+          description: "Your AI-powered process analyst. Minerva combines process data with contextual knowledge to identify causes and provide well-founded recommendations for action."
         },
         dataIntegration: {
           title: "Analyzer",
@@ -1092,7 +1092,7 @@ export const translations: Record<Language, Translations> = {
         }
       },
       frontierAgentsCta: {
-        title: "Discover the Minerva Frontier Agents",
+        title: "Discover Minerva Frontier Agents",
         subtitle: "Autonomous AI agents that analyze, decide, and optimize your workflows alongside your team.",
         buttonLabel: "Learn more"
       }
@@ -1824,7 +1824,7 @@ export const translations: Record<Language, Translations> = {
       teaserFeatures: {
         aiAnalytics: {
           title: "Minerva",
-          description: "Dein KI-gestützter Prozess-Analyst. Minerva kombiniert Prozessdaten mit Kontextwissen, um Ursachen zu erkennen, Zusammenhänge zu erklären und fundierte Handlungsempfehlungen zu geben."
+          description: "Dein KI-gestützter Prozess-Analyst. Minerva kombiniert Prozessdaten mit Kontextwissen, um Ursachen zu erkennen und fundierte Handlungsempfehlungen zu geben."
         },
         dataIntegration: {
           title: "Analyzer",
@@ -1844,7 +1844,7 @@ export const translations: Record<Language, Translations> = {
         }
       },
       frontierAgentsCta: {
-        title: "Entdecke die Minerva Frontier Agents",
+        title: "Entdecke Minerva Frontier Agents",
         subtitle: "Autonome KI-Agenten, die deine Abläufe analysieren, entscheiden und gemeinsam mit deinem Team optimieren.",
         buttonLabel: "Mehr erfahren"
       }

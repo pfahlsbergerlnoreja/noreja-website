@@ -225,7 +225,7 @@ const FeatureSection = ({ feature, Icon, layout, index, animationStyle }: Featur
               </motion.h2>
             </motion.div>
             <motion.div
-              className="text-lg lg:text-xl text-muted-foreground leading-relaxed space-y-4"
+              className="text-muted-foreground leading-relaxed space-y-4"
               variants={descVariants}
               initial="initial"
               animate="animate"
@@ -343,7 +343,7 @@ const Functionalities = () => {
                 size="md"
                 className="text-foreground mb-6"
               />
-              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              <p className="text-muted-foreground max-w-3xl mx-auto">
                 {t.functionalities.subtitle}
               </p>
             </motion.div>
@@ -564,7 +564,7 @@ const Functionalities = () => {
                       {t.pages.functionalities.learnMoreHighlight}
                     </span>
                   </h2>
-                  <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+                  <p className="text-muted-foreground max-w-3xl mx-auto">
                     {t.pages.functionalities.learnMoreSubtitle}
                   </p>
                   <Button

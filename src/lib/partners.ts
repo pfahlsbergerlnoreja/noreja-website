@@ -86,9 +86,9 @@ export interface Partner {
   name: string;
   isPartner: boolean;
   partnerType: PartnerType;
-  logoUrl: string;
-  logoUrlWhite?: string;
-  logoSize: PartnerLogoSize;
+  logoUrl: string | null;
+  logoUrlWhite?: string | null;
+  logoSize: PartnerLogoSize | null;
   personPhotoUrl?: string;
   website: string;
   category?: PartnerCategory | null;
@@ -266,18 +266,18 @@ const partnersBase: PartnerBase[] = [
   },
   {
     id: "10",
-    name: "Fortlane Partners Consulting GmbH",
+    name: "MEDIA Central Gesellschaft für Handelskommunikation & Marketing mbH",
     isPartner: false,
     partnerType: 'advisorWithQuote',
-    logoFilename: "fortlane_white.webp",
-    logoSource: 'partners_white',
-    logoFilenameWhite: "fortlane_white.webp",
-    logoSize: 'xlarge',
+    logoFilename: null,
+    logoSource: null,
+    logoFilenameWhite: null,
+    logoSize: null,
     personPhotoFilename: "Christoph_Blum_fortlane.webp",
-    website: "https://www.fortlane.com/de",
+    website: "https://www.media-central.com/en/",
     category: "consulting",
     quote: "Process Mining ist ein Schlüsselfaktor, um strategische Transformationen nicht nur erfolgreich umzusetzen, sondern auch nachhaltig messbar zu machen. Noreja Process Intelligence schafft dabei die notwendige Transparenz, um Fortschritte klar zu quantifizieren und Organisationen nachhaltig leistungsfähiger zu gestalten.",
-    quoteAuthor: "Christoph Blum, Principal",
+    quoteAuthor: "Christoph Blum, Chief of Staff",
     linkedin: "https://www.linkedin.com/in/christoph-blum/"
   },
   {
@@ -409,7 +409,7 @@ const partnersBase: PartnerBase[] = [
     website: "https://www.fortlane.com/de",
     category: "consulting",
     quote: "Companies overlook the importance of cash. We unlock cashflow potential, improving transparency and financial performance.",
-    quoteAuthor: "Pirmin Mutter, Principal",
+    quoteAuthor: "Pirmin Mutter, Partner",
     linkedin: "https://www.linkedin.com/in/pirmin-mutter/"
   },
   {
