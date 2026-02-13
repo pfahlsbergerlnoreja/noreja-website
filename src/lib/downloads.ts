@@ -117,6 +117,17 @@ export const downloadAssets: DownloadAsset[] = [
     access: "locked",
     languages: ["en"]
   },
+  {
+    id: "whitepaper-causal-hypothesis",
+    title: "Whitepaper: The Causal Hypothesis",
+    description: "How Causal Process Mining realizes the full potential of process mining. Learn about the limitations of traditional approaches and our novel direct-to-database methodology.",
+    fileUrl: "https://144242473.fs1.hubspotusercontent-eu1.net/hubfs/144242473/website_files/Noreja%20Causal%20Hypothesis%20Whitepaper.pdf",
+    fileSize: "2.5 MB",
+    fileType: "PDF",
+    category: "Whitepaper",
+    access: "locked",
+    languages: ["de", "en"]
+  },
   // Success Stories - DE
   {
     id: "success-story-cib-de",
