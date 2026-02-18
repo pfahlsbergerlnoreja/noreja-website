@@ -268,13 +268,10 @@
   from = "/tag/*"
   status = 410
 
-[[redirects]]
-  from = "/en/page/*"
-  status = 410
-
 # ----------------------------
 # Blog redirects to HubSpot
 # ----------------------------
+
 [[redirects]]
   from = "/blog"
   to = "https://blog.noreja.com/de-de"
@@ -306,8 +303,14 @@
   status = 301
   force = true
 
-  [[redirects]]
+[[redirects]]
   from = "/de/blog/page/*"
+  to = "https://blog.noreja.com/en/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/en/page/*"
   to = "https://blog.noreja.com/en/"
   status = 301
   force = true
