@@ -306,6 +306,12 @@
   status = 301
   force = true
 
+  [[redirects]]
+  from = "/de/blog/page/*"
+  to = "https://blog.noreja.com/en/"
+  status = 301
+  force = true
+
 [[redirects]]
   from = "/de/author/pfahlsbergerlukas_h7887jaj/"
   to = "https://blog.noreja.com/de-de/author/lukas-pfahlsberger"
