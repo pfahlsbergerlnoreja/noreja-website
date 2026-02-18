@@ -160,6 +160,12 @@
   to = "/de/datenschutz"
   status = 301
 
+[[redirects]]
+  from = "/*wp-content*"
+  to = "https://noreja.com/de/downloads"
+  status = 301
+  force = true
+
 # ----------------------------
 # Old success stories / references -> new success story routes
 # ----------------------------
@@ -298,6 +304,12 @@
   from = "/en/category/*"
   to = "https://blog.noreja.com/en"
   status = 301
+
+[[redirects]]
+  from = "/en/blog/page/*"
+  to = "https://blog.noreja.com/en/"
+  status = 301
+  force = true
 
 [[redirects]]
   from = "/de/author/pfahlsbergerlukas_h7887jaj/"
