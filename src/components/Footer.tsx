@@ -12,10 +12,15 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
   const { t, language } = useLanguage();
 
+  const documentationHref = language === 'de'
+    ? 'https://docs.noreja.com/de/article/der-ursprung-des-causal-process-mining'
+    : 'https://docs.noreja.com/en/article/the-origin-of-causal-process-mining';
+
   const resourcesLinks = [
     { name: t.navigation.team, routeKey: 'team' as const, external: false },
     { name: t.navigation.downloads, routeKey: 'downloads' as const, external: false },
     { name: t.navigation.events, routeKey: 'events' as const, external: false },
+    { name: t.footer.sections.documentation, href: documentationHref, external: true },
     { name: t.footer.sections.referralProgram, href: siteConfig.links.referralProgram, external: true }
   ];
 
@@ -98,7 +103,7 @@ export function Footer() {
           {/* Navigation */}
           <div className="md:col-span-2">
             <h3 className="font-semibold mb-4">{t.footer.sections.resources}</h3>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-x-4 gap-y-2">
               {resourcesLinks.map((item) => (
                 item.external ? (
                   <a

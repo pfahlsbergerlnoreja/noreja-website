@@ -581,6 +581,7 @@ export interface Translations {
       legal: string;
       contact: string;
       referralProgram: string;
+      documentation: string;
     };
     links: {
       imprint: string;
@@ -1322,7 +1323,8 @@ export const translations: Record<Language, Translations> = {
         resources: "Resources",
         legal: "Legal",
         contact: "Contact",
-        referralProgram: "Referral Program"
+        referralProgram: "Referral Program",
+        documentation: "Documentation"
       },
       links: {
         imprint: "Imprint",
@@ -2074,7 +2076,8 @@ export const translations: Record<Language, Translations> = {
         resources: "Ressourcen",
         legal: "Rechtliches",
         contact: "Kontakt",
-        referralProgram: "Referral-Programm"
+        referralProgram: "Referral-Programm",
+        documentation: "Dokumentation"
       },
       links: {
         imprint: "Impressum",
