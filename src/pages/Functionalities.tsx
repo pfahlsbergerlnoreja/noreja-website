@@ -28,6 +28,7 @@ interface FeatureSectionProps {
     imageSize: string;
     gridCols: string;
     imageOffset: string;
+    imagePadding: string;
   };
   index: number;
   animationStyle: {
@@ -143,7 +144,7 @@ const FeatureSection = ({ feature, Icon, layout, index, animationStyle }: Featur
           style={{ y: imageY, opacity: imageOpacity, scale: imageScale }}
         >
           <motion.div
-            className="relative w-full h-full overflow-visible group"
+            className={`relative w-full h-full overflow-visible group ${layout.imagePadding}`}
             variants={imageVariants}
             initial="initial"
             animate="animate"
@@ -374,31 +375,36 @@ const Functionalities = () => {
                   imageOrder: 1, 
                   imageSize: "h-full", 
                   gridCols: "lg:grid-cols-[0.7fr_0.3fr]",
-                  imageOffset: ""
+                  imageOffset: "",
+                  imagePadding: "pt-10 pl-10 pr-6 pb-6"
                 },
                 { 
                   imageOrder: 2, 
                   imageSize: "h-full", 
                   gridCols: "lg:grid-cols-[0.3fr_0.7fr]",
-                  imageOffset: "lg:mt-8"
+                  imageOffset: "lg:mt-8",
+                  imagePadding: "pt-6 pl-6 pr-10 pb-6"
                 },
                 { 
                   imageOrder: 1, 
                   imageSize: "h-full", 
                   gridCols: "lg:grid-cols-[0.7fr_0.3fr]",
-                  imageOffset: ""
+                  imageOffset: "",
+                  imagePadding: "pt-6 pl-10 pr-6 pb-6"
                 },
                 { 
                   imageOrder: 2, 
                   imageSize: "h-full", 
                   gridCols: "lg:grid-cols-[0.3fr_0.7fr]",
-                  imageOffset: "lg:mt-4"
+                  imageOffset: "lg:mt-4",
+                  imagePadding: "pt-6 pl-6 pr-10 pb-6"
                 },
                 { 
                   imageOrder: 1, 
                   imageSize: "h-full", 
                   gridCols: "lg:grid-cols-[0.7fr_0.3fr]",
-                  imageOffset: "lg:mt-12"
+                  imageOffset: "lg:mt-12",
+                  imagePadding: "pt-6 pl-10 pr-6 pb-6"
                 }
               ];
               
