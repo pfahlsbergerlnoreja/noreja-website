@@ -392,7 +392,7 @@ const Functionalities = () => {
                   imageOrder: 2, 
                   imageSize: "h-full", 
                   gridCols: "lg:grid-cols-[0.3fr_0.7fr]",
-                  imageOffset: "lg:-mt-8"
+                  imageOffset: "lg:mt-4"
                 },
                 { 
                   imageOrder: 1, 
