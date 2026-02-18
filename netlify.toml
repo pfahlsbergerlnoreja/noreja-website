@@ -43,24 +43,24 @@
 
 [[redirects]]
   from = "/*"
-  query = { hs_amp = ":any" }
   to = "/:splat"
   status = 301
   force = true
+  query = { hs_amp = "*" }
 
 [[redirects]]
   from = "/*"
-  query = { et_blog = ":any" }
   to = "/:splat"
   status = 301
   force = true
+  query = { et_blog = "*" }
 
 [[redirects]]
   from = "/*"
-  query = { trk = ":any" }
   to = "/:splat"
   status = 301
   force = true
+  query = { trk = "*" }
 
 [[redirects]]
   from = "https://www.noreja.com/*"
@@ -275,11 +275,6 @@
 # ----------------------------
 # Blog redirects to HubSpot
 # ----------------------------
-[[redirects]]
-  from = "/blog"
-  to = "https://blog.noreja.com/de-de"
-  status = 301
-
 [[redirects]]
   from = "/blog"
   to = "https://blog.noreja.com/de-de"
