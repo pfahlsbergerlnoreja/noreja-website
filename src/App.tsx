@@ -59,8 +59,8 @@ const App = () => (
       >
         <HubSpotPageViewTracker />
         <CanonicalUrl />
-        <NewsletterToast />
         <LanguageProvider>
+          <NewsletterToast />
           <MetaDescription />
           <ConditionalLayout>
             <Routes>

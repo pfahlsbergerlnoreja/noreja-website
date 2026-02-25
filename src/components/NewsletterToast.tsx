@@ -1,37 +1,50 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
-interface NewsletterToastProps {
-  onFormSubmit?: () => void;
-}
+const PORTAL_ID = "144242473";
+const FORM_ID_EN = "c56d0262-0916-49c0-b058-cd0d2d4e2539";
+const HS_SCRIPT_URL = `https://js-eu1.hsforms.net/forms/embed/${PORTAL_ID}.js`;
 
-export function NewsletterToast({ onFormSubmit }: NewsletterToastProps) {
+export function NewsletterToast() {
+  const { language } = useLanguage();
   const [visible, setVisible] = useState(false);
+  const scriptLoaded = useRef(false);
 
+  const formId = language === "en" ? FORM_ID_EN : null;
+
+  // Show toast after delay (only when a formId is available)
   useEffect(() => {
+    if (!formId) return;
+
     const dismissed = sessionStorage.getItem('noreja_newsletter_dismissed') === 'true';
     const submitted  = localStorage.getItem('noreja_newsletter_submitted')  === 'true';
     if (dismissed || submitted) return;
 
     const timer = setTimeout(() => setVisible(true), 5000);
     return () => clearTimeout(timer);
-  }, []);
+  }, [formId]);
+
+  // Load HubSpot embed script once toast becomes visible
+  useEffect(() => {
+    if (!visible || scriptLoaded.current) return;
+
+    const script = document.createElement("script");
+    script.src = HS_SCRIPT_URL;
+    script.async = true;
+    document.head.appendChild(script);
+    scriptLoaded.current = true;
+  }, [visible]);
 
   const handleDismiss = () => {
     sessionStorage.setItem('noreja_newsletter_dismissed', 'true');
     setVisible(false);
   };
 
-  const handleFormSubmit = () => {
-    localStorage.setItem('noreja_newsletter_submitted', 'true');
-    setVisible(false);
-    onFormSubmit?.();
-  };
-
   return (
     <AnimatePresence>
-      {visible && (
+      {visible && formId && (
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
@@ -46,8 +59,12 @@ export function NewsletterToast({ onFormSubmit }: NewsletterToastProps) {
           >
             <X size={18} />
           </button>
-
-          {/* HubSpot form will go here — call handleFormSubmit on submission */}
+          <div
+            className="hs-form-frame"
+            data-region="eu1"
+            data-form-id={formId}
+            data-portal-id={PORTAL_ID}
+          />
         </motion.div>
       )}
     </AnimatePresence>
