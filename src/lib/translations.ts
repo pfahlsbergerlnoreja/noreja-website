@@ -542,6 +542,8 @@ export interface Translations {
       spotsLeft: string;
       soldOut: string;
       loadingEvents: string;
+      upcomingEvent: string;
+      upcomingEventsLabel: string;
     };
   team: {
     title: string;
@@ -1284,7 +1286,9 @@ export const translations: Record<Language, Translations> = {
       capacity: "Capacity",
       spotsLeft: "spots left",
       soldOut: "Sold Out",
-      loadingEvents: "Loading events..."
+      loadingEvents: "Loading events...",
+      upcomingEvent: "upcoming event",
+      upcomingEventsLabel: "upcoming events",
     },
     team: {
       title: "Meet Our Team",
@@ -2037,7 +2041,9 @@ export const translations: Record<Language, Translations> = {
       capacity: "Kapazität",
       spotsLeft: "Plätze verfügbar",
       soldOut: "Ausverkauft",
-      loadingEvents: "Lade Veranstaltungen..."
+      loadingEvents: "Lade Veranstaltungen...",
+      upcomingEvent: "kommende Veranstaltung",
+      upcomingEventsLabel: "kommende Veranstaltungen",
     },
     team: {
       title: "Unser Team",

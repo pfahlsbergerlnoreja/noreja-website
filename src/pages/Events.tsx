@@ -232,7 +232,11 @@ const Events = () => {
             <h2 className="text-3xl font-bold mb-4">{t.events.upcomingEvents}</h2>
             <p className="text-muted-foreground">
               {upcomingEvents.length > 0 
-                ? `${upcomingEvents.length} upcoming event${upcomingEvents.length > 1 ? 's' : ''}`
+                ? `${upcomingEvents.length} ${
+                    upcomingEvents.length === 1
+                      ? t.events.upcomingEvent
+                      : t.events.upcomingEventsLabel
+                  }`
                 : t.events.stayTuned
               }
             </p>

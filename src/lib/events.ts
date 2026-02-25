@@ -49,8 +49,7 @@ export const eventData: EventData[] = [
       required: false,
     },
     type: 'conference',
-    featured: true,
-    image: '/api/placeholder/400/250'
+    featured: false,
   },
   {
     id: '2',
@@ -191,6 +190,99 @@ export const eventData: EventData[] = [
       required: false
     },
     type: 'conference'
+  },
+  {
+    id: '10',
+    title: 'Aptean Live Austria 2026',
+    description: {
+      de: 'In dieser Präsentation zeigen wir, was autonome Frontier Agents im Prozessmanagement sind: KI-Agenten, die Prozessdaten und Regeln selbstständig interpretieren, Hypothesen bilden und konkrete Optimierungsmaßnahmen ableiten. Wir erläutern den Nutzen solcher Agenten – von schnellerer Potenzialerkennung über bessere Priorisierung bis hin zu kontinuierlichem Monitoring und messbaren Effizienzgewinnen. Anhand eines konkreten RS2-Prozesses demonstrieren wir, wie ein Agent Engpässe, Medienbrüche und wiederkehrende Fehlerquellen identifiziert und daraus umsetzbare Verbesserungsvorschläge generiert. Dabei wird deutlich, wie aus reiner Transparenz echte Handlungsfähigkeit entsteht – inklusive klarer „Next Best Actions“.',
+      en: 'In this presentation, we show what autonomous Frontier Agents are in process management: AI agents that independently interpret process data and rules, form hypotheses, and derive concrete optimization measures. We explain the value of such agents—from faster identification of improvement potential and better prioritization to continuous monitoring and measurable efficiency gains. Using a concrete RS2 process as an example, we demonstrate how an agent identifies bottlenecks, media breaks, and recurring sources of errors, and translates them into actionable improvement recommendations.This makes it clear how transparency evolves into real operational impact—complete with clearly defined “Next Best Actions.”'
+    },
+    date: new Date('2026-06-30'),
+    endDate: new Date('2026-07-01'),
+    location: {
+      type: 'onsite',
+      address: 'Kongresszentrum Salzburg, Salzburg, Austria',
+    },
+    registration: {
+      required: false
+    },
+    type: 'conference'
+  },
+  {
+    id: '10',
+    title: 'ICPM Industry Days 2026',
+    description: {
+      de: 'Die zwei Tage sind bereits mit einer interaktiven und inspirierenden Agenda gefüllt – voller praxisnaher Einblicke, Innovationen und Erfolgsgeschichten. Lassen Sie uns gemeinsam die wachsende Bedeutung unseres Fachbereichs feiern. Gleichzeitig soll diese Veranstaltung daran erinnern, dass die Gründe, aus denen Unternehmen Process Intelligence einsetzen, vielfältig sind und maßgeschneiderte Lösungen sowie individuelle Ansätze erfordern.',
+      en: 'The two days are already primed with an interactive and inspiring agenda, packed with practical insights, innovation, and success stories. Let\'s celebrate the growing importance of our field. At the same time let this event be a reminder that the reasons for which organizations utilize process intelligence are varied and require tailored solutions and approaches.'
+    },
+    date: new Date('2026-03-10'),
+    endDate: new Date('2026-03-11'),
+    location: {
+      type: 'onsite',
+      address: 'Karlsruhe, Germany',
+    },
+    registration: {
+      required: true,
+      url: 'https://pretix.eu/PI360/icpm-2026/'
+    },
+    type: 'conference'
+  },
+  {
+    id: '11',
+    title: 'WorkflowAnalytica 2026',
+    description: {
+      de: 'Erlebe zwei Tage voller inspirierender Vorträge, spannender Diskussionen und exklusiver Netzwerk-Möglichkeiten. Auf der Agenda stehen praxisnahe Vorträge, interaktive Arbeitsgruppen und zahlreiche Gelegenheiten zum Austausch. Triff die führenden Köpfe der Branche und entdecke die neuesten Trends und Technologien rund um Prozessmanagement und Automatisierung.',
+      en: 'Experience two days full of inspiring talks, engaging discussions, and exclusive networking opportunities. The agenda features practical presentations, interactive workshops, and plenty of opportunities for exchange. Meet leading minds in the industry and discover the latest trends and technologies in process management and automation.'
+    },
+    date: new Date('2026-05-07'),
+    endDate: new Date('2026-05-08'),
+    location: {
+      type: 'onsite',
+      address: 'Colosseum, Berlin, Germany',
+    },
+    registration: {
+      required: true,
+      url: 'https://app1.edoobox.com/impulse/Konferenzen/WorkflowAnalytica/Kongress.ed.619c62a49e66_12628759891.WorkflowAnalytica%202026%20Teilnehmerticket/?edref=impulse&edcode=saYTq7D7SJEWNdE'
+    },
+    type: 'conference'
+  },
+  {
+    id: '12',
+    title: 'ViennaUP',
+    description: {
+      de: 'ViennaUP ist ein dynamisches und dezentral organisiertes Festival, das eine Vielzahl von Veranstaltungen und Aktivitäten bietet, die auf unterschiedliche Interessen und Vorlieben zugeschnitten sind.',
+      en: 'ViennaUP is a dynamic and decentralised festival offering a variety of events and acitivites tailored to diverse interests and preferences.'
+    },
+    date: new Date('2026-05-18'),
+    endDate: new Date('2026-05-22'),
+    location: {
+      type: 'onsite',
+      address: 'Vienna, Austria',
+    },
+    registration: {
+      required: true,
+      url: 'https://viennaup.com/programme/'
+    },
+    type: 'conference'
+  },
+  {
+    id: '13',
+    title: 'Hype oder echter Mehrwert für Prozesse? Agentic AI im Prozessmanagement erfolgreich einsetzen',
+    description: {
+      de: 'Agentic AI eröffnet im Prozessmanagement neue Möglichkeiten, indem sie Prozessschritte automatisiert, kontextbasiert interpretiert und gezielt Handlungsvorschläge ableitet. Unsere Veranstaltung beleuchtet, wo in Prozessen deterministisch gesteuert werden muss und wo Unschärfen von Sprachmodellen sogar hilfreich sind. Dafür betrachten wir verschiedene Szenarien, in denen KI-Agenten Prozesse prüfen, verbessern und beschleunigen können. Die Vortragenden beschäftigen sich mit Prozessen und KI in Unternehmen und Universitäten, und bringen aktuelle Einblicke in die Diskussion ein.',
+      en: 'Agentic AI opens up new possibilities in process management by automating process steps, interpreting context, and deriving targeted recommendations for action. Our session explores where processes need to be controlled deterministically and where the ambiguity of language models can actually be beneficial. To illustrate this, we examine various scenarios in which AI agents can analyze, improve, and accelerate processes. The speakers work at the intersection of processes and AI in both industry and academia, bringing current insights into the discussion.'
+    },
+    date: new Date('2026-04-29'),
+    location: {
+      type: 'onsite',
+      address: 'Weizenbaum Institut, Berlin, Germany',
+    },
+    registration: {
+      required: false,
+    },
+    type: 'conference',
+    featured: true,
   }
 ];
 
