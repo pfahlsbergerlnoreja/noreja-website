@@ -5,6 +5,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 
 const PORTAL_ID = "144242473";
 const FORM_ID_EN = "c56d0262-0916-49c0-b058-cd0d2d4e2539";
+const FORM_ID_DE = "4c2d159d-aefd-491d-b7bb-0d64474ae2a3";
 const HS_SCRIPT_URL = `https://js-eu1.hsforms.net/forms/embed/${PORTAL_ID}.js`;
 
 export function NewsletterToast() {
@@ -12,7 +13,7 @@ export function NewsletterToast() {
   const [visible, setVisible] = useState(false);
   const scriptLoaded = useRef(false);
 
-  const formId = language === "en" ? FORM_ID_EN : null;
+  const formId = language === "en" ? FORM_ID_EN : FORM_ID_DE;
 
   // Show toast after delay (only when a formId is available)
   useEffect(() => {
