@@ -51,7 +51,7 @@ export function NewsletterToast() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 40 }}
           transition={{ duration: 0.35, ease: "easeOut" }}
-          className="fixed bottom-6 right-6 z-50 w-80 rounded-xl bg-card/80 backdrop-blur-xl border border-border/40 shadow-2xl p-6"
+          className="fixed bottom-6 right-6 z-50 w-[560px] rounded-xl bg-card/80 backdrop-blur-xl border border-border/40 shadow-2xl px-6 py-3"
         >
           <button
             onClick={handleDismiss}
