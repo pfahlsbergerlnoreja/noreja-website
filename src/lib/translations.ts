@@ -851,7 +851,7 @@ export const translations: Record<Language, Translations> = {
             },
             {
               question: "Where is my data hosted?",
-              answer: "The data is hosted at Amazon AWS in Frankfurt. Due to complete tenant separation, hosting can also be done in other cloud regions or on-premises upon request. However, on-premises hosting incurs additional costs."
+              answer: "The data is hosted at Google Cloud and Amazon AWS in Frankfurt. Due to complete tenant separation, hosting can also be done in other cloud regions or on-premises upon request. However, on-premises hosting incurs additional costs."
             },
             {
               question: "How does Noreja handle data protection and IT security?",
@@ -1594,7 +1594,7 @@ export const translations: Record<Language, Translations> = {
             },
             {
               question: "Wo werden meine Daten gehostet?",
-              answer: "Die Daten werden bei der Amazon AWS in Frankfurt gehostet. Aufgrund vollständiger Mandanten-Trennung kann auf Wunsch aber auch in anderen Cloud-Regionen oder On-Prem gehostet werden. Bei On-Prem entstehen allerdings Zusatzaufwände."
+              answer: "Die Daten werden bei der Google Cloud und Amazon AWS in Frankfurt gehostet. Aufgrund vollständiger Mandanten-Trennung kann auf Wunsch aber auch in anderen Cloud-Regionen oder On-Prem gehostet werden. Bei On-Prem entstehen allerdings Zusatzaufwände."
             },
             {
               question: "Wie geht Noreja mit Datenschutz und IT-Security um?",
