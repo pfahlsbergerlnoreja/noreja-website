@@ -166,6 +166,12 @@
   status = 301
   force = true
 
+[[redirects]]
+  from = "/wp-content/uploads/2022/11/:image"
+  to = "https://144242473.fs1.hubspotusercontent-eu1.net/hubfs/144242473/mail_images/:image"
+  status = 301
+  force = true
+
 # ----------------------------
 # Old success stories / references -> new success story routes
 # ----------------------------
