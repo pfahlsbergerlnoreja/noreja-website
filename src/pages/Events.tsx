@@ -17,6 +17,43 @@ const Events = () => {
   const upcomingEvents = getUpcomingEvents();
   const pastEvents = getPastEvents();
 
+  const renderDescription = (text: string) => {
+    // Supports simple markdown links like: "Learn more [here](https://example.com)."
+    const parts: Array<React.ReactNode> = [];
+    const linkRe = /\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g;
+    let lastIndex = 0;
+    let match: RegExpExecArray | null;
+
+    while ((match = linkRe.exec(text)) !== null) {
+      const [full, label, url] = match;
+      const start = match.index;
+
+      if (start > lastIndex) {
+        parts.push(text.slice(lastIndex, start));
+      }
+
+      parts.push(
+        <a
+          key={`${start}-${url}`}
+          href={url}
+          target="_blank"
+          rel="noreferrer noopener"
+          className="text-primary underline underline-offset-4 hover:opacity-90 transition-opacity"
+        >
+          {label}
+        </a>
+      );
+
+      lastIndex = start + full.length;
+    }
+
+    if (lastIndex < text.length) {
+      parts.push(text.slice(lastIndex));
+    }
+
+    return parts.length ? <>{parts}</> : text;
+  };
+
   // Scroll to top when component mounts
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -114,7 +151,7 @@ const Events = () => {
 
         <CardContent className="pt-0">
           <p className="text-muted-foreground mb-6 leading-relaxed">
-            {getEventDescription(event, language)}
+            {renderDescription(getEventDescription(event, language))}
           </p>
 
           <div className="space-y-3 mb-6">
