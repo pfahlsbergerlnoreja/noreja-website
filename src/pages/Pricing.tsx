@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useRef } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, Info } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -64,6 +64,9 @@ const calculatePricing = (perspectivesIndex: number, dataAmountIndex: number) =>
   };
 };
 
+const toEventSuffix = (label: string) =>
+  label.replace(">", "gt").replace(/[^a-zA-Z0-9]/g, "").toLowerCase();
+
 const Pricing = () => {
   const { t, language } = useLanguage();
   
@@ -94,6 +97,8 @@ const Pricing = () => {
   const [privateLLMExcellence, setPrivateLLMExcellence] = useState(false);
   const [selectedPlanIndex, setSelectedPlanIndex] = useState(1); // Default to middle package (Pro)
   const [openAccordion, setOpenAccordion] = useState<string | undefined>(undefined); // Track which accordion is open
+  const dataAmountTimerRef = useRef<ReturnType<typeof setTimeout>>();
+  const perspectivesTimerRef = useRef<ReturnType<typeof setTimeout>>();
   const currentPerspectives = perspectivesLabels[perspectivesIndex];
   const currentDataAmount = dataAmountLabels[dataAmountIndex];
   const pricing = calculatePricing(perspectivesIndex, dataAmountIndex);
@@ -217,7 +222,18 @@ const Pricing = () => {
                   <div className="px-2">
                     <Slider
                       value={[dataAmountIndex]}
-                      onValueChange={(value) => setDataAmountIndex(value[0])}
+                      onValueChange={(value) => {
+                        setDataAmountIndex(value[0]);
+                        clearTimeout(dataAmountTimerRef.current);
+                        dataAmountTimerRef.current = setTimeout(() => {
+                          const suffix = toEventSuffix(dataAmountLabels[value[0]]?.label ?? "");
+                          const eventName = `pricing_slider_data_amount_${suffix}`;
+                          if (typeof window.gtag === "function") {
+                            window.gtag("event", eventName);
+                          }
+                          console.log(`[GA4] ${eventName}`);
+                        }, 1500);
+                      }}
                       max={4}
                       min={0}
                       step={1}
@@ -266,7 +282,18 @@ const Pricing = () => {
                   <div className="px-3">
                     <Slider
                       value={[perspectivesIndex]}
-                      onValueChange={(value) => setPerspectivesIndex(value[0])}
+                      onValueChange={(value) => {
+                        setPerspectivesIndex(value[0]);
+                        clearTimeout(perspectivesTimerRef.current);
+                        perspectivesTimerRef.current = setTimeout(() => {
+                          const suffix = toEventSuffix(perspectivesLabels[value[0]]?.label ?? "");
+                          const eventName = `pricing_slider_perspectives_${suffix}`;
+                          if (typeof window.gtag === "function") {
+                            window.gtag("event", eventName);
+                          }
+                          console.log(`[GA4] ${eventName}`);
+                        }, 1500);
+                      }}
                       max={4}
                       min={0}
                       step={1}
@@ -316,7 +343,14 @@ const Pricing = () => {
                     ? 'border-primary glow-primary scale-105 z-20' 
                     : 'scale-100 z-10 opacity-70 hover:opacity-85'
                 }`}
-                onClick={() => setSelectedPlanIndex(index)}
+                onClick={() => {
+                  setSelectedPlanIndex(index);
+                  const planName = ["core", "pro", "excellence"][index];
+                  if (typeof window.gtag === "function") {
+                    window.gtag("event", `pricing_select_${planName}`);
+                  }
+                  console.log(`[GA4] pricing_select_${planName}`);
+                }}
               >
                 
                 <CardHeader className="text-center pb-4 h-[200px] flex flex-col justify-center">
@@ -558,8 +592,12 @@ const Pricing = () => {
                         className={`w-full ${isSelected ? 'gradient-primary glow-primary hover:opacity-90 text-white' : 'border-border text-foreground hover:bg-secondary hover:text-foreground'}`}
                         size="lg"
                         onClick={(e) => {
-                          e.stopPropagation(); // Prevent card selection when clicking button
-                          // Scroll to HubSpot form
+                          e.stopPropagation();
+                          const planName = ["core", "pro", "excellence"][index];
+                          if (typeof window.gtag === "function") {
+                            window.gtag("event", `pricing_contact_${planName}`);
+                          }
+                          console.log(`[GA4] pricing_contact_${planName}`);
                           const formElement = document.getElementById('hubspot-contact-form');
                           if (formElement) {
                             formElement.scrollIntoView({ behavior: 'smooth' });
@@ -775,6 +813,11 @@ const Pricing = () => {
                               size="lg"
                               onClick={(e) => {
                                 e.stopPropagation();
+                                const planName = ["core", "pro", "excellence"][index];
+                                if (typeof window.gtag === "function") {
+                                  window.gtag("event", `pricing_contact_${planName}`);
+                                }
+                                console.log(`[GA4] pricing_contact_${planName}`);
                                 const formElement = document.getElementById('hubspot-contact-form');
                                 if (formElement) {
                                   formElement.scrollIntoView({ behavior: 'smooth' });

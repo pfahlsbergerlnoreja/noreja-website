@@ -876,6 +876,36 @@ npm run test
 | `src/components/HubSpotContactForm.tsx` | HubSpot form component |
 | `src/components/DownloadGate.tsx` | Download gating component |
 
+## GA4 Custom Events
+
+Übersicht aller custom GA4-Events, die per `window.gtag("event", ...)` gefeuert werden.
+
+### Scroll Tracking (`src/hooks/use-scroll-tracking.ts`)
+- `scroll_depth_25` / `scroll_depth_50` / `scroll_depth_75` / `scroll_depth_100` — feuert einmal pro Seitenbesuch bei Erreichen der jeweiligen Scroll-Tiefe
+
+### HubSpot Form Submissions (`src/hooks/use-hubspot-form.ts`)
+- `dataLayer.push({ event: "hubspot_form_submission", ... })` — bei erfolgreicher Formular-Absendung
+
+### Pricing Page (`src/pages/Pricing.tsx`)
+| Event | Trigger |
+|---|---|
+| `pricing_slider_data_amount_15mio` | Slider auf "15 Mio." (debounced 1.5s) |
+| `pricing_slider_data_amount_35mio` | Slider auf "35 Mio." |
+| `pricing_slider_data_amount_85mio` | Slider auf "85 Mio." |
+| `pricing_slider_data_amount_150mio` | Slider auf "150 Mio." |
+| `pricing_slider_data_amount_300mio` | Slider auf "300 Mio." |
+| `pricing_slider_perspectives_8x` | Slider auf "8x" (debounced 1.5s) |
+| `pricing_slider_perspectives_16x` | Slider auf "16x" |
+| `pricing_slider_perspectives_40x` | Slider auf "40x" |
+| `pricing_slider_perspectives_100x` | Slider auf "100x" |
+| `pricing_slider_perspectives_gt100` | Slider auf ">100" |
+| `pricing_select_core` | Core-Karte angeklickt |
+| `pricing_select_pro` | Pro-Karte angeklickt |
+| `pricing_select_excellence` | Excellence-Karte angeklickt |
+| `pricing_contact_core` | Kontakt-Button Core geklickt |
+| `pricing_contact_pro` | Kontakt-Button Pro geklickt |
+| `pricing_contact_excellence` | Kontakt-Button Excellence geklickt |
+
 ## Contributing
 
 1. Fork the repository
