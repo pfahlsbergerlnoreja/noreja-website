@@ -32,16 +32,11 @@ export function useScrollTracking() {
           if (percent >= threshold && !firedRef.current.has(threshold)) {
             firedRef.current.add(threshold);
 
-            const eventData = {
-              percent_scrolled: threshold,
-              page_path: location.pathname,
-            };
-
             if (typeof window.gtag === "function") {
-              window.gtag("event", "scroll_depth", eventData);
+              window.gtag("event", `scroll_depth_${threshold}`);
             }
 
-            console.log("[GA4 Scroll]", eventData);
+            console.log(`[GA4 Scroll] scroll_depth_${threshold}`, location.pathname);
           }
         }
       });
