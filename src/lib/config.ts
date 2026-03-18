@@ -48,6 +48,7 @@ export const hubspotConfig = {
   forms: {
     contact: "YOUR_CONTACT_FORM_ID",
     newsletter: "YOUR_NEWSLETTER_FORM_ID",
+    newsletterEn: "c56d0262-0916-49c0-b058-cd0d2d4e2539",
     download: HUBSPOT_FORM_GUID_DEFAULT
   }
 };
@@ -64,6 +65,7 @@ export const config = {
     forms: {
       download: HUBSPOT_FORM_GUID_DEFAULT,
       newsletter: "YOUR_NEWSLETTER_FORM_GUID",
+      newsletterEn: "c56d0262-0916-49c0-b058-cd0d2d4e2539",
       contact: "YOUR_CONTACT_FORM_GUID"
     }
   }

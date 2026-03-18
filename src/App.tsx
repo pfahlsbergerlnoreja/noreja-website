@@ -9,6 +9,7 @@ import { ConditionalLayout } from "@/components/ConditionalLayout";
 import { CanonicalUrl } from "@/components/CanonicalUrl";
 import { MetaDescription } from "@/components/MetaDescription";
 import { LanguageProvider } from "@/contexts/LanguageContext";
+import { NewsletterToast } from "@/components/NewsletterToast";
 import Index from "./pages/Index";
 import Functionalities from "./pages/Functionalities";
 import SuccessStories from "./pages/SuccessStories";
@@ -67,6 +68,7 @@ const App = () => (
         <ScrollDepthTracker />
         <CanonicalUrl />
         <LanguageProvider>
+          <NewsletterToast />
           <MetaDescription />
           <ConditionalLayout>
             <Routes>
