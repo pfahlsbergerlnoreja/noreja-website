@@ -74,6 +74,7 @@ export function Footer() {
                 whileTap={{ scale: 0.9 }}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Noreja on LinkedIn"
               >
                 <Linkedin className="h-5 w-5" />
               </motion.a>
@@ -84,16 +85,18 @@ export function Footer() {
                 whileTap={{ scale: 0.9 }}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Noreja on Twitter"
               >
                 <Twitter className="h-5 w-5" />
               </motion.a>
               <motion.a
-                href={siteConfig.links.youtube} 
+                href={siteConfig.links.youtube}
                 className="text-muted-foreground hover:text-primary transition-fast"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Noreja on YouTube"
               >
                 <Youtube className="h-5 w-5" />
               </motion.a>

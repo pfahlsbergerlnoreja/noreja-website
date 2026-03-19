@@ -19,6 +19,7 @@ function MobileLanguageSwitcher() {
   return (
     <motion.button
       onClick={toggleLanguage}
+      aria-label={`Switch language to ${language === 'en' ? 'German' : 'English'}`}
       className="relative flex items-center space-x-2 px-3 py-2 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors border border-border/50 hover:border-primary/30"
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
@@ -98,7 +99,7 @@ export function Header() {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
+          <nav aria-label="Main navigation" className="hidden md:flex items-center space-x-8">
             {navigationItems.map((item) => {
               if (item.external && item.routeKey === 'blog') {
                 return (
@@ -146,6 +147,8 @@ export function Header() {
             size="sm"
             className="md:hidden"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isMenuOpen}
           >
             {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </Button>
@@ -159,7 +162,7 @@ export function Header() {
             exit={{ opacity: 0, y: -20 }}
             className="md:hidden py-4 border-t border-border/40"
           >
-            <nav className="flex flex-col space-y-4">
+            <nav aria-label="Mobile navigation" className="flex flex-col space-y-4">
               {navigationItems.map((item) => {
                 if (item.external && item.routeKey === 'blog') {
                   return (

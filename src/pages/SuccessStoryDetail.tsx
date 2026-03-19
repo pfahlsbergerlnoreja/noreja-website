@@ -10,6 +10,8 @@ import { downloadAssets, type DownloadAsset } from "@/lib/downloads";
 import { DownloadGate } from "@/components/DownloadGate";
 import { ArrowRight } from "lucide-react";
 import { getRoutePath } from "@/lib/routes";
+import { BreadcrumbSchema } from "@/components/StructuredData";
+import { SITE_URL } from "@/lib/config";
 
 // Helper function to format text with markdown and HTML support
 const formatContent = (text: string): string => {
@@ -180,8 +182,13 @@ const SuccessStoryDetail = () => {
 
   return (
     <div className="min-h-screen relative overflow-hidden" style={gradientStyle}>
+      <BreadcrumbSchema items={[
+        { name: language === 'de' ? 'Startseite' : 'Home', url: `${SITE_URL}${getRoutePath('home', language)}` },
+        { name: 'Success Stories', url: `${SITE_URL}${getRoutePath('successStories', language)}` },
+        { name: successStory.companyName, url: `${SITE_URL}${getRoutePath('successStoryDetail', language, { companyName: successStory.id })}` },
+      ]} />
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-noreja-main/5 to-transparent pointer-events-none" />
-      
+
       <div className="relative z-10">
         {/* Hero Section */}
         <section className="relative py-20 lg:py-24">

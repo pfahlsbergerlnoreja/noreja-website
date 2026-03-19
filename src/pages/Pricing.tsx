@@ -11,6 +11,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { AnimatedGradientBox } from "@/components/AnimatedGradientBox";
 import { AnimatedGridBackground } from "@/components/AnimatedGridBackground";
+import { FAQSchema } from "@/components/StructuredData";
 import { AnimatedHeading } from "@/components/AnimatedHeading";
 import { getRoutePath } from "@/lib/routes";
 
@@ -168,6 +169,7 @@ const Pricing = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <FAQSchema items={t.pages.pricing.faq.items} />
       {/* Section with animated grid background - Sliders and Pricing Cards */}
       <div className="relative">
         <AnimatedGridBackground key="animated-grid-pricing" />

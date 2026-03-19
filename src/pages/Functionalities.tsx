@@ -4,6 +4,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { useEffect, useRef } from "react";
 import { LayoutDashboard, Search, Brain, Wrench, Code, ArrowRight, LucideIcon } from "lucide-react";
 import { AnimatedHeading } from "@/components/AnimatedHeading";
+import { SoftwareApplicationSchema } from "@/components/StructuredData";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { getRoutePath } from "@/lib/routes";
@@ -328,6 +329,7 @@ const Functionalities = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SoftwareApplicationSchema />
       {/* Hero Section */}
       <div className="relative">
         <section className="relative py-12 lg:py-24">

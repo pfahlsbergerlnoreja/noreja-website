@@ -1,0 +1,52 @@
+# Noreja Intelligence GmbH
+
+> Noreja is a Generative Process Intelligence platform that contextualizes operational data and human knowledge for the application of GenAI to business process analysis and optimization.
+
+## About
+
+Noreja Intelligence GmbH is a Vienna-based B2B SaaS company offering a next-generation Process Intelligence platform. Unlike traditional Process Mining tools, Noreja works directly on relational databases without requiring event logs, enabling faster data integration and more realistic process analysis. The platform combines causal process mining with generative AI to make business processes not just visible, but understandable and optimizable.
+
+## Core Product
+
+The Noreja platform consists of five main modules:
+
+- **Dashboard**: Central process metrics, trends, and anomaly monitoring with configurable widgets
+- **Analyzer**: Interactive workspace for detailed end-to-end process visualization and variant analysis
+- **Minerva AI**: Context-sensitive AI assistant that connects process data with domain knowledge (SLAs, organizational rules, external context)
+- **Builder**: Control center for data source connections, event modeling, and dimension logic — supports ServiceNow, PostgreSQL, Oracle, REST APIs, and more
+- **Workbench**: Integrated Jupyter Notebook environment working directly on the Noreja Knowledge Graph for custom analyses
+
+## Key Differentiators
+
+- No event logs required — connects directly to relational database tables
+- Multidimensional process perspectives (order number, user ID, invoice number, etc.)
+- Context and domain knowledge integration for AI-powered root cause analysis
+- ISO 27001 certified, data hosted in Frankfurt (Google Cloud / AWS)
+- Private LLM hosting available (Mistral, Deepseek, Gemma, Qwen3, etc.)
+
+## Important Pages
+
+- Platform Overview: https://noreja.com/en/platform
+- Pricing: https://noreja.com/en/pricing
+- Success Stories: https://noreja.com/en/success-stories
+- Use Cases — Supply Chain: https://noreja.com/en/use-cases/supply-chain
+- Use Cases — Manufacturing: https://noreja.com/en/use-cases/manufacturing
+- Use Cases — Insurance: https://noreja.com/en/use-cases/insurance
+- Use Cases — Banking: https://noreja.com/en/use-cases/banking
+- Partners: https://noreja.com/en/partners
+- Team: https://noreja.com/en/team
+- Events: https://noreja.com/en/events
+- Contact: https://noreja.com/en/contact
+- Blog: https://blog.noreja.com
+- Full LLM-optimized content: https://noreja.com/llms-full.txt
+
+## Languages
+
+The website is available in English (/en/) and German (/de/).
+
+## Contact
+
+- Website: https://noreja.com
+- LinkedIn: https://linkedin.com/company/noreja
+- YouTube: https://www.youtube.com/@noreja_intelligence
+- Book a meeting: https://outlook.office365.com/book/Kennenlernen@noreja.com/

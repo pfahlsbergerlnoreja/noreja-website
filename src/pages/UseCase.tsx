@@ -10,6 +10,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { DownloadGateInline } from "@/components/DownloadGate";
 import { getWhitepaperForUseCase } from "@/lib/downloads";
 import { getRoutePath } from "@/lib/routes";
+import { BreadcrumbSchema } from "@/components/StructuredData";
+import { SITE_URL } from "@/lib/config";
 
 const UseCase = () => {
   const { useCaseName } = useParams<{ useCaseName: string }>();
@@ -55,6 +57,11 @@ const UseCase = () => {
 
   return (
     <div className="min-h-screen relative overflow-hidden" style={gradientStyle}>
+      <BreadcrumbSchema items={[
+        { name: language === 'de' ? 'Startseite' : 'Home', url: `${SITE_URL}${getRoutePath('home', language)}` },
+        { name: 'Use Cases', url: `${SITE_URL}${getRoutePath('successStories', language)}` },
+        { name: useCaseData.title[language], url: `${SITE_URL}${getRoutePath('useCases', language, { useCaseName })}` },
+      ]} />
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-noreja-main/5 to-transparent pointer-events-none" />
       
       <div className="relative z-10">

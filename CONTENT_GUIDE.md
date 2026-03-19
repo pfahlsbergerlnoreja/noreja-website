@@ -17,7 +17,8 @@ Dieser Guide erklärt, wie du Inhalte auf der Noreja-Website anlegst und bearbei
 7. [Use Cases](#7-use-cases)
 8. [Downloads](#8-downloads)
 9. [Übersetzungen & FAQs](#9-übersetzungen--faqs)
-10. [Checkliste: Neuen Content live bringen](#10-checkliste-neuen-content-live-bringen)
+10. [SEO, Seitentitel & LLM-Crawlability](#10-seo-seitentitel--llm-crawlability)
+11. [Checkliste: Neuen Content live bringen](#11-checkliste-neuen-content-live-bringen)
 
 ---
 
@@ -34,6 +35,9 @@ Alle Inhalte der Website werden in TypeScript-Dateien unter `src/lib/` gepflegt.
 | Use Cases | `src/lib/useCases.ts` | `assets_raw/use_cases/` |
 | Downloads | `src/lib/downloads.ts` | — (PDFs liegen auf HubSpot) |
 | Texte & FAQs | `src/lib/translations.ts` | — |
+| LLM-Content | `public/llms.txt`, `public/llms-full.txt` | — |
+| Seitentitel | `src/components/PageTitle.tsx` | — |
+| Structured Data | `src/components/StructuredData.tsx` | — |
 
 **Grundprinzip:** Die Website ist bilingual (Deutsch + Englisch). Viele Felder erwarten deshalb ein Objekt mit `{ de: "...", en: "..." }`.
 
@@ -517,7 +521,83 @@ FAQs befinden sich unter `pages.pricing.faq.items`. Füge ein neues Objekt in **
 
 ---
 
-## 10. Checkliste: Neuen Content live bringen
+## 10. SEO, Seitentitel & LLM-Crawlability
+
+Die Website enthält mehrere Mechanismen, die sicherstellen, dass Suchmaschinen und LLM-Crawler (GPTBot, ClaudeBot, PerplexityBot etc.) die Inhalte korrekt erfassen.
+
+### llms.txt und llms-full.txt
+
+**Dateien:** `public/llms.txt`, `public/llms-full.txt`
+
+Diese Dateien folgen dem [llms.txt-Standard](https://llmstxt.org/) und geben LLM-Crawlern eine strukturierte Zusammenfassung der Website — unabhängig von JavaScript-Rendering.
+
+- **`llms.txt`** — Kompakte Übersicht: Firmenname, Produktbeschreibung, Links zu den wichtigsten Seiten
+- **`llms-full.txt`** — Ausführlicher Plaintext: Plattform-Module, Use Cases, Success Stories, Pricing, FAQ, Team, Partner
+
+**Wann aktualisieren?**
+
+Diese Dateien werden **nicht automatisch** generiert. Sie müssen manuell aktualisiert werden, wenn sich folgende Inhalte ändern:
+
+- Neue Success Stories, Use Cases oder Partner
+- Änderungen an Produkt-Features oder Pricing
+- Neue Team-Mitglieder oder Gründeränderungen
+- Neue FAQ-Einträge
+
+> **Tipp:** Am besten bei jedem größeren Content-Update kurz prüfen, ob `llms-full.txt` noch aktuell ist.
+
+### Seitentitel
+
+**Datei:** `src/components/PageTitle.tsx`
+
+Jede Seite bekommt einen eigenen `<title>` Tag (sichtbar im Browser-Tab). Die Titel sind direkt in der Komponente definiert — für statische Seiten als Mapping, für dynamische Seiten (Success Stories, Use Cases) wird der Titel aus den Daten generiert.
+
+**Wann aktualisieren?**
+
+- Bei **neuen statischen Seiten**: Eintrag im `pageTitles`-Objekt in `PageTitle.tsx` ergänzen
+- Bei **Success Stories und Use Cases**: Kein Handlungsbedarf — der Titel wird automatisch aus `companyName` bzw. `title` generiert
+
+### Structured Data (JSON-LD)
+
+**Datei:** `src/components/StructuredData.tsx`
+
+Die Website gibt Suchmaschinen und LLMs über JSON-LD strukturierte Daten mit. Folgende Schemas sind aktiv:
+
+| Schema | Seite | Was es enthält |
+|---|---|---|
+| `OrganizationSchema` | Homepage (`Index.tsx`) | Firmenname, URL, Logo, Social Links, Kontakt |
+| `SoftwareApplicationSchema` | Plattform (`Functionalities.tsx`) | Produktname, Features, Preisbereich |
+| `FAQSchema` | Pricing (`Pricing.tsx`) | FAQ-Fragen und -Antworten (aus `translations.ts`) |
+| `BreadcrumbSchema` | Success Story Detail, Use Case | Breadcrumb-Navigation (Home → Übersicht → Detail) |
+| `EventSchema` | Events (`Events.tsx`) | Event-Daten (war bereits vorhanden) |
+
+**Wann aktualisieren?**
+
+- **OrganizationSchema**: Bei Änderungen an Firmendaten (Adresse, Social Links, Gründungsjahr) → direkt in `StructuredData.tsx` anpassen
+- **SoftwareApplicationSchema**: Bei neuen Features oder Preisänderungen → direkt in `StructuredData.tsx` anpassen
+- **FAQSchema**: Wird automatisch aus `translations.ts` gezogen — kein manueller Aufwand
+- **BreadcrumbSchema**: Wird automatisch generiert — kein manueller Aufwand
+
+### hreflang-Tags
+
+**Datei:** `src/components/HreflangTags.tsx`
+
+Für jede Seite werden automatisch `<link rel="alternate" hreflang="de/en">` Tags gesetzt. Das hilft Suchmaschinen, die Sprachversionen korrekt zuzuordnen.
+
+**Kein manueller Aufwand** — die Tags werden aus dem bestehenden Routing generiert.
+
+### Meta Descriptions
+
+**Datei:** `src/lib/translations.ts` (Abschnitt `metaDescriptions`)
+
+Meta Descriptions werden pro Route und Sprache aus `translations.ts` geladen. Für neue statische Seiten muss ein Eintrag unter `metaDescriptions` in **beiden** Sprachblöcken (EN + DE) ergänzt werden.
+
+### Netlify Pre-Rendering
+
+In `netlify.toml` ist Pre-Rendering aktiviert. Netlify rendert die SPA serverseitig für Bot-Crawler, sodass auch Crawler ohne JavaScript-Support den vollständigen HTML-Content sehen.
+
+---
+
+## 11. Checkliste: Neuen Content live bringen
 
 Wenn du neuen Content erstellt hast, gehe diese Punkte durch:
 
@@ -533,11 +613,18 @@ Wenn du neuen Content erstellt hast, gehe diese Punkte durch:
 - [ ] **Sitemap** wird automatisch generiert — die IDs werden aus den Dateien extrahiert
 - [ ] **Download-Einträge** in `downloads.ts` angelegt (falls PDF vorhanden)
 - [ ] **Whitepaper-Mapping** in `downloads.ts` aktualisiert (bei Use Cases)
+- [ ] **`llms-full.txt`** aktualisiert? → Neue Story/Use Case ergänzen
 
 ### Bei neuen Seiten/URLs
 
 - [ ] **Redirects** in `netlify.toml` prüfen, falls sich URLs geändert haben
-- [ ] **SEO**: `metaDescription` gesetzt (wo verfügbar)
+- [ ] **SEO**: `metaDescription` in `translations.ts` gesetzt (beide Sprachen)
+- [ ] **Seitentitel**: Eintrag in `PageTitle.tsx` ergänzt (bei statischen Seiten)
+
+### Bei Änderungen an Produkt, Pricing, Team oder Partnern
+
+- [ ] **`llms-full.txt`** aktualisiert? → Relevante Abschnitte anpassen
+- [ ] **Structured Data** in `StructuredData.tsx` prüfen (bei Feature- oder Preisänderungen)
 
 ### Deployment
 

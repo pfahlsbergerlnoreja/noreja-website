@@ -11,6 +11,11 @@
 [build.processing.html]
   pretty_urls = false
 
+# Enable Netlify's built-in prerendering for bot crawlers (including AI crawlers)
+# This serves a server-side rendered snapshot to bots that don't execute JavaScript
+[build.processing.prerender]
+  enabled = true
+
 
 # ============================================
 # Headers

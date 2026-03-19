@@ -1,0 +1,233 @@
+# Noreja Intelligence GmbH — Full Information
+
+> Noreja is a Generative Process Intelligence platform that contextualizes operational data and human knowledge for the application of GenAI to business process analysis and optimization.
+
+---
+
+## Company Overview
+
+Noreja Intelligence GmbH is a Vienna-based B2B SaaS company and spin-off of the WU Vienna Institute for Data, Process and Knowledge Management. The company offers a next-generation Process Intelligence platform that goes beyond traditional Process Mining by working directly on relational databases without requiring event logs, enabling faster data integration and more realistic process analysis.
+
+The platform combines causal process mining with generative AI (Minerva AI) to make business processes not just visible, but understandable and optimizable. Noreja is ISO 27001 certified and hosts data at Google Cloud and Amazon AWS in Frankfurt, Germany.
+
+---
+
+## Platform Modules
+
+### Dashboard
+Keep central process metrics, trends, and anomalies in view at all times. The Dashboard combines different widgets so you can quickly capture volume, times, variants, deviations, and developments. Assemble your view flexibly: from simple KPIs to distributions and trend indicators to configurable analyses. This creates a clear overview of your process performance, precisely tailored to your questions.
+
+### Analyzer
+The Analyzer is your interactive workspace for detailed examination of every process step. On the central canvas, you visualize the real end-to-end flow, while variant lists, KPIs, and display levels help you quickly uncover patterns, bottlenecks, and deviations.
+
+Choose different perspectives like Process, Case, Pattern, or Timeline View and control which information comes into focus: cycle times, rework, violations, hypothetical paths, or detailed metrics at the activity and path level. With a few clicks, you go from the overall overview to the detailed analysis of individual cases or export your insights directly as a BPMN model or high-resolution visualization.
+
+The Analyzer combines exploratory analysis with clear structure: a single place to understand processes, make causes visible, and make better decisions.
+
+### Minerva AI
+Minerva is your context-sensitive AI assistant: It connects process data with additional knowledge such as SLAs, organizational rules, or external influences, delivering answers that go beyond classic Event Logs.
+
+Whether questions about the platform, anomalies in the Analyzer, or optimization ideas: Minerva analyzes your knowledge graphs directly, explaining why patterns emerge and how processes can be improved. You decide which models are used: Noreja-Hosted, your own On-Prem LLMs, or verified Cloud models. Everything is data protection compliant and fully controllable. In short: Minerva makes processes not only visible, but understandable.
+
+### Builder
+The Builder is your control center for every analytical foundation: Here you connect data sources, model events, and define dimension logics that later power Dashboards, Analyzer, and AI features.
+
+Whether it's ServiceNow, PostgreSQL, Oracle, or REST APIs — every connector can be set up, tested, and kept current in just a few steps. In clearly structured overviews, you immediately see which sources are active, which Entity Graphs have been imported, and what state your dimension models are in. With drag-and-drop, you build event graphs, define timestamps, properties, and complex relationships, including validation and transparent SQL insight.
+
+You model dimensions directly based on your events: place activities, draw causal paths, define and import filters. This creates a consistent, semantically clean model that your teams can later analyze intuitively. The Builder combines technical precision with fast iteration — a single workspace to transform raw data into a reliable, reusable process model.
+
+### Workbench
+The Workbench is your technical laboratory: a fully integrated Jupyter Notebook directly on the Noreja Knowledge Graph. Data scientists, engineers, and analysts can work here with Python as if they were in their familiar notebook environment, only directly on the graph database.
+
+Write scripts, test hypotheses, build your own KPIs, models, or data pipelines, and save your notebooks for repeatable, highly customized analyses. This connects exploration code, production-ready evaluations, and documentation in one step.
+
+Each user receives their own Workbench instance, admins maintain oversight through a central management panel and can start, stop, or clean up instances as needed. In short: The Workbench brings real data science power to where your process data lives — without tool breaks and without detours.
+
+---
+
+## Key Differentiators
+
+### Fast Connection
+Data integration works without intermediate steps such as an event log. The Builder connects directly to the tables of the (relational) databases. This significantly accelerates data connection compared to conventional solutions.
+
+### Realistic Results
+The process analysis takes into account the complex relationships within the data schema of the underlying source systems. This makes the analyses more realistic and avoids the weaknesses of traditional solutions.
+
+### Multidimensional Perspectives
+Process analysis can be performed in a multidimensional way. Users can add additional views based on various business objects, such as an order number, user ID, or invoice number.
+
+### Context and Domain Knowledge
+By integrating context and domain knowledge (unstructured text), a direct comparison between the target (TO-BE) and actual (AS-IS) state of a process can be made. In addition, AI can better interpret process analyses with context and derive the right implications.
+
+---
+
+## Use Cases
+
+### Supply Chain
+Noreja's innovative Process Intelligence approach and Supply Chain Management are made for each other. With the ability to uncover deep structural problems across data and systems, Noreja solves a variety of common problems in the industry.
+
+Application areas include:
+- **Production Line Optimization**: Identify bottlenecks, delays, and underutilized resources to streamline manufacturing processes, increase throughput, and reduce operating costs.
+- **Inventory Optimization**: Analyze inventory levels and turnover rates to maintain optimal stock levels, reduce overstock, and minimize stockouts.
+- **Emissions Tracking (CO2)**: Monitor and analyze greenhouse gas emissions throughout the supply chain to develop reduction strategies.
+- **Supplier Performance Analysis**: Evaluate and optimize supplier relationships.
+- **Working Capital Analysis**: Improve financial flow through process optimization.
+- **Quality Control and Compliance**: Ensure process adherence to quality standards.
+
+### Manufacturing
+Process Intelligence helps manufacturing companies optimize production workflows, reduce downtime, and improve overall equipment effectiveness.
+
+Application areas include:
+- **Shop-Floor Optimization**: Improve production floor efficiency and resource utilization.
+- **Demand and Output Forecast**: Better predict production needs and capacity planning.
+- **Warehouse Management**: Optimize storage, picking, and shipping processes.
+
+### Insurance
+Noreja helps insurance companies streamline claims processing, underwriting, and policy management.
+
+Application areas include:
+- **Customer Journey Mapping**: Understand and optimize the end-to-end customer experience.
+- **Partner Optimization**: Improve collaboration with brokers, agents, and service providers.
+- **Reserve Adjustments**: Optimize reserve calculation processes.
+
+### Banking
+Financial institutions use Noreja to improve compliance, customer onboarding, and operational efficiency.
+
+Application areas include:
+- **Know-Your-Customer Compliance**: Streamline KYC processes while maintaining regulatory compliance.
+- **Credit Card Application**: Optimize application processing and approval workflows.
+- **Account Opening & Onboarding**: Reduce friction in customer onboarding processes.
+
+---
+
+## Success Stories
+
+### Hector (Insurance)
+Hector identified critical blind spots in their insurance claims processing, including high rates of reopened claims and bottlenecks from delayed repair invoices. Through Process Mining, they reduced processing time by 75% while improving accuracy across all departments.
+
+### Megatron (Supply Chain / Manufacturing)
+Megatron uncovered critical blind spots in their supply chain and production processes, identifying optimization opportunities in order assignment and work step recording. The analysis revealed potential for $2.3M in annual cost savings through improved process transparency.
+
+### IDM Wärmepumpen (Manufacturing)
+IDM gained complete visibility into their Order-to-Cash process within three weeks, identifying critical bottlenecks in manual data entry and invoice processing. The analysis achieved 99.9% accuracy in process detection while significantly reducing manual workload.
+
+### CIB (Software Development / HR)
+CIB mapped their entire hiring process in just one month, identifying delays in initial applicant contact and bottlenecks in decision-making. The analysis revealed opportunities to reduce hiring time by up to one week and improve candidate experience, achieving 40% faster diagnosis of process issues.
+
+---
+
+## Pricing
+
+Noreja offers three pricing tiers, billed annually:
+
+### Core
+- Modules: Dashboard, Analyzer, Builder, Knowledge Base
+- 3 Power Users included
+- Service: Data Onboarding Workshop (2x p.a.), biweekly Value-Support Sessions
+- Starting from €8,600/month (based on 15M graph nodes, 8 perspectives)
+
+### Pro (Most Popular)
+- All Core features plus: Contextualizer, Issue Manager, Macro Builder
+- 6 Power Users included
+- Minerva AI included
+- Service: Data Onboarding Workshop (4x p.a.), weekly Value-Support Sessions
+- Starting from €13,200/month (based on 15M graph nodes, 8 perspectives)
+
+### Excellence
+- All Pro features plus: Workbench (Jupyter Notebooks), Premium Support
+- 10 Power Users included
+- Minerva AI included, Private LLM Hosting option
+- Service: Data Onboarding Workshop (6x p.a.), weekly Value-Support Sessions
+- Starting from €20,600/month (based on 15M graph nodes, 8 perspectives)
+
+Pricing scales based on data volume (graph nodes) and number of perspectives (dimensions/views on the process). All plans include a 14-day free trial, no setup fees, and can be canceled anytime with one month notice.
+
+85% of customers start with an initial Proof-Of-Value at a fixed price, typically focusing on a sub-process within 3-4 weeks.
+
+---
+
+## Frequently Asked Questions
+
+**Does Noreja offer a Proof-Of-Value?**
+Yes, 85% of customers start with an initial Proof-Of-Value at a very affordable fixed price. This typically focuses on a sub-process that Noreja connects, imports, analyzes, and reveals initial optimization potential within 3 to 4 weeks. After the Proof-Of-Value, 60% of the data integration is already completed.
+
+**Do I need Process Mining experts?**
+No. Noreja does not use event logs, so no complex data transformations are necessary, which often take up 80% of the time with conventional solutions.
+
+**Where is my data hosted?**
+Data is hosted at Google Cloud and Amazon AWS in Frankfurt. On-premises hosting is available upon request.
+
+**How does Noreja handle data protection?**
+Noreja is ISO 27001 certified. Complete tenant separation ensures data isolation.
+
+**What does private LLM hosting look like?**
+Private LLM hosting is implemented by operating a fully isolated environment at any cloud provider. Noreja sets up any LLM (e.g., Mistral, Deepseek, Gemma, Qwen3) that only the customer can access.
+
+**Are there partner companies that can support me?**
+Yes, Noreja has numerous partners among consultancies, system integrators, and universities who provide services with Noreja Process Intelligence.
+
+---
+
+## Team
+
+### Founders
+- **Dr. Lukas Pfahlsberger** — Chief Executive Officer
+- **Dr. techn. Philipp Waibel** — Chief Technology Officer
+- **Prof. Dr. Jan Mendling** — Head of Partnerships & Knowledge
+
+### Core Team
+- Julian Weiß — Senior Product Manager
+- Florian Eichin — Head of Frontend
+- Daniel Bauer — Head of Backend
+- Violeta Petkova — Senior Software Developer
+- Temuçin Damdinjamts-Kintaert — Software Developer
+
+### Advisory Board
+- Markus Neumayr
+- Christian Riffner
+- Gordana McNamara
+- Steven Knoblich
+
+---
+
+## Partners
+
+Noreja has an extensive partner ecosystem spanning technology, consulting, software, academic, legal, and incubator partners:
+
+- **Aptean** (Software/ERP) — Major Austrian ERP provider, partnering on process optimization
+- **Miragon** (Consulting) — Boutique consultancy specializing in process management and automation
+- **Changeenablers** (Consulting) — Business process management and process mining specialists
+- **WAITS** (Technology) — IT solutions and process consulting since 1999
+- **Nexigo** (Consulting) — Digital process transformation with 20+ years experience
+- **BOC Group** (Software) — Enterprise modeling software (ADONIS, ADOIT, ADOGRC)
+- **Vienesse Consulting** (Consulting) — Data- and process-driven digital transformation
+- **Fortlane Partners** (Advisory) — Strategy, M&A, and transformation advisory
+- **PwC Scale** (Incubator) — B2B tech cohort participant
+- **Humboldt Innovation** (Academic) — Applied research and startup support
+- **WU Vienna** (Academic) — Europe's largest business university, Noreja spin-off origin
+- **BRANDL & TALOS / Nährboden** (Legal) — Austrian law firm startup program
+
+---
+
+## Integrations
+
+Noreja connects to virtually every well-known relational database technology and can ingest data via common REST APIs. Individual data sources can be combined to map entire end-to-end process chains. Supported systems include ServiceNow, PostgreSQL, Oracle, and many more.
+
+---
+
+## Contact
+
+- **Website**: https://noreja.com
+- **Blog**: https://blog.noreja.com
+- **LinkedIn**: https://linkedin.com/company/noreja
+- **YouTube**: https://www.youtube.com/@noreja_intelligence
+- **Book a meeting**: https://outlook.office365.com/book/Kennenlernen@noreja.com/
+
+---
+
+## Legal
+
+- Noreja Intelligence GmbH
+- Imprint: https://noreja.com/en/imprint
+- Privacy Policy: https://noreja.com/en/privacy
+- Terms of Service: https://noreja.com/en/terms

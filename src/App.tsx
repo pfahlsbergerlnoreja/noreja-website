@@ -8,6 +8,8 @@ import { useScrollTracking } from "@/hooks/use-scroll-tracking";
 import { ConditionalLayout } from "@/components/ConditionalLayout";
 import { CanonicalUrl } from "@/components/CanonicalUrl";
 import { MetaDescription } from "@/components/MetaDescription";
+import { PageTitle } from "@/components/PageTitle";
+import { HreflangTags } from "@/components/HreflangTags";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { NewsletterToast } from "@/components/NewsletterToast";
 import Index from "./pages/Index";
@@ -70,6 +72,8 @@ const App = () => (
         <LanguageProvider>
           <NewsletterToast />
           <MetaDescription />
+          <PageTitle />
+          <HreflangTags />
           <ConditionalLayout>
             <Routes>
               {/* Redirect root to German home */}

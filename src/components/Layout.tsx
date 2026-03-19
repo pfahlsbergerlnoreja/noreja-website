@@ -56,7 +56,7 @@ export function Layout({ children }: LayoutProps) {
       */}
       
       <Header />
-      <main className="flex-1 relative z-10 w-full max-w-full overflow-x-hidden">
+      <main className="flex-1 relative z-10 w-full max-w-full overflow-x-hidden" role="main">
         {children}
       </main>
       <Footer />
