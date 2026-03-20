@@ -255,7 +255,7 @@ export function USPsShowcase() {
                     {/* Icon positioned above card - half on card, half above */}
                     <motion.img
                       src={usps[selectedCard].icon}
-                      alt=""
+                      alt={usps[selectedCard].title}
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
@@ -317,9 +317,9 @@ export function USPsShowcase() {
                       <div className="relative h-80 w-full border border-primary/50 rounded-2xl overflow-visible bg-gradient-to-br from-background/90 via-primary/20 to-secondary/40">
                         {/* Icon positioned above card - half on card, half above */}
                         <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
-                          <img 
-                            src={usp.icon} 
-                            alt="" 
+                          <img
+                            src={usp.icon}
+                            alt={usp.title}
                             className="w-24 h-24"
                           />
                         </div>

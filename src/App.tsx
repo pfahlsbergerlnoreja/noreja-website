@@ -3,7 +3,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { useScrollTracking } from "@/hooks/use-scroll-tracking";
 import { ConditionalLayout } from "@/components/ConditionalLayout";
 import { CanonicalUrl } from "@/components/CanonicalUrl";
@@ -12,24 +12,28 @@ import { PageTitle } from "@/components/PageTitle";
 import { HreflangTags } from "@/components/HreflangTags";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { NewsletterToast } from "@/components/NewsletterToast";
+
+// Critical routes loaded eagerly
 import Index from "./pages/Index";
 import Functionalities from "./pages/Functionalities";
-import SuccessStories from "./pages/SuccessStories";
-import SuccessStoryDetail from "./pages/SuccessStoryDetail";
-import UseCase from "./pages/UseCase";
-import Team from "./pages/Team";
-import Partners from "./pages/Partners";
-import Downloads from "./pages/Downloads";
-import DownloadThankYou from "./pages/DownloadThankYou";
-import Events from "./pages/Events";
 import Pricing from "./pages/Pricing";
+import SuccessStories from "./pages/SuccessStories";
 import ContactUs from "./pages/ContactUs";
-import Imprint from "./pages/Imprint";
-import TermsOfService from "./pages/TermsOfService";
-import PrivacyPolicy from "./pages/PrivacyPolicy";
-import NotFound from "./pages/NotFound";
-import Maintenance from "./pages/Maintenance";
-import AIAgents from "./pages/AIAgents";
+
+// Less critical routes loaded lazily
+const SuccessStoryDetail = lazy(() => import("./pages/SuccessStoryDetail"));
+const UseCase = lazy(() => import("./pages/UseCase"));
+const Team = lazy(() => import("./pages/Team"));
+const Partners = lazy(() => import("./pages/Partners"));
+const Downloads = lazy(() => import("./pages/Downloads"));
+const DownloadThankYou = lazy(() => import("./pages/DownloadThankYou"));
+const Events = lazy(() => import("./pages/Events"));
+const Imprint = lazy(() => import("./pages/Imprint"));
+const TermsOfService = lazy(() => import("./pages/TermsOfService"));
+const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
+const NotFound = lazy(() => import("./pages/NotFound"));
+const Maintenance = lazy(() => import("./pages/Maintenance"));
+const AIAgents = lazy(() => import("./pages/AIAgents"));
 
 const queryClient = new QueryClient();
 
@@ -75,6 +79,7 @@ const App = () => (
           <PageTitle />
           <HreflangTags />
           <ConditionalLayout>
+            <Suspense fallback={<div className="min-h-screen" />}>
             <Routes>
               {/* Redirect root to German home */}
               <Route path="/" element={<Navigate to="/de" replace />} />
@@ -149,6 +154,7 @@ const App = () => (
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
+            </Suspense>
           </ConditionalLayout>
         </LanguageProvider>
       </BrowserRouter>

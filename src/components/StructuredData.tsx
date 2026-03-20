@@ -114,6 +114,52 @@ export function FAQSchema({ items }: { items: Array<{ question: string; answer: 
   return <StructuredData schema={schema} id="faq" />;
 }
 
+export function CaseStudySchema({
+  companyName,
+  headline,
+  description,
+  url,
+  industry,
+  imageUrl,
+}: {
+  companyName: string;
+  headline: string;
+  description: string;
+  url: string;
+  industry: string;
+  imageUrl?: string;
+}) {
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline,
+    description,
+    url,
+    author: {
+      '@type': 'Organization',
+      name: 'Noreja Intelligence GmbH',
+      url: SITE_URL,
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Noreja Intelligence GmbH',
+      url: SITE_URL,
+      logo: {
+        '@type': 'ImageObject',
+        url: `${SITE_URL}/favicon.ico`,
+      },
+    },
+    about: {
+      '@type': 'Organization',
+      name: companyName,
+    },
+    keywords: `Process Intelligence, Case Study, ${companyName}, ${industry}`,
+    ...(imageUrl ? { image: imageUrl } : {}),
+  };
+
+  return <StructuredData schema={schema} id={`case-study-${companyName.toLowerCase()}`} />;
+}
+
 export function BreadcrumbSchema({
   items,
 }: {

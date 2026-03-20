@@ -10,7 +10,7 @@ import { downloadAssets, type DownloadAsset } from "@/lib/downloads";
 import { DownloadGate } from "@/components/DownloadGate";
 import { ArrowRight } from "lucide-react";
 import { getRoutePath } from "@/lib/routes";
-import { BreadcrumbSchema } from "@/components/StructuredData";
+import { BreadcrumbSchema, CaseStudySchema } from "@/components/StructuredData";
 import { SITE_URL } from "@/lib/config";
 
 // Helper function to format text with markdown and HTML support
@@ -187,6 +187,14 @@ const SuccessStoryDetail = () => {
         { name: 'Success Stories', url: `${SITE_URL}${getRoutePath('successStories', language)}` },
         { name: successStory.companyName, url: `${SITE_URL}${getRoutePath('successStoryDetail', language, { companyName: successStory.id })}` },
       ]} />
+      <CaseStudySchema
+        companyName={successStory.companyName}
+        headline={`${successStory.companyName} – ${successStory.subtitle[language]}`}
+        description={successStory.metaDescription?.[language] || successStory.summary[language]}
+        url={`${SITE_URL}${getRoutePath('successStoryDetail', language, { companyName: successStory.id })}`}
+        industry={successStory.industry[language]}
+        imageUrl={successStory.coverImageUrl ? `${SITE_URL}${successStory.coverImageUrl}` : undefined}
+      />
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-noreja-main/5 to-transparent pointer-events-none" />
 
       <div className="relative z-10">
