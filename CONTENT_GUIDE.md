@@ -424,6 +424,9 @@ const useCaseToWhitepaperMap: Record<string, Record<Language, string>> = {
 };
 ```
 
+Zur bearbeitung von Logos (bspw. weiße Version von Logos) nutze ich [Flowpoint](https://flowpoint.ai/tools/logo-color-changer).
+Einige der Cover Bilder, bspw. bei den Use Cases und Success Stories, wurden mit [Recraft](https://www.recraft.ai/community) erstellt. 
+
 ---
 
 ## 8. Downloads
