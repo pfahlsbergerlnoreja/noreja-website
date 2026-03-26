@@ -1,8 +1,8 @@
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import { HubSpotBlogTeaser } from "@/components/HubSpotBlogTeaser";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { useEffect, useRef } from "react";
-import { LayoutDashboard, Search, Brain, Wrench, Code, ArrowRight, LucideIcon } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { LayoutDashboard, Search, Brain, Wrench, Code, ArrowRight, LucideIcon, RotateCw } from "lucide-react";
 import { AnimatedHeading } from "@/components/AnimatedHeading";
 import { SoftwareApplicationSchema } from "@/components/StructuredData";
 import { Button } from "@/components/ui/button";
@@ -13,6 +13,11 @@ import analyzerImg from "@/assets/platform/analyzer.png";
 import minervaImg from "@/assets/platform/minerva.png";
 import builderImg from "@/assets/platform/builder.png";
 import workbenchImg from "@/assets/platform/workbench.png";
+import backDashboardImg from "@/assets/use_cases/supply_chain/production-line-optimization.webp";
+import backAnalyzerImg from "@/assets/use_cases/supply_chain/inventory-optimization.webp";
+import backMinervaImg from "@/assets/use_cases/manufacturing/capital-management.webp";
+import backBuilderImg from "@/assets/use_cases/manufacturing/defect-waste-reduction.webp";
+import backWorkbenchImg from "@/assets/use_cases/insurance/claims-optimisation.webp";
 
 // Feature Section Component with advanced scroll animations
 interface FeatureSectionProps {
@@ -22,6 +27,7 @@ interface FeatureSectionProps {
     title: string;
     description: string;
     imagePath: string | null;
+    backImagePath: string | null;
   };
   Icon: LucideIcon;
   layout: {
@@ -48,6 +54,7 @@ interface FeatureSectionProps {
 
 const FeatureSection = ({ feature, Icon, layout, index, animationStyle }: FeatureSectionProps) => {
   const { t } = useLanguage();
+  const [isFlipped, setIsFlipped] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
@@ -155,16 +162,53 @@ const FeatureSection = ({ feature, Icon, layout, index, animationStyle }: Featur
               perspective: "1000px",
             }}
           >
-            {/* Placeholder for image - replace with actual image when available */}
             {feature.imagePath ? (
-              <>
-                <motion.img
-                  src={feature.imagePath}
-                  alt={feature.title}
-                  className="relative z-10 w-full h-full object-contain transition-all duration-500"
-                  whileHover={{ scale: 1.05 }}
-                />
-              </>
+              <div
+                className="relative z-10 w-full h-full cursor-pointer"
+                onClick={() => feature.backImagePath && setIsFlipped(!isFlipped)}
+                style={{ perspective: "1000px" }}
+              >
+                <motion.div
+                  className="relative w-full h-full"
+                  animate={{ rotateY: isFlipped ? 180 : 0 }}
+                  transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                  style={{ transformStyle: "preserve-3d" }}
+                >
+                  {/* Vorderseite */}
+                  <div
+                    className="absolute inset-0 w-full h-full"
+                    style={{ backfaceVisibility: "hidden" }}
+                  >
+                    <img
+                      src={feature.imagePath}
+                      alt={feature.title}
+                      className="w-full h-full object-contain"
+                    />
+                    {feature.backImagePath && (
+                      <motion.div
+                        className="absolute bottom-3 right-3 w-8 h-8 rounded-full bg-black/30 backdrop-blur-sm flex items-center justify-center"
+                        animate={{ scale: [1, 1.1, 1] }}
+                        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                      >
+                        <RotateCw className="w-4 h-4 text-white/60" />
+                      </motion.div>
+                    )}
+                  </div>
+                  {/* Rückseite */}
+                  {feature.backImagePath && (
+                    <div
+                      className="absolute inset-0 w-full h-full"
+                      style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
+                    >
+                      <img
+                        src={feature.backImagePath}
+                        alt={`${feature.title} – Detail`}
+                        className="w-full h-full object-contain"
+                      />
+                    </div>
+                  )}
+                </motion.div>
+              </div>
             ) : (
               <div className="relative z-10 w-full h-full flex items-center justify-center bg-background">
                 <motion.div
@@ -295,35 +339,40 @@ const Functionalities = () => {
       icon: LayoutDashboard,
       title: t.functionalities.features.security.title,
       description: t.functionalities.features.security.description,
-      imagePath: dashboardImg
+      imagePath: dashboardImg,
+      backImagePath: backDashboardImg
     },
     {
       id: "data-integration",
       icon: Search,
       title: t.functionalities.features.dataIntegration.title,
       description: t.functionalities.features.dataIntegration.description,
-      imagePath: analyzerImg
+      imagePath: analyzerImg,
+      backImagePath: backAnalyzerImg
     },
     {
       id: "ai-analytics",
       icon: Brain,
       title: t.functionalities.features.aiAnalytics.title,
       description: t.functionalities.features.aiAnalytics.description,
-      imagePath: minervaImg
+      imagePath: minervaImg,
+      backImagePath: backMinervaImg
     },
     {
       id: "real-time",
       icon: Wrench,
       title: t.functionalities.features.realTime.title,
       description: t.functionalities.features.realTime.description,
-      imagePath: builderImg
+      imagePath: builderImg,
+      backImagePath: backBuilderImg
     },
     {
       id: "workbench",
       icon: Code,
       title: t.functionalities.features.workbench.title,
       description: t.functionalities.features.workbench.description,
-      imagePath: workbenchImg
+      imagePath: workbenchImg,
+      backImagePath: backWorkbenchImg
     }
   ];
 
