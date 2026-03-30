@@ -34,6 +34,10 @@ export const routes = {
     de: '/de/veranstaltungen',
     en: '/en/events',
   },
+  careers: {
+    de: '/de/karriere',
+    en: '/en/careers',
+  },
   downloads: {
     de: '/de/downloads',
     en: '/en/downloads',
@@ -88,6 +92,8 @@ const pathToRouteKey: Record<string, keyof typeof routes> = {
   '/en/team': 'team',
   '/de/veranstaltungen': 'events',
   '/en/events': 'events',
+  '/de/karriere': 'careers',
+  '/en/careers': 'careers',
   '/de/downloads': 'downloads',
   '/en/downloads': 'downloads',
   '/de/kontakt': 'contact',

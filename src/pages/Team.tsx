@@ -1,13 +1,16 @@
 import { motion } from "framer-motion";
 import { Linkedin } from "lucide-react";
 import { useMemo, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { HubSpotBlogTeaser } from "@/components/HubSpotBlogTeaser";
 import { TeamCard } from "@/components/TeamCard";
+import { Button } from "@/components/ui/button";
 import { teamMembers, advisoryMembers, initializeTeamData, type TeamMember, type AdvisoryMember } from "@/lib/team";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { getRoutePath } from "@/lib/routes";
 
 export default function Team() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [isLoading, setIsLoading] = useState(true);
   const [loadedTeamMembers, setLoadedTeamMembers] = useState<TeamMember[]>([]);
   const [loadedAdvisoryMembers, setLoadedAdvisoryMembers] = useState<AdvisoryMember[]>([]);
@@ -194,6 +197,30 @@ export default function Team() {
               </motion.div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Careers CTA Section */}
+      <section className="py-20 relative z-10 border-t border-border/40">
+        <div className="w-full max-w-7xl mx-auto px-4 lg:px-8 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-3xl lg:text-4xl font-bold mb-4 text-foreground">
+              {t.careers.joinTeamTitle}
+            </h2>
+            <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
+              {t.careers.joinTeamSubtitle}
+            </p>
+            <Button asChild className="gradient-primary glow-primary">
+              <Link to={getRoutePath('careers', language)}>
+                {t.careers.joinTeamCta}
+              </Link>
+            </Button>
+          </motion.div>
         </div>
       </section>
 

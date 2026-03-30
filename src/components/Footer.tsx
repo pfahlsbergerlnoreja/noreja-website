@@ -20,6 +20,7 @@ export function Footer() {
     { name: t.navigation.team, routeKey: 'team' as const, external: false },
     { name: t.navigation.downloads, routeKey: 'downloads' as const, external: false },
     { name: t.navigation.events, routeKey: 'events' as const, external: false },
+    { name: t.navigation.careers, routeKey: 'careers' as const, external: false },
     { name: t.footer.sections.documentation, href: documentationHref, external: true },
     { name: t.footer.sections.referralProgram, href: siteConfig.links.referralProgram, external: true }
   ];

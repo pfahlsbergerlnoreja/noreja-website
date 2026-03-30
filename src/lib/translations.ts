@@ -13,6 +13,7 @@ export interface Translations {
     team: string;
     downloads: string;
     events: string;
+    careers: string;
     quickNavigation: string;
   };
   pages: {
@@ -545,6 +546,26 @@ export interface Translations {
       upcomingEvent: string;
       upcomingEventsLabel: string;
     };
+  careers: {
+    subtitle: string;
+    openPositions: string;
+    openPosition: string;
+    openPositionsLabel: string;
+    noOpenPositions: string;
+    noOpenPositionsDescription: string;
+    initiativeApplication: string;
+    applyNow: string;
+    fullTime: string;
+    partTime: string;
+    internship: string;
+    workingStudent: string;
+    remote: string;
+    onsite: string;
+    hybrid: string;
+    joinTeamTitle: string;
+    joinTeamSubtitle: string;
+    joinTeamCta: string;
+  };
   team: {
     title: string;
     subtitle: string;
@@ -620,6 +641,7 @@ export interface Translations {
     partners: string;
     team: string;
     events: string;
+    careers: string;
     downloads: string;
     contact: string;
   };
@@ -637,6 +659,7 @@ export const translations: Record<Language, Translations> = {
       team: "Team",
       downloads: "Downloads",
       events: "Events",
+      careers: "Careers",
       quickNavigation: "Quick Navigation",
     },
     pages: {
@@ -1290,6 +1313,26 @@ export const translations: Record<Language, Translations> = {
       upcomingEvent: "upcoming event",
       upcomingEventsLabel: "upcoming events",
     },
+    careers: {
+      subtitle: "Become part of our team and help shape the future of process intelligence. Explore our open positions.",
+      openPositions: "Open Positions",
+      openPosition: "open position",
+      openPositionsLabel: "open positions",
+      noOpenPositions: "No open positions at the moment",
+      noOpenPositionsDescription: "We currently have no open positions, but we're always interested in talented people. Feel free to send us an unsolicited application.",
+      initiativeApplication: "Send Unsolicited Application",
+      applyNow: "Apply Now",
+      fullTime: "Full-time",
+      partTime: "Part-time",
+      internship: "Internship",
+      workingStudent: "Working Student",
+      remote: "Remote",
+      onsite: "On-site",
+      hybrid: "Hybrid",
+      joinTeamTitle: "Join Our Team",
+      joinTeamSubtitle: "We're looking for talented people who want to shape the future of process intelligence with us.",
+      joinTeamCta: "View Open Positions",
+    },
     team: {
       title: "Meet Our Team",
       subtitle: "Our team is made up of experts who live and breathe process intelligence. We help you make your processes measurably better.",
@@ -1365,6 +1408,7 @@ export const translations: Record<Language, Translations> = {
       partners: "Noreja’s partner ecosystem supports consulting, implementation, and the journey toward data-driven, AI-powered Process Intelligence – enabling transparency and operational impact.",
       team: "Meet the Noreja team – experienced experts in data-driven process analysis and AI-powered Process Intelligence, working together to create transparency and value.",
       events: "Stay informed about Noreja events focused on AI-powered process analysis and data-driven process optimization – practical formats for insights, exchange, and real-world learnings.",
+      careers: "Join the Noreja team – explore open positions in AI-powered process intelligence and help shape the future of data-driven process analysis.",
       downloads: "Download whitepapers, product briefs, and practical resources on data-driven, AI-powered Process Intelligence from Noreja – for deeper understanding and better decisions.",
       contact: "Get in touch with Noreja – we support you with questions around data-driven, AI-powered Process Intelligence, solutions, and implementation."
     }
@@ -1380,6 +1424,7 @@ export const translations: Record<Language, Translations> = {
       team: "Team",
       downloads: "Downloads",
       events: "Veranstaltungen",
+      careers: "Karriere",
       quickNavigation: "Schnellnavigation",
     },
     pages: {
@@ -2045,6 +2090,26 @@ export const translations: Record<Language, Translations> = {
       upcomingEvent: "kommende Veranstaltung",
       upcomingEventsLabel: "kommende Veranstaltungen",
     },
+    careers: {
+      subtitle: "Werde Teil unseres Teams und gestalte die Zukunft der Process Intelligence mit. Entdecke unsere offenen Stellen.",
+      openPositions: "Offene Stellen",
+      openPosition: "offene Stelle",
+      openPositionsLabel: "offene Stellen",
+      noOpenPositions: "Derzeit keine offenen Stellen",
+      noOpenPositionsDescription: "Aktuell haben wir keine offenen Positionen, aber wir freuen uns immer über talentierte Menschen. Sende uns gerne eine Initiativbewerbung.",
+      initiativeApplication: "Initiativbewerbung senden",
+      applyNow: "Jetzt bewerben",
+      fullTime: "Vollzeit",
+      partTime: "Teilzeit",
+      internship: "Praktikum",
+      workingStudent: "Werkstudent",
+      remote: "Remote",
+      onsite: "Vor Ort",
+      hybrid: "Hybrid",
+      joinTeamTitle: "Werde Teil unseres Teams",
+      joinTeamSubtitle: "Wir suchen talentierte Menschen, die mit uns die Zukunft der Process Intelligence gestalten wollen.",
+      joinTeamCta: "Offene Stellen ansehen",
+    },
     team: {
       title: "Unser Team",
       subtitle: "Unser Team besteht aus Expertinnen und Experten, die Process Intelligence leben. Wir unterstützen dich dabei, deine Prozesse messbar besser zu machen.",
@@ -2115,6 +2180,7 @@ export const translations: Record<Language, Translations> = {
       partners: "Unser Partner-Ecosystem bei Noreja unterstützt Beratung, Implementierung und den Weg zu datenbasierter, KI-gestützter Process Intelligence – für mehr Transparenz und operativen Erfolg.",
       team: "Lerne das Noreja-Team kennen – erfahrene Experten für datenbasierte Prozessanalyse und KI-gestützte Process Intelligence, die gemeinsam Transparenz und Wert schaffen.",
       events: "Bleib informiert über Noreja-Veranstaltungen zu KI-gestützter Prozessanalyse und datenbasierter Prozessoptimierung – praxisnahe Formate für Wissen, Austausch und echte Einblicke.",
+      careers: "Werde Teil des Noreja-Teams – entdecke offene Stellen im Bereich KI-gestützter Process Intelligence und gestalte die Zukunft der datenbasierten Prozessanalyse mit.",
       downloads: "Lade Whitepaper, Produkt-Briefs und praxisrelevante Ressourcen zu datenbasierter, KI-gestützter Process Intelligence von Noreja herunter – für fundiertes Wissen und bessere Entscheidungen.",
       contact: "Nimm Kontakt mit Noreja auf – wir unterstützen dich bei Fragen zu datenbasierter, KI-gestützter Process Intelligence, Lösungen und Implementierung."
     }
