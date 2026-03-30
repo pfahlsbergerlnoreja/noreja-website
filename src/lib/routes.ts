@@ -174,9 +174,6 @@ export function translateRoute(pathname: string, targetLang: Language): string {
     return pathname;
   }
   
-  // Remove language prefix to get base path
-  const basePath = pathname.replace(/^\/de|\/en/, '') || '/';
-  
   // Handle dynamic routes
   // Success story detail: /de/success-story/:companyName or /en/success-story/:companyName
   const successStoryMatch = pathname.match(/^\/(?:de|en)\/success-story\/(.+)$/);
@@ -190,9 +187,8 @@ export function translateRoute(pathname: string, targetLang: Language): string {
     return getRoutePath('useCases', targetLang, { useCaseName: useCaseMatch[1] });
   }
   
-  // Try to find matching route key from base path
-  const normalizedPath = basePath === '/' ? '/de' : `/de${basePath}`;
-  const routeKey = pathToRouteKey[normalizedPath];
+  // Try to find matching route key from the full pathname
+  const routeKey = pathToRouteKey[pathname];
   
   if (routeKey) {
     return routes[routeKey][targetLang];
@@ -217,7 +213,7 @@ export function getRouteKeyFromPath(pathname: string): keyof typeof routes | nul
   }
   
   // Remove language prefix
-  const basePath = pathname.replace(/^\/de|\/en/, '') || '/';
+  const basePath = pathname.replace(/^\/(de|en)/, '') || '/';
   const normalizedPath = basePath === '/' ? '/de' : `/de${basePath}`;
   
   // Check for dynamic routes first

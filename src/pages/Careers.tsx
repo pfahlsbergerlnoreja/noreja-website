@@ -53,8 +53,9 @@ const Careers = () => {
     return (
       <motion.div
         initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
+        whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3 }}
+        viewport={{ once: true }}
         className="group"
       >
         <Card className="h-full transition-all duration-300 hover:shadow-lg hover:shadow-primary/20 border-border/50 hover:border-primary/30">
@@ -100,14 +101,14 @@ const Careers = () => {
 
   const EmptyState = () => {
     const mailtoHref = `mailto:${MAILTO_ADDRESS}?subject=${encodeURIComponent(
-      language === 'de' ? 'Initiativbewerbung' : 'Unsolicited Application'
+      language === 'de' ? 'Initiativbewerbung Noreja' : 'Unsolicited Application for Noreja'
     )}`;
 
     return (
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
         className="text-center py-20"
       >
         <div className="max-w-md mx-auto">
@@ -130,17 +131,17 @@ const Careers = () => {
   };
 
   return (
-    <main className="min-h-screen relative overflow-hidden" style={gradientStyle}>
+    <div className="min-h-screen relative overflow-hidden" style={gradientStyle}>
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-noreja-main/5 to-transparent pointer-events-none" />
 
       <div className="relative z-10">
         {/* Hero Section */}
-        <section className="relative py-20 px-4">
-          <div className="container mx-auto max-w-4xl text-center">
+        <section className="relative py-12 md:py-20 lg:py-24">
+          <div className="w-full max-w-7xl mx-auto px-4 lg:px-8 text-center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
+              transition={{ duration: 0.8 }}
             >
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
                 {t.navigation.careers}
@@ -160,7 +161,7 @@ const Careers = () => {
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.2 }}
+                  transition={{ duration: 0.8, delay: 0.2 }}
                   className="mb-12"
                 >
                   <h2 className="text-3xl font-bold mb-4">{t.careers.openPositions}</h2>
@@ -183,7 +184,7 @@ const Careers = () => {
           </div>
         </section>
       </div>
-    </main>
+    </div>
   );
 };
 
