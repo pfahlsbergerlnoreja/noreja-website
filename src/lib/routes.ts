@@ -38,6 +38,10 @@ export const routes = {
     de: '/de/karriere',
     en: '/en/careers',
   },
+  careerDetail: {
+    de: '/de/karriere/:jobId',
+    en: '/en/careers/:jobId',
+  },
   downloads: {
     de: '/de/downloads',
     en: '/en/downloads',
@@ -186,6 +190,12 @@ export function translateRoute(pathname: string, targetLang: Language): string {
   if (useCaseMatch) {
     return getRoutePath('useCases', targetLang, { useCaseName: useCaseMatch[1] });
   }
+
+  // Career detail: /de/karriere/:jobId or /en/careers/:jobId
+  const careerDetailMatch = pathname.match(/^\/(?:de|en)\/(?:karriere|careers)\/(.+)$/);
+  if (careerDetailMatch) {
+    return getRoutePath('careerDetail', targetLang, { jobId: careerDetailMatch[1] });
+  }
   
   // Try to find matching route key from the full pathname
   const routeKey = pathToRouteKey[pathname];
@@ -222,6 +232,9 @@ export function getRouteKeyFromPath(pathname: string): keyof typeof routes | nul
   }
   if (pathname.match(/^\/(?:de|en)\/use-cases\//)) {
     return 'useCases';
+  }
+  if (pathname.match(/^\/(?:de|en)\/(?:karriere|careers)\/.+/)) {
+    return 'careerDetail';
   }
   
   return pathToRouteKey[normalizedPath] || null;

@@ -29,6 +29,7 @@ const Downloads = lazy(() => import("./pages/Downloads"));
 const DownloadThankYou = lazy(() => import("./pages/DownloadThankYou"));
 const Events = lazy(() => import("./pages/Events"));
 const Careers = lazy(() => import("./pages/Careers"));
+const CareerDetail = lazy(() => import("./pages/CareerDetail"));
 const Imprint = lazy(() => import("./pages/Imprint"));
 const TermsOfService = lazy(() => import("./pages/TermsOfService"));
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
@@ -120,6 +121,8 @@ const App = () => (
               {/* Careers */}
               <Route path="/de/karriere" element={<Careers />} />
               <Route path="/en/careers" element={<Careers />} />
+              <Route path="/de/karriere/:jobId" element={<CareerDetail />} />
+              <Route path="/en/careers/:jobId" element={<CareerDetail />} />
 
               {/* Downloads */}
               <Route path="/de/downloads" element={<Downloads />} />

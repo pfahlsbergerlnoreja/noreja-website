@@ -1,11 +1,13 @@
 import { useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Briefcase, MapPin, Mail } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Briefcase, MapPin, Mail, ArrowRight } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { getActiveListings, getJobDescription, type JobListing } from '@/lib/careers';
+import { getRoutePath } from '@/lib/routes';
 
 const MAILTO_ADDRESS = 'lukas.pfahlsberger@noreja.com';
 
@@ -35,20 +37,19 @@ const Careers = () => {
   };
 
   const getLocationLabel = (location: JobListing['location']) => {
+    if (location.address) {
+      return location.address[language];
+    }
     const typeLabels: Record<JobListing['location']['type'], string> = {
       remote: t.careers.remote,
       onsite: t.careers.onsite,
       hybrid: t.careers.hybrid,
     };
-    const label = typeLabels[location.type];
-    return location.address ? `${label} – ${location.address}` : label;
+    return typeLabels[location.type];
   };
 
   const JobCard = ({ job }: { job: JobListing }) => {
-    const subject = language === 'de'
-      ? `Bewerbung: ${job.title}`
-      : `Application: ${job.title}`;
-    const mailtoHref = `mailto:${MAILTO_ADDRESS}?subject=${encodeURIComponent(subject)}`;
+    const detailPath = getRoutePath('careerDetail', language, { jobId: job.id });
 
     return (
       <motion.div
@@ -58,43 +59,45 @@ const Careers = () => {
         viewport={{ once: true }}
         className="group"
       >
-        <Card className="h-full transition-all duration-300 hover:shadow-lg hover:shadow-primary/20 border-border/50 hover:border-primary/30">
-          <CardHeader className="pb-4">
-            <div className="flex items-center gap-2 mb-2">
-              <Badge variant="secondary" className="text-xs capitalize">
-                {getTypeLabel(job.type)}
-              </Badge>
-              {job.department && (
-                <Badge variant="outline" className="text-xs">
-                  {job.department}
+        <Link to={detailPath} className="block h-full">
+          <Card className="h-full flex flex-col transition-all duration-300 hover:shadow-lg hover:shadow-primary/20 border-border/50 hover:border-primary/30">
+            <CardHeader className="pb-4">
+              <div className="flex items-center gap-2 mb-2">
+                <Badge variant="secondary" className="text-xs capitalize">
+                  {getTypeLabel(job.type)}
                 </Badge>
-              )}
-            </div>
-            <CardTitle className="text-xl leading-tight group-hover:text-primary transition-colors">
-              {job.title}
-            </CardTitle>
-          </CardHeader>
-
-          <CardContent className="pt-0">
-            <p className="text-muted-foreground mb-6 leading-relaxed">
-              {getJobDescription(job, language)}
-            </p>
-
-            <div className="space-y-3 mb-6">
-              <div className="flex items-center gap-3 text-sm">
-                <MapPin className="h-4 w-4 text-primary shrink-0" />
-                <span>{getLocationLabel(job.location)}</span>
+                {job.department && (
+                  <Badge variant="outline" className="text-xs">
+                    {job.department}
+                  </Badge>
+                )}
               </div>
-            </div>
+              <CardTitle className="text-xl leading-tight group-hover:text-primary transition-colors h-[3.5rem] line-clamp-2">
+                {job.title}
+              </CardTitle>
+            </CardHeader>
 
-            <Button className="w-full group/btn" asChild>
-              <a href={mailtoHref} className="flex items-center justify-center gap-2">
-                {t.careers.applyNow}
-                <Mail className="h-4 w-4 group-hover/btn:translate-x-0.5 transition-transform" />
-              </a>
-            </Button>
-          </CardContent>
-        </Card>
+            <CardContent className="pt-0 flex flex-col flex-1">
+              <p className="text-muted-foreground leading-relaxed h-[9rem] line-clamp-6">
+                {getJobDescription(job, language)}
+              </p>
+
+              <div className="mt-auto pt-6">
+                <div className="flex items-center gap-3 text-sm mb-6">
+                  <MapPin className="h-4 w-4 text-primary shrink-0" />
+                  <span>{getLocationLabel(job.location)}</span>
+                </div>
+
+                <Button className="w-full group/btn" asChild>
+                  <span className="flex items-center justify-center gap-2">
+                    {t.careers.viewDetails}
+                    <ArrowRight className="h-4 w-4 group-hover/btn:translate-x-0.5 transition-transform" />
+                  </span>
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </Link>
       </motion.div>
     );
   };

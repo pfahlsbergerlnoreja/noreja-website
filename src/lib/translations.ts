@@ -565,6 +565,14 @@ export interface Translations {
     joinTeamTitle: string;
     joinTeamSubtitle: string;
     joinTeamCta: string;
+    aboutCompanyHeading: string;
+    roleDescriptionHeading: string;
+    tasksHeading: string;
+    requirementsHeading: string;
+    benefitsHeading: string;
+    closingHeading: string;
+    viewDetails: string;
+    backToOverview: string;
   };
   team: {
     title: string;
@@ -1332,6 +1340,14 @@ export const translations: Record<Language, Translations> = {
       joinTeamTitle: "Join Our Team",
       joinTeamSubtitle: "We're looking for talented people who want to shape the future of process intelligence with us.",
       joinTeamCta: "View Open Positions",
+      aboutCompanyHeading: "About Noreja",
+      roleDescriptionHeading: "Your Role",
+      tasksHeading: "Your Tasks",
+      requirementsHeading: "Your Profile",
+      benefitsHeading: "What We Offer",
+      closingHeading: "Interested?",
+      viewDetails: "View Details",
+      backToOverview: "Back to Open Positions",
     },
     team: {
       title: "Meet Our Team",
@@ -2109,6 +2125,14 @@ export const translations: Record<Language, Translations> = {
       joinTeamTitle: "Werde Teil unseres Teams",
       joinTeamSubtitle: "Wir suchen talentierte Menschen, die mit uns die Zukunft der Process Intelligence gestalten wollen.",
       joinTeamCta: "Offene Stellen ansehen",
+      aboutCompanyHeading: "Über Noreja",
+      roleDescriptionHeading: "Deine Rolle",
+      tasksHeading: "Deine Aufgaben",
+      requirementsHeading: "Dein Profil",
+      benefitsHeading: "Was wir dir bieten",
+      closingHeading: "Interesse?",
+      viewDetails: "Details ansehen",
+      backToOverview: "Zurück zu den offenen Stellen",
     },
     team: {
       title: "Unser Team",
