@@ -8,6 +8,13 @@ const FORM_ID_EN = "c56d0262-0916-49c0-b058-cd0d2d4e2539";
 const FORM_ID_DE = "4c2d159d-aefd-491d-b7bb-0d64474ae2a3";
 const HS_SCRIPT_URL = `https://js-eu1.hsforms.net/forms/embed/${PORTAL_ID}.js`;
 
+function hasMarketingConsent(): boolean {
+  const match = document.cookie.match(/(?:^|;\s*)cookieyes-consent=([^;]*)/);
+  if (!match) return false;
+  const value = decodeURIComponent(match[1]);
+  return value.includes("advertisement:yes");
+}
+
 export function NewsletterToast() {
   const { language } = useLanguage();
   const [visible, setVisible] = useState(false);
@@ -16,7 +23,7 @@ export function NewsletterToast() {
 
   const formId = language === "en" ? FORM_ID_EN : FORM_ID_DE;
 
-  // Preload HubSpot embed script after delay, only show popup if it loads successfully
+  // Preload HubSpot embed script after delay, only show popup if marketing cookies are accepted
   useEffect(() => {
     if (!formId) return;
 
@@ -26,6 +33,7 @@ export function NewsletterToast() {
 
     const timer = setTimeout(() => {
       if (scriptLoaded.current) return;
+      if (!hasMarketingConsent()) return;
 
       const script = document.createElement("script");
       script.src = HS_SCRIPT_URL;
@@ -35,7 +43,6 @@ export function NewsletterToast() {
         setVisible(true);
       };
       script.onerror = () => {
-        // HubSpot script blocked (e.g. by Cookieyes) or failed — don't show popup
         scriptLoaded.current = false;
       };
       document.head.appendChild(script);
@@ -43,6 +50,17 @@ export function NewsletterToast() {
     }, 5000);
     return () => clearTimeout(timer);
   }, [formId]);
+
+  // Hide popup if user revokes consent after it was shown
+  useEffect(() => {
+    const handleConsentUpdate = () => {
+      if (!hasMarketingConsent()) {
+        setVisible(false);
+      }
+    };
+    document.addEventListener("cookieyes_consent_update", handleConsentUpdate);
+    return () => document.removeEventListener("cookieyes_consent_update", handleConsentUpdate);
+  }, []);
 
   const handleDismiss = () => {
     sessionStorage.setItem('noreja_newsletter_dismissed', 'true');
