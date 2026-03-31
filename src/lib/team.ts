@@ -112,19 +112,6 @@ const teamMembersBase: TeamMemberBase[] = [
     }
   },
   {
-    id: "4",
-    name: "Julian Weiß",
-    role: "Senior Product Manager",
-    oneLiner: "Building scalable platforms that power enterprise growth.",
-    linkedInUrl: "https://www.linkedin.com/in/julian-weiss/",
-    imageFilename: "Julian-Weiss.webp",
-    isFounder: false,
-    personalIntro: {
-      en: "Julian is a Product Manager with a strong focus on data-driven product development and scalable digital solutions. \n\n At Noreja, he is responsible for the continuous development of key product areas, ensuring that data-driven decisions and user-centric approaches are integrated into the product strategy. Previously, he worked at several scale-ups, where he supported growth phases by developing and optimizing digital products and implementing efficient processes. Through close collaboration with cross-functional teams, he drove innovative solutions and actively shaped strategic scaling projects. \n\n His academic background is in business informatics, where he focused on process optimization and analysis during his studies and continued this work during his tenure at TU Wien.",
-      de: "Julian ist Produkt Manager mit einem starken Fokus auf datengetriebene Produktentwicklung und skalierbare digitale Lösungen. \n\n Bei Noreja verantwortet er die Weiterentwicklung zentraler Produktbereiche und stellt sicher, dass datenbasierte Entscheidungen und nutzerzentrierte Ansätze in die Produktstrategie einfließen. Zuvor war er in mehreren Scale-ups tätig und begleitete dort Wachstumsphasen mit der Entwicklung und Optimierung digitaler Produkte sowie der Einführung effizienter Prozesse. Durch die enge Zusammenarbeit mit cross-funktionalen Teams trieb er innovative Lösungen voran und gestaltete strategische Skalierungsprojekte aktiv mit. \n\n Sein akademischer Hintergrund liegt in der Wirtschaftsinformatik, wobei er sich bereits während seines Studiums intensiv mit der Optimierung und Analyse von Geschäftsprozessen beschäftigte und während seiner Beschäftigung an der TU Wien fortführte. "
-    }
-  },
-  {
     id: "5",
     name: "Florian Eichin",
     role: "Head of Frontend",

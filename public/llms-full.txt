@@ -176,7 +176,6 @@ Yes, Noreja has numerous partners among consultancies, system integrators, and u
 - **Prof. Dr. Jan Mendling** — Head of Partnerships & Knowledge
 
 ### Core Team
-- Julian Weiß — Senior Product Manager
 - Florian Eichin — Head of Frontend
 - Daniel Bauer — Head of Backend
 - Violeta Petkova — Senior Software Developer
