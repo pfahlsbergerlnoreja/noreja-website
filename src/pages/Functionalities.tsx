@@ -8,16 +8,16 @@ import { SoftwareApplicationSchema } from "@/components/StructuredData";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { getRoutePath } from "@/lib/routes";
-import dashboardImg from "@/assets/platform/dashboard.png";
-import analyzerImg from "@/assets/platform/analyzer.png";
-import minervaImg from "@/assets/platform/minerva.png";
-import builderImg from "@/assets/platform/builder.png";
-import workbenchImg from "@/assets/platform/workbench.png";
-import backDashboardImg from "@/assets/use_cases/supply_chain/production-line-optimization.webp";
-import backAnalyzerImg from "@/assets/use_cases/supply_chain/inventory-optimization.webp";
-import backMinervaImg from "@/assets/use_cases/manufacturing/capital-management.webp";
-import backBuilderImg from "@/assets/use_cases/manufacturing/defect-waste-reduction.webp";
-import backWorkbenchImg from "@/assets/use_cases/insurance/claims-optimisation.webp";
+import dashboardImg from "@/assets/platform/dashboard.webp";
+import analyzerImg from "@/assets/platform/analyzer.webp";
+import minervaImg from "@/assets/platform/minerva.webp";
+import builderImg from "@/assets/platform/builder.webp";
+import workbenchImg from "@/assets/platform/workbench.webp";
+import backDashboardImg from "@/assets/platform/dashboard_platform.webp";
+import backAnalyzerImg from "@/assets/platform/analyzer_platform.webp";
+import backMinervaImg from "@/assets/platform/manager_platform.webp";
+import backBuilderImg from "@/assets/platform/builder_platform.webp";
+import backWorkbenchImg from "@/assets/platform/workbench_platform.webp";
 
 // Feature Section Component with advanced scroll animations
 interface FeatureSectionProps {

@@ -11,7 +11,7 @@ const __dirname = dirname(__filename);
 const SOURCE_DIR = resolve(__dirname, '../assets_raw');
 const DEST_DIR = resolve(__dirname, '../src/assets');
 const WEBP_QUALITY = 80;
-const DEFAULT_EXCLUDED_FOLDERS = ['icons', 'platform'];
+const DEFAULT_EXCLUDED_FOLDERS = ['icons'];
 
 // Supported image formats for conversion
 const CONVERTIBLE_FORMATS = ['.png', '.jpg', '.jpeg'];

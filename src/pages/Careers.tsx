@@ -92,7 +92,7 @@ const Careers = () => {
                   <span className="flex items-center justify-center gap-2">
                     {t.careers.viewDetails}
                     <ArrowRight className="h-4 w-4 group-hover/btn:translate-x-0.5 transition-transform" />
-                  </span>
+                </span>
                 </Button>
               </div>
             </CardContent>

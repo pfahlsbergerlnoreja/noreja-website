@@ -2,11 +2,11 @@ import { motion } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useMemo } from "react";
 import mainAnimation from "@/assets/animation/main_animation_transparent.webm";
-import dashboardImg from "@/assets/platform/dashboard.png";
-import analyzerImg from "@/assets/platform/analyzer.png";
-import minervaImg from "@/assets/platform/minerva.png";
-import builderImg from "@/assets/platform/builder.png";
-import workbenchImg from "@/assets/platform/workbench.png";
+import dashboardImg from "@/assets/platform/dashboard.webp";
+import analyzerImg from "@/assets/platform/analyzer.webp";
+import minervaImg from "@/assets/platform/minerva.webp";
+import builderImg from "@/assets/platform/builder.webp";
+import workbenchImg from "@/assets/platform/workbench.webp";
 
 interface AnimationSectionProps {
   size?: "default" | "large";
