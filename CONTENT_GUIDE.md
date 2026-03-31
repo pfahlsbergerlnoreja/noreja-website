@@ -16,9 +16,10 @@ Dieser Guide erklärt, wie du Inhalte auf der Noreja-Website anlegst und bearbei
 6. [Partner & Kundenstimmen](#6-partner--kundenstimmen)
 7. [Use Cases](#7-use-cases)
 8. [Downloads](#8-downloads)
-9. [Übersetzungen & FAQs](#9-übersetzungen--faqs)
-10. [SEO, Seitentitel & LLM-Crawlability](#10-seo-seitentitel--llm-crawlability)
-11. [Checkliste: Neuen Content live bringen](#11-checkliste-neuen-content-live-bringen)
+9. [Karriere / Stellenanzeigen](#9-karriere--stellenanzeigen)
+10. [Übersetzungen & FAQs](#10-übersetzungen--faqs)
+11. [SEO, Seitentitel & LLM-Crawlability](#11-seo-seitentitel--llm-crawlability)
+12. [Checkliste: Neuen Content live bringen](#12-checkliste-neuen-content-live-bringen)
 
 ---
 
@@ -34,6 +35,7 @@ Alle Inhalte der Website werden in TypeScript-Dateien unter `src/lib/` gepflegt.
 | Partner | `src/lib/partners.ts` | `assets_raw/partners/`, `assets_raw/partnerFaces/` |
 | Use Cases | `src/lib/useCases.ts` | `assets_raw/use_cases/` |
 | Downloads | `src/lib/downloads.ts` | — (PDFs liegen auf HubSpot) |
+| Karriere / Stellenanzeigen | `src/lib/careers.ts` | — |
 | Texte & FAQs | `src/lib/translations.ts` | — |
 | LLM-Content | `public/llms.txt`, `public/llms-full.txt` | — |
 | Seitentitel | `src/components/PageTitle.tsx` | — |
@@ -467,7 +469,110 @@ Bei bilingualen Downloads separate Einträge anlegen (mit `-de` / `-en` Suffix i
 
 ---
 
-## 9. Übersetzungen & FAQs
+## 9. Karriere / Stellenanzeigen
+
+**Datei:** `src/lib/careers.ts`
+
+Stellenanzeigen erscheinen auf der Karriereseite (`/de/karriere` bzw. `/en/careers`) als Karten in einem 3-Spalten-Grid. Jede Stelle hat eine eigene Detailseite (`/de/karriere/{jobId}` bzw. `/en/careers/{jobId}`). Bewerbungen laufen per E-Mail an `lukas.pfahlsberger@noreja.com`.
+
+### Interface-Übersicht
+
+```typescript
+interface JobListing {
+  id: string;                              // URL-Slug (z.B. 'senior-developer')
+  title: string;                           // Jobtitel
+  description: { de: string; en: string }; // Kurzbeschreibung (für Kartenansicht)
+  type: 'full-time' | 'part-time' | 'internship' | 'working-student';
+  location: {
+    type: 'remote' | 'onsite' | 'hybrid';
+    address?: { de: string; en: string };  // Optional: Standort-Text
+  };
+  department?: string;                     // Optional (z.B. 'Customer Success', 'Sales', 'Marketing')
+  publishedDate: Date;                     // Veröffentlichungsdatum (bestimmt Sortierung)
+  aboutCompany: { de: string; en: string }; // "Über Noreja"-Absatz
+  roleDescription: { de: string; en: string }; // Rollenbeschreibung
+  tasks: { de: string[]; en: string[] };   // Aufgaben (als Liste)
+  requirements: { de: string[]; en: string[] }; // Anforderungen (als Liste)
+  benefits: { de: string[]; en: string[] }; // Benefits (als Liste)
+  closingText: { de: string; en: string }; // Abschluss-/Bewerbungsaufforderung
+}
+```
+
+### So fügst du eine neue Stellenanzeige hinzu
+
+Öffne `src/lib/careers.ts` und füge einen neuen Eintrag in das `jobListings`-Array ein:
+
+```typescript
+{
+  id: 'senior-frontend-engineer',
+  title: 'Senior Frontend Engineer (m/w/d)',
+  description: {
+    de: 'Kurze Beschreibung der Stelle für die Kartenansicht...',
+    en: 'Short description for the card view...',
+  },
+  type: 'full-time',
+  location: {
+    type: 'remote',
+    address: {
+      de: 'Deutschland / Remote',
+      en: 'Germany / Remote',
+    },
+  },
+  department: 'Engineering',
+  publishedDate: new Date('2026-03-31'),
+  aboutCompany: {
+    de: 'Text über Noreja...',
+    en: 'Text about Noreja...',
+  },
+  roleDescription: {
+    de: 'Beschreibung der Rolle...',
+    en: 'Role description...',
+  },
+  tasks: {
+    de: ['Aufgabe 1', 'Aufgabe 2', '...'],
+    en: ['Task 1', 'Task 2', '...'],
+  },
+  requirements: {
+    de: ['Anforderung 1', 'Anforderung 2', '...'],
+    en: ['Requirement 1', 'Requirement 2', '...'],
+  },
+  benefits: {
+    de: ['Benefit 1', 'Benefit 2', '...'],
+    en: ['Benefit 1', 'Benefit 2', '...'],
+  },
+  closingText: {
+    de: 'Wir freuen uns auf deine Bewerbung!',
+    en: 'We look forward to your application!',
+  },
+}
+```
+
+### Pflichtfelder
+
+Alle Felder außer `department` und `location.address` sind **Pflicht**. Alle Textfelder müssen in **beiden Sprachen** (DE + EN) gepflegt werden.
+
+### Erlaubte Werte
+
+| Feld | Erlaubte Werte |
+|---|---|
+| `type` | `'full-time'`, `'part-time'`, `'internship'`, `'working-student'` |
+| `location.type` | `'remote'`, `'onsite'`, `'hybrid'` |
+
+### Stellenanzeige entfernen
+
+Einfach den entsprechenden Eintrag aus dem `jobListings`-Array löschen. Wenn keine Stellen mehr vorhanden sind, wird automatisch ein Hinweis mit Link zur Initiativbewerbung angezeigt.
+
+### Hinweise
+
+- Stellen werden nach `publishedDate` sortiert (neueste zuerst)
+- Die `id` wird als URL-Slug verwendet — kebab-case, eindeutig, z.B. `'account-executive'`
+- Der `aboutCompany`-Text kann über mehrere Absätze gehen (mit `\n\n` getrennt)
+- Die `description` sollte 2–3 Sätze lang sein (wird auf der Kartenansicht auf 6 Zeilen begrenzt)
+- Der "Jetzt bewerben"-Button öffnet den E-Mail-Client mit vorausgefülltem Betreff
+
+---
+
+## 10. Übersetzungen & FAQs
 
 **Datei:** `src/lib/translations.ts`
 
@@ -524,7 +629,7 @@ FAQs befinden sich unter `pages.pricing.faq.items`. Füge ein neues Objekt in **
 
 ---
 
-## 10. SEO, Seitentitel & LLM-Crawlability
+## 11. SEO, Seitentitel & LLM-Crawlability
 
 Die Website enthält mehrere Mechanismen, die sicherstellen, dass Suchmaschinen und LLM-Crawler (GPTBot, ClaudeBot, PerplexityBot etc.) die Inhalte korrekt erfassen.
 
@@ -600,7 +705,7 @@ In `netlify.toml` ist Pre-Rendering aktiviert. Netlify rendert die SPA serversei
 
 ---
 
-## 11. Checkliste: Neuen Content live bringen
+## 12. Checkliste: Neuen Content live bringen
 
 Wenn du neuen Content erstellt hast, gehe diese Punkte durch:
 
