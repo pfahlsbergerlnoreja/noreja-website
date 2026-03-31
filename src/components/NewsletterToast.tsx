@@ -11,11 +11,12 @@ const HS_SCRIPT_URL = `https://js-eu1.hsforms.net/forms/embed/${PORTAL_ID}.js`;
 export function NewsletterToast() {
   const { language } = useLanguage();
   const [visible, setVisible] = useState(false);
+  const [scriptReady, setScriptReady] = useState(false);
   const scriptLoaded = useRef(false);
 
   const formId = language === "en" ? FORM_ID_EN : FORM_ID_DE;
 
-  // Show toast after delay (only when a formId is available)
+  // Preload HubSpot embed script after delay, only show popup if it loads successfully
   useEffect(() => {
     if (!formId) return;
 
@@ -23,20 +24,25 @@ export function NewsletterToast() {
     const submitted  = localStorage.getItem('noreja_newsletter_submitted')  === 'true';
     if (dismissed || submitted) return;
 
-    const timer = setTimeout(() => setVisible(true), 5000);
+    const timer = setTimeout(() => {
+      if (scriptLoaded.current) return;
+
+      const script = document.createElement("script");
+      script.src = HS_SCRIPT_URL;
+      script.async = true;
+      script.onload = () => {
+        setScriptReady(true);
+        setVisible(true);
+      };
+      script.onerror = () => {
+        // HubSpot script blocked (e.g. by Cookieyes) or failed — don't show popup
+        scriptLoaded.current = false;
+      };
+      document.head.appendChild(script);
+      scriptLoaded.current = true;
+    }, 5000);
     return () => clearTimeout(timer);
   }, [formId]);
-
-  // Load HubSpot embed script once toast becomes visible
-  useEffect(() => {
-    if (!visible || scriptLoaded.current) return;
-
-    const script = document.createElement("script");
-    script.src = HS_SCRIPT_URL;
-    script.async = true;
-    document.head.appendChild(script);
-    scriptLoaded.current = true;
-  }, [visible]);
 
   const handleDismiss = () => {
     sessionStorage.setItem('noreja_newsletter_dismissed', 'true');
@@ -45,28 +51,38 @@ export function NewsletterToast() {
 
   return (
     <AnimatePresence>
-      {visible && formId && (
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 40 }}
-          transition={{ duration: 0.35, ease: "easeOut" }}
-          className="fixed bottom-6 right-6 z-50 w-[560px] rounded-xl bg-card/80 backdrop-blur-xl border border-border/40 shadow-2xl px-6 py-3"
-        >
-          <button
+      {visible && scriptReady && formId && (
+        <>
+          {/* Invisible backdrop — click/tap outside to dismiss */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-40"
             onClick={handleDismiss}
-            aria-label="Close"
-            className="absolute top-3 right-3 text-muted-foreground hover:text-foreground transition-colors"
-          >
-            <X size={18} />
-          </button>
-          <div
-            className="hs-form-frame"
-            data-region="eu1"
-            data-form-id={formId}
-            data-portal-id={PORTAL_ID}
           />
-        </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 40 }}
+            transition={{ duration: 0.35, ease: "easeOut" }}
+            className="fixed bottom-6 right-6 z-50 w-[560px] rounded-xl bg-card/80 backdrop-blur-xl border border-border/40 shadow-2xl px-6 py-3"
+          >
+            <button
+              onClick={handleDismiss}
+              aria-label="Close"
+              className="absolute top-3 right-3 text-muted-foreground hover:text-foreground transition-colors"
+            >
+              <X size={18} />
+            </button>
+            <div
+              className="hs-form-frame"
+              data-region="eu1"
+              data-form-id={formId}
+              data-portal-id={PORTAL_ID}
+            />
+          </motion.div>
+        </>
       )}
     </AnimatePresence>
   );
