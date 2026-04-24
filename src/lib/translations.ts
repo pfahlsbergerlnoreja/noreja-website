@@ -2197,6 +2197,11 @@ export const translations: Record<Language, Translations> = {
     buttons: {
       contactUs: "Kontakt"
     },
+    maintenance: {
+      title: "Wartungsarbeiten",
+      subtitle: "Wir führen derzeit planmäßige Wartungsarbeiten durch",
+      message: "Unsere Plattform ist vorübergehend nicht verfügbar, da wir derzeit Updates und Verbesserungen implementieren. Wir sind in Kürze wieder online. Vielen Dank für Ihre Geduld."
+    },
     metaDescriptions: {
       functionalities: "Erhalte mit Noreja vollständige Prozess-Transparenz in Echtzeit – datenbasiert, KI-gestützt und für fundierte Entscheidungen zur Optimierung deiner Geschäftsprozesse.",
       pricing: "Entdecke die Preismodelle von Noreja – flexible Pakete für datenbasierte, KI-gestützte Prozessanalyse und transparente Entscheidungen, abgestimmt auf deine Organisation.",

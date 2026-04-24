@@ -75,8 +75,8 @@ export const routes = {
     en: '/en/frontier-agents',
   },
   maintenance: {
-    de: '/maintenance',
-    en: '/maintenance',
+    de: '/de/wartung',
+    en: '/en/maintenance',
   },
 } as const;
 
@@ -112,7 +112,8 @@ const pathToRouteKey: Record<string, keyof typeof routes> = {
   '/en/download-thank-you': 'downloadThankYou',
   '/de/frontier-agents': 'aiAgents',
   '/en/frontier-agents': 'aiAgents',
-  '/maintenance': 'maintenance',
+  '/en/maintenance': 'maintenance',
+  '/de/wartung': 'maintenance',
 };
 
 /**

@@ -15,22 +15,6 @@ const Maintenance = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-white relative overflow-hidden">
-      {/* Blue Header */}
-      <header 
-        className="w-full py-4 px-6 md:px-8"
-        style={{ backgroundColor: toolHeaderBlue }}
-      >
-        <div className="container mx-auto flex items-center">
-          <motion.img
-            src={logo}
-            alt="Noreja Logo"
-            className="h-8 md:h-10"
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
-          />
-        </div>
-      </header>
 
       {/* Main content area */}
       <div className="flex-1 flex items-center justify-center px-6 py-12">

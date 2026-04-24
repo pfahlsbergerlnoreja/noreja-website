@@ -156,8 +156,9 @@ const App = () => (
               <Route path="/de/frontier-agents" element={<AIAgents />} />
               <Route path="/en/frontier-agents" element={<AIAgents />} />
               
-              {/* Maintenance (same for both) */}
-              <Route path="/maintenance" element={<Maintenance />} />
+              {/* Maintenance */}
+              <Route path="/de/wartung" element={<Maintenance />} />
+              <Route path="/en/maintenance" element={<Maintenance />} />
               
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
