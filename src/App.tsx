@@ -157,6 +157,7 @@ const App = () => (
               <Route path="/en/frontier-agents" element={<AIAgents />} />
               
               {/* Maintenance */}
+              <Route path="/maintenance" element={<Maintenance />} />
               <Route path="/de/wartung" element={<Maintenance />} />
               <Route path="/en/maintenance" element={<Maintenance />} />
               
