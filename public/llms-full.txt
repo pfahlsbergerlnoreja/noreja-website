@@ -105,9 +105,6 @@ Application areas include:
 ### Hector (Insurance)
 Hector identified critical blind spots in their insurance claims processing, including high rates of reopened claims and bottlenecks from delayed repair invoices. Through Process Mining, they reduced processing time by 75% while improving accuracy across all departments.
 
-### Megatron (Supply Chain / Manufacturing)
-Megatron uncovered critical blind spots in their supply chain and production processes, identifying optimization opportunities in order assignment and work step recording. The analysis revealed potential for $2.3M in annual cost savings through improved process transparency.
-
 ### IDM Wärmepumpen (Manufacturing)
 IDM gained complete visibility into their Order-to-Cash process within three weeks, identifying critical bottlenecks in manual data entry and invoice processing. The analysis achieved 99.9% accuracy in process detection while significantly reducing manual workload.
 

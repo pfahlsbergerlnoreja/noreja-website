@@ -162,17 +162,6 @@ export const downloadAssets: DownloadAsset[] = [
     access: "locked",
     languages: ["de"]
   },
-  {
-    id: "success-story-megatron-de",
-    title: "Success Story: Megatron",
-    description: "Erfahren Sie mehr über Megatrons erfolgreiche Implementierung von Process Mining.",
-    fileUrl: "https://144242473.fs1.hubspotusercontent-eu1.net/hubfs/144242473/website_files/successstories_DE/Megatron_Success_Story_DE.pdf",
-    fileSize: "1.5 MB",
-    fileType: "PDF",
-    category: "Success Stories",
-    access: "locked",
-    languages: ["de"]
-  },
   // Success Stories - EN
   {
     id: "success-story-cib-en",
@@ -201,17 +190,6 @@ export const downloadAssets: DownloadAsset[] = [
     title: "Success Story: IDM",
     description: "Read how IDM uses Process Mining to increase process efficiency.",
     fileUrl: "https://144242473.fs1.hubspotusercontent-eu1.net/hubfs/144242473/website_files/successstories_EN/EN_IDM_Success_Story_EN",
-    fileSize: "1.5 MB",
-    fileType: "PDF",
-    category: "Success Stories",
-    access: "locked",
-    languages: ["en"]
-  },
-  {
-    id: "success-story-megatron-en",
-    title: "Success Story: Megatron",
-    description: "Learn more about Megatron's successful implementation of Process Mining.",
-    fileUrl: "https://144242473.fs1.hubspotusercontent-eu1.net/hubfs/144242473/website_files/successstories_EN/EN_Megatron_Success_Story_EN.pdf",
     fileSize: "1.5 MB",
     fileType: "PDF",
     category: "Success Stories",
