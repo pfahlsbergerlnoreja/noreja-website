@@ -114,8 +114,8 @@ export const successStories: SuccessStory[] = [
     logoUrl: getImagePath(customerLogoImages, "hector_logo_white.webp"),
     coverImageUrl: getCoverImagePath("Insurance"),
     summary: {
-      en: "Hector identified critical blind spots in their insurance claims processing, including high rates of reopened claims and bottlenecks from delayed repair invoices. Through Process Mining, they reduced processing time by 75% while improving accuracy across all departments.",
-      de: "Hector identifizierte kritische Blind-Spots in der Schadensabwicklung, darunter hohe Raten an wiedereröffneten Schadenfällen und Engpässe durch verzögerte Reparaturrechnungen. Durch Process Mining reduzierten sie die Verarbeitungszeit um 75% und verbesserten gleichzeitig die Genauigkeit in allen Abteilungen."
+      en: "Hector identified critical blind spots in their insurance claims processing, including high rates of reopened claims and bottlenecks from delayed repair invoices.",
+      de: "Hector identifizierte kritische Blind-Spots in der Schadensabwicklung, darunter hohe Raten an wiedereröffneten Schadenfällen und Engpässe durch verzögerte Reparaturrechnungen."
     },
     subtitle: {
       en: "How Process Mining transformed claims processing efficiency",
@@ -258,16 +258,6 @@ export const successStories: SuccessStory[] = [
       }
     },
     downloadAssetId: "success-story-hector",
-    keyStat: {
-      en: {
-        value: "75%",
-        metric: "Processing Time Reduction"
-      },
-      de: {
-        value: "75%",
-        metric: "Reduzierung der Verarbeitungszeit"
-      }
-    },
     externalUrl: "https://example.com/case-studies/techcorp",
     industry: {
       en: "Insurance",
@@ -278,176 +268,8 @@ export const successStories: SuccessStory[] = [
       de: "1000+ Mitarbeiter"
     },
     metaDescription: {
-      en: "Hector identified critical blind spots in their insurance claims processing, including high rates of reopened claims and bottlenecks from delayed repair invoices. Through Process Mining, they reduced processing time by 75% while improving accuracy across all departments.",
-      de: "Hector identifizierte kritische Blind-Spots in der Schadensabwicklung, darunter hohe Raten an wiedereröffneten Schadenfällen und Engpässe durch verzögerte Reparaturrechnungen. Durch Process Mining reduzierten sie die Verarbeitungszeit um 75% und verbesserten gleichzeitig die Genauigkeit in allen Abteilungen."
-    }
-  },
-  {
-    id: "megatron",
-    companyName: "Megatron",
-    logoUrl: getImagePath(customerLogoImages, "megatron_logo_white_xlarge.webp"),
-    coverImageUrl: getCoverImagePath("Supply Chain"),
-    summary: {
-      en: "Megatron uncovered critical blind spots in their supply chain and production processes, identifying optimization opportunities in order assignment and work step recording. The analysis revealed potential for $2.3M in annual cost savings through improved process transparency.",
-      de: "Megatron deckte kritische Blind-Spots in der Supply Chain und Produktion auf und identifizierte Optimierungspotenziale bei der Auftragszuordnung und Arbeitsschritterfassung. Die Analyse ergab ein Potenzial von 2,3 Mio. € jährlicher Kosteneinsparungen durch verbesserte Prozesstransparenz."
-    },
-    subtitle: {
-      en: "How Process Mining uncovers blind spots and identifies optimization potential in production",
-      de: "Wie Process Mining blinde Flecken aufdeckt und Optimierungspotenziale in der Produktion identifiziert"
-    },
-    whoIsSection: {
-      en: {
-        title: "Who is ",
-        highlight: "Megatron?",
-        content: "MEGATRON Elektronik GmbH & Co. KG, based in Putzbrunn near Munich, specializes in sensor technology and precision measurement technology. The company develops and produces high-quality components primarily for industrial applications and stands for precision, reliability, and customer-specific solutions in the electronics industry."
-      },
-      de: {
-        title: "Wer ist ",
-        highlight: "Megatron?",
-        content: "MEGATRON Elektronik GmbH & Co. KG mit Sitz in Putzbrunn bei München ist spezialisiert auf Sensortechnologie und Präzisionsmesstechnik. Das Unternehmen entwickelt und produziert hochwertige Komponenten vor allem für industrielle Anwendungen und steht für Präzision, Zuverlässigkeit und kundenspezifische Lösungen in der Elektronikbranche."
-      }
-    },
-    blindSpotsSection: {
-      en: {
-        title: "Where were the ",
-        highlight: "blind spots?",
-        content: "Optimization potential in the use of the ERP system through more targeted collection of relevant information along process chains. Low transparency regarding the status of orders and customer orders."
-      },
-      de: {
-        title: "Wo waren die ",
-        highlight: "Blind-Spots?",
-        content: "Optimierungspotenzial in der Nutzung des ERP-Systems durch die gezieltere Erfassung relevanter Informationen entlang der Prozessketten. Niedrige Transparenz bezüglich des Status von Bestellungen und Kundenaufträgen."
-      }
-    },
-    findingsSection: {
-      en: {
-        title: "What did we ",
-        highlight: "find?",
-        findings: [
-          {
-            title: "Optimizable Order Assignment",
-            content: "The current system does not allow direct assignment of production orders to customer orders. Such a link would improve traceability in production, make process control more efficient, and significantly simplify customer communication."
-          },
-          {
-            title: "More Differentiated Discount Conditions",
-            content: "Previous discount conditions offered optimization potential due to their relatively homogeneous handling and sometimes led to avoidable financial disadvantages. A granular differentiation between customers with different payment behaviors could unlock cash flow potential."
-          },
-          {
-            title: "Work Step Recording in Production",
-            content: "Individual work steps in production are currently not recorded in detail, which complicates targeted optimization of processes and leads to unnecessary inefficiencies. Structured recording and analysis of individual work steps could significantly increase productivity and reduce long-term costs."
-          },
-          {
-            title: "Potential for More Stable Production",
-            content: "Recurring delays in the creation of picking slips lead to unclear duration of the picking process and negatively impact production planning. Targeted optimization of picking could shorten process times and significantly improve planning reliability."
-          }
-        ]
-      },
-      de: {
-        title: "Was haben wir ",
-        highlight: "gefunden?",
-        findings: [
-          {
-            title: "Optimierbare Auftragszuordnung",
-            content: "Das aktuelle System ermöglicht keine direkte Zuordnung von Produktionsaufträgen zu Kundenaufträgen. Eine solche Verknüpfung würde die Nachverfolgbarkeit in der Produktion verbessern, die Prozesssteuerung effizienter gestalten und die Kundenkommunikation erheblich vereinfachen."
-          },
-          {
-            title: "Differenziertere Skontobedingungen",
-            content: "Die bisherigen Skontobedingungen boten aufgrund ihrer relativ homogenen Handhabung Optimierungspotenzial und führten teilweise zu vermeidbaren finanziellen Nachteilen. Eine granulare Differenzierung zwischen Kunden mit unterschiedlichem Zahlungsverhalten könnte Cashflow-Potenziale freisetzen."
-          },
-          {
-            title: "Arbeitsschritt-erfassung in Produktion",
-            content: "Einzelne Arbeitsschritte in der Produktion werden derzeit nicht detailliert erfasst, was eine gezielte Optimierung von Prozessen erschwert und zu unnötigen Ineffizienzen führt. Eine strukturierte Erfassung und Analyse einzelner Arbeitsschritte könnte die Produktivität erheblich steigern und langfristig Kosten reduzieren."
-          },
-          {
-            title: "Potenzial für stabilere Produktion",
-            content: "Wiederkehrende Verzögerungen bei der Erstellung von Kommissionierscheinen führen zu unklarer Dauer des Kommissioniervorgangs und beeinträchtigen die Produktionsplanung negativ. Eine gezielte Optimierung der Kommissionierung könnte Prozesszeiten verkürzen und die Planungssicherheit erheblich verbessern."
-          }
-        ]
-      }
-    },
-    detailSection: {
-      en: {
-        title: "In ",
-        highlight: "Detail",
-        items: [
-          {
-            title: "Uncover and understand structural problems",
-            imagePath: getSuccessStoryImagePath("megatron_structural_de.webp"),
-            imageSize: "l",
-            content: "*Runtime, object count and other process metrics have been hidden for anonymization purposes."
-          },
-          {
-            title: "Fluctuating run times",
-            imagePath: getSuccessStoryImagePath("megatron_runtime_de.webp"),
-            imageSize: "s",
-            content: "The posting out of materials was partly slower than planned in recent years. Production delays or standstills could be significantly reduced in the future through automation in material withdrawal."
-          }
-        ]
-      },
-      de: {
-        title: "Im ",
-        highlight: "Detail",
-        items: [
-          {
-            title: "Strukturprobleme aufdecken und verstehen",
-            imagePath: getSuccessStoryImagePath("megatron_structural_de.webp"),
-            content: "*Laufzeiten, Objektanzahl und weitere Prozesskennzahlen wurden aus Gründen der Anonymisierung ausgeblendet."
-          },
-          {
-            title: "Schwankende Laufzeiten",
-            imagePath: getSuccessStoryImagePath("megatron_runtime_de.webp"),
-            content: "Die Ausbuchung der Materialien verlief in den letzten Jahren teils langsamer als geplant. Produktionsverzögerungen oder -stillstände ließen sich durch Automatisierungen bei der Materialentnahme künftig deutlich verringern."
-          }
-        ]
-      }
-    },
-    nextStepsSection: {
-      en: {
-        title: "Next ",
-        highlight: "Steps",
-        items: [
-          {
-            title: "After the Workshop",
-            imagePath: getSuccessStoryImagePath("megatron_matrix_de.webp"),
-            content: "During the workshop, initial use cases were developed together. Of the total of 11 identified application cases, Megatron will initially focus on those that achieve a particularly high impact with low effort. Use Cases 8 and 9 have already been initiated and are outside the scope."
-          }
-        ]
-      },
-      de: {
-        title: "Nächste ",
-        highlight: "Schritte",
-        items: [
-          {
-            title: "Nach dem Workshop",
-            imagePath: getSuccessStoryImagePath("megatron_matrix_de.webp"),
-            content: "Im Rahmen des Workshops wurden gemeinsam erste Use Cases erarbeitet. Von denen insgesamt 11 identifizierten Anwendungsfällen wird sich Megatron zunächst auf diejenigen konzentrieren, die mit geringem Aufwand einen besonders hohen Impact erzielen. Die Use Cases 8 und 9 wurden bereits initiiert und liegen außerhalb des Scopes."
-          }
-        ]
-      }
-    },
-    downloadAssetId: "success-story-megatron",
-    keyStat: {
-      en: {
-        value: "$2.3M",
-        metric: "Annual Cost Savings"
-      },
-      de: {
-        value: "2,3 Mio. €",
-        metric: "Jährliche Kosteneinsparungen"
-      }
-    },
-    externalUrl: "https://example.com/case-studies/global-retail",
-    industry: {
-      en: "Supply Chain",
-      de: "Supply-Chain"
-    },
-    company_size: {
-      en: "500-1000 employees",
-      de: "500-1000 Mitarbeiter"
-    },
-    metaDescription: {
-      en: "Megatron uncovered critical blind spots in their supply chain and production processes, identifying optimization opportunities in order assignment and work step recording. The analysis revealed potential for $2.3M in annual cost savings through improved process transparency.",
-      de: "Megatron deckte kritische Blind-Spots in der Supply Chain und Produktion auf und identifizierte Optimierungspotenziale bei der Auftragszuordnung und Arbeitsschritterfassung. Die Analyse ergab ein Potenzial von 2,3 Mio. € jährlicher Kosteneinsparungen durch verbesserte Prozesstransparenz."
+      en: "Hector identified critical blind spots in their insurance claims processing, including high rates of reopened claims and bottlenecks from delayed repair invoices.",
+      de: "Hector identifizierte kritische Blind-Spots in der Schadensabwicklung, darunter hohe Raten an wiedereröffneten Schadenfällen und Engpässe durch verzögerte Reparaturrechnungen."
     }
   },
   {
@@ -456,8 +278,8 @@ export const successStories: SuccessStory[] = [
     logoUrl: getImagePath(customerLogoImages, "idm_logo_white.webp"),
     coverImageUrl: getCoverImagePath("Manufacturing"),
     summary: {
-      en: "IDM gained complete visibility into their Order-to-Cash process within three weeks, identifying critical bottlenecks in manual data entry and invoice processing. The analysis achieved 99.9% accuracy in process detection while significantly reducing manual workload.",
-      de: "IDM gewann innerhalb von drei Wochen vollständige Transparenz über ihren Order-to-Cash-Prozess und identifizierte kritische Engpässe bei der manuellen Dateneingabe und Rechnungsstellung. Die Analyse erreichte 99,9% Genauigkeit bei der Prozesserfassung und reduzierte den manuellen Arbeitsaufwand erheblich."
+      en: "IDM gained complete visibility into their Order-to-Cash process within three weeks, identifying critical bottlenecks in manual data entry and invoice processing.",
+      de: "IDM gewann innerhalb von drei Wochen vollständige Transparenz über ihren Order-to-Cash-Prozess und identifizierte kritische Engpässe bei der manuellen Dateneingabe und Rechnungsstellung."
     },
     subtitle: {
       en: "Optimizing manufacturing processes through Process Mining",
@@ -575,16 +397,6 @@ export const successStories: SuccessStory[] = [
       }
     },
     downloadAssetId: "success-story-idm",
-    keyStat: {
-      en: {
-        value: "99.9%",
-        metric: "Detection Accuracy"
-      },
-      de: {
-        value: "99,9%",
-        metric: "Erfassungsgenauigkeit"
-      }
-    },
     externalUrl: "https://example.com/case-studies/financeplus",
     industry: {
       en: "Manufacturing",
@@ -605,8 +417,8 @@ export const successStories: SuccessStory[] = [
     logoUrl: getImagePath(customerLogoImages, "cib_logo_white.webp"),
     coverImageUrl: getCoverImagePath("Software Development"),
     summary: {
-      en: "CIB mapped their entire hiring process in just one month, identifying delays in initial applicant contact and bottlenecks in decision-making. The analysis revealed opportunities to reduce hiring time by up to one week and improve candidate experience, achieving 40% faster diagnosis of process issues.",
-      de: "CIB bildete ihren gesamten Einstellungsprozess in nur einem Monat ab und identifizierte Verzögerungen beim ersten Kontakt mit Bewerbern und Engpässe bei Entscheidungen. Die Analyse ergab Möglichkeiten, die Einstellungszeit um bis zu einer Woche zu verkürzen und die Kandidatenerfahrung zu verbessern, was zu 40% schnellerer Diagnose von Prozessproblemen führte."
+      en: "CIB mapped their entire hiring process in just one month, identifying delays in initial applicant contact and bottlenecks in decision-making.",
+      de: "CIB bildete ihren gesamten Einstellungsprozess in nur einem Monat ab und identifizierte Verzögerungen beim ersten Kontakt mit Bewerbern und Engpässe bei Entscheidungen."
     },
     subtitle: {
       en: "Transforming software development processes",
@@ -769,16 +581,6 @@ Keine **Nachverfolgung der Prozess-Conformance** für die Bewerber-Experience.
       }
     },
     downloadAssetId: "success-story-cib",
-    keyStat: {
-      en: {
-        value: "40%",
-        metric: "Faster Diagnosis"
-      },
-      de: {
-        value: "40%",
-        metric: "Schnellere Diagnose"
-      }
-    },
     externalUrl: "https://example.com/case-studies/healthcare-dynamics",
     industry: {
       en: "Software Development",
