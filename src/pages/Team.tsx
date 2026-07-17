@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { teamMembers, advisoryMembers, initializeTeamData, type TeamMember, type AdvisoryMember } from "@/lib/team";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { getRoutePath } from "@/lib/routes";
+import { TeamSchema } from "@/components/StructuredData";
 
 export default function Team() {
   const { t, language } = useLanguage();
@@ -63,6 +64,16 @@ export default function Team() {
         radial-gradient(ellipse 1000px 800px at 50% 50%, hsl(var(--noreja-secondary) / 0.10) 0%, transparent 60%)
       `
     }}>
+      {loadedTeamMembers.length > 0 && (
+        <TeamSchema
+          members={loadedTeamMembers.map((m) => ({
+            name: m.name,
+            role: m.role,
+            linkedInUrl: m.linkedInUrl,
+            imageUrl: m.imageUrl,
+          }))}
+        />
+      )}
       {/* Background Effects */}
       <div className="absolute inset-0">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-noreja-main/10 rounded-full blur-3xl" />

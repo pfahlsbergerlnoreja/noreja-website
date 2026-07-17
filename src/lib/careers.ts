@@ -339,3 +339,45 @@ export function getJobById(id: string): JobListing | undefined {
 export function getJobDescription(job: JobListing, language: Language): string {
   return job.description[language];
 }
+
+// Maps our internal employment types to schema.org JobPosting employmentType values.
+const SCHEMA_EMPLOYMENT_TYPE: Record<JobListing['type'], string> = {
+  'full-time': 'FULL_TIME',
+  'part-time': 'PART_TIME',
+  'internship': 'INTERN',
+  'working-student': 'PART_TIME',
+};
+
+/**
+ * Builds a self-contained HTML description for a JobPosting structured-data entry.
+ * Google/LLMs expect the full role summary, tasks, requirements and benefits here.
+ */
+export function buildJobPostingDescription(job: JobListing, language: Language): string {
+  const labels =
+    language === 'de'
+      ? { role: 'Über die Rolle', tasks: 'Aufgaben', requirements: 'Anforderungen', benefits: 'Benefits' }
+      : { role: 'About the role', tasks: 'Responsibilities', requirements: 'Requirements', benefits: 'Benefits' };
+
+  const list = (items: string[]) =>
+    `<ul>${items.map((i) => `<li>${i}</li>`).join('')}</ul>`;
+
+  return [
+    `<p>${job.roleDescription[language].replace(/\n\n/g, '</p><p>')}</p>`,
+    `<h3>${labels.tasks}</h3>${list(job.tasks[language])}`,
+    `<h3>${labels.requirements}</h3>${list(job.requirements[language])}`,
+    `<h3>${labels.benefits}</h3>${list(job.benefits[language])}`,
+  ].join('');
+}
+
+export function getJobPostingSchemaInput(job: JobListing, language: Language, jobUrl: string) {
+  return {
+    id: job.id,
+    title: job.title,
+    description: buildJobPostingDescription(job, language),
+    datePosted: job.publishedDate.toISOString().split('T')[0],
+    employmentType: SCHEMA_EMPLOYMENT_TYPE[job.type],
+    locationType: job.location.type,
+    locationAddress: job.location.address?.[language],
+    url: jobUrl,
+  };
+}

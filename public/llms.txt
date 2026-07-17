@@ -28,6 +28,7 @@ The Noreja platform consists of five main modules:
 
 - Platform Overview: https://noreja.com/en/platform
 - Pricing: https://noreja.com/en/pricing
+- Frontier Agents: https://noreja.com/en/frontier-agents
 - Success Stories: https://noreja.com/en/success-stories
 - Use Cases — Supply Chain: https://noreja.com/en/use-cases/supply-chain
 - Use Cases — Manufacturing: https://noreja.com/en/use-cases/manufacturing
@@ -36,9 +37,27 @@ The Noreja platform consists of five main modules:
 - Partners: https://noreja.com/en/partners
 - Team: https://noreja.com/en/team
 - Events: https://noreja.com/en/events
+- Careers: https://noreja.com/en/careers
+- Downloads: https://noreja.com/en/downloads
+- Definitions / Glossary: https://noreja.com/en/definitions
 - Contact: https://noreja.com/en/contact
 - Blog: https://blog.noreja.com
 - Full LLM-optimized content: https://noreja.com/llms-full.txt
+
+## Glossary / Definitions
+
+Noreja maintains a knowledge base defining key process-intelligence terms (available in English and German):
+
+- What is Process Mining?: https://noreja.com/en/definitions/process-mining
+- What is Process Intelligence?: https://noreja.com/en/definitions/process-intelligence
+- What are Graph Databases?: https://noreja.com/en/definitions/graph-databases
+- What is an Event Knowledge Graph?: https://noreja.com/en/definitions/event-knowledge-graph
+- What is Causal Process Mining?: https://noreja.com/en/definitions/causal-process-mining
+- Weaknesses of Directly-Follows approaches: https://noreja.com/en/definitions/directly-follows-limitations
+- What is an Event Log?: https://noreja.com/en/definitions/event-log
+- What is Business Process Management?: https://noreja.com/en/definitions/business-process-management
+- How to define the term Process?: https://noreja.com/en/definitions/what-is-a-process
+- What is OCPM (Object-Centric Process Mining)?: https://noreja.com/en/definitions/object-centric-process-mining
 
 ## Languages
 

@@ -4,6 +4,7 @@ import { LanguageContext } from '@/contexts/LanguageContext';
 import { getRouteKeyFromPath } from '@/lib/routes';
 import { successStories } from '@/lib/successStories';
 import { useCases } from '@/lib/useCases';
+import { getDefinitionById } from '@/lib/definitions';
 import { SITE_URL } from '@/lib/config';
 
 // Page titles for OG tags (mirrors PageTitle.tsx)
@@ -63,6 +64,10 @@ const ogPageTitles: Record<string, Record<'en' | 'de', string>> = {
   aiAgents: {
     en: 'Frontier Agents | Noreja',
     de: 'Frontier Agents | Noreja',
+  },
+  definitions: {
+    en: 'Definitions | Noreja',
+    de: 'Definitionen | Noreja',
   },
 };
 
@@ -130,6 +135,21 @@ export function MetaDescription() {
       if (routeKey in t.metaDescriptions) {
         description = t.metaDescriptions[routeKey as keyof typeof t.metaDescriptions];
       }
+    } else if (routeKey === 'definitionDetail') {
+      const match = location.pathname.match(/^\/(?:de|en)\/(?:definitionen|definitions)\/(.+)$/);
+      if (match) {
+        const definition = getDefinitionById(match[1].toLowerCase());
+        if (definition) {
+          title = `${definition.question[language]} | Noreja`;
+          description = definition.definition[language];
+        }
+      }
+    } else if (routeKey === 'definitions') {
+      title = language === 'de' ? 'Definitionen | Noreja' : 'Definitions | Noreja';
+      description =
+        language === 'de'
+          ? 'Wissensdatenbank von Noreja: klare Definitionen zu Process Mining, Process Intelligence, Geschäftsprozessmanagement und mehr.'
+          : 'Noreja knowledge base: clear definitions of Process Mining, Process Intelligence, Business Process Management, and more.';
     } else if (routeKey && routeKey in t.metaDescriptions) {
       description = t.metaDescriptions[routeKey as keyof typeof t.metaDescriptions];
     }

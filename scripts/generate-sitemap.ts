@@ -31,6 +31,40 @@ function extractSuccessStoryIds(): string[] {
   return ids;
 }
 
+function extractJobIds(): string[] {
+  const filePath = resolve(__dirname, '../src/lib/careers.ts');
+  const content = readFileSync(filePath, 'utf-8');
+  const ids: string[] = [];
+
+  const arrayMatch = content.match(/export const jobListings: JobListing\[\] = \[([\s\S]*?)\n\];/);
+  if (arrayMatch) {
+    const arrayContent = arrayMatch[1];
+    const jobMatches = arrayContent.matchAll(/\{\s*id:\s*'([^']+)'[\s\S]*?title:/g);
+    for (const match of jobMatches) {
+      ids.push(match[1]);
+    }
+  }
+
+  return ids;
+}
+
+function extractDefinitionIds(): string[] {
+  const filePath = resolve(__dirname, '../src/lib/definitions.ts');
+  const content = readFileSync(filePath, 'utf-8');
+  const ids: string[] = [];
+
+  const arrayMatch = content.match(/export const definitions: Definition\[\] = \[([\s\S]*?)\n\];/);
+  if (arrayMatch) {
+    const arrayContent = arrayMatch[1];
+    const defMatches = arrayContent.matchAll(/\{\s*id:\s*'([^']+)'[\s\S]*?question:/g);
+    for (const match of defMatches) {
+      ids.push(match[1]);
+    }
+  }
+
+  return ids;
+}
+
 function extractUseCaseIds(): string[] {
   const filePath = resolve(__dirname, '../src/lib/useCases.ts');
   const content = readFileSync(filePath, 'utf-8');
@@ -96,6 +130,10 @@ function generateSitemap() {
   addEntry('/en/contact', 0.8, 'weekly');
   addEntry('/de/frontier-agents', 0.8, 'weekly');
   addEntry('/en/frontier-agents', 0.8, 'weekly');
+  addEntry('/de/karriere', 0.7, 'weekly');
+  addEntry('/en/careers', 0.7, 'weekly');
+  addEntry('/de/definitionen', 0.7, 'weekly');
+  addEntry('/en/definitions', 0.7, 'weekly');
 
   // Legal pages (lower priority)
   addEntry('/de/impressum', 0.5, 'monthly');
@@ -117,6 +155,20 @@ function generateSitemap() {
   useCaseIds.forEach((useCaseId) => {
     addEntry(`/de/use-cases/${useCaseId}`, 0.7, 'monthly');
     addEntry(`/en/use-cases/${useCaseId}`, 0.7, 'monthly');
+  });
+
+  // Career / job detail pages
+  const jobIds = extractJobIds();
+  jobIds.forEach((jobId) => {
+    addEntry(`/de/karriere/${jobId}`, 0.6, 'weekly');
+    addEntry(`/en/careers/${jobId}`, 0.6, 'weekly');
+  });
+
+  // Definition / knowledge base detail pages
+  const definitionIds = extractDefinitionIds();
+  definitionIds.forEach((defId) => {
+    addEntry(`/de/definitionen/${defId}`, 0.6, 'monthly');
+    addEntry(`/en/definitions/${defId}`, 0.6, 'monthly');
   });
 
   // Write entries to sitemap stream

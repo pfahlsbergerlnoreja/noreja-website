@@ -165,6 +165,62 @@ Yes, Noreja has numerous partners among consultancies, system integrators, and u
 
 ---
 
+## Glossary / Key Definitions
+
+Noreja maintains a bilingual (English/German) knowledge base defining the core concepts of process intelligence. Full glossary: https://noreja.com/en/definitions
+
+### What is Process Mining?
+Process Mining is a data-driven analysis method that reconstructs and visualizes real business processes based on the digital traces left in IT systems such as ERP, CRM, or ticketing tools. It reveals how processes actually run — as opposed to how they were planned or documented — making bottlenecks, deviations, and optimization potential visible in an objective, fact-based way.
+Why it matters: Companies often rely on assumptions about their processes that rarely match reality. Process Mining provides a fact-based foundation for decisions, reduces costs by uncovering inefficiencies, and forms the basis for automation and continuous improvement.
+URL: https://noreja.com/en/definitions/process-mining
+
+### What is Process Intelligence?
+Process Intelligence is the evolution of classic Process Mining: it combines process data with context and domain knowledge and uses AI to make processes not just visible, but understandable and optimizable. Instead of only showing what happens, it explains why it happens and derives concrete recommendations for action.
+Why it matters: Pure process visualization is not enough to create real value. Process Intelligence delivers root-cause analysis and prioritized measures, allowing organizations to move faster from insight to action and achieve operational excellence.
+URL: https://noreja.com/en/definitions/process-intelligence
+
+### What are Graph Databases?
+Graph databases store data as nodes (entities) and edges (relationships) instead of in tables with rows and columns, allowing highly connected data and complex relationships to be represented and queried efficiently. Well-known examples include Neo4j and Amazon Neptune.
+Why it matters: Business processes consist of diverse, interconnected objects such as orders, invoices, and customers. Graph databases represent this reality more naturally than relational models and are the technological foundation for modern approaches such as Event Knowledge Graphs and Causal Process Mining.
+URL: https://noreja.com/en/definitions/graph-databases
+
+### What is an Event Knowledge Graph?
+An Event Knowledge Graph (EKG) is a graph-based data structure that stores events together with the objects involved and their relationships. Unlike a flat event log, an EKG can represent multiple process perspectives and their connections simultaneously, without reducing them to a single case ID.
+Why it matters: Real processes rarely follow a single case notion. Event Knowledge Graphs overcome this limitation by connecting several dimensions at once — the basis for more realistic, multidimensional process analysis without artificial simplification.
+URL: https://noreja.com/en/definitions/event-knowledge-graph
+
+### What is Causal Process Mining?
+Causal Process Mining is an approach that goes beyond the temporal order of activities to uncover the actual cause-and-effect relationships between them. Instead of inferring connections from mere sequence, it models which events genuinely trigger which others.
+Why it matters: Classic approaches often confuse temporal proximity with causality, producing misleading process models. Causal Process Mining delivers correct relationships — essential for reliable root-cause analysis, sound decisions, and the meaningful use of AI.
+URL: https://noreja.com/en/definitions/causal-process-mining
+
+### What are the Weaknesses of Directly-Follows Approaches?
+Directly-Follows approaches (Directly-Follows Graphs, DFG) build process models solely from which activity immediately follows another. This purely sequential view cannot correctly represent concurrency, loops, and genuine dependencies, and is sensitive to noise and incomplete data, often resulting in inaccurate or misleading models.
+Why it matters: Because many process mining tools rely on DFGs, they frequently produce cluttered "spaghetti diagrams" and false causal assumptions. Understanding these weaknesses allows you to deliberately choose more expressive methods such as Event Knowledge Graphs and Causal Process Mining.
+URL: https://noreja.com/en/definitions/directly-follows-limitations
+
+### What is an Event Log?
+An event log is a chronological record of events in which each entry contains at least a case ID, an activity, and a timestamp. It is the classic input format for traditional Process Mining.
+Why it matters: Creating event logs is labor-intensive and forces complex, multidimensional processes into a single case perspective — a major bottleneck of classic approaches. Modern methods therefore work directly on relational databases or graphs and require no pre-built event log.
+URL: https://noreja.com/en/definitions/event-log
+
+### What is Business Process Management?
+Business Process Management (BPM) is a discipline for the systematic design, execution, monitoring, and improvement of business processes. It combines methods, metrics, and technologies to consistently align workflows with organizational goals.
+Why it matters: Well-managed processes are the lever for efficiency, quality, and adaptability. BPM provides the framework in which analysis methods such as Process Mining and Process Intelligence unfold their value — from as-is analysis to continuous optimization.
+URL: https://noreja.com/en/definitions/business-process-management
+
+### How do I define the term Process?
+A process is a structured sequence of activities that turns defined inputs into a result (output) while creating value for customers or the organization. Processes have a clear beginning, a clear end, and repeatable steps.
+Why it matters: A shared understanding of what a process is forms the prerequisite for any analysis and optimization. Only by clearly delineating and defining processes can you measure, compare, and purposefully improve them.
+URL: https://noreja.com/en/definitions/what-is-a-process
+
+### What is OCPM (Object-Centric Process Mining)?
+OCPM stands for Object-Centric Process Mining — an approach that analyzes processes around multiple object types (e.g. order, delivery, invoice) instead of reducing them to a single case ID. Events can relate to several objects at the same time.
+Why it matters: Real ERP and CRM processes are inherently object-centric and multidimensional. OCPM avoids the convergence and divergence distortions that arise when forcing everything into a single case notion, and thereby delivers a more realistic picture of the process.
+URL: https://noreja.com/en/definitions/object-centric-process-mining
+
+---
+
 ## Team
 
 ### Founders

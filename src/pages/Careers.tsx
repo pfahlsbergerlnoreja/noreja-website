@@ -6,14 +6,23 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { getActiveListings, getJobDescription, type JobListing } from '@/lib/careers';
+import { getActiveListings, getJobDescription, getJobPostingSchemaInput, type JobListing } from '@/lib/careers';
 import { getRoutePath } from '@/lib/routes';
+import { JobPostingSchema } from '@/components/StructuredData';
+import { SITE_URL } from '@/lib/config';
 
 const MAILTO_ADDRESS = 'lukas.pfahlsberger@noreja.com';
 
 const Careers = () => {
   const { t, language } = useLanguage();
   const listings = getActiveListings();
+  const jobSchemaInputs = listings.map((job) =>
+    getJobPostingSchemaInput(
+      job,
+      language,
+      `${SITE_URL}${getRoutePath('careerDetail', language, { jobId: job.id })}`
+    )
+  );
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -135,6 +144,7 @@ const Careers = () => {
 
   return (
     <div className="min-h-screen relative overflow-hidden" style={gradientStyle}>
+      {jobSchemaInputs.length > 0 && <JobPostingSchema jobs={jobSchemaInputs} />}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-noreja-main/5 to-transparent pointer-events-none" />
 
       <div className="relative z-10">

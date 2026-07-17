@@ -42,6 +42,14 @@ export const routes = {
     de: '/de/karriere/:jobId',
     en: '/en/careers/:jobId',
   },
+  definitions: {
+    de: '/de/definitionen',
+    en: '/en/definitions',
+  },
+  definitionDetail: {
+    de: '/de/definitionen/:slug',
+    en: '/en/definitions/:slug',
+  },
   downloads: {
     de: '/de/downloads',
     en: '/en/downloads',
@@ -98,6 +106,8 @@ const pathToRouteKey: Record<string, keyof typeof routes> = {
   '/en/events': 'events',
   '/de/karriere': 'careers',
   '/en/careers': 'careers',
+  '/de/definitionen': 'definitions',
+  '/en/definitions': 'definitions',
   '/de/downloads': 'downloads',
   '/en/downloads': 'downloads',
   '/de/kontakt': 'contact',
@@ -197,6 +207,12 @@ export function translateRoute(pathname: string, targetLang: Language): string {
   if (careerDetailMatch) {
     return getRoutePath('careerDetail', targetLang, { jobId: careerDetailMatch[1] });
   }
+
+  // Definition detail: /de/definitionen/:slug or /en/definitions/:slug
+  const definitionDetailMatch = pathname.match(/^\/(?:de|en)\/(?:definitionen|definitions)\/(.+)$/);
+  if (definitionDetailMatch) {
+    return getRoutePath('definitionDetail', targetLang, { slug: definitionDetailMatch[1] });
+  }
   
   // Try to find matching route key from the full pathname
   const routeKey = pathToRouteKey[pathname];
@@ -237,6 +253,12 @@ export function getRouteKeyFromPath(pathname: string): keyof typeof routes | nul
   if (pathname.match(/^\/(?:de|en)\/(?:karriere|careers)\/.+/)) {
     return 'careerDetail';
   }
-  
+  if (pathname.match(/^\/(?:de|en)\/(?:definitionen|definitions)\/.+/)) {
+    return 'definitionDetail';
+  }
+  if (pathname === '/de/definitionen' || pathname === '/en/definitions') {
+    return 'definitions';
+  }
+
   return pathToRouteKey[normalizedPath] || null;
 }

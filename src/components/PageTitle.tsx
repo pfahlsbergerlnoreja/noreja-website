@@ -4,6 +4,7 @@ import { LanguageContext } from '@/contexts/LanguageContext';
 import { getRouteKeyFromPath } from '@/lib/routes';
 import { successStories } from '@/lib/successStories';
 import { useCases } from '@/lib/useCases';
+import { getDefinitionById } from '@/lib/definitions';
 import { SITE_NAME } from '@/lib/config';
 
 const pageTitles: Record<string, Record<'en' | 'de', string>> = {
@@ -63,6 +64,10 @@ const pageTitles: Record<string, Record<'en' | 'de', string>> = {
     en: 'Frontier Agents | Noreja',
     de: 'Frontier Agents | Noreja',
   },
+  definitions: {
+    en: 'Definitions | Noreja',
+    de: 'Definitionen | Noreja',
+  },
 };
 
 export function PageTitle() {
@@ -97,6 +102,14 @@ export function PageTitle() {
         );
         if (useCase) {
           title = `${useCase.title[language]} – Use Case | ${SITE_NAME}`;
+        }
+      }
+    } else if (routeKey === 'definitionDetail') {
+      const match = location.pathname.match(/^\/(?:de|en)\/(?:definitionen|definitions)\/(.+)$/);
+      if (match) {
+        const definition = getDefinitionById(match[1].toLowerCase());
+        if (definition) {
+          title = `${definition.question[language]} | ${SITE_NAME}`;
         }
       }
     } else if (routeKey && routeKey in pageTitles) {

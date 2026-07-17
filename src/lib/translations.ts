@@ -14,6 +14,7 @@ export interface Translations {
     downloads: string;
     events: string;
     careers: string;
+    definitions: string;
     quickNavigation: string;
   };
   pages: {
@@ -668,6 +669,7 @@ export const translations: Record<Language, Translations> = {
       downloads: "Downloads",
       events: "Events",
       careers: "Careers",
+      definitions: "Definitions",
       quickNavigation: "Quick Navigation",
     },
     pages: {
@@ -1442,6 +1444,7 @@ export const translations: Record<Language, Translations> = {
       downloads: "Downloads",
       events: "Veranstaltungen",
       careers: "Karriere",
+      definitions: "Definitionen",
       quickNavigation: "Schnellnavigation",
     },
     pages: {

@@ -5,8 +5,10 @@ import { ArrowLeft, MapPin, Mail, CheckCircle2 } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { getJobById, type JobListing } from '@/lib/careers';
+import { getJobById, getJobPostingSchemaInput, type JobListing } from '@/lib/careers';
 import { getRoutePath } from '@/lib/routes';
+import { JobPostingSchema } from '@/components/StructuredData';
+import { SITE_URL } from '@/lib/config';
 
 const MAILTO_ADDRESS = 'lukas.pfahlsberger@noreja.com';
 
@@ -112,6 +114,15 @@ const CareerDetail = () => {
 
   return (
     <div className="min-h-screen relative overflow-hidden" style={gradientStyle}>
+      <JobPostingSchema
+        jobs={[
+          getJobPostingSchemaInput(
+            job,
+            language,
+            `${SITE_URL}${getRoutePath('careerDetail', language, { jobId: job.id })}`
+          ),
+        ]}
+      />
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-noreja-main/5 to-transparent pointer-events-none" />
 
       <div className="relative z-10">
