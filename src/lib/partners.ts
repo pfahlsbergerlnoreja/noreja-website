@@ -443,6 +443,20 @@ const partnersBase: PartnerBase[] = [
     quote: "Noreja ermöglicht uns, Process Mining strukturiert und systematisch einzusetzen, um die Ausführung unserer IT-Prozesse in den Zielsystemen – wie ServiceNow – nachhaltig auf ein hohes Qualitätsniveau zu heben.",
     quoteAuthor: "Tatjana Meyer, IT Strategie / Prozesse",
     linkedin: "https://www.linkedin.com/in/tatjana-meyer-992930260/"
+  },
+  {
+    id: "22",
+    name: "MINAUTICS GmbH",
+    isPartner: true,
+    partnerType: 'businessWithoutQuote',
+    logoFilename: "minautics_logo.webp",
+    logoSource: 'partners',
+    logoSize: 'medium',
+    website: "https://www.mi-nautics.com/",
+    category: "consulting",
+    quote: "",
+    quoteAuthor: "",
+    linkedin: "",
   }
 ];
 
