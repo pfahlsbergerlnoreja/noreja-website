@@ -23,6 +23,14 @@ export interface Definition {
     de: string;
     en: string;
   };
+  /**
+   * Optional explicit glossary term for the DefinedTerm schema. If omitted, the term
+   * is derived from the question. Set this when the question doesn't reduce cleanly.
+   */
+  term?: {
+    de: string;
+    en: string;
+  };
   /** Related definition ids for internal linking */
   related?: string[];
 }
@@ -227,6 +235,194 @@ export const definitions: Definition[] = [
       en: 'Processes centered on multiple objects instead of a single case ID.',
     },
     related: ['event-knowledge-graph', 'event-log', 'causal-process-mining'],
+  },
+  {
+    id: 'process-discovery',
+    question: {
+      de: 'Was ist Process Discovery?',
+      en: 'What is Process Discovery?',
+    },
+    definition: {
+      de: 'Process Discovery ist eine Kerndisziplin des Process Mining, bei der aus den Ereignisdaten eines IT-Systems automatisch ein Prozessmodell erzeugt wird. Ohne vorherige Annahmen wird der tatsächliche Ablauf – inklusive aller Varianten und Abweichungen – als Diagramm rekonstruiert.',
+      en: 'Process Discovery is a core Process Mining discipline that automatically generates a process model from the event data in an IT system. Without any prior assumptions, it reconstructs the actual flow – including all variants and deviations – as a diagram.',
+    },
+    whyImportant: {
+      de: 'Manuell erstellte Prozessdokumentationen sind oft unvollständig oder veraltet. Process Discovery liefert ein objektives, datenbasiertes Ist-Bild als Ausgangspunkt für jede Analyse, Optimierung und Automatisierung.',
+      en: 'Manually created process documentation is often incomplete or outdated. Process Discovery delivers an objective, data-based as-is picture as the starting point for any analysis, optimization, and automation.',
+    },
+    teaser: {
+      de: 'Automatisch ein Prozessmodell aus Ereignisdaten erzeugen – ohne Vorannahmen.',
+      en: 'Automatically generate a process model from event data – with no prior assumptions.',
+    },
+    related: ['process-mining', 'event-log', 'conformance-checking'],
+  },
+  {
+    id: 'conformance-checking',
+    question: {
+      de: 'Was ist Conformance Checking?',
+      en: 'What is Conformance Checking?',
+    },
+    definition: {
+      de: 'Conformance Checking ist eine Process-Mining-Technik, die den tatsächlich beobachteten Prozessablauf (Ist) mit einem definierten Referenz- oder Soll-Modell vergleicht. So werden Abweichungen, Regelverstöße und Compliance-Lücken sichtbar gemacht und quantifiziert.',
+      en: 'Conformance Checking is a Process Mining technique that compares the actually observed process flow (as-is) against a defined reference or target model. This makes deviations, rule violations, and compliance gaps visible and quantifiable.',
+    },
+    whyImportant: {
+      de: 'Unternehmen müssen nachweisen, dass Prozesse Vorgaben und Regularien einhalten. Conformance Checking deckt Abweichungen automatisch auf und ist damit ein zentraler Baustein für Compliance, Qualitätssicherung und Risikomanagement.',
+      en: 'Companies must demonstrate that their processes comply with policies and regulations. Conformance Checking uncovers deviations automatically and is therefore a central building block for compliance, quality assurance, and risk management.',
+    },
+    teaser: {
+      de: 'Ist-Ablauf gegen Soll-Modell prüfen – Abweichungen und Regelverstöße aufdecken.',
+      en: 'Check the actual flow against a target model – reveal deviations and violations.',
+    },
+    related: ['process-discovery', 'to-be-vs-as-is-process', 'business-process-management'],
+  },
+  {
+    id: 'task-mining',
+    question: {
+      de: 'Was ist Task Mining?',
+      en: 'What is Task Mining?',
+    },
+    definition: {
+      de: 'Task Mining analysiert die Interaktionen von Nutzer:innen direkt am Desktop – etwa Klicks, Tastatureingaben und Anwendungswechsel –, um manuelle Arbeitsschritte sichtbar zu machen. Anders als Process Mining, das auf Systemdaten basiert, erfasst Task Mining Tätigkeiten auf Aktivitätsebene direkt am Arbeitsplatz.',
+      en: 'Task Mining analyzes user interactions directly at the desktop – such as clicks, keystrokes, and application switches – to make manual work steps visible. Unlike Process Mining, which relies on system data, Task Mining captures activities at the task level directly at the workstation.',
+    },
+    whyImportant: {
+      de: 'Viele Ineffizienzen entstehen in manuellen, nicht systemgestützten Tätigkeiten, die klassisches Process Mining nicht erfasst. Task Mining schließt diese Lücke und hilft, Automatisierungspotenziale – etwa für RPA – präzise zu identifizieren.',
+      en: 'Many inefficiencies arise in manual, non-system-supported tasks that classic Process Mining does not capture. Task Mining closes this gap and helps to precisely identify automation potential, for example for RPA.',
+    },
+    teaser: {
+      de: 'Manuelle Tätigkeiten am Desktop erfassen – die Ergänzung zum Process Mining.',
+      en: 'Capture manual desktop activities – the complement to Process Mining.',
+    },
+    related: ['process-mining', 'process-intelligence'],
+  },
+  {
+    id: 'ocel-2',
+    question: {
+      de: 'Was ist OCEL 2.0?',
+      en: 'What is OCEL 2.0?',
+    },
+    definition: {
+      de: 'OCEL 2.0 (Object-Centric Event Log Standard, Version 2.0) ist ein offenes Standardformat zum Speichern objektzentrierter Ereignisdaten. Es erlaubt, dass sich ein einzelnes Ereignis auf mehrere Objekte unterschiedlicher Typen bezieht, und bildet zudem Objektattribute und Beziehungen über die Zeit ab.',
+      en: 'OCEL 2.0 (Object-Centric Event Log standard, version 2.0) is an open standard format for storing object-centric event data. It allows a single event to relate to multiple objects of different types and also captures object attributes and relationships over time.',
+    },
+    whyImportant: {
+      de: 'Klassische Event-Logs zwingen Prozesse in eine einzige Fall-ID und verzerren dadurch die Realität. OCEL 2.0 ist die Datengrundlage für Object-Centric Process Mining und ermöglicht realistischere, mehrdimensionale Analysen komplexer ERP- und CRM-Prozesse.',
+      en: 'Classic event logs force processes into a single case ID and thereby distort reality. OCEL 2.0 is the data foundation for Object-Centric Process Mining and enables more realistic, multidimensional analysis of complex ERP and CRM processes.',
+    },
+    teaser: {
+      de: 'Der offene Standard für objektzentrierte Ereignisdaten.',
+      en: 'The open standard for object-centric event data.',
+    },
+    term: {
+      de: 'OCEL 2.0',
+      en: 'OCEL 2.0',
+    },
+    related: ['object-centric-process-mining', 'event-log', 'event-knowledge-graph'],
+  },
+  {
+    id: 'process-variant',
+    question: {
+      de: 'Was ist eine Prozessvariante?',
+      en: 'What is a Process Variant?',
+    },
+    definition: {
+      de: 'Eine Prozessvariante ist eine bestimmte, eindeutige Abfolge von Aktivitäten, mit der ein Prozess von Anfang bis Ende durchlaufen wird. Alle Prozessinstanzen, die exakt demselben Pfad folgen, gehören zur selben Variante.',
+      en: 'A process variant is a specific, distinct sequence of activities through which a process runs from start to finish. All process instances that follow exactly the same path belong to the same variant.',
+    },
+    whyImportant: {
+      de: 'Reale Prozesse weichen oft stark vom vorgesehenen Standardablauf ab und bringen zahlreiche Varianten hervor. Die Analyse von Prozessvarianten zeigt, wo Standardisierungspotenzial, Sonderfälle und Ineffizienzen liegen.',
+      en: 'Real processes often deviate significantly from the intended standard flow, producing numerous variants. Analyzing process variants reveals where standardization potential, special cases, and inefficiencies lie.',
+    },
+    teaser: {
+      de: 'Ein eindeutiger Pfad durch den Prozess – die Basis der Variantenanalyse.',
+      en: 'A distinct path through the process – the basis of variant analysis.',
+    },
+    related: ['process-instance', 'process-mining', 'directly-follows-limitations'],
+  },
+  {
+    id: 'process-instance',
+    question: {
+      de: 'Was ist eine Prozessinstanz?',
+      en: 'What is a Process Instance?',
+    },
+    definition: {
+      de: 'Eine Prozessinstanz (auch „Case" genannt) ist die konkrete, einmalige Ausführung eines Prozesses – zum Beispiel ein einzelner Kundenauftrag, der den gesamten Order-to-Cash-Prozess durchläuft. Sie umfasst alle Ereignisse, die zu diesem einen Fall gehören.',
+      en: 'A process instance (also called a "case") is the concrete, one-time execution of a process – for example, a single customer order running through the entire order-to-cash process. It comprises all events belonging to that one case.',
+    },
+    whyImportant: {
+      de: 'Die Prozessinstanz ist die grundlegende Analyseeinheit im Process Mining. Erst durch das Bündeln von Ereignissen zu Instanzen lassen sich Durchlaufzeiten, Varianten und Abweichungen messen und vergleichen.',
+      en: 'The process instance is the fundamental unit of analysis in Process Mining. Only by bundling events into instances can throughput times, variants, and deviations be measured and compared.',
+    },
+    teaser: {
+      de: 'Die konkrete Einzelausführung eines Prozesses – die Analyseeinheit im Process Mining.',
+      en: 'The concrete single execution of a process – the unit of analysis in Process Mining.',
+    },
+    related: ['process-variant', 'event-log', 'what-is-a-process'],
+  },
+  {
+    id: 'process-simulation',
+    question: {
+      de: 'Was ist Process Simulation?',
+      en: 'What is Process Simulation?',
+    },
+    definition: {
+      de: 'Process Simulation modelliert einen Geschäftsprozess und spielt seinen Ablauf rechnerisch durch, um das Verhalten unter verschiedenen Bedingungen vorherzusagen. So lassen sich Änderungen – etwa an Kapazitäten, Reihenfolgen oder Regeln – testen, bevor sie in der Realität umgesetzt werden.',
+      en: 'Process Simulation models a business process and computationally plays through its execution to predict its behavior under different conditions. This makes it possible to test changes – such as to capacities, sequences, or rules – before they are implemented in reality.',
+    },
+    whyImportant: {
+      de: 'Prozessänderungen sind in der Praxis teuer und riskant. Mit Process Simulation können Unternehmen „Was-wäre-wenn"-Szenarien risikofrei durchspielen, Engpässe vorhersehen und die Wirkung von Optimierungen belegen, bevor sie investieren.',
+      en: 'Process changes are expensive and risky in practice. With Process Simulation, companies can play through "what-if" scenarios risk-free, anticipate bottlenecks, and prove the impact of optimizations before investing.',
+    },
+    teaser: {
+      de: 'Prozesse rechnerisch durchspielen – Was-wäre-wenn-Szenarien vor der Umsetzung.',
+      en: 'Play processes through computationally – what-if scenarios before implementation.',
+    },
+    related: ['digital-process-twin', 'process-intelligence', 'to-be-vs-as-is-process'],
+  },
+  {
+    id: 'digital-process-twin',
+    question: {
+      de: 'Was ist ein Digital Process Twin?',
+      en: 'What is a Digital Process Twin?',
+    },
+    definition: {
+      de: 'Ein Digital Process Twin ist ein digitales, datenbasiertes Abbild eines realen Geschäftsprozesses, das kontinuierlich mit aktuellen Betriebsdaten gespeist wird. Er bildet den Prozess nicht nur einmalig ab, sondern spiegelt seinen laufenden Zustand wider und erlaubt Analysen, Simulationen und Vorhersagen.',
+      en: 'A Digital Process Twin is a digital, data-based replica of a real business process that is continuously fed with current operational data. It represents not just a one-time snapshot but reflects the process\'s ongoing state and enables analysis, simulation, and prediction.',
+    },
+    whyImportant: {
+      de: 'Ein Digital Process Twin verbindet Ist-Transparenz mit Zukunftsfähigkeit: Unternehmen können Auswirkungen von Entscheidungen vorab simulieren, Abweichungen in Echtzeit erkennen und Prozesse kontinuierlich statt punktuell steuern.',
+      en: 'A Digital Process Twin combines as-is transparency with future readiness: companies can simulate the impact of decisions in advance, detect deviations in real time, and steer processes continuously rather than sporadically.',
+    },
+    teaser: {
+      de: 'Das lebende digitale Abbild eines Prozesses – für Analyse, Simulation und Steuerung.',
+      en: 'The living digital replica of a process – for analysis, simulation, and control.',
+    },
+    related: ['process-simulation', 'process-intelligence', 'event-knowledge-graph'],
+  },
+  {
+    id: 'to-be-vs-as-is-process',
+    question: {
+      de: 'Was ist ein Soll-Prozess und was ist ein Ist-Prozess?',
+      en: 'What is a To-Be process and what is an As-Is process?',
+    },
+    definition: {
+      de: 'Der Ist-Prozess (AS-IS) beschreibt, wie ein Prozess tatsächlich abläuft, während der Soll-Prozess (TO-BE) den angestrebten, idealen Zielzustand definiert. Process Mining macht den Ist-Prozess sichtbar; das Soll-Modell dient als Referenz für Verbesserung und Vergleich.',
+      en: 'The as-is process (AS-IS) describes how a process actually runs, while the to-be process (TO-BE) defines the desired, ideal target state. Process Mining makes the as-is process visible; the to-be model serves as a reference for improvement and comparison.',
+    },
+    whyImportant: {
+      de: 'Optimierung entsteht erst aus dem Abgleich beider Sichtweisen: Nur wer Ist und Soll kennt, kann Lücken erkennen, Maßnahmen ableiten und deren Wirkung messen. Dieser Vergleich ist der Kern von Conformance Checking und kontinuierlicher Prozessverbesserung.',
+      en: 'Improvement only emerges from comparing both perspectives: only by knowing the as-is and to-be can you identify gaps, derive measures, and measure their impact. This comparison is at the heart of Conformance Checking and continuous process improvement.',
+    },
+    teaser: {
+      de: 'AS-IS gegen TO-BE – die Grundlage jeder Prozessverbesserung.',
+      en: 'AS-IS versus TO-BE – the foundation of every process improvement.',
+    },
+    term: {
+      de: 'Soll-Prozess und Ist-Prozess',
+      en: 'To-Be and As-Is Process',
+    },
+    related: ['conformance-checking', 'business-process-management', 'process-mining'],
   },
 ];
 

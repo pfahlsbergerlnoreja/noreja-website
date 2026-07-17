@@ -219,6 +219,51 @@ OCPM stands for Object-Centric Process Mining — an approach that analyzes proc
 Why it matters: Real ERP and CRM processes are inherently object-centric and multidimensional. OCPM avoids the convergence and divergence distortions that arise when forcing everything into a single case notion, and thereby delivers a more realistic picture of the process.
 URL: https://noreja.com/en/definitions/object-centric-process-mining
 
+### What is Process Discovery?
+Process Discovery is a core Process Mining discipline that automatically generates a process model from the event data in an IT system. Without any prior assumptions, it reconstructs the actual flow — including all variants and deviations — as a diagram.
+Why it matters: Manually created process documentation is often incomplete or outdated. Process Discovery delivers an objective, data-based as-is picture as the starting point for any analysis, optimization, and automation.
+URL: https://noreja.com/en/definitions/process-discovery
+
+### What is Conformance Checking?
+Conformance Checking is a Process Mining technique that compares the actually observed process flow (as-is) against a defined reference or target model. This makes deviations, rule violations, and compliance gaps visible and quantifiable.
+Why it matters: Companies must demonstrate that their processes comply with policies and regulations. Conformance Checking uncovers deviations automatically and is therefore a central building block for compliance, quality assurance, and risk management.
+URL: https://noreja.com/en/definitions/conformance-checking
+
+### What is Task Mining?
+Task Mining analyzes user interactions directly at the desktop — such as clicks, keystrokes, and application switches — to make manual work steps visible. Unlike Process Mining, which relies on system data, Task Mining captures activities at the task level directly at the workstation.
+Why it matters: Many inefficiencies arise in manual, non-system-supported tasks that classic Process Mining does not capture. Task Mining closes this gap and helps to precisely identify automation potential, for example for RPA.
+URL: https://noreja.com/en/definitions/task-mining
+
+### What is OCEL 2.0?
+OCEL 2.0 (Object-Centric Event Log standard, version 2.0) is an open standard format for storing object-centric event data. It allows a single event to relate to multiple objects of different types and also captures object attributes and relationships over time.
+Why it matters: Classic event logs force processes into a single case ID and thereby distort reality. OCEL 2.0 is the data foundation for Object-Centric Process Mining and enables more realistic, multidimensional analysis of complex ERP and CRM processes.
+URL: https://noreja.com/en/definitions/ocel-2
+
+### What is a Process Variant?
+A process variant is a specific, distinct sequence of activities through which a process runs from start to finish. All process instances that follow exactly the same path belong to the same variant.
+Why it matters: Real processes often deviate significantly from the intended standard flow, producing numerous variants. Analyzing process variants reveals where standardization potential, special cases, and inefficiencies lie.
+URL: https://noreja.com/en/definitions/process-variant
+
+### What is a Process Instance?
+A process instance (also called a "case") is the concrete, one-time execution of a process — for example, a single customer order running through the entire order-to-cash process. It comprises all events belonging to that one case.
+Why it matters: The process instance is the fundamental unit of analysis in Process Mining. Only by bundling events into instances can throughput times, variants, and deviations be measured and compared.
+URL: https://noreja.com/en/definitions/process-instance
+
+### What is Process Simulation?
+Process Simulation models a business process and computationally plays through its execution to predict its behavior under different conditions. This makes it possible to test changes — such as to capacities, sequences, or rules — before they are implemented in reality.
+Why it matters: Process changes are expensive and risky in practice. With Process Simulation, companies can play through "what-if" scenarios risk-free, anticipate bottlenecks, and prove the impact of optimizations before investing.
+URL: https://noreja.com/en/definitions/process-simulation
+
+### What is a Digital Process Twin?
+A Digital Process Twin is a digital, data-based replica of a real business process that is continuously fed with current operational data. It represents not just a one-time snapshot but reflects the process's ongoing state and enables analysis, simulation, and prediction.
+Why it matters: A Digital Process Twin combines as-is transparency with future readiness: companies can simulate the impact of decisions in advance, detect deviations in real time, and steer processes continuously rather than sporadically.
+URL: https://noreja.com/en/definitions/digital-process-twin
+
+### What is a To-Be process and what is an As-Is process?
+The as-is process (AS-IS) describes how a process actually runs, while the to-be process (TO-BE) defines the desired, ideal target state. Process Mining makes the as-is process visible; the to-be model serves as a reference for improvement and comparison.
+Why it matters: Improvement only emerges from comparing both perspectives: only by knowing the as-is and to-be can you identify gaps, derive measures, and measure their impact. This comparison is at the heart of Conformance Checking and continuous process improvement.
+URL: https://noreja.com/en/definitions/to-be-vs-as-is-process
+
 ---
 
 ## Team

@@ -58,14 +58,17 @@ const DefinitionDetail = () => {
   const answerText = `${definition.definition[language]} ${definition.whyImportant[language]}`;
   // Derive a clean glossary term from the question for the DefinedTerm schema,
   // e.g. "Was ist ein Event Knowledge Graph?" -> "Event Knowledge Graph".
-  const term = definition.question[language]
-    .replace(/^Was (ist|sind die|sind)\s+/i, '')
-    .replace(/^What (is|are)\s+/i, '')
-    .replace(/^Wie definiere ich den Begriff\s+/i, '')
-    .replace(/^How do I define the term\s+/i, '')
-    .replace(/^(einen|eine|ein|der|die|das|an|a|the)\s+/i, '')
-    .replace(/[?]$/, '')
-    .trim();
+  // An explicit term overrides the heuristic when the question doesn't reduce cleanly.
+  const term =
+    definition.term?.[language] ??
+    definition.question[language]
+      .replace(/^Was (ist|sind die|sind)\s+/i, '')
+      .replace(/^What (is|are)\s+/i, '')
+      .replace(/^Wie definiere ich den Begriff\s+/i, '')
+      .replace(/^How do I define the term\s+/i, '')
+      .replace(/^(einen|eine|ein|der|die|das|an|a|the)\s+/i, '')
+      .replace(/[?]$/, '')
+      .trim();
 
   return (
     <main className="min-h-screen relative overflow-hidden" style={gradientStyle}>

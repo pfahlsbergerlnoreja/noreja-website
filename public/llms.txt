@@ -58,6 +58,15 @@ Noreja maintains a knowledge base defining key process-intelligence terms (avail
 - What is Business Process Management?: https://noreja.com/en/definitions/business-process-management
 - How to define the term Process?: https://noreja.com/en/definitions/what-is-a-process
 - What is OCPM (Object-Centric Process Mining)?: https://noreja.com/en/definitions/object-centric-process-mining
+- What is Process Discovery?: https://noreja.com/en/definitions/process-discovery
+- What is Conformance Checking?: https://noreja.com/en/definitions/conformance-checking
+- What is Task Mining?: https://noreja.com/en/definitions/task-mining
+- What is OCEL 2.0?: https://noreja.com/en/definitions/ocel-2
+- What is a Process Variant?: https://noreja.com/en/definitions/process-variant
+- What is a Process Instance?: https://noreja.com/en/definitions/process-instance
+- What is Process Simulation?: https://noreja.com/en/definitions/process-simulation
+- What is a Digital Process Twin?: https://noreja.com/en/definitions/digital-process-twin
+- What is a To-Be process and an As-Is process?: https://noreja.com/en/definitions/to-be-vs-as-is-process
 
 ## Languages
 
