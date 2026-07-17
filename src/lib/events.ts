@@ -283,6 +283,164 @@ export const eventData: EventData[] = [
     },
     type: 'conference',
     featured: true,
+  },
+  {
+    id: '14',
+    title: 'Agentic AI & Process Intelligence: Maximising ROI Through Smarter Process Management',
+    description: {
+      de: 'Dieser exklusive Workshop bringt führende Vertreter:innen aus Wirtschaft und Wissenschaft zusammen, um zu erkunden, wie Agentic AI und Process Intelligence (PI) operative Exzellenz neu gestalten – und Unternehmen dabei unterstützen, Arbeit nicht nur zu automatisieren, sondern kontinuierlich zu optimieren und zu verbessern.',
+      en: 'This exclusive workshop brings together industry and academic leaders to explore how Agentic AI and Process Intelligence (PI) are reshaping operational excellence — enabling organisations not only to automate work, but to continuously optimise and improve it.'
+    },
+    date: new Date('2026-09-16'),
+    location: {
+      type: 'onsite',
+      address: 'University of Westminster – Cavendish Campus, 115 New Cavendish Street, London, W1W 6UW',
+    },
+    registration: {
+      required: true,
+      url: 'https://2dvm7d.share-eu1.hsforms.com/2ISxV0Xh5SlmsBI-C4l0rkw'
+    },
+    type: 'workshop',
+    cta: {
+      text: 'Register',
+      url: 'https://2dvm7d.share-eu1.hsforms.com/2ISxV0Xh5SlmsBI-C4l0rkw',
+      type: 'register'
+    }
+  },
+  {
+    id: '15',
+    title: '24. PzM Summit',
+    description: {
+      de: 'Der 24. PzM Summit findet am 19. & 20. November in der Orangerie Schönbrunn statt. Zahlreiche hochkarätige Vortragende aus Wirtschaft und Wissenschaft teilten ihr Prozessmanagement Knowhow in Vorträgen, Seminaren und Diskussionen. Über 400 Personen aus Prozess-, Projekt-, Risiko- und Qualitätsmanagement nehmen teil.',
+      en: 'The 24th PzM Summit takes place on November 19–20 at the Orangerie Schönbrunn in Vienna. Numerous high-profile speakers from business and academia share their process management expertise through talks, seminars, and discussions. Over 400 participants from process, project, risk, and quality management will attend.'
+    },
+    date: new Date('2026-11-19'),
+    endDate: new Date('2026-11-20'),
+    location: {
+      type: 'onsite',
+      address: 'Orangerie Schönbrunn, Vienna, Austria',
+    },
+    registration: {
+      required: false,
+      url: 'https://www.prozesse.at/summit/'
+    },
+    type: 'conference',
+    cta: {
+      text: 'Learn more',
+      url: 'https://www.prozesse.at/summit/',
+      type: 'learn-more'
+    }
+  },
+  {
+    id: '16',
+    title: 'Jenseits des Hypes: Agentic AI im Prozessmanagement erfolgreich einsetzen',
+    description: {
+      de: 'Agentic AI eröffnet im Prozessmanagement neue Möglichkeiten, indem sie Prozessschritte automatisiert, kontextbasiert interpretiert und gezielt Handlungsvorschläge ableitet. Unsere Veranstaltung beleuchtet, wo in Prozessen deterministisch gesteuert werden muss und wo Unschärfen von Sprachmodellen sogar hilfreich sind. Dazu betrachten wir verschiedene Szenarien, in denen KI-Agenten Prozesse prüfen, verbessern und beschleunigen können. Die Vortragenden beschäftigen sich mit Prozessen und KI in Unternehmen und Universitäten, und bringen aktuelle Einblicke in die Diskussion ein. Die Veranstaltung findet in Kooperation mit Noreja und BOC Group statt.',
+      en: 'Agentic AI opens up new possibilities in process management by automating process steps, interpreting them in context, and deriving targeted recommendations for action. Our event explores where processes must be controlled deterministically and where the ambiguity of language models can even be helpful. To this end, we examine various scenarios in which AI agents can review, improve, and accelerate processes. The speakers work at the intersection of processes and AI in companies and universities, bringing current insights to the discussion. This event takes place in cooperation with Noreja and BOC Group.'
+    },
+    date: new Date('2026-09-09'),
+    location: {
+      type: 'onsite',
+      address: 'WU Executive Academy, Vienna, Austria',
+    },
+    registration: {
+      required: false
+    },
+    type: 'conference'
+  },
+  {
+    id: '17',
+    title: 'WorkflowAnalytica 2027',
+    description: {
+      de: 'Die WorkflowAnalytica ist die zentrale Veranstaltung für Business Process Management in der DACH-Region. In 2027 wollen wir die führenden BPM-Experten aus Deutschland, Österreich und der Schweiz im Colosseum in Berlin wieder zusammenbringen. Erlebe zwei Tage voller inspirierender Vorträge, spannender Diskussionen und exklusiver Netzwerk-Möglichkeiten. Auf der Agenda stehen praxisnahe Vorträge, interaktive Arbeitsgruppen und zahlreiche Gelegenheiten zum Austausch. Triff die führenden Köpfe der Branche und entdecke die neuesten Trends und Technologien rund um Prozessmanagement und Automatisierung.',
+      en: 'WorkflowAnalytica is the leading Business Process Management (BPM) event in the DACH region. In 2027, we want to bring together leading BPM experts from Germany, Austria, and Switzerland once again at the Colosseum in Berlin. Experience two days full of inspiring talks, engaging discussions, and exclusive networking opportunities. The agenda features practical presentations, interactive workshops, and plenty of opportunities for exchange. Meet leading minds in the industry and discover the latest trends and technologies in process management and automation.'
+    },
+    date: new Date('2027-04-29'),
+    endDate: new Date('2027-04-30'),
+    location: {
+      type: 'onsite',
+      address: 'Colosseum, Berlin, Germany',
+    },
+    registration: {
+      required: false,
+      url: 'https://www.workflow-analytica.eu/'
+    },
+    type: 'conference',
+    cta: {
+      text: 'Learn more',
+      url: 'https://www.workflow-analytica.eu/',
+      type: 'learn-more'
+    }
+  },
+  {
+    id: '18',
+    title: 'WorkflowAnalytica 2028',
+    description: {
+      de: 'Die WorkflowAnalytica ist die zentrale Veranstaltung für Business Process Management in der DACH-Region. In 2028 wollen wir die führenden BPM-Experten aus Deutschland, Österreich und der Schweiz im Colosseum in Berlin wieder zusammenbringen. Erlebe zwei Tage voller inspirierender Vorträge, spannender Diskussionen und exklusiver Netzwerk-Möglichkeiten. Auf der Agenda stehen praxisnahe Vorträge, interaktive Arbeitsgruppen und zahlreiche Gelegenheiten zum Austausch. Triff die führenden Köpfe der Branche und entdecke die neuesten Trends und Technologien rund um Prozessmanagement und Automatisierung.',
+      en: 'WorkflowAnalytica is the leading Business Process Management (BPM) event in the DACH region. In 2028, we want to bring together leading BPM experts from Germany, Austria, and Switzerland once again at the Colosseum in Berlin. Experience two days full of inspiring talks, engaging discussions, and exclusive networking opportunities. The agenda features practical presentations, interactive workshops, and plenty of opportunities for exchange. Meet leading minds in the industry and discover the latest trends and technologies in process management and automation.'
+    },
+    date: new Date('2028-04-01'),
+    location: {
+      type: 'onsite',
+      address: 'Colosseum, Berlin, Germany',
+    },
+    registration: {
+      required: false,
+      url: 'https://www.workflow-analytica.eu/'
+    },
+    type: 'conference',
+    cta: {
+      text: 'Learn more',
+      url: 'https://www.workflow-analytica.eu/',
+      type: 'learn-more'
+    }
+  },
+  {
+    id: '19',
+    title: 'WorkflowAnalytica 2029',
+    description: {
+      de: 'Die WorkflowAnalytica ist die zentrale Veranstaltung für Business Process Management in der DACH-Region. In 2029 wollen wir die führenden BPM-Experten aus Deutschland, Österreich und der Schweiz im Colosseum in Berlin wieder zusammenbringen. Erlebe zwei Tage voller inspirierender Vorträge, spannender Diskussionen und exklusiver Netzwerk-Möglichkeiten. Auf der Agenda stehen praxisnahe Vorträge, interaktive Arbeitsgruppen und zahlreiche Gelegenheiten zum Austausch. Triff die führenden Köpfe der Branche und entdecke die neuesten Trends und Technologien rund um Prozessmanagement und Automatisierung.',
+      en: 'WorkflowAnalytica is the leading Business Process Management (BPM) event in the DACH region. In 2029, we want to bring together leading BPM experts from Germany, Austria, and Switzerland once again at the Colosseum in Berlin. Experience two days full of inspiring talks, engaging discussions, and exclusive networking opportunities. The agenda features practical presentations, interactive workshops, and plenty of opportunities for exchange. Meet leading minds in the industry and discover the latest trends and technologies in process management and automation.'
+    },
+    date: new Date('2029-04-01'),
+    location: {
+      type: 'onsite',
+      address: 'Colosseum, Berlin, Germany',
+    },
+    registration: {
+      required: false,
+      url: 'https://www.workflow-analytica.eu/'
+    },
+    type: 'conference',
+    cta: {
+      text: 'Learn more',
+      url: 'https://www.workflow-analytica.eu/',
+      type: 'learn-more'
+    }
+  },
+  {
+    id: '20',
+    title: 'ICPM 2027 (International Conference on Process Mining)',
+    description: {
+      de: 'Die ICPM ist die weltweit führende Veranstaltung im Bereich Process Mining – ein einzigartiger Treffpunkt für Anbieter, Berater, Kund:innen, Anwender:innen und Forscher:innen, um sich zu vernetzen, Wissen auszutauschen und die Zukunft des Fachbereichs mitzugestalten. Aufbauend auf ihrem renommierten Erbe bietet die ICPM 2027 ein vielseitiges Programm aus aktueller Forschung und Innovationen aus der Praxis, ergänzt durch herausragende Möglichkeiten für Sponsoring, Networking und Ausstellungen.',
+      en: 'ICPM stands as the flagship global event in process mining — a unique meeting point for vendors, consultants, customers, end-users, and researchers to connect, share insights, and shape the future of the field. Building on its prestigious legacy, ICPM 2027 will deliver a vibrant program blending cutting-edge research and industry innovation, enriched by exceptional opportunities for sponsorship, networking, and exhibition.'
+    },
+    date: new Date('2027-02-08'),
+    endDate: new Date('2027-02-12'),
+    location: {
+      type: 'onsite',
+      address: 'University of Calabria (UNICAL), Rende, Italy',
+    },
+    registration: {
+      required: false,
+      url: 'https://icpmconference.org/2027/'
+    },
+    type: 'conference',
+    cta: {
+      text: 'Learn more',
+      url: 'https://icpmconference.org/2027/',
+      type: 'learn-more'
+    }
   }
 ];
 
