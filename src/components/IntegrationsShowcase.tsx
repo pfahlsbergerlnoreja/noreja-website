@@ -7,24 +7,25 @@ type IntegrationLogo = {
   size?: 'regular' | 'large' | 'xlarge';
 };
 
-// Lazy load images (will be loaded when section comes into view)
+// Import all logo URLs eagerly: with eager:false each image becomes a tiny
+// extra JS chunk (one network round trip per image in the critical path);
+// eager:true inlines just the URL strings into this bundle.
 const integrationImages = import.meta.glob<{ default: string }>(
   '../assets/integrations/*.{png,jpg,jpeg,svg,webp}',
-  { eager: false }
+  { eager: true }
 );
 
 // Cache for processed logos
 let logosCache: IntegrationLogo[] | null = null;
 
 // Process images into logo objects
-const processLogos = async (): Promise<IntegrationLogo[]> => {
+const processLogos = (): IntegrationLogo[] => {
   if (logosCache) {
     return logosCache;
   }
 
   const imageEntries = Object.entries(integrationImages);
-  const logoPromises = imageEntries.map(async ([path, moduleLoader]) => {
-    const module = await moduleLoader();
+  const logos = imageEntries.map(([path, module]) => {
     const filename = path.split('/').pop()?.replace(/\.(png|jpg|jpeg|svg|webp)$/, '') || '';
     
     let size: 'regular' | 'large' | 'xlarge' = 'regular';
@@ -49,7 +50,7 @@ const processLogos = async (): Promise<IntegrationLogo[]> => {
     };
   });
 
-  logosCache = await Promise.all(logoPromises);
+  logosCache = logos;
   return logosCache;
 };
 
@@ -131,10 +132,8 @@ export const IntegrationsShowcase: React.FC<IntegrationsShowcaseProps> = ({
           // Start loading when section is within 200px of viewport
           if (entry.isIntersecting && loadedLogos.length === 0) {
             setIsLoading(true);
-            processLogos().then((logos) => {
-              setLoadedLogos(logos);
-              setIsLoading(false);
-            });
+            setLoadedLogos(processLogos());
+            setIsLoading(false);
             // Disconnect observer after loading starts
             observer.disconnect();
           }

@@ -85,6 +85,13 @@
   status = 301
   force = true
 
+# Common misspelling of llms.txt — without this, the SPA fallback would
+# answer /llm.txt with the HTML shell (status 200), confusing crawlers/validators
+[[redirects]]
+  from = "/llm.txt"
+  to = "/llms.txt"
+  status = 301
+
 [[redirects]]
   from = "/en/privacy-policy"
   to = "/en/privacy"

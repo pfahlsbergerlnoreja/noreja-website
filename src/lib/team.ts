@@ -1,31 +1,17 @@
-// Dynamically import all team images (lazy loading)
+// Import all team image URLs eagerly: with eager:false each image becomes a
+// tiny extra JS chunk (one network round trip per image in the critical path);
+// eager:true inlines just the URL strings into this bundle.
 const teamImages = import.meta.glob<{ default: string }>(
   '../assets/team/*.{png,jpg,jpeg,webp}',
-  { eager: false }
+  { eager: true }
 );
 
-// Cache for loaded images
-const imageCache = new Map<string, string>();
-
-// Helper function to get image path from imports (async)
-const getTeamImagePath = async (filename: string): Promise<string> => {
-  // Check cache first
-  if (imageCache.has(filename)) {
-    return imageCache.get(filename)!;
-  }
-
-  const entry = Object.entries(teamImages).find(([path]) => 
+// Helper function to get image path from imports
+const getTeamImagePath = (filename: string): string => {
+  const entry = Object.entries(teamImages).find(([path]) =>
     path.toLowerCase().includes(filename.toLowerCase())
   );
-  
-  if (entry) {
-    const module = await entry[1]();
-    const url = module.default;
-    imageCache.set(filename, url);
-    return url;
-  }
-  
-  return '';
+  return entry ? entry[1].default : '';
 };
 
 export interface TeamMember {

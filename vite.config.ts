@@ -22,5 +22,8 @@ export default defineConfig(({ mode }) => ({
   build: {
     // Ship modern JS (all evergreen browsers); avoids unnecessary transpilation/polyfills
     target: "es2022",
+    // Source maps for production debugging / Lighthouse "missing source map" audit.
+    // Only fetched by DevTools, no runtime cost; note they expose readable source.
+    sourcemap: true,
   },
 }));

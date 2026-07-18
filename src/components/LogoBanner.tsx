@@ -1,15 +1,16 @@
 import React, { useMemo, useEffect, useState } from 'react';
 
-// Dynamically import all customer logos (lazy loading)
+// Import all logo URLs eagerly: with eager:false each image becomes a tiny
+// extra JS chunk (one network round trip per image in the critical path);
+// eager:true inlines just the URL strings into this bundle.
 const customerImages = import.meta.glob<{ default: string }>(
   '../assets/customers/*.{png,jpg,jpeg,svg,webp}',
-  { eager: false }
+  { eager: true }
 );
 
-// Dynamically import all partner logos (white versions) (lazy loading)
 const partnerImages = import.meta.glob<{ default: string }>(
   '../assets/partners/partners_white/*.{png,jpg,jpeg,svg,webp}',
-  { eager: false }
+  { eager: true }
 );
 
 // Fisher-Yates shuffle function
@@ -69,8 +70,7 @@ const LogoBanner: React.FC = () => {
     const loadLogos = async () => {
       // Process customer logos
       const customerEntries = Object.entries(customerImages);
-      const customerLogosPromises = customerEntries.map(async ([path, moduleLoader]) => {
-        const module = await moduleLoader();
+      const customerLogos = customerEntries.map(([path, module]) => {
         const filename = path.split('/').pop()?.replace(/\.(png|jpg|jpeg|svg|webp)$/, '') || '';
         
         // Determine size based on filename postfix
@@ -98,8 +98,7 @@ const LogoBanner: React.FC = () => {
 
       // Process partner logos
       const partnerEntries = Object.entries(partnerImages);
-      const partnerLogosPromises = partnerEntries.map(async ([path, moduleLoader]) => {
-        const module = await moduleLoader();
+      const partnerLogos = partnerEntries.map(([path, module]) => {
         const filename = path.split('/').pop()?.replace(/\.(png|jpg|jpeg|svg|webp)$/, '') || '';
         
         // Determine size based on filename postfix
@@ -124,9 +123,6 @@ const LogoBanner: React.FC = () => {
           size
         };
       });
-      
-      const customerLogos = await Promise.all(customerLogosPromises);
-      const partnerLogos = await Promise.all(partnerLogosPromises);
       
       // Combine all logos with customers first, then partners (no randomization)
       const allLogos: Logo[] = [...customerLogos, ...partnerLogos];

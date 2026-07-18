@@ -1,67 +1,42 @@
-// Dynamically import all partner logos (lazy loading)
+// Import all image URLs eagerly: with eager:false each image becomes a tiny
+// extra JS chunk (one network round trip per image in the critical path);
+// eager:true inlines just the URL strings into this bundle.
 const partnerLogoImages = import.meta.glob<{ default: string }>(
   '../assets/partners/*.{png,jpg,jpeg,svg,webp}',
-  { eager: false }
+  { eager: true }
 );
 
-// Dynamically import all white partner logos (lazy loading)
 const partnerLogoImagesWhite = import.meta.glob<{ default: string }>(
   '../assets/partners/partners_white/*.{png,jpg,jpeg,svg,webp}',
-  { eager: false }
+  { eager: true }
 );
 
-// Dynamically import all partner face photos (lazy loading)
 const partnerFaceImages = import.meta.glob<{ default: string }>(
   '../assets/partnerFaces/*.{png,jpg,jpeg,webp}',
-  { eager: false }
+  { eager: true }
 );
 
-// Dynamically import all customer logos (lazy loading)
 const customersLogoImages = import.meta.glob<{ default: string }>(
   '../assets/customers/*.{png,jpg,jpeg,svg,webp}',
-  { eager: false }
+  { eager: true }
 );
 
-// Dynamically import all other logos (lazy loading)
 const otherLogosImages = import.meta.glob<{ default: string }>(
   '../assets/other_logos/*.{png,jpg,jpeg,svg,webp}',
-  { eager: false }
+  { eager: true }
 );
 
-// Cache for loaded images
-const imageCache = new Map<string, string>();
-
-// Helper function to get image path from imports (async)
-const getImagePath = async (
-  images: Record<string, () => Promise<{ default: string }>>,
-  filename: string,
-  sourceType?: string
-): Promise<string> => {
+// Helper function to get image path from imports
+const getImagePath = (
+  images: Record<string, { default: string }>,
+  filename: string
+): string => {
   if (!filename) return '';
-  
-  const cacheKey = sourceType ? `${sourceType}-${filename}` : filename;
-  
-  // Check cache first
-  if (imageCache.has(cacheKey)) {
-    return imageCache.get(cacheKey)!;
-  }
 
-  try {
-    const entry = Object.entries(images).find(([path]) => 
-      path.toLowerCase().includes(filename.toLowerCase())
-    );
-    
-    if (entry) {
-      const module = await entry[1]();
-      const url = module.default;
-      imageCache.set(cacheKey, url);
-      return url;
-    }
-  } catch (error) {
-    console.warn(`Failed to load image: ${filename}`, error);
-  }
-  
-  return '';
+  const entry = Object.entries(images).find(([path]) =>
+    path.toLowerCase().includes(filename.toLowerCase())
+  );
+  return entry ? entry[1].default : '';
 };
 
 export type PartnerLogoSize = 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge';
@@ -482,15 +457,15 @@ export const getPartners = async (): Promise<Partner[]> => {
     const imagePromises = partnersBase.map(async (partner) => {
       try {
         const logoUrl = partner.logoFilename 
-          ? await getImagePath(getImageCollection(partner.logoSource), partner.logoFilename, partner.logoSource)
+          ? getImagePath(getImageCollection(partner.logoSource), partner.logoFilename)
           : '';
         
         const logoUrlWhite = partner.logoFilenameWhite
-          ? await getImagePath(partnerLogoImagesWhite, partner.logoFilenameWhite, 'partners_white')
+          ? getImagePath(partnerLogoImagesWhite, partner.logoFilenameWhite)
           : undefined;
         
         const personPhotoUrl = partner.personPhotoFilename
-          ? await getImagePath(partnerFaceImages, partner.personPhotoFilename, 'partnerFaces')
+          ? getImagePath(partnerFaceImages, partner.personPhotoFilename)
           : undefined;
         
         return {
@@ -666,15 +641,15 @@ export const getPartnersForGrid = async (): Promise<Partner[]> => {
     const imagePromises = partnersWithPhotos.map(async (partner) => {
       try {
         const logoUrl = partner.logoFilename 
-          ? await getImagePath(getImageCollection(partner.logoSource), partner.logoFilename, partner.logoSource)
+          ? getImagePath(getImageCollection(partner.logoSource), partner.logoFilename)
           : '';
         
         const logoUrlWhite = partner.logoFilenameWhite
-          ? await getImagePath(partnerLogoImagesWhite, partner.logoFilenameWhite, 'partners_white')
+          ? getImagePath(partnerLogoImagesWhite, partner.logoFilenameWhite)
           : undefined;
         
         const personPhotoUrl = partner.personPhotoFilename
-          ? await getImagePath(partnerFaceImages, partner.personPhotoFilename, 'partnerFaces')
+          ? getImagePath(partnerFaceImages, partner.personPhotoFilename)
           : undefined;
 
         return {
