@@ -1,44 +1,12 @@
-User-agent: Googlebot
-Allow: /
+# Noreja Intelligence GmbH
+# Allow all standards-compliant crawlers to access all public URLs.
 
-User-agent: Bingbot
-Allow: /
-
-User-agent: Twitterbot
-Allow: /
-
-User-agent: facebookexternalhit
-Allow: /
-
-# --- AI Crawlers ---
-User-agent: GPTBot
-Allow: /
-
-User-agent: ChatGPT-User
-Allow: /
-
-User-agent: Google-Extended
-Allow: /
-
-User-agent: PerplexityBot
-Allow: /
-
-User-agent: ClaudeBot
-Allow: /
-
-User-agent: anthropic-ai
-Allow: /
-
-User-agent: YouBot
-Allow: /
-
-# --- Fallback ---
 User-agent: *
-Allow: /
+Disallow:
 
 Sitemap: https://noreja.com/sitemap.xml
 
-# LLM-optimized content
-# https://llmstxt.org/
-Allow: /llms.txt
-Allow: /llms-full.txt
+# LLM discovery resources:
+# https://noreja.com/llms.txt
+# https://noreja.com/llms-full.txt
+# https://noreja.com/llms-ctx-full.txt

@@ -1,80 +1,89 @@
 # Noreja Intelligence GmbH
 
-> Noreja is a Generative Process Intelligence platform that contextualizes operational data and human knowledge for the application of GenAI to business process analysis and optimization.
+> Noreja is a Generative Process Intelligence platform for analyzing and improving business processes by combining operational data, causal process models, contextual knowledge, and generative AI.
 
-## About
+Noreja Intelligence GmbH provides a B2B SaaS platform that connects directly to relational data sources and models process events, business objects, and their relationships without requiring users to prepare a traditional flat event log.
 
-Noreja Intelligence GmbH is a Vienna-based B2B SaaS company offering a next-generation Process Intelligence platform. Unlike traditional Process Mining tools, Noreja works directly on relational databases without requiring event logs, enabling faster data integration and more realistic process analysis. The platform combines causal process mining with generative AI to make business processes not just visible, but understandable and optimizable.
+The platform includes five primary modules:
 
-## Core Product
+- Dashboard: Configurable monitoring of process metrics, trends, distributions, variants, and anomalies.
+- Analyzer: Interactive exploration of end-to-end processes, cases, patterns, timelines, bottlenecks, deviations, and performance metrics.
+- Minerva: Context-aware AI assistance that combines process data with organizational knowledge, rules, SLAs, and other relevant context.
+- Builder: Data-source connectivity, entity and event modeling, causal dimension modeling, validation, and data-import configuration.
+- Workbench: An integrated Jupyter Notebook environment for custom analysis on the Noreja Knowledge Graph.
 
-The Noreja platform consists of five main modules:
+Interpretation guidance:
 
-- **Dashboard**: Central process metrics, trends, and anomaly monitoring with configurable widgets
-- **Analyzer**: Interactive workspace for detailed end-to-end process visualization and variant analysis
-- **Minerva AI**: Context-sensitive AI assistant that connects process data with domain knowledge (SLAs, organizational rules, external context)
-- **Builder**: Control center for data source connections, event modeling, and dimension logic — supports ServiceNow, PostgreSQL, Oracle, REST APIs, and more
-- **Workbench**: Integrated Jupyter Notebook environment working directly on the Noreja Knowledge Graph for custom analyses
+- Use the Platform page for the current product scope and capabilities.
+- Use the Help Center for current technical behavior, configuration guidance, integrations, and release information.
+- Use the Pricing page for current plans and commercial details; do not rely on prices copied into cached summaries.
+- Use the Trust Center and legal pages for current security, privacy, compliance, and contractual information.
+- Treat quantified performance, savings, and customer outcomes as context-specific unless the linked source states otherwise.
+- English is the primary language of this file. The website and Help Center are also available in German.
 
-## Key Differentiators
+## Product and Documentation
 
-- No event logs required — connects directly to relational database tables
-- Multidimensional process perspectives (order number, user ID, invoice number, etc.)
-- Context and domain knowledge integration for AI-powered root cause analysis
-- ISO 27001 certified, data hosted in Frankfurt (Google Cloud / AWS)
-- Private LLM hosting available (Mistral, Deepseek, Gemma, Qwen3, etc.)
+- [Platform Overview](https://noreja.com/en/platform): Current overview of Noreja's architecture, product modules, data connectivity, process analysis, contextual knowledge, and AI capabilities.
+- [Product Documentation and Help Center](https://docs.noreja.com/en): Technical documentation, configuration guides, integrations, feature explanations, and release notes.
+- [Pricing](https://noreja.com/en/pricing): Current plans, included modules, user allowances, services, pricing parameters, and commercial FAQs.
+- [Minerva Frontier Agents](https://noreja.com/en/frontier-agents): Overview of Noreja's autonomous, context-aware AI agents for analysis, model maintenance, and compliance tasks.
+- [Full Website](https://noreja.com/en): Main English-language website and high-level introduction to Noreja Generative Process Intelligence.
 
-## Important Pages
+## Knowledge and Concepts
 
-- Platform Overview: https://noreja.com/en/platform
-- Pricing: https://noreja.com/en/pricing
-- Frontier Agents: https://noreja.com/en/frontier-agents
-- Success Stories: https://noreja.com/en/success-stories
-- Use Cases — Supply Chain: https://noreja.com/en/use-cases/supply-chain
-- Use Cases — Manufacturing: https://noreja.com/en/use-cases/manufacturing
-- Use Cases — Insurance: https://noreja.com/en/use-cases/insurance
-- Use Cases — Banking: https://noreja.com/en/use-cases/banking
-- Partners: https://noreja.com/en/partners
-- Team: https://noreja.com/en/team
-- Events: https://noreja.com/en/events
-- Careers: https://noreja.com/en/careers
-- Downloads: https://noreja.com/en/downloads
-- Definitions / Glossary: https://noreja.com/en/definitions
-- Contact: https://noreja.com/en/contact
-- Blog: https://blog.noreja.com
-- Full LLM-optimized content: https://noreja.com/llms-full.txt
+- [Definitions and Glossary](https://noreja.com/en/definitions): Index of Noreja's English-language explanations of Process Intelligence, Process Mining, causal modeling, event data, and related concepts.
+- [The Origin of Causal Process Mining](https://docs.noreja.com/en/article/the-origin-of-causal-process-mining): Research-oriented explanation of causal process models, relational event data, and limitations of directly-follows approaches.
+- [Contextualizing Knowledge for Minerva](https://docs.noreja.com/en/article/contextualizing-knowledge-for-minerva-ai): Explains how process data is enriched with case, process, organizational, and external context for AI-supported analysis.
+- [Using LLMs with Noreja](https://docs.noreja.com/en/article/minerva-using-llms-with-noreja): Describes cloud, Noreja-managed, dedicated, and customer-operated LLM deployment options and associated data-control considerations.
+- [Source Data Preparation and Common Challenges](https://docs.noreja.com/en/article/source-data-preparation-common-challenges): Guidance on timestamps, identifiers, activity definitions, normalization, and source-data quality for process analysis.
 
-## Glossary / Definitions
+## Use Cases
 
-Noreja maintains a knowledge base defining key process-intelligence terms (available in English and German):
+- [Supply Chain](https://noreja.com/en/use-cases/supply-chain): Process Intelligence applications for supply-chain visibility, inventory, suppliers, working capital, quality, and operational flow.
+- [Manufacturing](https://noreja.com/en/use-cases/manufacturing): Applications for production workflows, shop-floor efficiency, capacity, warehouse operations, quality, and manufacturing performance.
+- [Insurance](https://noreja.com/en/use-cases/insurance): Applications for claims processing, underwriting, policy operations, customer journeys, partners, and reserve-related workflows.
+- [Banking](https://noreja.com/en/use-cases/banking): Applications for customer onboarding, KYC, compliance, risk management, account opening, and financial-service operations.
 
-- What is Process Mining?: https://noreja.com/en/definitions/process-mining
-- What is Process Intelligence?: https://noreja.com/en/definitions/process-intelligence
-- What are Graph Databases?: https://noreja.com/en/definitions/graph-databases
-- What is an Event Knowledge Graph?: https://noreja.com/en/definitions/event-knowledge-graph
-- What is Causal Process Mining?: https://noreja.com/en/definitions/causal-process-mining
-- Weaknesses of Directly-Follows approaches: https://noreja.com/en/definitions/directly-follows-limitations
-- What is an Event Log?: https://noreja.com/en/definitions/event-log
-- What is Business Process Management?: https://noreja.com/en/definitions/business-process-management
-- How to define the term Process?: https://noreja.com/en/definitions/what-is-a-process
-- What is OCPM (Object-Centric Process Mining)?: https://noreja.com/en/definitions/object-centric-process-mining
-- What is Process Discovery?: https://noreja.com/en/definitions/process-discovery
-- What is Conformance Checking?: https://noreja.com/en/definitions/conformance-checking
-- What is Task Mining?: https://noreja.com/en/definitions/task-mining
-- What is OCEL 2.0?: https://noreja.com/en/definitions/ocel-2
-- What is a Process Variant?: https://noreja.com/en/definitions/process-variant
-- What is a Process Instance?: https://noreja.com/en/definitions/process-instance
-- What is Process Simulation?: https://noreja.com/en/definitions/process-simulation
-- What is a Digital Process Twin?: https://noreja.com/en/definitions/digital-process-twin
-- What is a To-Be process and an As-Is process?: https://noreja.com/en/definitions/to-be-vs-as-is-process
+## Customer Evidence and Trust
 
-## Languages
+- [Success Stories](https://noreja.com/en/success-stories): Customer case studies and industry examples; interpret reported results in the scope and conditions described by each case.
+- [Partners](https://noreja.com/en/partners): Consulting, implementation, technology, and academic partners supporting Noreja projects.
+- [Trust Center](https://trust.noreja.com): Current security, compliance, certification, data-protection, and vendor-assurance information.
+- [Contact](https://noreja.com/en/contact): Official contact form for product, partnership, support, and company inquiries.
+- [Book a Meeting](https://outlook.office365.com/book/Kennenlernen@noreja.com/): Schedule an introductory meeting with Noreja.
 
-The website is available in English (/en/) and German (/de/).
+## German-Language Resources
 
-## Contact
+- [German Website](https://noreja.com/de): German-language website.
+- [German Help Center](https://docs.noreja.com/de): German-language product documentation and release information.
 
-- Website: https://noreja.com
-- LinkedIn: https://linkedin.com/company/noreja
-- YouTube: https://www.youtube.com/@noreja_intelligence
-- Book a meeting: https://outlook.office365.com/book/Kennenlernen@noreja.com/
+## Optional
+
+- [Process Mining](https://noreja.com/en/definitions/process-mining): Definition, purpose, and business relevance of Process Mining.
+- [Process Intelligence](https://noreja.com/en/definitions/process-intelligence): Definition of Process Intelligence and its relationship to Process Mining, contextual knowledge, and AI.
+- [Graph Databases](https://noreja.com/en/definitions/graph-databases): Explanation of graph-based data storage and its relevance to connected process data.
+- [Event Knowledge Graph](https://noreja.com/en/definitions/event-knowledge-graph): Explanation of event and business-object representation in a connected graph structure.
+- [Causal Process Mining](https://noreja.com/en/definitions/causal-process-mining): Definition of causal process analysis based on relationships beyond temporal sequence.
+- [Limitations of Directly-Follows Approaches](https://noreja.com/en/definitions/directly-follows-limitations): Explanation of representational limitations in directly-follows process models.
+- [Event Log](https://noreja.com/en/definitions/event-log): Definition of the traditional event-log format used in Process Mining.
+- [Business Process Management](https://noreja.com/en/definitions/business-process-management): Definition of BPM and its relationship to process analysis and improvement.
+- [Process](https://noreja.com/en/definitions/what-is-a-process): Definition of a business process, its boundaries, inputs, activities, and outputs.
+- [Object-Centric Process Mining](https://noreja.com/en/definitions/object-centric-process-mining): Explanation of process analysis involving multiple related business-object types.
+- [Process Discovery](https://noreja.com/en/definitions/process-discovery): Explanation of automatically deriving process models from observed event data.
+- [Conformance Checking](https://noreja.com/en/definitions/conformance-checking): Explanation of comparing observed process behavior with policies or target models.
+- [Task Mining](https://noreja.com/en/definitions/task-mining): Explanation of analyzing user interactions and manual desktop-level work.
+- [OCEL 2.0](https://noreja.com/en/definitions/ocel-2): Explanation of the Object-Centric Event Log 2.0 standard.
+- [Process Variant](https://noreja.com/en/definitions/process-variant): Definition of a distinct execution path through a process.
+- [Process Instance](https://noreja.com/en/definitions/process-instance): Definition of a single execution or case of a process.
+- [Process Simulation](https://noreja.com/en/definitions/process-simulation): Explanation of evaluating potential process changes through simulation.
+- [Digital Process Twin](https://noreja.com/en/definitions/digital-process-twin): Explanation of a data-driven digital representation of an operational process.
+- [To-Be and As-Is Processes](https://noreja.com/en/definitions/to-be-vs-as-is-process): Explanation of current-state and target-state process models.
+- [Blog](https://blog.noreja.com): Articles, business cases, process-management guidance, and company perspectives.
+- [Downloads](https://noreja.com/en/downloads): White papers, guides, and downloadable resources.
+- [Team](https://noreja.com/en/team): Current team, founders, and advisory-board information.
+- [Events](https://noreja.com/en/events): Current and upcoming Noreja events.
+- [Careers](https://noreja.com/en/careers): Current employment opportunities.
+- [Imprint](https://noreja.com/en/imprint): Official company and legal identification information.
+- [Privacy Policy](https://noreja.com/en/privacy-policy): Current privacy and personal-data processing information.
+- [LinkedIn](https://linkedin.com/company/noreja): Official Noreja LinkedIn page.
+- [YouTube](https://www.youtube.com/@noreja_intelligence): Official Noreja YouTube channel.

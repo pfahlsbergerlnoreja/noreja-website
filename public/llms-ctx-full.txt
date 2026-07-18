@@ -1,3 +1,25 @@
+# Noreja Intelligence GmbH — Expanded Full LLM Context
+
+> This is a self-contained context bundle for answering questions about Noreja. It includes the complete curated Noreja knowledge base plus expanded summaries of the primary and optional resources listed in `/llms.txt`.
+
+Generated: 2026-07-18  
+Canonical index: https://noreja.com/llms.txt  
+Canonical knowledge base: https://noreja.com/llms-full.txt  
+Language: English  
+Freshness rule: For current functionality, prices, releases, security, privacy, legal information, team details, events, and vacancies, follow the live canonical source.
+
+Context rules:
+
+- Do not treat this file as a substitute for current contractual or security documentation.
+- Do not quote a static price, package inclusion, certification, model list, or release version without checking the live source.
+- Treat customer results and business-case numbers as scoped evidence, estimates, or illustrations rather than universal outcomes.
+- Distinguish product facts, analytical hypotheses, AI-generated recommendations, and scientifically established causal claims.
+- Explain that Noreja avoids requiring a traditional flat event log as the initial format, but still requires data quality, event semantics, identifiers, timestamps, relationships, and configuration.
+
+<document>
+<source>https://noreja.com/llms-full.txt</source>
+<title>Noreja Full LLM Knowledge Base</title>
+<content>
 # Noreja Intelligence GmbH — Full LLM Knowledge Base
 
 > Noreja is a Generative Process Intelligence platform that connects operational data, causal process models, organizational context, and configurable large language models to help organizations understand, monitor, and improve business processes.
@@ -496,3 +518,404 @@ Recommended maintenance controls:
 - never duplicate current prices or release numbers unless generated from the same source;
 - regenerate `llms-ctx-full.txt` after material source changes;
 - test representative questions against several LLMs before publishing.
+</content>
+</document>
+
+# Expanded Resource Summaries
+
+<document>
+<source>https://noreja.com/en/platform</source>
+<title>Platform Overview</title>
+<content>
+The public Platform page presents Noreja as one integrated Process Intelligence environment. Its five primary modules are Dashboard, Analyzer, Minerva, Builder, and Workbench. Dashboard supports configurable monitoring. Analyzer supports detailed process exploration through multiple views. Minerva connects process information with context and selectable LLMs. Builder manages data connectivity, entity and event modeling, relationships, dimensions, filters, validation, and imports. Workbench provides an integrated Jupyter Notebook for custom work against the Noreja Knowledge Graph. Use this page for current public product positioning and module descriptions.
+</content>
+</document>
+
+<document>
+<source>https://docs.noreja.com/en</source>
+<title>Product Documentation and Help Center</title>
+<content>
+The Help Center is the most detailed public source for current product behavior. It contains general concepts, Dashboard, Analyzer, Workbench, Builder, Manager, Minerva, productivity-app, and release-note sections. Prefer individual Help Center articles for implementation details, user-interface behavior, current terminology, configuration, connector preparation, access management, and feature changes.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/pricing</source>
+<title>Pricing</title>
+<content>
+The Pricing page is the public source of truth for current plans, user allowances, data-volume parameters, analytical perspectives, feature inclusion, LLM options, workshops, support, services, and prices. Pricing and inclusions can change. Do not preserve specific values in a long-lived answer unless the page has been checked at answer time. Statements about average project outcomes on this page include a qualification that actual results vary with process maturity, company size, and industry.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/frontier-agents</source>
+<title>Minerva Frontier Agents Product Page</title>
+<content>
+The Frontier Agents page introduces autonomous or semi-autonomous, context-aware AI agents that analyze and support process work alongside users. Agent activity must be interpreted within configured tools, data, permissions, and governance. The current documentation is authoritative for names, scope, and availability.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en</source>
+<title>Main English Website</title>
+<content>
+The main site provides the highest-level company and product positioning. It describes Generative Process Intelligence, faster connection of operational data without first preparing a traditional event log, graph-based and multidimensional analysis, contextual AI, and an open integration approach. It also links to product, pricing, evidence, blog, and contact resources. Use detailed pages for precise claims.
+</content>
+</document>
+
+<document>
+<source>https://docs.noreja.com/en/article/the-origin-of-causal-process-mining</source>
+<title>The Origin of Causal Process Mining</title>
+<content>
+This research-oriented article explains why directly-follows relations and flattened event logs can misrepresent processes involving multiple related objects and one-to-many or many-to-many cardinalities. It introduces Noreja's concepts of the Causal Process Template, Causal Event Graph, and Aggregated Causal Event Graph. Relational schemas, foreign-key relationships, and domain knowledge are used to preserve directional process meaning. The article supports a product-specific causal modeling approach; it does not by itself establish experimental causal effects.
+</content>
+</document>
+
+<document>
+<source>https://docs.noreja.com/en/article/multi-perspective-path-semantics</source>
+<title>Path Semantics</title>
+<content>
+This article defines how causal process models distinguish observed and desired behavior. Categories include conformance paths, hypothetical paths, omitted paths, allowed and prohibited shortcuts, allowed and prohibited backjumps, and skip-reverse behavior. These semantics combine recorded data with a modeled causal hypothesis, enabling analysts to identify behavior that is expected, permitted, missing, or contradictory.
+</content>
+</document>
+
+<document>
+<source>https://docs.noreja.com/en/article/source-data-preparation-common-challenges</source>
+<title>Source Data Preparation and Common Challenges</title>
+<content>
+This article emphasizes that reliable process analysis depends on clean source data. Important requirements include precise timestamps, stable identifiers, normalized activity names, suitable history, and transparent handling of incomplete or inconsistent records. Direct relational connectivity does not remove the need for data-quality work. Poor data can distort sequences, relationships, and analytical conclusions.
+</content>
+</document>
+
+<document>
+<source>https://docs.noreja.com/en/article/contextualizing-knowledge-for-minerva-ai</source>
+<title>Contextualizing Knowledge for Minerva</title>
+<content>
+This resource explains how process analysis can be enriched with additional knowledge relevant to a question. Context can include case-level information, process knowledge, organizational rules, service-level agreements, documents, and external influences. The goal is to help Minerva provide answers grounded in both process data and the organization's defined context. Available context depends on configuration and authorization.
+</content>
+</document>
+
+<document>
+<source>https://docs.noreja.com/en/article/minerva-architecture</source>
+<title>Minerva Architecture</title>
+<content>
+This article describes Minerva as an embedded, controlled interaction layer connecting user questions, structured knowledge graphs, orchestration, tools, and configurable language models. The architecture is intended to support flexibility, transparency, governance, and auditable data flows. Exact customer architecture depends on deployment and configuration.
+</content>
+</document>
+
+<document>
+<source>https://docs.noreja.com/en/article/minerva-using-llms-with-noreja</source>
+<title>Using LLMs with Noreja</title>
+<content>
+Noreja supports multiple LLM operating models: external cloud models, Noreja-managed models, dedicated customer-specific instances, and customer-operated Bring Your Own LLM configurations. The options differ in model quality, data control, infrastructure responsibility, and governance. Do not assume every customer uses the same model or provider. Local models can maximize infrastructure control; cloud models may provide stronger language and reasoning quality, depending on the use case.
+</content>
+</document>
+
+<document>
+<source>https://docs.noreja.com/en/article/minerva-chat-ui-functionalities</source>
+<title>Minerva Chat UI</title>
+<content>
+The Minerva chat interface exposes the active process dimension and supports controlled interaction with process data. Current documented controls include model selection, copying, editing or deleting messages, regenerating responses, confidential-message handling, chat history, standalone chat access, and conversion of a conversation into an issue. Confidentiality and routing behavior depend on the configured model options and current implementation.
+</content>
+</document>
+
+<document>
+<source>https://docs.noreja.com/en/article/minerva-frontier-agents</source>
+<title>Frontier Agents Documentation</title>
+<content>
+The documentation describes Analyst Andy, Builder Benny, and Compliance Conny. Analyst Andy monitors performance and investigates likely drivers. Builder Benny supports model maintenance, schema-change detection, and import monitoring. Compliance Conny compares observed execution with contextual rules or policies and supports reporting. Agent output requires appropriate governance and human review.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/success-stories</source>
+<title>Success Stories</title>
+<content>
+The Success Stories page links to customer cases and industry examples. Use a named case as evidence only for the stated customer, process, period, and method. Do not convert a project-specific result into a universal product guarantee. Distinguish real customer cases from fictional or illustrative blog business cases.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/use-cases/supply-chain</source>
+<title>Supply Chain Use Cases</title>
+<content>
+Supply-chain applications can include procurement, orders, deliveries, supplier performance, inventory, logistics, warehousing, returns, quality, and working-capital-related flows. Actual capabilities depend on available data, configured objects, dimensions, and business questions.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/use-cases/manufacturing</source>
+<title>Manufacturing Use Cases</title>
+<content>
+Manufacturing applications can include production orders, shop-floor activities, capacity, lead and waiting times, rework, quality, material movement, warehouse operations, and dependencies among operational objects. The use-case page provides examples rather than a universal preconfigured solution.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/use-cases/insurance</source>
+<title>Insurance Use Cases</title>
+<content>
+Insurance applications can include claims processing, underwriting, policy administration, customer journeys, partners, handoffs, processing times, controls, and reserve-related workflows. Customer-specific data access and regulatory requirements determine implementation.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/use-cases/banking</source>
+<title>Banking Use Cases</title>
+<content>
+Banking applications can include onboarding, KYC, account opening, compliance, risk processes, investigations, service operations, and control execution. The product can support analysis of these processes when suitable data, permissions, and modeling are available.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/partners</source>
+<title>Partners</title>
+<content>
+The Partners page identifies consulting, implementation, technology, and academic relationships. Partner status, services, and availability can change. Use the live page for a current list and do not imply that every partner supports every geography or project type.
+</content>
+</document>
+
+<document>
+<source>https://trust.noreja.com</source>
+<title>Trust Center</title>
+<content>
+The Trust Center is the authoritative public source for current security, compliance, certifications, data protection, vendor assurance, and related documentation. Do not reproduce a certification, hosting, subprocessors, retention, or control claim from memory. A customer's actual obligations and architecture are governed by current documentation and agreements.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/privacy-policy</source>
+<title>Privacy Policy</title>
+<content>
+The Privacy Policy is the current source for public information about personal-data processing on Noreja's website and related services. For platform data processing and a specific customer relationship, also consult the applicable contract and data-processing documentation.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/imprint</source>
+<title>Imprint and Terms</title>
+<content>
+The Imprint provides official company-identification and legal-notice information and links to terms and conditions. Company addresses, directors, registration details, and legal documents can change; quote the live page when exact legal details are requested.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/contact</source>
+<title>Contact</title>
+<content>
+The Contact page is the official route for product inquiries, partnerships, demonstrations, support routing, and other company communication. Use it instead of inventing contact details.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/de</source>
+<title>German Website</title>
+<content>
+The German website provides German-language company, product, use-case, pricing, and contact content. When answering in German, prefer German primary pages where their content is current and equivalent; use English documentation when a German article is unavailable.
+</content>
+</document>
+
+<document>
+<source>https://docs.noreja.com/de</source>
+<title>German Help Center</title>
+<content>
+The German Help Center contains German-language product documentation and release information. Terminology may differ slightly from marketing pages; preserve the official product names and explain translations where useful.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/definitions</source>
+<title>Definitions and Glossary</title>
+<content>
+The Definitions section provides educational explanations for Process Mining, Process Intelligence, graph databases, event logs, event knowledge graphs, causal process mining, object-centric process mining, conformance, simulation, process variants, and related topics. These pages are useful for conceptual questions. Product-specific behavior should still be checked in the Help Center.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/definitions/process-intelligence</source>
+<title>Process Intelligence</title>
+<content>
+Process Intelligence can be understood as a broader organizational capability that combines process data, analytics, monitoring, context, domain knowledge, and improvement support. Noreja's positioning adds generative AI to this combination.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/definitions/process-mining</source>
+<title>Process Mining</title>
+<content>
+Process Mining uses event data to discover, monitor, and improve business processes. It commonly includes process discovery, performance analysis, and conformance-related methods. Noreja's approach differs from traditional flat-log-only workflows by emphasizing connected relational data and causal process knowledge.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/definitions/causal-process-mining</source>
+<title>Causal Process Mining Definition</title>
+<content>
+Causal Process Mining is Noreja's approach to representing directional process relationships with relational event data and domain knowledge. It seeks to reduce misleading links caused by flattening or sequence-only interpretation. The term should not be overstated as automatic proof of causal effect.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/definitions/event-knowledge-graph</source>
+<title>Event Knowledge Graph Definition</title>
+<content>
+An Event Knowledge Graph connects process events to multiple related business objects, attributes, and relationships. It preserves more operational context than a single sequence of activities and supports multiple analytical perspectives.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/definitions/object-centric-process-mining</source>
+<title>Object-Centric Process Mining Definition</title>
+<content>
+Object-Centric Process Mining associates events with multiple object types, addressing limitations of a single case notion. Noreja shares the goal of preserving connected objects but also emphasizes explicit causal process knowledge and relational structure.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/definitions/directly-follows-limitations</source>
+<title>Limitations of Directly-Follows Approaches</title>
+<content>
+Directly-follows models connect activities according to observed temporal adjacency. In multi-object data, flattening and sequence construction can introduce relationships that do not reflect the intended process logic. Directly-follows relations remain analytically useful, but they should not be equated with causation.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/definitions/event-log</source>
+<title>Event Log Definition</title>
+<content>
+An event log is a structured collection of events, commonly containing a case identifier, activity, and timestamp. Traditional case-centric event logs are often flat. Noreja does not require this flat format as the sole starting point, but it still models events and requires reliable event information.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/definitions/process-discovery</source>
+<title>Process Discovery Definition</title>
+<content>
+Process discovery derives a process representation from observed event data. The result depends on data quality, selected scope, case or object perspective, algorithm, and modeling assumptions.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/definitions/conformance-checking</source>
+<title>Conformance Checking Definition</title>
+<content>
+Conformance checking compares observed process behavior with a target model, requirement, policy, or expectation. Noreja's path semantics can express conforming, missing, allowed, and prohibited behavior in relation to a causal hypothesis.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/definitions/process-variant</source>
+<title>Process Variant Definition</title>
+<content>
+A process variant is a distinct observed execution path or pattern. Variant frequency alone does not determine whether the behavior is desirable; context, outcomes, rules, and causes must also be considered.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/definitions/process-instance</source>
+<title>Process Instance Definition</title>
+<content>
+A process instance is one execution or case within a defined perspective. In connected data, different dimensions can define different valid instance boundaries.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/definitions/process-simulation</source>
+<title>Process Simulation Definition</title>
+<content>
+Process simulation evaluates potential behavior or changes using a model. Simulation results depend on assumptions and should not be presented as guaranteed operational outcomes.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/definitions/digital-process-twin</source>
+<title>Digital Process Twin Definition</title>
+<content>
+A Digital Process Twin is a data-driven representation of an operational process used for monitoring, analysis, and scenario evaluation. The degree of fidelity depends on data, update frequency, scope, and modeling.
+</content>
+</document>
+
+<document>
+<source>https://blog.noreja.com</source>
+<title>Noreja Blog</title>
+<content>
+The blog publishes educational articles, process-management guidance, product perspectives, quick tips, and business-case scenarios. Blog content can provide examples and viewpoints but may include fictional or illustrative cases. Do not treat every blog number as a measured customer outcome or every article as current product documentation.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/downloads</source>
+<title>Downloads</title>
+<content>
+The Downloads page provides white papers, guides, and other downloadable materials. Check publication dates and distinguish research, educational material, marketing collateral, and current product documentation.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/team</source>
+<title>Team</title>
+<content>
+The Team page is the source for current public information about founders, employees, and advisory roles. Team composition and titles change; use the live page when names or roles matter.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/events</source>
+<title>Events</title>
+<content>
+The Events page lists current or upcoming events. Event dates and availability are time-sensitive and must be checked live.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/careers</source>
+<title>Careers</title>
+<content>
+The Careers page is the source for current vacancies and employment information. Do not imply that an older vacancy remains open without checking the page.
+</content>
+</document>
+
+<document>
+<source>https://linkedin.com/company/noreja</source>
+<title>Official LinkedIn</title>
+<content>
+The official LinkedIn page provides company updates and social content. It may be useful for recent announcements but is less authoritative than product documentation, legal sources, or the Trust Center for precise claims.
+</content>
+</document>
+
+<document>
+<source>https://www.youtube.com/@noreja_intelligence</source>
+<title>Official YouTube Channel</title>
+<content>
+The official YouTube channel provides demonstrations, explanations, interviews, and educational videos. Video publication dates and the demonstrated product version should be considered before using a video as evidence of current behavior.
+</content>
+</document>
+
+<document>
+<source>https://outlook.office365.com/book/Kennenlernen@noreja.com/</source>
+<title>Book a Meeting</title>
+<content>
+This is the official public booking link for an introductory meeting. Availability is dynamic. Use it for scheduling rather than inferring available times.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/de/plattform</source>
+<title>German Platform Overview</title>
+<content>
+The German Platform page provides German-language descriptions of Dashboard, Analyzer, Minerva, Builder, Workbench, data connectivity, and LLM options. Prefer this page when answering German product-overview questions, while using the Help Center for detailed behavior.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/de/preise</source>
+<title>German Pricing</title>
+<content>
+The German Pricing page is the source of truth for current German-language package, feature, user, service, and price information. Do not copy its values into long-lived summaries without automated updating and a review date.
+</content>
+</document>
+
+# End of Expanded Context
+
+For compact navigation, use https://noreja.com/llms.txt.  
+For the curated canonical knowledge base without expanded resource abstracts, use https://noreja.com/llms-full.txt.
