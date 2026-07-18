@@ -1,44 +1,20 @@
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode } from "react";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
-import { GlobalConnectionOverlay } from "./GlobalConnectionOverlay";
 
 interface LayoutProps {
   children: ReactNode;
 }
 
+// NOTE: The GlobalConnectionOverlay + data-global-connections wiring was removed
+// here: ProcessGraphSection (the only producer of that data) is not mounted on
+// any page, so the overlay never rendered anything — but its body-wide
+// MutationObservers still ran on every page and burned main-thread time on each
+// DOM/style mutation (Lighthouse "Script Evaluation" / forced reflow). If
+// ProcessGraphSection is reintroduced, render <GlobalConnectionOverlay /> on
+// that page directly instead of globally.
+
 export function Layout({ children }: LayoutProps) {
-  const [globalConnections, setGlobalConnections] = useState<any[]>([]);
-
-  useEffect(() => {
-    // Listen for global connections data from ProcessGraphSection
-    const updateConnections = () => {
-      const section = document.querySelector('[data-global-connections]');
-      if (section) {
-        const connectionsData = section.getAttribute('data-global-connections');
-        if (connectionsData) {
-          try {
-            setGlobalConnections(JSON.parse(connectionsData));
-          } catch (e) {
-            console.warn('Failed to parse global connections:', e);
-          }
-        }
-      }
-    };
-
-    // Check immediately and set up observer
-    updateConnections();
-    
-    const observer = new MutationObserver(updateConnections);
-    observer.observe(document.body, { 
-      childList: true, 
-      subtree: true, 
-      attributes: true,
-      attributeFilter: ['data-global-connections']
-    });
-
-    return () => observer.disconnect();
-  }, []);
 
   return (
     <div className="min-h-screen flex flex-col relative w-full max-w-full overflow-x-hidden">
@@ -60,10 +36,7 @@ export function Layout({ children }: LayoutProps) {
         {children}
       </main>
       <Footer />
-      
-      {/* Global Connection Overlay */}
-      <GlobalConnectionOverlay connections={globalConnections} />
-      
+
       {/* TODO: Add HubSpot chat widget */}
       {/* 
       <script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/YOUR_PORTAL_ID.js"></script>

@@ -36,6 +36,10 @@ export function GlobalConnectionOverlay({ connections }: GlobalConnectionOverlay
   const observersRef = useRef<Map<string, IntersectionObserver>>(new Map());
 
   useEffect(() => {
+    // Without connections there is nothing to draw — skip the (expensive)
+    // body-wide MutationObserver + forced-layout reads entirely
+    if (connections.length === 0) return;
+
     const updatePositions = () => {
       const positions = new Map<string, NodePosition>();
       
@@ -85,18 +89,24 @@ export function GlobalConnectionOverlay({ connections }: GlobalConnectionOverlay
     // Initial position calculation
     updatePositions();
 
-    // Update on resize and scroll
+    // Coalesce updates: many mutations can arrive per frame, but we only need
+    // one position recalculation per frame (each one forces layout)
+    let rafId: number | null = null;
     const handleUpdate = () => {
-      requestAnimationFrame(updatePositions);
+      if (rafId !== null) return;
+      rafId = requestAnimationFrame(() => {
+        rafId = null;
+        updatePositions();
+      });
     };
 
     window.addEventListener('resize', handleUpdate);
 
     // Also update when nodes might have animated into view
     const observer = new MutationObserver(handleUpdate);
-    observer.observe(document.body, { 
-      childList: true, 
-      subtree: true, 
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
       attributes: true,
       attributeFilter: ['style', 'class']
     });
@@ -104,11 +114,14 @@ export function GlobalConnectionOverlay({ connections }: GlobalConnectionOverlay
     return () => {
       window.removeEventListener('resize', handleUpdate);
       observer.disconnect();
+      if (rafId !== null) cancelAnimationFrame(rafId);
     };
-  }, []);
+  }, [connections.length]);
 
   // Setup intersection observers for each node
   useEffect(() => {
+    if (connections.length === 0) return;
+
     const nodeElements = document.querySelectorAll('[data-node-id]');
     
     // Clear existing observers
