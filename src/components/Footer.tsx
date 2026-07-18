@@ -59,7 +59,7 @@ export function Footer() {
               <motion.img
                 src={logo}
                 alt="Noreja Logo"
-                className="w-36 aspect-[1308/322]"
+                className="w-36 aspect-[1566/405]"
                 loading="lazy"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
