@@ -37,11 +37,6 @@ export function PartnersTeaser() {
       partner.quote
   );
 
-  // Don't render if no partners loaded yet
-  if (loadedPartners.length === 0) {
-    return null;
-  }
-
   const getPartnerLogo = (partner: Partner) => {
     if (partner.preferOriginalLogo) {
       return partner.logoUrl || partner.logoUrlWhite || "";
@@ -72,6 +67,10 @@ export function PartnersTeaser() {
     setCurrentIndex(partnerIndex);
   };
 
+  // Don't render if no partners loaded yet (after all hooks, per rules-of-hooks)
+  if (loadedPartners.length === 0) {
+    return null;
+  }
 
   return (
     <section ref={ref} className="py-20">
@@ -115,7 +114,9 @@ export function PartnersTeaser() {
                 <img
                   src={getPartnerLogo(partner)}
                   alt={partner.name}
-                  className="max-h-full max-w-full object-contain"
+                  // w-full/h-full: both dimensions sized via CSS (fixed button box)
+                  // so the browser reserves space before the image loads (CLS audit)
+                  className="w-full h-full object-contain"
                   loading="lazy"
                 />
               </button>

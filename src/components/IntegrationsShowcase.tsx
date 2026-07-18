@@ -219,16 +219,23 @@ export const IntegrationsShowcase: React.FC<IntegrationsShowcaseProps> = ({
 
 // Logo image component
 const LogoImage: React.FC<{ logo: IntegrationLogo }> = ({ logo }) => {
-  const sizeClass = 
+  const sizeClass =
     logo.size === 'xlarge' ? 'max-h-32 max-w-32' :
     logo.size === 'large' ? 'max-h-16 max-w-16' :
     'max-h-12 max-w-12';
-  
+
+  // Explicit width/height (matching the max box above) so the browser can
+  // reserve space before the image loads (Lighthouse CLS audit). With
+  // object-contain the logo is letterboxed inside the box — visually identical.
+  const dimension = logo.size === 'xlarge' ? 128 : logo.size === 'large' ? 64 : 48;
+
   return (
     <div className="mx-auto grid h-24 w-24 place-content-center rounded-xl bg-white/90 shadow-sm ring-1 ring-border">
       <img
         src={logo.src}
         alt={logo.alt}
+        width={dimension}
+        height={dimension}
         className={`${sizeClass} object-contain opacity-90`}
         loading="lazy"
         decoding="async"

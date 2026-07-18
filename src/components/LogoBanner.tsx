@@ -34,22 +34,32 @@ interface Logo {
 // Memoized logo item component to prevent unnecessary re-renders
 const LogoItem = React.memo<{ company: Logo; index: number }>(({ company, index }) => {
   // Apply size classes based on logo size
-  const sizeClass = 
+  const sizeClass =
     company.size === 'xlarge' ? 'max-h-20 max-w-32' :
     company.size === 'large' ? 'max-h-16 max-w-24' :
     'max-h-12 max-w-20';
-  
+
   const containerClass =
     company.size === 'xlarge' ? 'w-32 h-20' :
     company.size === 'large' ? 'w-24 h-16' :
     'w-20 h-12';
-  
+
+  // Explicit width/height (matching the max box above) so the browser can
+  // reserve space before the image loads (Lighthouse CLS audit). With
+  // object-contain the logo is letterboxed inside the box — visually identical.
+  const { width, height } =
+    company.size === 'xlarge' ? { width: 128, height: 80 } :
+    company.size === 'large' ? { width: 96, height: 64 } :
+    { width: 80, height: 48 };
+
   return (
     <div className="flex-shrink-0 mx-8 flex items-center justify-center max-w-fit">
       <div className={`relative ${containerClass} flex items-center justify-center opacity-60 hover:opacity-80 transition-opacity duration-300`}>
         <img
           src={company.logo}
           alt={`${company.name} logo`}
+          width={width}
+          height={height}
           className={`${sizeClass} object-contain filter grayscale hover:grayscale-0 transition-all duration-300`}
           loading="lazy"
           decoding="async"
