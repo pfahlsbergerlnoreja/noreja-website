@@ -20,26 +20,40 @@
     <meta name="twitter:description" content="Revolutionary technology solutions for the future. Experience cutting-edge AI, real-time processing, and enterprise security." />
     <meta name="twitter:image" content="/og-image.png" />
 
-    <!-- Start cookieyes banner -->
-    <script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/0cfa11eeed66dfc938753166/script.js"></script>
+    <!-- Google Consent Mode v2: deny all storage until CookieYes pushes a consent update.
+         This must run before gtag.js so no cookies are set pre-consent, which in turn
+         allows the CookieYes script itself to load deferred (non-render-blocking). -->
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('consent', 'default', {
+        ad_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied',
+        analytics_storage: 'denied',
+        functionality_storage: 'denied',
+        personalization_storage: 'denied',
+        security_storage: 'granted'
+      });
+      gtag('js', new Date());
+      gtag('config', 'G-W8W4S9BL46');
+    </script>
+
+    <!-- Start cookieyes banner (deferred: executes before the app bundle and the
+         HubSpot loader, which are also deferred and appear later in the document) -->
+    <script id="cookieyes" type="text/javascript" defer src="https://cdn-cookieyes.com/client_data/0cfa11eeed66dfc938753166/script.js"></script>
     <!-- End cookieyes banner -->
 
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-W8W4S9BL46"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-W8W4S9BL46');
-    </script>
   </head>
 
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-    <!-- Start of HubSpot Embed Code -->
-    <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/144242473.js"></script>
+    <!-- Start of HubSpot Embed Code (defer only, no async: guarantees CookieYes
+         executes first so its auto-blocking can intercept HubSpot cookies) -->
+    <script type="text/javascript" id="hs-script-loader" defer src="//js-eu1.hs-scripts.com/144242473.js"></script>
     <!-- End of HubSpot Embed Code -->
   </body>
 </html>

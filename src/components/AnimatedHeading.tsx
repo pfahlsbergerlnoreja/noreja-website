@@ -30,20 +30,6 @@ export function AnimatedHeading({
   const [minWidth, setMinWidth] = useState<number | undefined>(undefined);
   const measureRef = useRef<HTMLSpanElement>(null);
 
-  // If no rotating words, just show fixed text
-  if (rotatingWords.length === 0) {
-    return (
-      <motion.h1
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.4, duration: 0.8 }}
-        className={`${sizeClasses[size]} font-bold mb-4 lg:mb-6 leading-[1.1] lg:leading-[1.2] text-center ${className}`}
-      >
-        {fixedText}
-      </motion.h1>
-    );
-  }
-
   // Reset animation only when language changes
   useEffect(() => {
     setCurrentWordIndex(0);
@@ -96,68 +82,67 @@ export function AnimatedHeading({
   // Measure the widest word to calculate min-width for preventing layout shifts
   useEffect(() => {
     const measureWidth = () => {
-      if (!measureRef.current || !rotatingWords || rotatingWords.length === 0) return;
+      const el = measureRef.current;
+      if (!el || !rotatingWords || rotatingWords.length === 0) return;
 
-      // Measure the actual rendered width of each word to find the widest one
-      // (not just the longest by character count, as character widths vary)
-      let widestWord = rotatingWords[0];
-      let maxWidth = 0;
-      
-      for (const word of rotatingWords) {
-        // Set the word to measure its width
-        measureRef.current.textContent = word;
-        
-        // Force a reflow to ensure accurate measurement
-        void measureRef.current.offsetWidth;
-        
-        // Get the width of this word
-        const wordWidth = measureRef.current.offsetWidth;
-        
-        // Track the widest word
-        if (wordWidth > maxWidth) {
-          maxWidth = wordWidth;
-          widestWord = word;
-        }
-      }
-      
-      // Now measure the cursor with margin using the widest word
-      measureRef.current.textContent = widestWord;
-      void measureRef.current.offsetWidth;
-      
-      const cursorSpan = document.createElement('span');
-      cursorSpan.className = 'inline-block ml-1';
-      cursorSpan.style.fontSize = '1em';
-      cursorSpan.style.lineHeight = '0.1';
-      cursorSpan.textContent = '_';
-      measureRef.current.appendChild(cursorSpan);
-      
-      // Force a reflow
-      void measureRef.current.offsetWidth;
-      
-      // Get the total width including cursor
-      const totalWidth = measureRef.current.offsetWidth;
-      
-      // Clean up
-      measureRef.current.removeChild(cursorSpan);
-      measureRef.current.textContent = '';
-      
-      // Set the min-width
+      // Render every word (each with its trailing cursor) at once, then read all
+      // widths in a single pass: one layout instead of a forced reflow per word.
+      el.textContent = '';
+      const wrappers = rotatingWords.map((word) => {
+        const wrapper = document.createElement('span');
+        wrapper.className = 'inline-block whitespace-nowrap';
+        const wordSpan = document.createElement('span');
+        wordSpan.textContent = word;
+        const cursorSpan = document.createElement('span');
+        cursorSpan.className = 'inline-block ml-1';
+        cursorSpan.style.fontSize = '1em';
+        cursorSpan.style.lineHeight = '0.1';
+        cursorSpan.textContent = '_';
+        wrapper.appendChild(wordSpan);
+        wrapper.appendChild(cursorSpan);
+        el.appendChild(wrapper);
+        return wrapper;
+      });
+
+      const totalWidth = Math.max(...wrappers.map((w) => w.offsetWidth));
+
+      el.textContent = '';
       setMinWidth(totalWidth);
     };
 
     // Measure after a short delay to ensure DOM is ready
     const timeoutId = setTimeout(measureWidth, 100);
 
-    // Also measure on window resize to handle responsive changes
-    window.addEventListener('resize', measureWidth);
+    // Re-measure on resize, debounced so we don't thrash layout during drag-resize
+    let resizeTimeoutId: ReturnType<typeof setTimeout>;
+    const handleResize = () => {
+      clearTimeout(resizeTimeoutId);
+      resizeTimeoutId = setTimeout(measureWidth, 150);
+    };
+    window.addEventListener('resize', handleResize);
 
     return () => {
       clearTimeout(timeoutId);
-      window.removeEventListener('resize', measureWidth);
+      clearTimeout(resizeTimeoutId);
+      window.removeEventListener('resize', handleResize);
     };
   }, [rotatingWords, size]);
 
   const sizeClass = sizeClasses[size];
+
+  // If no rotating words, just show fixed text (after all hooks, per rules-of-hooks)
+  if (rotatingWords.length === 0) {
+    return (
+      <motion.h1
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.4, duration: 0.8 }}
+        className={`${sizeClass} font-bold mb-4 lg:mb-6 leading-[1.1] lg:leading-[1.2] text-center ${className}`}
+      >
+        {fixedText}
+      </motion.h1>
+    );
+  }
 
   return (
     <motion.h1

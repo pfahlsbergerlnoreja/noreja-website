@@ -19,4 +19,8 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    // Ship modern JS (all evergreen browsers); avoids unnecessary transpilation/polyfills
+    target: "es2022",
+  },
 }));
