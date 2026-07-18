@@ -187,10 +187,11 @@ export function AnimatedGridBackground({ className = "" }: AnimatedGridBackgroun
         {points.map(point => (
           <div
             key={point.id}
-            className="absolute w-1 h-1 rounded-full transition-opacity duration-300"
+            className="absolute left-0 top-0 w-1 h-1 rounded-full transition-opacity duration-300"
             style={{
-              left: `${point.x}px`,
-              top: `${point.y}px`,
+              // transform instead of left/top: doesn't trigger layout, and moving
+              // via left/top makes every animation frame count towards CLS
+              transform: `translate(${point.x}px, ${point.y}px)`,
               backgroundColor: 'hsl(var(--noreja-secondary))',
               boxShadow: '0 0 6px hsl(var(--noreja-secondary) / 0.6), 0 0 12px hsl(var(--noreja-secondary) / 0.4)',
               opacity: Math.sin(point.progress * Math.PI) * 0.6 + 0.4

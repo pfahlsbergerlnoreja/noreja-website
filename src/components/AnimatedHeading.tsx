@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useLayoutEffect, useRef } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 interface AnimatedHeadingProps {
@@ -79,8 +79,10 @@ export function AnimatedHeading({
     return () => clearInterval(interval);
   }, []);
 
-  // Measure the widest word to calculate min-width for preventing layout shifts
-  useEffect(() => {
+  // Measure the widest word to calculate min-width for preventing layout shifts.
+  // useLayoutEffect: runs before the browser paints, so the reserved width is
+  // already in place on the first frame (no visible layout shift / CLS).
+  useLayoutEffect(() => {
     const measureWidth = () => {
       const el = measureRef.current;
       if (!el || !rotatingWords || rotatingWords.length === 0) return;
@@ -110,8 +112,15 @@ export function AnimatedHeading({
       setMinWidth(totalWidth);
     };
 
-    // Measure after a short delay to ensure DOM is ready
-    const timeoutId = setTimeout(measureWidth, 100);
+    // Measure synchronously before first paint, and again once web fonts have
+    // loaded (fallback-font metrics can differ from the final font)
+    measureWidth();
+    let cancelled = false;
+    if (document.fonts?.ready) {
+      document.fonts.ready.then(() => {
+        if (!cancelled) measureWidth();
+      });
+    }
 
     // Re-measure on resize, debounced so we don't thrash layout during drag-resize
     let resizeTimeoutId: ReturnType<typeof setTimeout>;
@@ -122,7 +131,7 @@ export function AnimatedHeading({
     window.addEventListener('resize', handleResize);
 
     return () => {
-      clearTimeout(timeoutId);
+      cancelled = true;
       clearTimeout(resizeTimeoutId);
       window.removeEventListener('resize', handleResize);
     };

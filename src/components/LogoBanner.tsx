@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect, useState } from 'react';
+import React, { useMemo } from 'react';
 
 // Import all logo URLs eagerly: with eager:false each image becomes a tiny
 // extra JS chunk (one network round trip per image in the critical path);
@@ -61,86 +61,50 @@ const LogoItem = React.memo<{ company: Logo; index: number }>(({ company, index 
 
 LogoItem.displayName = 'LogoItem';
 
-const LogoBanner: React.FC = () => {
-  const [loadedLogos, setLoadedLogos] = useState<Logo[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+// Build logo objects from the eagerly imported images
+const processImages = (
+  images: Record<string, { default: string }>,
+  nameStripPattern: RegExp
+): Logo[] => {
+  return Object.entries(images).map(([path, module]) => {
+    const filename = path.split('/').pop()?.replace(/\.(png|jpg|jpeg|svg|webp)$/, '') || '';
 
-  // Load images on mount
-  useEffect(() => {
-    const loadLogos = async () => {
-      // Process customer logos
-      const customerEntries = Object.entries(customerImages);
-      const customerLogos = customerEntries.map(([path, module]) => {
-        const filename = path.split('/').pop()?.replace(/\.(png|jpg|jpeg|svg|webp)$/, '') || '';
-        
-        // Determine size based on filename postfix
-        let size: LogoSize = 'regular';
-        if (filename.toLowerCase().includes('_xlarge')) {
-          size = 'xlarge';
-        } else if (filename.toLowerCase().includes('_large')) {
-          size = 'large';
-        }
-        
-        const name = filename
-          .replace(/_logo|_white|-logo|_large|_xlarge/gi, '')
-          .replace(/[-_]/g, ' ')
-          .trim()
-          .split(' ')
-          .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-          .join(' ');
-        
-        return {
-          name,
-          logo: module.default,
-          size
-        };
-      });
+    // Determine size based on filename postfix
+    let size: LogoSize = 'regular';
+    if (filename.toLowerCase().includes('_xlarge')) {
+      size = 'xlarge';
+    } else if (filename.toLowerCase().includes('_large')) {
+      size = 'large';
+    }
 
-      // Process partner logos
-      const partnerEntries = Object.entries(partnerImages);
-      const partnerLogos = partnerEntries.map(([path, module]) => {
-        const filename = path.split('/').pop()?.replace(/\.(png|jpg|jpeg|svg|webp)$/, '') || '';
-        
-        // Determine size based on filename postfix
-        let size: LogoSize = 'regular';
-        if (filename.toLowerCase().includes('_xlarge')) {
-          size = 'xlarge';
-        } else if (filename.toLowerCase().includes('_large')) {
-          size = 'large';
-        }
-        
-        const name = filename
-          .replace(/_logo|_white|-logo|-white|_large|_xlarge/gi, '')
-          .replace(/[-_]/g, ' ')
-          .trim()
-          .split(' ')
-          .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-          .join(' ');
-        
-        return {
-          name,
-          logo: module.default,
-          size
-        };
-      });
-      
-      // Combine all logos with customers first, then partners (no randomization)
-      const allLogos: Logo[] = [...customerLogos, ...partnerLogos];
-      setLoadedLogos(allLogos);
-      setIsLoading(false);
+    const name = filename
+      .replace(nameStripPattern, '')
+      .replace(/[-_]/g, ' ')
+      .trim()
+      .split(' ')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+
+    return {
+      name,
+      logo: module.default,
+      size
     };
-    
-    loadLogos();
-  }, []);
+  });
+};
 
+// Computed once at module load, synchronously: rendering the banner on the very
+// first paint (instead of popping it in after an effect) avoids layout shift (CLS)
+const allLogos: Logo[] = [
+  ...processImages(customerImages, /_logo|_white|-logo|_large|_xlarge/gi),
+  ...processImages(partnerImages, /_logo|_white|-logo|-white|_large|_xlarge/gi)
+];
+
+const LogoBanner: React.FC = () => {
   // Memoize duplicated logos to prevent re-creation on every render
   const duplicatedLogos = useMemo(() => {
-    return [...loadedLogos, ...loadedLogos, ...loadedLogos, ...loadedLogos];
-  }, [loadedLogos]);
-
-  if (isLoading) {
-    return null; // Or a loading spinner
-  }
+    return [...allLogos, ...allLogos, ...allLogos, ...allLogos];
+  }, []);
 
   return (
     <div className="relative overflow-hidden py-8 w-full">
