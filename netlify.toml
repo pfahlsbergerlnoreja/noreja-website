@@ -11,11 +11,12 @@
 [build.processing.html]
   pretty_urls = false
 
-# NOTE: Prerendering can NOT be enabled via netlify.toml — the block
-# [build.processing.prerender] that used to sit here is not a valid config key
-# and had no effect (verified 2026-07: bots receive the empty SPA shell).
-# It must be enabled in the Netlify UI:
-#   Site configuration -> Build & deploy -> Post processing -> Prerendering
+# NOTE: Prerendering (so bots/AI crawlers get real HTML, not the empty SPA
+# shell) is NOT configured here — it needs no netlify.toml changes at all.
+# The legacy "Post processing -> Prerendering" toggle is deprecated; this site
+# uses the "Netlify Prerender Extension" instead, enabled per-project in the
+# Netlify UI (Extensions -> Netlify Prerender -> Enable prerendering + redeploy).
+# Verify after deploy via the X-Prerendered response header on a bot user-agent.
 
 
 # ============================================
