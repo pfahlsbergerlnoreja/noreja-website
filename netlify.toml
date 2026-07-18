@@ -87,6 +87,17 @@
   status = 301
   force = true
 
+# Root -> default language, server-side. The SPA's client-side <Navigate>
+# redirect painted a frame with empty content (footer near the top of the
+# viewport) before the homepage mounted — measured as a 0.92 CLS on the footer
+# in Lighthouse. force = true because index.html would otherwise shadow this.
+# The client-side <Navigate> in App.tsx stays as a fallback for local dev.
+[[redirects]]
+  from = "/"
+  to = "/de"
+  status = 301
+  force = true
+
 # Common misspelling of llms.txt — without this, the SPA fallback would
 # answer /llm.txt with the HTML shell (status 200), confusing crawlers/validators
 [[redirects]]
