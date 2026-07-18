@@ -625,9 +625,10 @@ export const initializePartnersData = async (): Promise<void> => {
   return initializationPromise;
 };
 
-// Lightweight function that only loads face photos for partners with photos and quotes
-// Used by PartnerPhotosGrid to avoid loading all logo images
-export const getPartnersForGrid = async (): Promise<Partner[]> => {
+// Lightweight function that only resolves face photos for partners with photos and quotes.
+// Synchronous (image URLs are imported eagerly) so callers can render the grid on the
+// first paint instead of popping it in after an effect — avoids layout shift (CLS).
+export const getPartnersForGrid = (): Partner[] => {
   try {
     // Filter to only partners with photos and quotes
     const partnersWithPhotos = partnersBase.filter(
@@ -637,8 +638,8 @@ export const getPartnersForGrid = async (): Promise<Partner[]> => {
         partner.quote
     );
 
-    // Load face photos and logos (logos needed for modal dialog)
-    const imagePromises = partnersWithPhotos.map(async (partner) => {
+    // Resolve face photos and logos (logos needed for modal dialog)
+    return partnersWithPhotos.map((partner) => {
       try {
         const logoUrl = partner.logoFilename 
           ? getImagePath(getImageCollection(partner.logoSource), partner.logoFilename)
@@ -690,8 +691,6 @@ export const getPartnersForGrid = async (): Promise<Partner[]> => {
       }
     });
 
-    const result = await Promise.all(imagePromises);
-    return result;
   } catch (error) {
     console.error('Error loading partners for grid:', error);
     // Return empty array on error - component will handle gracefully

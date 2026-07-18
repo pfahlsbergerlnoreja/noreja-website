@@ -111,64 +111,28 @@ export const IntegrationsShowcase: React.FC<IntegrationsShowcaseProps> = ({
 }) => {
   const { t } = useLanguage();
   const sectionRef = React.useRef<HTMLElement>(null);
-  const [loadedLogos, setLoadedLogos] = React.useState<IntegrationLogo[]>(providedLogos || []);
-  const [isLoading, setIsLoading] = React.useState(!providedLogos);
-  
-  // Use Intersection Observer to lazy load images when section comes into view
+
+  // Logos resolve synchronously (image URLs are imported eagerly; the images
+  // themselves load lazily via loading="lazy"), so the section renders at its
+  // final height on the first paint — no pop-in, no layout shift (CLS)
+  const loadedLogos = React.useMemo(
+    () => providedLogos || processLogos(),
+    [providedLogos]
+  );
+
+  // Use fewer rows on mobile (2), medium (3), and more on desktop (4).
+  // Initialized synchronously so the first paint already uses the correct
+  // layout instead of correcting itself after mount (layout shift)
+  const getScreenSize = () => {
+    const width = window.innerWidth;
+    if (width < 768) return 'mobile' as const;
+    if (width < 1024) return 'medium' as const;
+    return 'desktop' as const;
+  };
+  const [screenSize, setScreenSize] = React.useState<'mobile' | 'medium' | 'desktop'>(getScreenSize);
+
   React.useEffect(() => {
-    // If logos are provided, skip lazy loading
-    if (providedLogos) {
-      return;
-    }
-
-    // If logos are already loaded, skip observer setup
-    if (loadedLogos.length > 0) {
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          // Start loading when section is within 200px of viewport
-          if (entry.isIntersecting && loadedLogos.length === 0) {
-            setIsLoading(true);
-            setLoadedLogos(processLogos());
-            setIsLoading(false);
-            // Disconnect observer after loading starts
-            observer.disconnect();
-          }
-        });
-      },
-      {
-        rootMargin: '200px', // Start loading 200px before section is visible
-        threshold: 0
-      }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => {
-      observer.disconnect();
-    };
-  }, [providedLogos, loadedLogos.length]);
-
-  // Use fewer rows on mobile (2), medium (3), and more on desktop (4)
-  const [screenSize, setScreenSize] = React.useState<'mobile' | 'medium' | 'desktop'>('desktop');
-  
-  React.useEffect(() => {
-    const checkScreenSize = () => {
-      const width = window.innerWidth;
-      if (width < 768) {
-        setScreenSize('mobile');
-      } else if (width < 1024) {
-        setScreenSize('medium');
-      } else {
-        setScreenSize('desktop');
-      }
-    };
-    checkScreenSize();
+    const checkScreenSize = () => setScreenSize(getScreenSize());
     window.addEventListener('resize', checkScreenSize);
     return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
@@ -216,23 +180,15 @@ export const IntegrationsShowcase: React.FC<IntegrationsShowcaseProps> = ({
               <TextContent />
             </div>
             <div className="relative w-full z-0 overflow-hidden">
-              {isLoading ? (
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4" aria-hidden>
-                  {Array.from({ length: actualRows }).map((_, idx) => (
-                    <div key={idx} className="h-[320px] md:h-[520px] rounded-xl bg-muted/50 animate-pulse" />
-                  ))}
-                </div>
-              ) : (
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4" aria-hidden>
-                  {rowsData.map((row, rowIndex) => (
-                    <VerticalTicker
-                      key={rowIndex}
-                      items={row}
-                      reverse={rowIndex % 2 === 1}
-                    />
-                  ))}
-                </div>
-              )}
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4" aria-hidden>
+                {rowsData.map((row, rowIndex) => (
+                  <VerticalTicker
+                    key={rowIndex}
+                    items={row}
+                    reverse={rowIndex % 2 === 1}
+                  />
+                ))}
+              </div>
             </div>
           </div>
         ) : (
@@ -244,23 +200,15 @@ export const IntegrationsShowcase: React.FC<IntegrationsShowcaseProps> = ({
 
             {/* Right: Integrations Animation Grid */}
             <div className="relative w-full z-0 overflow-hidden">
-              {isLoading ? (
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" aria-hidden>
-                  {Array.from({ length: actualRows }).map((_, idx) => (
-                    <div key={idx} className="h-[320px] md:h-[520px] rounded-xl bg-muted/50 animate-pulse" />
-                  ))}
-                </div>
-              ) : (
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" aria-hidden>
-                  {rowsData.map((row, rowIndex) => (
-                    <VerticalTicker
-                      key={rowIndex}
-                      items={row}
-                      reverse={rowIndex % 2 === 1}
-                    />
-                  ))}
-                </div>
-              )}
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" aria-hidden>
+                {rowsData.map((row, rowIndex) => (
+                  <VerticalTicker
+                    key={rowIndex}
+                    items={row}
+                    reverse={rowIndex % 2 === 1}
+                  />
+                ))}
+              </div>
             </div>
           </div>
         )}

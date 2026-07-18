@@ -30,9 +30,12 @@ export function IntegratedHeroSection() {
 
       {/* Main Hero Content */}
       <div className="relative z-10 container mx-auto px-4 lg:px-8 text-center flex-1 flex flex-col justify-center py-8 md:py-0 w-full max-w-full overflow-hidden">
+        {/* Hero copy animates transform-only (no opacity fade): invisible text
+            doesn't count as painted for LCP, so a fade-in of the largest text
+            block adds its full delay+duration to the LCP metric */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ y: 20 }}
+          animate={{ y: 0 }}
           transition={{ duration: 0.8 }}
           className="max-w-6xl mx-auto w-full"
         >
@@ -58,9 +61,9 @@ export function IntegratedHeroSection() {
 
           {/* Subtitle */}
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6, duration: 0.8 }}
+            initial={{ y: 20 }}
+            animate={{ y: 0 }}
+            transition={{ duration: 0.8 }}
             className="text-lg sm:text-xl md:text-2xl text-muted-foreground mb-6 md:mb-8 max-w-5xl xl:max-w-6xl mx-auto whitespace-pre-line px-4"
           >
             {displaySubtitle}

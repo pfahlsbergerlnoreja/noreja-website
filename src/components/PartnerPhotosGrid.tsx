@@ -18,22 +18,10 @@ export function PartnerPhotosGrid() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const { t } = useLanguage();
-  const [loadedPartners, setLoadedPartners] = useState<Partner[]>([]);
-  
-  // Load only face photos for grid partners
-  useEffect(() => {
-    const loadData = async () => {
-      try {
-        const partners = await getPartnersForGrid();
-        setLoadedPartners(partners);
-      } catch (error) {
-        console.error('[PartnerPhotosGrid] Error loading partners:', error);
-        setLoadedPartners([]);
-      }
-    };
-    loadData();
-  }, []);
-  
+  // Partners resolve synchronously (image URLs are imported eagerly), so the grid
+  // is fully laid out on the first paint — no pop-in, no layout shift (CLS)
+  const [loadedPartners] = useState<Partner[]>(() => getPartnersForGrid());
+
   const [selectedPartner, setSelectedPartner] = useState<Partner | null>(null);
   const [api, setApi] = useState<CarouselApi>();
   const [isPaused, setIsPaused] = useState(false);

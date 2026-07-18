@@ -143,9 +143,9 @@ export function AnimatedHeading({
   if (rotatingWords.length === 0) {
     return (
       <motion.h1
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.4, duration: 0.8 }}
+        initial={{ y: 20 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.8 }}
         className={`${sizeClass} font-bold mb-4 lg:mb-6 leading-[1.1] lg:leading-[1.2] text-center ${className}`}
       >
         {fixedText}
@@ -153,11 +153,13 @@ export function AnimatedHeading({
     );
   }
 
+  // Transform-only entrance (no opacity fade): the H1 is an LCP candidate,
+  // and invisible text doesn't count as painted for LCP
   return (
     <motion.h1
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.4, duration: 0.8 }}
+      initial={{ y: 20 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.8 }}
       className={`${sizeClass} font-bold mb-4 lg:mb-6 leading-[1.1] lg:leading-[1.2] flex flex-col lg:flex-row items-center justify-center gap-2 sm:gap-4 lg:gap-4 text-center ${className}`}
     >
       <span className="lg:whitespace-nowrap">{fixedText}</span>
