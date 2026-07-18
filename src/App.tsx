@@ -13,14 +13,15 @@ import { HreflangTags } from "@/components/HreflangTags";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { NewsletterToast } from "@/components/NewsletterToast";
 
-// Critical routes loaded eagerly
+// Only the landing page is loaded eagerly — every other route is lazy so its
+// code stays out of the main bundle (Lighthouse: "reduce unused JavaScript")
 import Index from "./pages/Index";
-import Functionalities from "./pages/Functionalities";
-import Pricing from "./pages/Pricing";
-import SuccessStories from "./pages/SuccessStories";
-import ContactUs from "./pages/ContactUs";
 
 // Less critical routes loaded lazily
+const Functionalities = lazy(() => import("./pages/Functionalities"));
+const Pricing = lazy(() => import("./pages/Pricing"));
+const SuccessStories = lazy(() => import("./pages/SuccessStories"));
+const ContactUs = lazy(() => import("./pages/ContactUs"));
 const SuccessStoryDetail = lazy(() => import("./pages/SuccessStoryDetail"));
 const UseCase = lazy(() => import("./pages/UseCase"));
 const Team = lazy(() => import("./pages/Team"));
