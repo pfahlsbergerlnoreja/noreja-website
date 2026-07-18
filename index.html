@@ -3,6 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Warm up the connection to the blog origin early. It is otherwise only
+         discovered late, via the runtime RSS fetch in the blog teaser, so
+         preconnecting here saves the DNS/TLS handshake (~320 ms per Lighthouse). -->
+    <link rel="preconnect" href="https://blog.noreja.com" crossorigin />
+    <link rel="dns-prefetch" href="https://blog.noreja.com" />
+
     <title>Noreja | Generative Process Intelligence</title>
     <meta name="description" content="Noreja's Generative Process Intelligence allows to contextualize operational data and human knowledge for the application of GenAI." />
     <meta name="author" content="Noreja Intelligence" />
