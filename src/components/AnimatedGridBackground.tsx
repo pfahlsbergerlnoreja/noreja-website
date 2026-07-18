@@ -2,8 +2,6 @@ import { useEffect, useRef, useState } from 'react';
 
 interface GridPoint {
   id: string;
-  x: number;
-  y: number;
   direction: 'horizontal' | 'vertical';
   speed: number;
   progress: number;
@@ -14,22 +12,35 @@ interface AnimatedGridBackgroundProps {
   className?: string;
 }
 
+const GRID_SIZE = 50;
+const MIN_SPEED = 0.001;
+const MAX_SPEED = 0.003;
+
+// Compute a point's current position from its progress
+function pointPosition(point: GridPoint, width: number, height: number) {
+  if (point.direction === 'horizontal') {
+    return { x: point.progress * width, y: point.gridLineIndex * GRID_SIZE };
+  }
+  return { x: point.gridLineIndex * GRID_SIZE, y: point.progress * height };
+}
+
 export function AnimatedGridBackground({ className = "" }: AnimatedGridBackgroundProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const animationRef = useRef<number>();
   const [points, setPoints] = useState<GridPoint[]>([]);
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
 
-  const GRID_SIZE = 50;
-  const MIN_SPEED = 0.001;
-  const MAX_SPEED = 0.003;
+  // Mutable copies used by the animation loop (never trigger React renders)
+  const pointsRef = useRef<GridPoint[]>([]);
+  const nodesRef = useRef<(HTMLDivElement | null)[]>([]);
+  const dimensionsRef = useRef(dimensions);
+  dimensionsRef.current = dimensions;
 
   // Initialize points - use full viewport dimensions
   useEffect(() => {
     const updateDimensions = () => {
-      setDimensions({ 
-        width: window.innerWidth, 
-        height: window.innerHeight 
+      setDimensions({
+        width: window.innerWidth,
+        height: window.innerHeight
       });
     };
 
@@ -45,7 +56,7 @@ export function AnimatedGridBackground({ className = "" }: AnimatedGridBackgroun
     // Use Math.floor to prevent overflow and ensure proper grid bounds
     const horizontalLines = Math.floor(dimensions.height / GRID_SIZE);
     const verticalLines = Math.floor(dimensions.width / GRID_SIZE);
-    
+
     // Calculate point count based on screen size (1 point per 4-5 grid lines)
     const horizontalCount = Math.max(2, Math.floor(horizontalLines / 4));
     const verticalCount = Math.max(2, Math.floor(verticalLines / 4));
@@ -54,95 +65,85 @@ export function AnimatedGridBackground({ className = "" }: AnimatedGridBackgroun
 
     // Create horizontal points distributed across ALL horizontal lines
     for (let i = 0; i < horizontalCount; i++) {
-      // Randomly distribute across all available horizontal lines
-      const gridLineIndex = Math.floor(Math.random() * horizontalLines);
-      const y = gridLineIndex * GRID_SIZE;
-      const speed = MIN_SPEED + Math.random() * (MAX_SPEED - MIN_SPEED);
-      
       newPoints.push({
         id: `h-${i}`,
-        x: 0,
-        y,
         direction: 'horizontal',
-        speed,
+        speed: MIN_SPEED + Math.random() * (MAX_SPEED - MIN_SPEED),
         progress: Math.random(),
-        gridLineIndex
+        gridLineIndex: Math.floor(Math.random() * horizontalLines)
       });
     }
 
     // Create vertical points distributed across ALL vertical lines
     for (let i = 0; i < verticalCount; i++) {
-      // Randomly distribute across all available vertical lines
-      const gridLineIndex = Math.floor(Math.random() * verticalLines);
-      const x = gridLineIndex * GRID_SIZE;
-      const speed = MIN_SPEED + Math.random() * (MAX_SPEED - MIN_SPEED);
-      
       newPoints.push({
         id: `v-${i}`,
-        x,
-        y: 0,
         direction: 'vertical',
-        speed,
+        speed: MIN_SPEED + Math.random() * (MAX_SPEED - MIN_SPEED),
         progress: Math.random(),
-        gridLineIndex
+        gridLineIndex: Math.floor(Math.random() * verticalLines)
       });
     }
 
+    pointsRef.current = newPoints;
+    nodesRef.current = [];
     setPoints(newPoints);
   }, [dimensions]);
 
-  // Animation loop
+  // Animation loop: mutates the dot elements directly (transform/opacity only,
+  // both compositor-friendly) instead of setState per frame. The previous
+  // implementation re-rendered the whole component through React on every
+  // animation frame — with three instances on the homepage that dominated
+  // main-thread "Script Evaluation" and "Style & Layout" time. The loop is
+  // also paused entirely while the container is outside the viewport.
   useEffect(() => {
-    if (points.length === 0) return;
+    if (points.length === 0 || !containerRef.current) return;
 
-    const animate = () => {
-      setPoints(prevPoints => 
-        prevPoints.map(point => {
-          let newProgress = point.progress + point.speed;
-          let newX = point.x;
-          let newY = point.y;
+    let rafId: number | null = null;
 
-          if (point.direction === 'horizontal') {
-            // Horizontal points move left to right, Y stays fixed
-            newX = newProgress * dimensions.width;
-            newY = point.gridLineIndex * GRID_SIZE;
-            if (newProgress >= 1) {
-              newProgress = 0;
-              newX = 0;
-            }
-          } else {
-            // Vertical points move top to bottom, X stays fixed
-            newX = point.gridLineIndex * GRID_SIZE;
-            newY = newProgress * dimensions.height;
-            if (newProgress >= 1) {
-              newProgress = 0;
-              newY = 0;
-            }
-          }
+    const step = () => {
+      const { width, height } = dimensionsRef.current;
+      const pts = pointsRef.current;
+      for (let i = 0; i < pts.length; i++) {
+        const p = pts[i];
+        p.progress += p.speed;
+        if (p.progress >= 1) p.progress = 0;
 
-          return {
-            ...point,
-            x: newX,
-            y: newY,
-            progress: newProgress
-          };
-        })
-      );
-
-      animationRef.current = requestAnimationFrame(animate);
+        const node = nodesRef.current[i];
+        if (node) {
+          const { x, y } = pointPosition(p, width, height);
+          node.style.transform = `translate(${x}px, ${y}px)`;
+          node.style.opacity = String(Math.sin(p.progress * Math.PI) * 0.6 + 0.4);
+        }
+      }
+      rafId = requestAnimationFrame(step);
     };
 
-    animationRef.current = requestAnimationFrame(animate);
-
-    return () => {
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
+    const start = () => {
+      if (rafId === null) rafId = requestAnimationFrame(step);
+    };
+    const stop = () => {
+      if (rafId !== null) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
       }
     };
-  }, [points.length, dimensions]);
+
+    // Only animate while visible — offscreen instances cost nothing
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) start();
+      else stop();
+    });
+    observer.observe(containerRef.current);
+
+    return () => {
+      observer.disconnect();
+      stop();
+    };
+  }, [points]);
 
   return (
-    <div 
+    <div
       ref={containerRef}
       className={`absolute inset-0 overflow-hidden pointer-events-none z-0 ${className}`}
       style={{
@@ -181,23 +182,25 @@ export function AnimatedGridBackground({ className = "" }: AnimatedGridBackgroun
           />
         ))}
       </svg>
-      
-      {/* Animated Points */}
+
+      {/* Animated Points (positions/opacity are driven imperatively per frame) */}
       <div className="absolute inset-0">
-        {points.map(point => (
-          <div
-            key={point.id}
-            className="absolute left-0 top-0 w-1 h-1 rounded-full transition-opacity duration-300"
-            style={{
-              // transform instead of left/top: doesn't trigger layout, and moving
-              // via left/top makes every animation frame count towards CLS
-              transform: `translate(${point.x}px, ${point.y}px)`,
-              backgroundColor: 'hsl(var(--noreja-secondary))',
-              boxShadow: '0 0 6px hsl(var(--noreja-secondary) / 0.6), 0 0 12px hsl(var(--noreja-secondary) / 0.4)',
-              opacity: Math.sin(point.progress * Math.PI) * 0.6 + 0.4
-            }}
-          />
-        ))}
+        {points.map((point, i) => {
+          const { x, y } = pointPosition(point, dimensions.width, dimensions.height);
+          return (
+            <div
+              key={point.id}
+              ref={(el) => { nodesRef.current[i] = el; }}
+              className="absolute left-0 top-0 w-1 h-1 rounded-full"
+              style={{
+                transform: `translate(${x}px, ${y}px)`,
+                backgroundColor: 'hsl(var(--noreja-secondary))',
+                boxShadow: '0 0 6px hsl(var(--noreja-secondary) / 0.6), 0 0 12px hsl(var(--noreja-secondary) / 0.4)',
+                opacity: Math.sin(point.progress * Math.PI) * 0.6 + 0.4
+              }}
+            />
+          );
+        })}
       </div>
     </div>
   );
