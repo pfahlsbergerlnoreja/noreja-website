@@ -5,6 +5,7 @@ import { getRouteKeyFromPath } from '@/lib/routes';
 import { successStories } from '@/lib/successStories';
 import { useCases } from '@/lib/useCases';
 import { getDefinitionById } from '@/lib/definitions';
+import { getBattleCardById, getBattleCardVsName, getBattleCardVsTitle } from '@/lib/battle-cards';
 import { SITE_URL } from '@/lib/config';
 
 // Page titles for OG tags (mirrors PageTitle.tsx)
@@ -68,6 +69,10 @@ const ogPageTitles: Record<string, Record<'en' | 'de', string>> = {
   definitions: {
     en: 'Definitions | Noreja',
     de: 'Definitionen | Noreja',
+  },
+  battleCards: {
+    en: 'Process Intelligence Compared – Battle Cards | Noreja',
+    de: 'Process Intelligence im Vergleich – Battle Cards | Noreja',
   },
 };
 
@@ -150,6 +155,28 @@ export function MetaDescription() {
         language === 'de'
           ? 'Wissensdatenbank von Noreja: klare Definitionen zu Process Mining, Process Intelligence, Geschäftsprozessmanagement und mehr.'
           : 'Noreja knowledge base: clear definitions of Process Mining, Process Intelligence, Business Process Management, and more.';
+    } else if (routeKey === 'battleCards') {
+      title =
+        language === 'de'
+          ? 'Process Intelligence im Vergleich – Battle Cards | Noreja'
+          : 'Process Intelligence Compared – Battle Cards | Noreja';
+      description =
+        language === 'de'
+          ? 'Sachlicher Vergleich führender Process-Mining- und Process-Intelligence-Plattformen – und wie sich Norejas kausaler Ansatz vom frequenzbasierten Paradigma abgrenzt.'
+          : 'A factual comparison of leading process mining and process intelligence platforms – and how Noreja’s causal approach differs from the frequency-based paradigm.';
+    } else if (routeKey === 'battleCardDetail') {
+      const match = location.pathname.match(/^\/(?:de|en)\/battle-cards\/(.+)$/);
+      if (match) {
+        const card = getBattleCardById(match[1].toLowerCase());
+        if (card) {
+          const vsName = getBattleCardVsName(card.id);
+          title = `${getBattleCardVsTitle(card.id, language)} | Noreja`;
+          description =
+            language === 'de'
+              ? `Noreja vs. ${vsName}: sachlicher Vergleich von Analyse-Paradigma, Datenmodell und Ökosystem-Bindung – kausale Process Intelligence gegenüber frequenzbasiertem Process Mining.`
+              : `Noreja vs. ${vsName}: a factual comparison of analysis paradigm, data model, and ecosystem lock-in – causal process intelligence versus frequency-based process mining.`;
+        }
+      }
     } else if (routeKey && routeKey in t.metaDescriptions) {
       description = t.metaDescriptions[routeKey as keyof typeof t.metaDescriptions];
     }

@@ -5,6 +5,7 @@ import { getRouteKeyFromPath } from '@/lib/routes';
 import { successStories } from '@/lib/successStories';
 import { useCases } from '@/lib/useCases';
 import { getDefinitionById } from '@/lib/definitions';
+import { getBattleCardById, getBattleCardVsTitle } from '@/lib/battle-cards';
 import { SITE_NAME } from '@/lib/config';
 
 const pageTitles: Record<string, Record<'en' | 'de', string>> = {
@@ -68,6 +69,10 @@ const pageTitles: Record<string, Record<'en' | 'de', string>> = {
     en: 'Definitions | Noreja',
     de: 'Definitionen | Noreja',
   },
+  battleCards: {
+    en: 'Process Intelligence Compared – Battle Cards | Noreja',
+    de: 'Process Intelligence im Vergleich – Battle Cards | Noreja',
+  },
 };
 
 export function PageTitle() {
@@ -110,6 +115,14 @@ export function PageTitle() {
         const definition = getDefinitionById(match[1].toLowerCase());
         if (definition) {
           title = `${definition.question[language]} | ${SITE_NAME}`;
+        }
+      }
+    } else if (routeKey === 'battleCardDetail') {
+      const match = location.pathname.match(/^\/(?:de|en)\/battle-cards\/(.+)$/);
+      if (match) {
+        const card = getBattleCardById(match[1].toLowerCase());
+        if (card) {
+          title = `${getBattleCardVsTitle(card.id, language)} | ${SITE_NAME}`;
         }
       }
     } else if (routeKey && routeKey in pageTitles) {

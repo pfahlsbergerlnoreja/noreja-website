@@ -50,6 +50,14 @@ export const routes = {
     de: '/de/definitionen/:slug',
     en: '/en/definitions/:slug',
   },
+  battleCards: {
+    de: '/de/battle-cards',
+    en: '/en/battle-cards',
+  },
+  battleCardDetail: {
+    de: '/de/battle-cards/:slug',
+    en: '/en/battle-cards/:slug',
+  },
   downloads: {
     de: '/de/downloads',
     en: '/en/downloads',
@@ -108,6 +116,8 @@ const pathToRouteKey: Record<string, keyof typeof routes> = {
   '/en/careers': 'careers',
   '/de/definitionen': 'definitions',
   '/en/definitions': 'definitions',
+  '/de/battle-cards': 'battleCards',
+  '/en/battle-cards': 'battleCards',
   '/de/downloads': 'downloads',
   '/en/downloads': 'downloads',
   '/de/kontakt': 'contact',
@@ -213,6 +223,12 @@ export function translateRoute(pathname: string, targetLang: Language): string {
   if (definitionDetailMatch) {
     return getRoutePath('definitionDetail', targetLang, { slug: definitionDetailMatch[1] });
   }
+
+  // Battle card detail: /de/battle-cards/:slug or /en/battle-cards/:slug
+  const battleCardDetailMatch = pathname.match(/^\/(?:de|en)\/battle-cards\/(.+)$/);
+  if (battleCardDetailMatch) {
+    return getRoutePath('battleCardDetail', targetLang, { slug: battleCardDetailMatch[1] });
+  }
   
   // Try to find matching route key from the full pathname
   const routeKey = pathToRouteKey[pathname];
@@ -258,6 +274,12 @@ export function getRouteKeyFromPath(pathname: string): keyof typeof routes | nul
   }
   if (pathname === '/de/definitionen' || pathname === '/en/definitions') {
     return 'definitions';
+  }
+  if (pathname.match(/^\/(?:de|en)\/battle-cards\/.+/)) {
+    return 'battleCardDetail';
+  }
+  if (pathname === '/de/battle-cards' || pathname === '/en/battle-cards') {
+    return 'battleCards';
   }
 
   return pathToRouteKey[normalizedPath] || null;

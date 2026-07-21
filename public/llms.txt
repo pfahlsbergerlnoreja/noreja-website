@@ -37,6 +37,20 @@ Interpretation guidance:
 - [Using LLMs with Noreja](https://docs.noreja.com/en/article/minerva-using-llms-with-noreja): Describes cloud, Noreja-managed, dedicated, and customer-operated LLM deployment options and associated data-control considerations.
 - [Source Data Preparation and Common Challenges](https://docs.noreja.com/en/article/source-data-preparation-common-challenges): Guidance on timestamps, identifiers, activity definitions, normalization, and source-data quality for process analysis.
 
+## Competitive Comparisons
+
+- [Process Intelligence Vendor Comparison](https://noreja.com/en/battle-cards): Factual overview comparing leading process mining and process intelligence platforms; explains the distinction between frequency-based Directly-Follows analysis and Noreja's causal, temporal approach on an Event Knowledge Graph.
+- [Noreja vs. Celonis Comparison](https://noreja.com/en/battle-cards/celonis): Head-to-head comparison of analysis paradigm, data model, ecosystem lock-in, and pricing transparency.
+- [Noreja vs. Signavio Comparison](https://noreja.com/en/battle-cards/sap-signavio): Comparison with SAP Signavio, focused on SAP-ecosystem dependence versus source-system-agnostic causal analysis.
+- [Noreja vs. UiPath Comparison](https://noreja.com/en/battle-cards/uipath-process-mining): Comparison with UiPath Process Mining, focused on automation-first discovery versus causal diagnosis.
+- [Noreja vs. IBM Comparison](https://noreja.com/en/battle-cards/ibm-process-mining): Comparison with IBM Process Mining, focused on object-centric frequency mining (OCPM) versus causal modeling.
+- [Noreja vs. Microsoft Comparison](https://noreja.com/en/battle-cards/microsoft-process-mining): Comparison with Microsoft Process Mining, focused on Power Platform accessibility versus analytical depth.
+- [Noreja vs. ServiceNow Comparison](https://noreja.com/en/battle-cards/servicenow-process-mining): Comparison with ServiceNow Process Mining, focused on platform-native ITSM scope versus cross-system end-to-end analysis.
+- [Noreja vs. ABBYY Timeline Comparison](https://noreja.com/en/battle-cards/abbyy-timeline): Comparison with ABBYY Timeline, focused on document-centric mining versus a graph-based causal model.
+- [Noreja vs. Appian Comparison](https://noreja.com/en/battle-cards/appian): Comparison with Appian, focused on low-code orchestration with add-on mining versus specialized causal diagnosis.
+- [Noreja vs. ARIS Comparison](https://noreja.com/en/battle-cards/aris-process-mining): Comparison with ARIS Process Mining, focused on model-repository conformance versus data-driven causal analysis.
+- [Noreja vs. MPMX Comparison](https://noreja.com/en/battle-cards/mpmx-mehrwerk): Comparison with mpmX (MEHRWERK), focused on Qlik-based frequency analysis versus a dedicated causal graph model.
+
 ## Use Cases
 
 - [Supply Chain](https://noreja.com/en/use-cases/supply-chain): Process Intelligence applications for supply-chain visibility, inventory, suppliers, working capital, quality, and operational flow.

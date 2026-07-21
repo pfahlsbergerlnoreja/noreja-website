@@ -65,6 +65,24 @@ function extractDefinitionIds(): string[] {
   return ids;
 }
 
+function extractBattleCardIds(): string[] {
+  const filePath = resolve(__dirname, '../src/lib/battle-cards.ts');
+  const content = readFileSync(filePath, 'utf-8');
+  const ids: string[] = [];
+
+  const arrayMatch = content.match(/export const battleCards: BattleCard\[\] = \[([\s\S]*?)\n\];/);
+  if (arrayMatch) {
+    const arrayContent = arrayMatch[1];
+    // Match top-level battle card objects: id followed by name
+    const cardMatches = arrayContent.matchAll(/\{\s*id:\s*'([^']+)',\s*name:/g);
+    for (const match of cardMatches) {
+      ids.push(match[1]);
+    }
+  }
+
+  return ids;
+}
+
 function extractUseCaseIds(): string[] {
   const filePath = resolve(__dirname, '../src/lib/useCases.ts');
   const content = readFileSync(filePath, 'utf-8');
@@ -134,6 +152,8 @@ function generateSitemap() {
   addEntry('/en/careers', 0.7, 'weekly');
   addEntry('/de/definitionen', 0.7, 'weekly');
   addEntry('/en/definitions', 0.7, 'weekly');
+  addEntry('/de/battle-cards', 0.7, 'weekly');
+  addEntry('/en/battle-cards', 0.7, 'weekly');
 
   // Legal pages (lower priority)
   addEntry('/de/impressum', 0.5, 'monthly');
@@ -169,6 +189,13 @@ function generateSitemap() {
   definitionIds.forEach((defId) => {
     addEntry(`/de/definitionen/${defId}`, 0.6, 'monthly');
     addEntry(`/en/definitions/${defId}`, 0.6, 'monthly');
+  });
+
+  // Battle card / vendor comparison detail pages
+  const battleCardIds = extractBattleCardIds();
+  battleCardIds.forEach((cardId) => {
+    addEntry(`/de/battle-cards/${cardId}`, 0.6, 'monthly');
+    addEntry(`/en/battle-cards/${cardId}`, 0.6, 'monthly');
   });
 
   // Write entries to sitemap stream

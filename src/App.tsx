@@ -33,6 +33,8 @@ const Careers = lazy(() => import("./pages/Careers"));
 const CareerDetail = lazy(() => import("./pages/CareerDetail"));
 const Definitions = lazy(() => import("./pages/Definitions"));
 const DefinitionDetail = lazy(() => import("./pages/DefinitionDetail"));
+const BattleCards = lazy(() => import("./pages/BattleCards"));
+const BattleCardDetail = lazy(() => import("./pages/BattleCardDetail"));
 const Imprint = lazy(() => import("./pages/Imprint"));
 const TermsOfService = lazy(() => import("./pages/TermsOfService"));
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
@@ -132,6 +134,12 @@ const App = () => (
               <Route path="/en/definitions" element={<Definitions />} />
               <Route path="/de/definitionen/:slug" element={<DefinitionDetail />} />
               <Route path="/en/definitions/:slug" element={<DefinitionDetail />} />
+
+              {/* Battle Cards / Competitive comparison */}
+              <Route path="/de/battle-cards" element={<BattleCards />} />
+              <Route path="/en/battle-cards" element={<BattleCards />} />
+              <Route path="/de/battle-cards/:slug" element={<BattleCardDetail />} />
+              <Route path="/en/battle-cards/:slug" element={<BattleCardDetail />} />
 
               {/* Downloads */}
               <Route path="/de/downloads" element={<Downloads />} />
