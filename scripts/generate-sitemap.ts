@@ -9,6 +9,7 @@ const __dirname = dirname(__filename);
 
 // Import config (simple import, no dynamic globs)
 import { SITE_URL } from '../src/lib/config';
+import { useCases } from '../src/lib/useCases';
 
 // Read and parse TypeScript files to extract IDs
 function extractSuccessStoryIds(): string[] {
@@ -84,25 +85,45 @@ function extractBattleCardIds(): string[] {
 }
 
 function extractUseCaseIds(): string[] {
-  const filePath = resolve(__dirname, '../src/lib/useCases.ts');
-  const content = readFileSync(filePath, 'utf-8');
-  const useCaseIds: string[] = [];
-  
-  // Extract id from export const useCases array (only top-level objects, not nested additionalUseCases)
-  // Match the array content and extract ids from objects that have title field (to ensure it's a top-level use case)
-  const arrayMatch = content.match(/export const useCases: UseCase\[\] = \[([\s\S]*?)\];/);
-  if (arrayMatch) {
-    const arrayContent = arrayMatch[1];
-    // Match objects that start with { and have id followed by title (to ensure it's a top-level use case object)
-    const useCaseMatches = arrayContent.matchAll(/\{\s*id:\s*"([^"]+)"[\s\S]*?title:\s*\{/g);
-    for (const match of useCaseMatches) {
-      useCaseIds.push(match[1]);
-    }
-  }
-  
-  return useCaseIds;
+  // Only top-level use cases have their own detail route (/use-cases/:id).
+  // Nested additionalUseCases entries do not, so importing the array directly
+  // (instead of regex-scraping the source) guarantees we never emit dead URLs.
+  return useCases.map((useCase) => useCase.id);
 }
 
+
+// Pretty-print the single-line XML the `sitemap` library produces, applying
+// standard indentation and one element per line.
+function formatXml(xml: string): string {
+  const PADDING = '  ';
+  const withBreaks = xml.replace(/>\s*</g, '>\n<');
+  let indent = 0;
+
+  return withBreaks
+    .split('\n')
+    .map((line) => {
+      // Closing tag (</url>): dedent before printing.
+      if (/^<\/[^>]+>$/.test(line)) {
+        indent = Math.max(indent - 1, 0);
+        return PADDING.repeat(indent) + line;
+      }
+      // Leaf element (<loc>…</loc>), self-closing tag, declaration or comment:
+      // stays on a single line at the current depth.
+      if (
+        /^<[^!?][^>]*>.*<\/[^>]+>$/.test(line) ||
+        /^<[^>]+\/>$/.test(line) ||
+        /^<\?.*\?>$/.test(line) ||
+        /^<!.*>$/.test(line)
+      ) {
+        return PADDING.repeat(indent) + line;
+      }
+      // Opening tag (<url>, <urlset …>): print, then indent children.
+      const out = PADDING.repeat(indent) + line;
+      indent += 1;
+      return out;
+    })
+    .join('\n');
+}
 
 interface SitemapEntry {
   url: string;
@@ -210,8 +231,10 @@ function generateSitemap() {
     const outputPath = resolve(__dirname, '../public/sitemap.xml');
     const writeStream = createWriteStream(outputPath);
     
+    const formatted = formatXml(sm.toString()) + '\n';
+
     return new Promise<void>((resolve, reject) => {
-      writeStream.write(sm);
+      writeStream.write(formatted);
       writeStream.end();
       writeStream.on('finish', () => {
         console.log(`✅ Sitemap generated successfully at ${outputPath}`);

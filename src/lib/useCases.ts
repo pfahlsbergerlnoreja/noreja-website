@@ -1,10 +1,17 @@
 import type { Language } from "./translations";
 
-// Dynamically import all use case images (if they exist in the future)
-const useCaseImages = import.meta.glob<{ default: string }>(
-  '../assets/use_cases/**/*.{png,jpg,jpeg,svg,webp}',
-  { eager: true }
-);
+// Dynamically import all use case images (if they exist in the future).
+// Wrapped in try/catch so the module can also be imported outside Vite (e.g. the
+// tsx-run sitemap generator), where import.meta.glob is not available.
+let useCaseImages: Record<string, { default: string }> = {};
+try {
+  useCaseImages = import.meta.glob<{ default: string }>(
+    '../assets/use_cases/**/*.{png,jpg,jpeg,svg,webp}',
+    { eager: true }
+  );
+} catch {
+  useCaseImages = {};
+}
 
 // Helper function to get image path from imports
 const getImagePath = (
