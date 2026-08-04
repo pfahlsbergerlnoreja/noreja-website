@@ -344,9 +344,15 @@ export const eventData: EventData[] = [
       address: 'WU Executive Academy, Vienna, Austria',
     },
     registration: {
-      required: false
+      required: true,
+      url: 'https://share-eu1.hsforms.com/2xgsOndOqQMuM2wE4pDAeeA2dvm7d'
     },
-    type: 'conference'
+    type: 'conference',
+    cta: {
+      text: 'Register',
+      url: 'https://share-eu1.hsforms.com/2xgsOndOqQMuM2wE4pDAeeA2dvm7d',
+      type: 'register'
+    }
   },
   {
     id: '17',

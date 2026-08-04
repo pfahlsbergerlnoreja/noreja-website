@@ -272,7 +272,7 @@ const partnersBase: PartnerBase[] = [
   },
   {
     id: "12",
-    name: "PwC Österreich GmbH",
+    name: "PwC Deutschland",
     isPartner: true,
     partnerType: 'businessWithoutQuote',
     logoFilename: "pwc_logo-white.webp",

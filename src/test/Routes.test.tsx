@@ -77,9 +77,10 @@ describe('Route Presence Tests', () => {
     expect(document.body).toBeInTheDocument()
   })
 
-  test('renders 404 page for unknown routes', () => {
-    const { getByText } = renderApp('/unknown-route')
-    expect(getByText('404')).toBeInTheDocument()
-    expect(getByText('Oops! Page not found')).toBeInTheDocument()
+  test('renders 404 page for unknown routes', async () => {
+    // NotFound is lazy-loaded, so the assertions must wait for the chunk to resolve
+    const { findByText } = renderApp('/unknown-route')
+    expect(await findByText('404')).toBeInTheDocument()
+    expect(await findByText('Oops! Page not found')).toBeInTheDocument()
   })
 })

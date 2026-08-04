@@ -1,63 +1,73 @@
-import { render } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
+import { MemoryRouter } from 'react-router-dom'
 import { vi, describe, test, expect, beforeEach, afterEach } from 'vitest'
 import { HubSpotBlogTeaser } from '@/components/HubSpotBlogTeaser'
+import { LanguageProvider } from '@/contexts/LanguageContext'
+import { translations } from '@/lib/translations'
 
-describe('HubSpotBlogTeaser Script Loading Tests', () => {
+// LanguageProvider relies on router hooks, so a router is required.
+// The route prefix decides which language the component renders in.
+const renderTeaser = (
+  props: Partial<React.ComponentProps<typeof HubSpotBlogTeaser>> = {},
+  route = '/en'
+) =>
+  render(
+    <MemoryRouter initialEntries={[route]}>
+      <LanguageProvider>
+        <HubSpotBlogTeaser {...props} />
+      </LanguageProvider>
+    </MemoryRouter>
+  )
+
+describe('HubSpotBlogTeaser', () => {
   beforeEach(() => {
-    // Clear any existing scripts
-    document.head.innerHTML = ''
-    // Reset document.getElementById mock
-    const mockElement = document.createElement('div')
-    mockElement.id = 'hubspot-blog-teaser'
-    vi.spyOn(document, 'getElementById').mockReturnValue(mockElement)
+    // The component fetches an RSS feed on mount - keep tests offline and deterministic
+    vi.spyOn(global, 'fetch').mockImplementation(
+      () => new Promise(() => {}) // never resolves, so the loading state stays visible
+    )
   })
 
   afterEach(() => {
     vi.restoreAllMocks()
   })
 
-  test('renders container element for blog posts', () => {
-    const { getByText } = render(<HubSpotBlogTeaser />)
-    
-    expect(getByText('Latest Insights')).toBeInTheDocument()
-    expect(getByText('Stay updated with our latest blog posts and industry insights.')).toBeInTheDocument()
+  test('renders the heading and subtitle from the translations', () => {
+    renderTeaser()
+
+    const heading = screen.getByRole('heading', { level: 2 })
+    expect(heading).toHaveTextContent(translations.en.blog.title)
+    expect(heading).toHaveTextContent(translations.en.blog.titleHighlight)
+    expect(screen.getByText(translations.en.blog.subtitle)).toBeInTheDocument()
   })
 
-  test('creates target container with correct ID', () => {
-    const { container } = render(<HubSpotBlogTeaser />)
-    
-    // Check that the target container exists
-    const blogContainer = container.querySelector('#hubspot-blog-teaser')
-    expect(blogContainer).toBeInTheDocument()
+  test('renders German copy on a German route', () => {
+    renderTeaser({}, '/de')
+
+    expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent(
+      translations.de.blog.title
+    )
+    expect(screen.getByText(translations.de.blog.subtitle)).toBeInTheDocument()
   })
 
-  test('handles script loading safely on client-side', () => {
-    // Mock document.createElement to track script creation
-    const mockScript = document.createElement('script')
-    const createElementSpy = vi.spyOn(document, 'createElement').mockReturnValue(mockScript)
-    const appendChildSpy = vi.spyOn(document.head, 'appendChild').mockImplementation(() => mockScript)
+  test('renders one loading skeleton card per maxItems while posts are loading', () => {
+    const { container } = renderTeaser({ maxItems: 5 })
 
-    const { getByText } = render(<HubSpotBlogTeaser />)
-
-    // The component should be rendered without errors
-    expect(getByText('Latest Insights')).toBeInTheDocument()
-
-    // Cleanup spies
-    createElementSpy.mockRestore()
-    appendChildSpy.mockRestore()
+    // The desktop grid renders maxItems skeleton cards; the mobile grid renders one
+    const desktopGrid = container.querySelector('.hidden.lg\\:grid')
+    expect(desktopGrid).toBeInTheDocument()
+    expect(desktopGrid?.children).toHaveLength(5)
   })
 
-  test('component unmounts without errors', () => {
-    const { unmount } = render(<HubSpotBlogTeaser />)
-    
-    // Should unmount without throwing errors
+  test('defaults to three skeleton cards', () => {
+    const { container } = renderTeaser()
+
+    const desktopGrid = container.querySelector('.hidden.lg\\:grid')
+    expect(desktopGrid?.children).toHaveLength(3)
+  })
+
+  test('unmounts without errors', () => {
+    const { unmount } = renderTeaser()
+
     expect(() => unmount()).not.toThrow()
-  })
-
-  test('respects maxItems prop', () => {
-    const { getByText } = render(<HubSpotBlogTeaser maxItems={5} />)
-    
-    // Component should render normally with maxItems prop
-    expect(getByText('Latest Insights')).toBeInTheDocument()
   })
 })

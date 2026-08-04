@@ -145,6 +145,30 @@
   to = "/de/veranstaltungen"
   status = 301
 
+# Download thank-you page without language prefix (used as HubSpot form redirect target).
+# Without these the SPA fallback serves index.html and the router renders the 404 page,
+# which breaks the gated-download flow (the pending download is never triggered).
+[[redirects]]
+  from = "/download-vielen-dank"
+  to = "/de/download-vielen-dank"
+  status = 301
+
+[[redirects]]
+  from = "/download-thank-you"
+  to = "/en/download-thank-you"
+  status = 301
+
+# Cross-language spellings, so either configured URL keeps working
+[[redirects]]
+  from = "/de/download-thank-you"
+  to = "/de/download-vielen-dank"
+  status = 301
+
+[[redirects]]
+  from = "/en/download-vielen-dank"
+  to = "/en/download-thank-you"
+  status = 301
+
 [[redirects]]
   from = "/impressum"
   to = "/de/impressum"
