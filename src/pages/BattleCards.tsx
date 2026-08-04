@@ -11,6 +11,8 @@ import {
   paradigmLabel,
   lockInLabel,
   causalLabel,
+  enterpriseAiLabel,
+  enterpriseAiScale,
   getLocalized,
 } from '@/lib/battle-cards';
 import { getRoutePath } from '@/lib/routes';
@@ -45,12 +47,13 @@ const BattleCards = () => {
           pillars: norejaProfile.pillars.de,
           matrixTitle: 'Vergleichsmatrix',
           matrixSubtitle:
-            'Die Attribute verdichten die methodischen Unterschiede. „Analyse-Paradigma" bezeichnet die Art der Modellbildung, „Kausalanalyse" den Reifegrad echter Ursache-Wirkungs-Rekonstruktion.',
+            'Die Attribute verdichten die methodischen Unterschiede. „Analyse-Paradigma" bezeichnet die Art der Modellbildung, „Kausalanalyse" den Reifegrad echter Ursache-Wirkungs-Rekonstruktion und „Unternehmens-KI-Fähigkeit" die Eignung des Datenmodells als Kontext- und Wissensbasis für unternehmensspezifische KI. Die Bewertungslogik der letzten Spalte ist unter der Tabelle offengelegt.',
           colVendor: 'Plattform',
           colParadigm: 'Analyse-Paradigma',
           colDataModel: 'Datenmodell',
           colLockIn: 'Ökosystem-Bindung',
           colCausal: 'Kausalanalyse',
+          colEnterpriseAi: 'Unternehmens-KI-Fähigkeit',
           cardsTitle: 'Die Battle Cards im Einzelnen',
           cardsSubtitle:
             'Jede Karte fasst Ausrichtung, Stärken und methodische Reichweite neutral zusammen und benennt die Abgrenzung zum kausalen Ansatz.',
@@ -58,6 +61,7 @@ const BattleCards = () => {
           strengthsLabel: 'Stärken',
           considerationsLabel: 'Methodische Einordnung',
           differentiatorLabel: 'Abgrenzung zu Noreja',
+          advantagesLabel: 'Weitere Noreja-Vorteile',
           criteriaTitle: 'Woran sich eine zukunftsfähige Lösung erkennen lässt',
           criteria: [
             {
@@ -100,12 +104,13 @@ const BattleCards = () => {
           pillars: norejaProfile.pillars.en,
           matrixTitle: 'Comparison Matrix',
           matrixSubtitle:
-            'These attributes condense the methodical differences. “Analysis paradigm” denotes the type of model construction, “causal analysis” the maturity of genuine cause-and-effect reconstruction.',
+            'These attributes condense the methodical differences. “Analysis paradigm” denotes the type of model construction, “causal analysis” the maturity of genuine cause-and-effect reconstruction, and “enterprise AI capability” the suitability of the data model as a context and knowledge base for enterprise-specific AI. The rating logic for the last column is disclosed below the table.',
           colVendor: 'Platform',
           colParadigm: 'Analysis paradigm',
           colDataModel: 'Data model',
           colLockIn: 'Ecosystem lock-in',
           colCausal: 'Causal analysis',
+          colEnterpriseAi: 'Enterprise AI capability',
           cardsTitle: 'The Battle Cards in Detail',
           cardsSubtitle:
             'Each card neutrally summarizes orientation, strengths, and methodical reach, and states the distinction from the causal approach.',
@@ -113,6 +118,7 @@ const BattleCards = () => {
           strengthsLabel: 'Strengths',
           considerationsLabel: 'Methodical context',
           differentiatorLabel: 'Distinction from Noreja',
+          advantagesLabel: 'Additional Noreja advantages',
           criteriaTitle: 'How to Recognize a Future-Proof Solution',
           criteria: [
             {
@@ -255,7 +261,7 @@ const BattleCards = () => {
               <p className="mt-3 text-muted-foreground leading-relaxed">{t.matrixSubtitle}</p>
             </div>
             <div className="overflow-x-auto rounded-2xl border border-border/60 bg-background/80">
-              <table className="w-full min-w-[720px] border-collapse text-left text-sm">
+              <table className="w-full min-w-[980px] border-collapse text-left text-sm">
                 <thead>
                   <tr className="border-b border-border/60 bg-noreja-main/5">
                     <th className="px-4 py-4 font-semibold">{t.colVendor}</th>
@@ -263,6 +269,7 @@ const BattleCards = () => {
                     <th className="px-4 py-4 font-semibold">{t.colDataModel}</th>
                     <th className="px-4 py-4 font-semibold">{t.colLockIn}</th>
                     <th className="px-4 py-4 font-semibold">{t.colCausal}</th>
+                    <th className="px-4 py-4 font-semibold min-w-[280px]">{t.colEnterpriseAi}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -275,6 +282,14 @@ const BattleCards = () => {
                     <td className="px-4 py-4">Event Knowledge Graph</td>
                     <td className="px-4 py-4">{lockInLabel.low[language]}</td>
                     <td className="px-4 py-4 font-semibold">{causalLabel.native[language]}</td>
+                    <td className="px-4 py-4 align-top">
+                      <span className="font-semibold text-noreja-main">
+                        {enterpriseAiLabel[norejaProfile.enterpriseAi.level][language]}
+                      </span>
+                      <span className="mt-1 block text-xs leading-relaxed text-muted-foreground">
+                        {getLocalized(norejaProfile.enterpriseAi.rationale, language)}
+                      </span>
+                    </td>
                   </tr>
                   {battleCards.map((card) => (
                     <tr key={card.id} className="border-b border-border/40 last:border-0">
@@ -287,10 +302,42 @@ const BattleCards = () => {
                       </td>
                       <td className="px-4 py-4 text-muted-foreground">{lockInLabel[card.matrix.lockIn][language]}</td>
                       <td className="px-4 py-4 text-muted-foreground">{causalLabel[card.matrix.causal][language]}</td>
+                      <td className="px-4 py-4 align-top">
+                        <span className="font-semibold text-foreground/90">
+                          {enterpriseAiLabel[card.matrix.enterpriseAi.level][language]}
+                        </span>
+                        <span className="mt-1 block text-xs leading-relaxed text-muted-foreground">
+                          {getLocalized(card.matrix.enterpriseAi.rationale, language)}
+                        </span>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
               </table>
+            </div>
+
+            {/* Transparent disclosure of the graph-centric rating logic */}
+            <div className="mt-6 rounded-2xl border border-noreja-main/25 bg-noreja-main/5 p-6">
+              <div className="flex items-start gap-3">
+                <Network className="mt-0.5 h-5 w-5 shrink-0 text-noreja-main" />
+                <div>
+                  <h3 className="font-semibold">{enterpriseAiScale[language].title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                    {enterpriseAiScale[language].intro}
+                  </p>
+                  <ul className="mt-4 space-y-2">
+                    {enterpriseAiScale[language].levels.map((level) => (
+                      <li key={level.label} className="text-sm leading-relaxed text-muted-foreground">
+                        <span className="font-semibold text-foreground/90">{level.label}:</span>{' '}
+                        {level.text}
+                      </li>
+                    ))}
+                  </ul>
+                  <p className="mt-4 border-t border-border/40 pt-4 text-xs leading-relaxed text-muted-foreground">
+                    {enterpriseAiScale[language].disclosure}
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -359,6 +406,21 @@ const BattleCards = () => {
                           <p className="mt-1.5 text-sm text-foreground/90 leading-relaxed">
                             {getLocalized(card.differentiator, language)}
                           </p>
+                          {card.norejaAdvantages[language].length > 0 && (
+                            <>
+                              <h4 className="mt-4 text-xs font-semibold uppercase tracking-wide text-noreja-main">
+                                {t.advantagesLabel}
+                              </h4>
+                              <ul className="mt-1.5 space-y-1.5">
+                                {card.norejaAdvantages[language].map((item) => (
+                                  <li key={item} className="flex gap-2 text-sm text-foreground/90 leading-relaxed">
+                                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-noreja-main/60" />
+                                    {item}
+                                  </li>
+                                ))}
+                              </ul>
+                            </>
+                          )}
                         </div>
                       </div>
                     </CardContent>

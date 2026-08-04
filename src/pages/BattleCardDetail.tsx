@@ -13,6 +13,8 @@ import {
   paradigmLabel,
   lockInLabel,
   causalLabel,
+  enterpriseAiLabel,
+  norejaProfile,
   getLocalized,
 } from '@/lib/battle-cards';
 import { getRoutePath } from '@/lib/routes';
@@ -54,6 +56,7 @@ const BattleCardDetail = () => {
           rowDataModel: 'Datenmodell',
           rowLockIn: 'Ökosystem-Bindung',
           rowCausal: 'Kausalanalyse',
+          rowEnterpriseAi: 'Unternehmens-KI-Fähigkeit',
           rowPricing: 'Pricing-Transparenz',
           norejaParadigm: 'Kausal + Temporal',
           norejaDataModel: 'Event Knowledge Graph',
@@ -65,6 +68,7 @@ const BattleCardDetail = () => {
           strengthsLabel: 'Stärken',
           considerationsLabel: 'Methodische Einordnung',
           whyTitle: `Warum Noreja statt ${vsName}?`,
+          advantagesLabel: 'Weitere Noreja-Vorteile',
           faqTitle: 'Häufige Fragen',
           otherTitle: 'Weitere Vergleiche',
           ctaTitle: 'Kausale Prozessanalyse selbst erleben',
@@ -82,6 +86,7 @@ const BattleCardDetail = () => {
           rowDataModel: 'Data model',
           rowLockIn: 'Ecosystem lock-in',
           rowCausal: 'Causal analysis',
+          rowEnterpriseAi: 'Enterprise AI capability',
           rowPricing: 'Pricing transparency',
           norejaParadigm: 'Causal + Temporal',
           norejaDataModel: 'Event Knowledge Graph',
@@ -93,6 +98,7 @@ const BattleCardDetail = () => {
           strengthsLabel: 'Strengths',
           considerationsLabel: 'Methodical context',
           whyTitle: `Why Noreja instead of ${vsName}?`,
+          advantagesLabel: 'Additional Noreja advantages',
           faqTitle: 'Frequently Asked Questions',
           otherTitle: 'More comparisons',
           ctaTitle: 'Experience Causal Process Analysis Yourself',
@@ -125,6 +131,20 @@ const BattleCardDetail = () => {
       dimension: t.rowCausal,
       noreja: t.norejaCausal,
       vendor: causalLabel[card.matrix.causal][language],
+    },
+    {
+      dimension: t.rowEnterpriseAi,
+      noreja: enterpriseAiLabel[norejaProfile.enterpriseAi.level][language],
+      vendor: (
+        <>
+          <span className="font-medium text-foreground/90">
+            {enterpriseAiLabel[card.matrix.enterpriseAi.level][language]}
+          </span>
+          <span className="mt-1 block text-xs leading-relaxed">
+            {getLocalized(card.matrix.enterpriseAi.rationale, language)}
+          </span>
+        </>
+      ),
     },
     {
       dimension: t.rowPricing,
@@ -197,9 +217,9 @@ const BattleCardDetail = () => {
                 <tbody>
                   {comparisonRows.map((row) => (
                     <tr key={row.dimension} className="border-b border-border/40 last:border-0">
-                      <td className="px-4 py-4 font-medium">{row.dimension}</td>
-                      <td className="px-4 py-4 bg-noreja-main/5 font-medium text-foreground/90">{row.noreja}</td>
-                      <td className="px-4 py-4 text-muted-foreground">{row.vendor}</td>
+                      <td className="px-4 py-4 align-top font-medium">{row.dimension}</td>
+                      <td className="px-4 py-4 align-top bg-noreja-main/5 font-medium text-foreground/90">{row.noreja}</td>
+                      <td className="px-4 py-4 align-top text-muted-foreground">{row.vendor}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -253,6 +273,21 @@ const BattleCardDetail = () => {
                 <p className="mt-4 text-base md:text-lg text-foreground/90 leading-relaxed">
                   {getLocalized(card.differentiator, language)}
                 </p>
+                {card.norejaAdvantages[language].length > 0 && (
+                  <>
+                    <h3 className="mt-6 text-sm font-semibold uppercase tracking-wide text-noreja-main">
+                      {t.advantagesLabel}
+                    </h3>
+                    <ul className="mt-3 space-y-3">
+                      {card.norejaAdvantages[language].map((item) => (
+                        <li key={item} className="flex gap-2 text-sm md:text-base text-foreground/90 leading-relaxed">
+                          <Check className="mt-1 h-4 w-4 shrink-0 text-noreja-main" />
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                )}
               </div>
             </div>
           </section>

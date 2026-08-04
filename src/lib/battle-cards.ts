@@ -14,6 +14,23 @@ export type EcosystemLockIn = 'low' | 'medium' | 'high';
 /** Reifegrad der kausalen Ursache-Wirkungs-Analyse. */
 export type CausalMaturity = 'none' | 'partial' | 'native';
 
+/**
+ * Eignung des zugrundeliegenden Datenmodells als Kontext- und Wissensbasis
+ * für unternehmensspezifische KI.
+ *
+ * Die Bewertung ist bewusst GRAPHZENTRIERT und folgt einer offen benannten Logik:
+ * - high:   zentraler Event Knowledge Graph, der Ereignisse, Objekte, Beziehungen,
+ *           Zeitbezüge und Unternehmenswissen verbindet und schrittweise um weitere
+ *           Prozesse, Dokumente und Organisationseinheiten erweiterbar ist
+ * - medium: objektzentrierter Event Log (mehrere Objekttypen, aber kein durchgängiger Wissensgraph)
+ * - low:    case-zentrierter Event Log oder Workflow-Logs (auf eine Fallnotion reduziert)
+ *
+ * Bewertet wird ausschließlich das Datenmodell als Wissensbasis – nicht der
+ * Funktionsumfang, die Marktreife oder die KI-Features der Produkte selbst.
+ * Datenmodelle, die keiner Kategorie exakt entsprechen, werden nach struktureller Nähe eingeordnet.
+ */
+export type EnterpriseAiCapability = 'low' | 'medium' | 'high';
+
 export interface BattleCard {
   /** URL-Slug, sprachübergreifend (z. B. "celonis") */
   id: string;
@@ -49,6 +66,18 @@ export interface BattleCard {
     de: string;
     en: string;
   };
+  /**
+   * Ein bis zwei zusätzliche, recherchierte Noreja-Vorteile je Anbieter.
+   * Bewusst getrennt vom differentiator gehalten: Der differentiator benennt die
+   * methodische Kernabgrenzung, diese Punkte ergänzen konkrete, belegbare
+   * Unterschiede (Architektur, Einführung, KI-Kontext, Integration, Mittelstandsfit).
+   * Formulierungen sind wettbewerbsrechtlich vorsichtig gehalten: faktenbasiert,
+   * ohne Superlative, Wettbewerber-Fähigkeiten werden anerkannt statt bestritten.
+   */
+  norejaAdvantages: {
+    de: string[];
+    en: string[];
+  };
   /** Attribute für die Vergleichsmatrix */
   matrix: {
     paradigm: AnalysisParadigm;
@@ -59,6 +88,18 @@ export interface BattleCard {
     };
     lockIn: EcosystemLockIn;
     causal: CausalMaturity;
+    /**
+     * Eignung des Datenmodells als Kontext- und Wissensbasis für unternehmensspezifische KI,
+     * bewertet nach der graphzentrierten Logik in {@link EnterpriseAiCapability}.
+     */
+    enterpriseAi: {
+      level: EnterpriseAiCapability;
+      /** Kurzbegründung der Bewertung (ein Satz) */
+      rationale: {
+        de: string;
+        en: string;
+      };
+    };
   };
 }
 
@@ -80,6 +121,14 @@ export const norejaProfile = {
   summary: {
     de: 'Noreja verortet Prozessverhalten in einem semantischen Modell aus Geschäftsobjekten, Domänenwissen und Geschäftsregeln. Statt aus der bloßen Häufigkeit von Aktivitätsfolgen auf Zusammenhänge zu schließen, unterscheidet die Plattform kausal, ob eine Abweichung ein legitimer Prozesspfad oder ein Fehlermuster ist – und macht KI-Empfehlungen dadurch nachvollziehbar.',
     en: 'Noreja situates process behavior within a semantic model of business objects, domain knowledge, and business rules. Instead of inferring relationships from the sheer frequency of activity sequences, the platform distinguishes causally whether a deviation is a legitimate process path or an error pattern – making AI recommendations traceable.',
+  },
+  /** Bewertung nach derselben graphzentrierten Logik wie die Wettbewerbskarten. */
+  enterpriseAi: {
+    level: 'high' as EnterpriseAiCapability,
+    rationale: {
+      de: 'Ein zentraler Event Knowledge Graph verbindet Ereignisse, Objekte, Beziehungen, Zeitbezüge und Unternehmenswissen in einem Modell und lässt sich schrittweise um weitere Prozesse, Dokumente und Organisationseinheiten erweitern.',
+      en: 'A central Event Knowledge Graph connects events, objects, relationships, temporal references, and enterprise knowledge in one model and can be incrementally extended with further processes, documents, and organizational units.',
+    },
   },
   pillars: {
     de: [
@@ -133,14 +182,16 @@ export const battleCards: BattleCard[] = [
       de: [
         'Größte Auswahl an vorgefertigten Schnittstellen und Konnektoren am Markt',
         'Ausgereifte, umfangreiche Schulungs- und Enablement-Programme',
-        'Workflow-Trigger (Action Engine) für automatisierte Folgeaktionen',
+        'Workflow-Trigger und Orchestration Engine für automatisierte Folgeaktionen',
         'Umfangreiche Bibliothek an Standard-KPIs und Prozess-Apps',
+        'Process Intelligence Graph und AgentC-Anbindung an führende Agenten-Plattformen (u. a. Copilot Studio, Bedrock, Agentforce)',
       ],
       en: [
         'Largest selection of pre-built interfaces and connectors on the market',
         'Mature, extensive training and enablement programs',
-        'Workflow triggers (Action Engine) for automated follow-up actions',
+        'Workflow triggers and Orchestration Engine for automated follow-up actions',
         'Extensive library of standard KPIs and process apps',
+        'Process Intelligence Graph and AgentC connectivity to leading agent platforms (incl. Copilot Studio, Bedrock, Agentforce)',
       ],
     },
     considerations: {
@@ -159,6 +210,16 @@ export const battleCards: BattleCard[] = [
       de: 'Noreja ergänzt die frequenzbasierte Analyse um ein echtes kausales und temporales Modell auf einem Event Knowledge Graph und deckt so Ursache-Wirkungs-Beziehungen statt bloßer Häufigkeiten auf.',
       en: 'Noreja complements frequency-based analysis with a genuine causal and temporal model on an Event Knowledge Graph, uncovering cause-and-effect relationships rather than mere frequencies.',
     },
+    norejaAdvantages: {
+      de: [
+        'Fokussierte Einführung statt Plattformtransformation: Noreja startet prozessweise direkt auf den relationalen Quelltabellen und liefert erste kausale Analysen, ohne dass ein unternehmensweites Plattform-Rollout vorausgeht – bestehende BI-, Workflow- und Automatisierungssysteme bleiben führend.',
+        'KI-Kontext mit freier Modellwahl: Noreja verbindet Prozessdaten, Geschäftsregeln und SOPs direkt im Event Knowledge Graph und unterstützt dabei eigene oder privat gehostete LLMs bis hin zum On-Premises-Betrieb – statt den KI-Kontext primär an externe Agenten-Plattformen weiterzureichen.',
+      ],
+      en: [
+        'Focused adoption instead of platform transformation: Noreja starts process by process directly on relational source tables and delivers first causal analyses without requiring an enterprise-wide platform rollout – existing BI, workflow, and automation systems remain in the lead.',
+        'AI context with free model choice: Noreja links process data, business rules, and SOPs directly in the Event Knowledge Graph and supports your own or privately hosted LLMs up to on-premises operation – rather than primarily handing AI context to external agent platforms.',
+      ],
+    },
     matrix: {
       paradigm: 'frequency',
       dataModel: {
@@ -167,6 +228,13 @@ export const battleCards: BattleCard[] = [
       },
       lockIn: 'medium',
       causal: 'none',
+      enterpriseAi: {
+        level: 'medium',
+        rationale: {
+          de: 'Objektzentrierte Logs erfassen mehrere Objekttypen und liefern damit brauchbaren Kontext, bleiben aber extrahierte Tabellen ohne durchgängigen Wissensgraphen: Beziehungen, Zeitbezüge und Unternehmenswissen sind nicht gemeinsam modelliert und nicht schrittweise um Dokumente oder Organisationseinheiten erweiterbar.',
+          en: 'Object-centric logs capture multiple object types and thus provide usable context, but remain extracted tables without an end-to-end knowledge graph: relationships, temporal references, and enterprise knowledge are not modeled jointly and cannot be incrementally extended with documents or organizational units.',
+        },
+      },
     },
   },
   {
@@ -214,6 +282,16 @@ export const battleCards: BattleCard[] = [
       de: 'Noreja ist quellsystem-agnostisch und modelliert übergreifende Objektbeziehungen im Graphen, statt die Analyse an ein einzelnes ERP-Ökosystem zu binden.',
       en: 'Noreja is source-system agnostic and models cross-cutting object relationships in a graph rather than tying analysis to a single ERP ecosystem.',
     },
+    norejaAdvantages: {
+      de: [
+        'Unabhängig von einer S/4HANA-Transformation: Der Nutzen von Noreja hängt nicht an einer ERP-Migrations-Roadmap – die Analyse startet mining-first auf den vorhandenen operativen Daten, ohne vorgelagertes Prozessrepository oder Modellierungsinitiative.',
+        'SAP- und Nicht-SAP-Daten in einem Modell: Bestehende Primär- und Fremdschlüsselbeziehungen der Quellsysteme werden direkt genutzt, um Geschäftsobjekte über SAP-Grenzen hinweg in einem Event Knowledge Graph zu verbinden.',
+      ],
+      en: [
+        'Independent of an S/4HANA transformation: Noreja’s value does not hinge on an ERP migration roadmap – analysis starts mining-first on existing operational data, with no upstream process repository or modeling initiative required.',
+        'SAP and non-SAP data in one model: existing primary- and foreign-key relationships of the source systems are used directly to connect business objects across SAP boundaries in one Event Knowledge Graph.',
+      ],
+    },
     matrix: {
       paradigm: 'frequency',
       dataModel: {
@@ -222,6 +300,13 @@ export const battleCards: BattleCard[] = [
       },
       lockIn: 'high',
       causal: 'none',
+      enterpriseAi: {
+        level: 'low',
+        rationale: {
+          de: 'Der case-zentrierte Event Log reduziert mehrdimensionale Abläufe auf eine einzige Fallnotion; Objektbeziehungen und Zeitbezüge gehen dabei verloren, sodass keine erweiterbare Wissensbasis für unternehmensspezifische KI entsteht.',
+          en: 'The case-centric event log reduces multidimensional flows to a single case notion; object relationships and temporal references are lost, so no extensible knowledge base for enterprise-specific AI emerges.',
+        },
+      },
     },
   },
   {
@@ -244,11 +329,13 @@ export const battleCards: BattleCard[] = [
         'Nahtloser Übergang von der Analyse zur RPA-Umsetzung',
         'Kombinierte Sicht auf System-, Desktop- und Kommunikationsdaten',
         'Integrierte Governance und ROI-Nachverfolgung für Automatisierung',
+        'Agentic Orchestration (Maestro) koordiniert Agenten, Roboter und Menschen in BPMN-Prozessen',
       ],
       en: [
         'Seamless transition from analysis to RPA implementation',
         'Combined view of system, desktop, and communication data',
         'Integrated governance and ROI tracking for automation',
+        'Agentic orchestration (Maestro) coordinates agents, robots, and people in BPMN processes',
       ],
     },
     considerations: {
@@ -267,6 +354,16 @@ export const battleCards: BattleCard[] = [
       de: 'Noreja stellt die kausale Diagnose voran: Erst das semantische Verständnis der Ursachen entscheidet, welche Schritte überhaupt automatisiert werden sollten – plattformunabhängig.',
       en: 'Noreja puts causal diagnosis first: only a semantic understanding of causes determines which steps should be automated at all – independent of any platform.',
     },
+    norejaAdvantages: {
+      de: [
+        'Fachlich notwendige Ausnahmen erkennen statt automatisieren: Regeln, SOPs und Domänenwissen im Graphen unterscheiden legitime Prozessvarianten von Fehlermustern – bevor Automatisierungskandidaten priorisiert werden.',
+        'Freie Wahl der Ausführungsebene: Erkenntnisse und Priorisierungen fließen in die vorhandenen RPA-, Workflow- und Agenten-Systeme, statt Analyse und Automatisierung an ein Plattform-Ökosystem zu koppeln.',
+      ],
+      en: [
+        'Recognize business-critical exceptions instead of automating them: rules, SOPs, and domain knowledge in the graph distinguish legitimate process variants from error patterns – before automation candidates are prioritized.',
+        'Free choice of execution layer: insights and prioritizations feed into your existing RPA, workflow, and agent systems rather than coupling analysis and automation to one platform ecosystem.',
+      ],
+    },
     matrix: {
       paradigm: 'frequency',
       dataModel: {
@@ -275,6 +372,13 @@ export const battleCards: BattleCard[] = [
       },
       lockIn: 'medium',
       causal: 'none',
+      enterpriseAi: {
+        level: 'low',
+        rationale: {
+          de: 'Event- und Task-Logs liefern zwar zusätzliche Desktop-Signale, bleiben aber fall- bzw. sitzungsbezogene Aufzeichnungen: Sie werden nicht zu einem gemeinsamen Graphen aus Objekten, Beziehungen und Unternehmenswissen verknüpft.',
+          en: 'Event and task logs do add desktop-level signals, but remain case- and session-scoped recordings: they are not linked into a shared graph of objects, relationships, and enterprise knowledge.',
+        },
+      },
     },
   },
   {
@@ -295,13 +399,15 @@ export const battleCards: BattleCard[] = [
     strengths: {
       de: [
         'Objektzentrierte Analyse überwindet die starre Ein-Fall-Sicht',
-        'Datengetriebene Simulation und präskriptive Empfehlungen',
+        'Datengetriebene What-if-Simulation und präskriptive Empfehlungen',
         'On-Premise- und Hybrid-Betrieb für regulierte Branchen',
+        'LLM-gestützter Process Mining Assistant (watsonx) für Ursachen-Hypothesen',
       ],
       en: [
         'Object-centric analysis overcomes the rigid single-case view',
-        'Data-driven simulation and prescriptive recommendations',
+        'Data-driven what-if simulation and prescriptive recommendations',
         'On-premise and hybrid operation for regulated industries',
+        'LLM-powered Process Mining Assistant (watsonx) for root-cause hypotheses',
       ],
     },
     considerations: {
@@ -320,6 +426,16 @@ export const battleCards: BattleCard[] = [
       de: 'Noreja geht über die objektzentrierte Frequenzsicht hinaus und modelliert im Graphen die kausalen Beziehungen zwischen Ereignissen – nicht nur ihre Zuordnung zu mehreren Objekten.',
       en: 'Noreja goes beyond the object-centric frequency view and models the causal relationships between events in a graph – not merely their assignment to multiple objects.',
     },
+    norejaAdvantages: {
+      de: [
+        'Nachvollziehbare Kausalannahmen: Die Beziehungen, auf denen Analysen und KI-Empfehlungen beruhen, sind im Event Knowledge Graph explizit sichtbar und prüfbar – statt in prädiktiven Modellen oder Assistenten-Antworten verborgen zu bleiben.',
+        'Fokussierter Mittelstandsscope: Einstieg über einen abgegrenzten Proof-of-Value mit transparenten, öffentlich einsehbaren Paketen – ohne Einführung im Verbund einer umfassenden Enterprise-Automation-Suite.',
+      ],
+      en: [
+        'Traceable causal assumptions: the relationships underlying analyses and AI recommendations are explicitly visible and verifiable in the Event Knowledge Graph – rather than remaining hidden in predictive models or assistant answers.',
+        'Focused mid-market scope: entry via a scoped proof-of-value with transparent, publicly available packages – without adopting a comprehensive enterprise automation suite.',
+      ],
+    },
     matrix: {
       paradigm: 'hybrid',
       dataModel: {
@@ -328,6 +444,13 @@ export const battleCards: BattleCard[] = [
       },
       lockIn: 'high',
       causal: 'partial',
+      enterpriseAi: {
+        level: 'medium',
+        rationale: {
+          de: 'OCPM überwindet die Ein-Fall-Sicht und trägt damit mehr Kontext als case-zentrierte Logs, bleibt jedoch ein Log-Format: Ereignisse, Objekte und Beziehungen werden nicht als ein persistenter, um Dokumente und Organisationswissen erweiterbarer Wissensgraph geführt.',
+          en: 'OCPM overcomes the single-case view and therefore carries more context than case-centric logs, yet remains a log format: events, objects, and relationships are not maintained as a persistent knowledge graph extensible with documents and organizational knowledge.',
+        },
+      },
     },
   },
   {
@@ -362,16 +485,28 @@ export const battleCards: BattleCard[] = [
         'Ausrichtung auf Zugänglichkeit statt methodischer Analysetiefe',
         'Voller Nutzen setzt eine Microsoft-zentrierte Landschaft voraus',
         'Prozessmodelle bleiben in der frequenzbasierten Logik verhaftet',
+        'Kapazitäts- und kontingentbasierte Lizenzierung (Speicher je Nutzerlizenz, Tenant-Obergrenze, Add-ons)',
       ],
       en: [
         'Oriented toward accessibility rather than analytical depth',
         'Full value presupposes a Microsoft-centric landscape',
         'Process models remain tied to frequency-based logic',
+        'Capacity- and quota-based licensing (storage per user license, tenant cap, add-ons)',
       ],
     },
     differentiator: {
       de: 'Noreja adressiert die methodische Tiefe: kausale Modellierung und semantischer Kontext statt breiter, aber frequenzbasierter Zugänglichkeit im geschlossenen Ökosystem.',
       en: 'Noreja addresses analytical depth: causal modeling and semantic context instead of broad but frequency-based accessibility within a closed ecosystem.',
+    },
+    norejaAdvantages: {
+      de: [
+        'Systemübergreifende relationale Analyse: Noreja bindet relationale Quellen jenseits von Dataverse direkt an und verbindet sie in einem Event Knowledge Graph – ohne Speicher-Kontingente und Kapazitäts-Add-ons der Power-Platform-Lizenzierung.',
+        'Freie LLM-Wahl statt Copilot-Bindung: KI-Funktionen laufen wahlweise mit eigenen, privat gehosteten oder On-Premises-Modellen – der semantische Prozesskontext bleibt dabei im eigenen Graphen.',
+      ],
+      en: [
+        'Cross-system relational analysis: Noreja connects relational sources beyond Dataverse directly and links them in one Event Knowledge Graph – without the storage quotas and capacity add-ons of Power Platform licensing.',
+        'Free LLM choice instead of Copilot dependence: AI features run with your own, privately hosted, or on-premises models – while the semantic process context stays in your own graph.',
+      ],
     },
     matrix: {
       paradigm: 'frequency',
@@ -381,6 +516,13 @@ export const battleCards: BattleCard[] = [
       },
       lockIn: 'high',
       causal: 'none',
+      enterpriseAi: {
+        level: 'low',
+        rationale: {
+          de: 'Die case-zentrierte Log-Sicht bildet Reihenfolgen innerhalb einer Fallnotion ab; Sprachmodelle greifen damit auf flache Sequenzdaten statt auf einen verknüpften Wissensgraphen mit Objekten, Beziehungen und Fachwissen zu.',
+          en: 'The case-centric log view depicts sequences within a single case notion; language models therefore access flat sequence data rather than a connected knowledge graph of objects, relationships, and domain knowledge.',
+        },
+      },
     },
   },
   {
@@ -413,18 +555,28 @@ export const battleCards: BattleCard[] = [
     considerations: {
       de: [
         'Fokus liegt auf Service-Management-Abläufen innerhalb der Plattform',
-        'Übergreifende End-to-End-Prozesse über Fremdsysteme sind nur eingeschränkt abbildbar',
+        'Externe Daten werden über Workflow Data Fabric primär für Workflows und Agenten erschlossen – die Mining-Analyse bleibt auf Plattform-Prozesse fokussiert',
         'Analyse bleibt auf die frequenzbasierte Prozesssicht beschränkt',
       ],
       en: [
         'Focus lies on service-management workflows within the platform',
-        'Cross-system end-to-end processes are only partially representable',
+        'External data is surfaced via Workflow Data Fabric primarily for workflows and agents – mining analysis stays focused on platform processes',
         'Analysis remains confined to the frequency-based process view',
       ],
     },
     differentiator: {
       de: 'Noreja analysiert End-to-End-Prozesse über Systemgrenzen hinweg im Graphen, statt auf die Serviceprozesse einer einzelnen Plattform beschränkt zu sein.',
       en: 'Noreja analyzes end-to-end processes across system boundaries in a graph, rather than being confined to the service processes of a single platform.',
+    },
+    norejaAdvantages: {
+      de: [
+        'ServiceNow im Geschäftskontext: Noreja verbindet ServiceNow-Daten mit ERP-, Finanz- und Produktionsdaten zu durchgängigen Geschäftsobjekten – Tickets werden im Kontext der vor- und nachgelagerten Backend-Prozesse kausal analysierbar.',
+        'Ein Graph, viele Prozessperspektiven: Einmal modellierte Objekt- und Ereignisbeziehungen werden über ITSM hinaus für weitere Prozesse und Analysen wiederverwendet, statt je Anwendungsfall neu aufgebaut zu werden.',
+      ],
+      en: [
+        'ServiceNow in business context: Noreja links ServiceNow data with ERP, finance, and production data into continuous business objects – tickets become causally analyzable in the context of upstream and downstream backend processes.',
+        'One graph, many process perspectives: object and event relationships modeled once are reused beyond ITSM for further processes and analyses instead of being rebuilt per use case.',
+      ],
     },
     matrix: {
       paradigm: 'frequency',
@@ -434,6 +586,13 @@ export const battleCards: BattleCard[] = [
       },
       lockIn: 'high',
       causal: 'none',
+      enterpriseAi: {
+        level: 'low',
+        rationale: {
+          de: 'Plattform-native Workflow-Logs enden an der Systemgrenze: Sie decken Serviceprozesse einer Anwendung ab und lassen sich nicht zu einem unternehmensweiten Graphen über weitere Prozesse, Dokumente und Organisationseinheiten ausbauen.',
+          en: 'Platform-native workflow logs stop at the system boundary: they cover the service processes of one application and cannot be grown into an enterprise-wide graph spanning further processes, documents, and organizational units.',
+        },
+      },
     },
   },
   {
@@ -456,11 +615,13 @@ export const battleCards: BattleCard[] = [
         'Starke Erschließung unstrukturierter Dokumenten- und E-Mail-Kontexte',
         'Kombination aus Task Mining und Prozessanalyse',
         'Root-Cause- und Compliance-Auswertungen für regulierte Abläufe',
+        'KI-gestützte Prozessprognose und Simulation auf Basis historischer Ausführungsmuster',
       ],
       en: [
         'Strong extraction of unstructured document and email context',
         'Combination of task mining and process analysis',
         'Root-cause and compliance evaluations for regulated workflows',
+        'AI-supported process prediction and simulation based on historical execution patterns',
       ],
     },
     considerations: {
@@ -479,6 +640,16 @@ export const battleCards: BattleCard[] = [
       de: 'Noreja modelliert Prozesse als semantischen Graphen mit kausalen Beziehungen zwischen Ereignissen und ist damit nicht auf dokumentengetriebene Abläufe zugeschnitten.',
       en: 'Noreja models processes as a semantic graph with causal relationships between events and is therefore not tailored to document-driven workflows.',
     },
+    norejaAdvantages: {
+      de: [
+        'Strukturierte Prozessdaten als Kern, Dokumente als Kontext: Noreja baut die Analyse auf den relationalen Transaktionsdaten der Quellsysteme auf und verknüpft SOPs, Richtlinien und Dokumente als zusätzliche Wissensebene im Graphen – statt umgekehrt.',
+        'Mehrere Beziehungstypen statt primär zeitlicher Timeline: Der Event Knowledge Graph unterscheidet zeitliche, kausale und kontextuelle Beziehungen und macht damit fachliche Interpretation möglich, wo eine Zeitachsen-Analyse an ihre Grenzen stößt.',
+      ],
+      en: [
+        'Structured process data at the core, documents as context: Noreja builds the analysis on the relational transaction data of the source systems and links SOPs, policies, and documents as an additional knowledge layer in the graph – rather than the other way around.',
+        'Multiple relationship types instead of a primarily temporal timeline: the Event Knowledge Graph distinguishes temporal, causal, and contextual relationships, enabling business interpretation where a timeline analysis reaches its limits.',
+      ],
+    },
     matrix: {
       paradigm: 'frequency',
       dataModel: {
@@ -487,6 +658,13 @@ export const battleCards: BattleCard[] = [
       },
       lockIn: 'medium',
       causal: 'partial',
+      enterpriseAi: {
+        level: 'low',
+        rationale: {
+          de: 'Der Dokumentenkontext ist ein echter Pluspunkt, wird aber an fallbezogene Logs angehängt statt in einem Graphen mit Objekten, Beziehungen und Zeitbezügen verknüpft – die Wissensbasis bleibt damit dokumentenzentriert und nicht unternehmensweit erweiterbar.',
+          en: 'Document context is a genuine plus, but it is attached to case-scoped logs rather than linked in a graph of objects, relationships, and temporal references – leaving the knowledge base document-centric rather than extensible enterprise-wide.',
+        },
+      },
     },
   },
   {
@@ -501,19 +679,21 @@ export const battleCards: BattleCard[] = [
       en: 'Process mining as a building block of an automation and orchestration platform.',
     },
     summary: {
-      de: 'Appian positioniert Process Mining als Bestandteil einer Low-Code-Plattform für Workflow-Automatisierung und Case Management. Erkenntnisse lassen sich in derselben Umgebung unmittelbar in orchestrierte Abläufe überführen.',
-      en: 'Appian positions process mining as part of a low-code platform for workflow automation and case management. Insights can be translated directly into orchestrated workflows within the same environment.',
+      de: 'Appian positioniert Process Mining mit Process HQ als Bestandteil einer Low-Code-Plattform für Workflow-Automatisierung und Case Management. Process HQ bündelt Data Fabric, Mining, Machine Learning und generative KI (AI Copilot); Erkenntnisse lassen sich in derselben Umgebung unmittelbar in orchestrierte Abläufe überführen.',
+      en: 'With Process HQ, Appian positions process mining as part of a low-code platform for workflow automation and case management. Process HQ bundles data fabric, mining, machine learning, and generative AI (AI Copilot); insights can be translated directly into orchestrated workflows within the same environment.',
     },
     strengths: {
       de: [
         'Kurzer Weg von der Erkenntnis zur orchestrierten Umsetzung',
         'Low-Code-Entwicklung für schnelle Prozessänderungen',
         'Orchestrierung komplexer Abläufe über mehrere Systeme',
+        'Process HQ verbindet Data Fabric, Mining und AI Copilot in einer geführten Analyseumgebung',
       ],
       en: [
         'Short path from insight to orchestrated implementation',
         'Low-code development for rapid process changes',
         'Orchestration of complex workflows across multiple systems',
+        'Process HQ combines data fabric, mining, and AI Copilot in one guided analysis environment',
       ],
     },
     considerations: {
@@ -532,6 +712,16 @@ export const battleCards: BattleCard[] = [
       de: 'Noreja ist auf die kausale Prozessdiagnose spezialisiert – die belastbare Grundlage, bevor Abläufe orchestriert oder automatisiert werden.',
       en: 'Noreja specializes in causal process diagnosis – the reliable foundation before workflows are orchestrated or automated.',
     },
+    norejaAdvantages: {
+      de: [
+        'Analyse ohne Migration der Prozessausführung: Noreja untersucht die Abläufe in den bestehenden Systemen, ohne dass Workflows oder Cases auf eine neue Ausführungsplattform umziehen müssen.',
+        'Fokussierte Analyse- und Kontextschicht: Vorhandene Workflow- und Case-Management-Lösungen werden um kausale Diagnose und semantischen Prozesskontext ergänzt – nicht ersetzt.',
+      ],
+      en: [
+        'Analysis without migrating process execution: Noreja examines the flows inside existing systems, with no need to move workflows or cases to a new execution platform.',
+        'A focused analysis and context layer: existing workflow and case-management solutions are complemented with causal diagnosis and semantic process context – not replaced.',
+      ],
+    },
     matrix: {
       paradigm: 'frequency',
       dataModel: {
@@ -540,6 +730,13 @@ export const battleCards: BattleCard[] = [
       },
       lockIn: 'high',
       causal: 'none',
+      enterpriseAi: {
+        level: 'low',
+        rationale: {
+          de: 'Workflow-Logs protokollieren die Ausführung orchestrierter Abläufe innerhalb der Plattform; sie enthalten kein semantisches Modell aus Objekten, Beziehungen und Unternehmenswissen, auf das unternehmensspezifische KI aufsetzen könnte.',
+          en: 'Workflow logs record the execution of orchestrated flows inside the platform; they contain no semantic model of objects, relationships, and enterprise knowledge on which enterprise-specific AI could build.',
+        },
+      },
     },
   },
   {
@@ -563,12 +760,14 @@ export const battleCards: BattleCard[] = [
         'Große angrenzende Produktfamilie für Modellierung und Prozessverwaltung',
         'Automatisierte Conformance gegen Soll-Modelle (BPMN, EPK)',
         'KI-gestützter Root-Cause-Miner zur Korrelation von Verzögerungsfaktoren',
+        'Process Core als governter digitaler Zwilling aus Prozessen, Rollen, Regeln und Kontrollen – auch als Leitplanke für KI-Agenten',
       ],
       en: [
         'Tight coupling of process mining with the governed ARIS model repository',
         'Large adjacent product family for modeling and process administration',
         'Automated conformance against to-be models (BPMN, EPC)',
         'AI-supported root-cause miner correlating delay factors',
+        'Process Core as a governed digital twin of processes, roles, rules, and controls – also serving as guardrails for AI agents',
       ],
     },
     considerations: {
@@ -587,6 +786,16 @@ export const battleCards: BattleCard[] = [
       de: 'Noreja deckt kausale Ursache-Wirkungs-Beziehungen im Graphen auf, statt korrelierende Faktoren gegen ein hinterlegtes Soll-Modell zu gewichten – und benötigt kein vorgelagertes Modell-Repository.',
       en: 'Noreja uncovers causal cause-and-effect relationships in a graph rather than weighting correlating factors against a stored to-be model – and requires no upstream model repository.',
     },
+    norejaAdvantages: {
+      de: [
+        'Data-first statt Repository-first: Noreja startet direkt auf den Ist-Daten der Quellsysteme – ein gepflegtes Soll-Modell-Repository ist für den Einstieg keine Voraussetzung und kann später als Kontext ergänzt werden.',
+        'Offene KI- und Data-Science-Integration: Über die integrierte Workbench (Jupyter/Python) arbeiten eigene Modelle und Analysen direkt auf dem Event Knowledge Graph – mit freier Wahl der LLMs bis hin zum On-Premises-Betrieb.',
+      ],
+      en: [
+        'Data-first instead of repository-first: Noreja starts directly on the as-is data of the source systems – a maintained to-be model repository is not a prerequisite for getting started and can be added later as context.',
+        'Open AI and data-science integration: via the integrated Workbench (Jupyter/Python), your own models and analyses work directly on the Event Knowledge Graph – with free choice of LLMs up to on-premises operation.',
+      ],
+    },
     matrix: {
       paradigm: 'frequency',
       dataModel: {
@@ -595,61 +804,85 @@ export const battleCards: BattleCard[] = [
       },
       lockIn: 'high',
       causal: 'partial',
+      enterpriseAi: {
+        level: 'low',
+        rationale: {
+          de: 'Das governte Soll-Modell-Repository liefert wertvolles Prozesswissen, die Analyse selbst arbeitet jedoch auf case-zentrierten Logs: Modell und Ereignisdaten bleiben getrennt statt in einem gemeinsamen, erweiterbaren Wissensgraphen verbunden.',
+          en: 'The governed to-be model repository provides valuable process knowledge, yet the analysis itself runs on case-centric logs: model and event data remain separate rather than joined in one shared, extensible knowledge graph.',
+        },
+      },
     },
   },
   {
     id: 'mpmx-mehrwerk',
     name: 'mpmX (MEHRWERK)',
     category: {
-      de: 'Qlik-basiert · Self-Service-Analytik',
-      en: 'Qlik-based · self-service analytics',
+      de: 'Datenplattform-nativ · Self-Service',
+      en: 'Data-platform-native · self-service',
     },
     focus: {
-      de: 'Process Mining verzahnt mit der assoziativen Analytik von Qlik.',
-      en: 'Process mining interwoven with Qlik’s associative analytics.',
+      de: 'Process Mining nativ auf bestehenden Datenplattformen wie Qlik, Snowflake und Databricks.',
+      en: 'Process mining natively on existing data platforms such as Qlik, Snowflake, and Databricks.',
     },
     summary: {
-      de: 'mpmX des deutschen Anbieters MEHRWERK ist eng mit der Qlik-Technologie verwoben und verbindet klassische BI, Reporting und Self-Service-Process-Mining auf einer Plattform. Der assoziative Analyse-Ansatz ermöglicht flexible, interaktive Auswertungen und einen schnellen Einstieg für BI-affine Teams.',
-      en: 'mpmX from German vendor MEHRWERK is tightly interwoven with Qlik technology and combines classic BI, reporting, and self-service process mining on one platform. The associative analysis approach enables flexible, interactive evaluations and a fast start for BI-savvy teams.',
+      de: 'mpmX des deutschen Anbieters MEHRWERK bringt Process Mining direkt auf bestehende Datenplattformen: Datenaufbereitung, Speicherung und Mining laufen nativ auf Qlik, Snowflake oder Databricks. Objektzentriertes Process Mining (OCPM) gehört zum Standardumfang, und der Self-Service-Ansatz ermöglicht datenaffinen Teams einen schnellen Einstieg.',
+      en: 'mpmX from German vendor MEHRWERK brings process mining directly onto existing data platforms: data preparation, storage, and mining run natively on Qlik, Snowflake, or Databricks. Object-centric process mining (OCPM) is part of the standard scope, and the self-service approach enables data-savvy teams to start quickly.',
     },
     strengths: {
       de: [
         'Löst komplexe n:m-Beziehungen zwischen Prozessobjekten zuverlässig auf',
-        'In-Memory-Verarbeitung für performante, hochinteraktive Auswertungen',
-        'Assoziative Analytik dank Qlik-Engine, kombiniert mit BI und Reporting',
+        'Datenplattform-nativ: Aufbereitung und Mining direkt auf Qlik, Snowflake oder Databricks',
+        'Objektzentriertes Process Mining (OCPM) im Standardumfang',
         'Schneller Einstieg und Self-Service für datenaffine Fachbereiche',
       ],
       en: [
         'Reliably resolves complex n:m relationships between process objects',
-        'In-memory processing for performant, highly interactive analysis',
-        'Associative analytics via the Qlik engine, combined with BI and reporting',
+        'Data-platform-native: preparation and mining directly on Qlik, Snowflake, or Databricks',
+        'Object-centric process mining (OCPM) as part of the standard scope',
         'Fast onboarding and self-service for data-savvy departments',
       ],
     },
     considerations: {
       de: [
-        'Analytische Stärke ist an das Qlik-Technologiefundament gebunden',
-        'Prozessanalyse bleibt frequenzbasiert ohne kausale Modellierung',
+        'Analytische Stärke ist an das Fundament der jeweiligen Datenplattform gebunden',
+        'Prozessanalyse bleibt trotz OCPM frequenzbasiert ohne kausale Modellierung',
         'Kein graphbasiertes, semantisches Kausalmodell im Kern',
       ],
       en: [
-        'Analytical strength is tied to the underlying Qlik technology foundation',
-        'Process analysis remains frequency-based without causal modeling',
+        'Analytical strength is tied to the foundation of the respective data platform',
+        'Despite OCPM, process analysis remains frequency-based without causal modeling',
         'No graph-based, semantic causal model at its core',
       ],
     },
     differentiator: {
-      de: 'Noreja setzt auf ein eigenständiges, graphbasiertes Kausal- und Temporalmodell statt einer auf BI-Technologie aufsetzenden Frequenzanalyse – und trennt so echte Ursachen von statistischer Koinzidenz.',
-      en: 'Noreja relies on a dedicated, graph-based causal and temporal model instead of a frequency analysis built on top of BI technology – thereby separating genuine causes from statistical coincidence.',
+      de: 'Noreja setzt auf ein eigenständiges, graphbasiertes Kausal- und Temporalmodell statt einer auf BI- und Datenplattformen aufsetzenden Frequenzanalyse – und trennt so echte Ursachen von statistischer Koinzidenz.',
+      en: 'Noreja relies on a dedicated, graph-based causal and temporal model instead of a frequency analysis built on top of BI and data platforms – thereby separating genuine causes from statistical coincidence.',
+    },
+    norejaAdvantages: {
+      de: [
+        'Explizite Semantik fachlicher Beziehungstypen: Der Event Knowledge Graph unterscheidet zeitliche, kausale und kontextuelle Pfade und verknüpft Regeln, SOPs und Dokumente mit den Prozessdaten – über die Auflösung von Objektbeziehungen hinaus.',
+        'Wissensbasis unabhängig von der Datenplattform: Analyse und Kontextmodell liegen im eigenen Graphen statt in Apps einer BI- oder Datenplattform-Engine – die Nutzungsschicht ist damit nicht an Qlik, Snowflake oder Databricks gebunden.',
+      ],
+      en: [
+        'Explicit semantics of business relationship types: the Event Knowledge Graph distinguishes temporal, causal, and contextual paths and links rules, SOPs, and documents with the process data – beyond resolving object relationships.',
+        'A knowledge base independent of the data platform: analysis and context model live in a dedicated graph rather than in apps of a BI or data-platform engine – so the usage layer is not tied to Qlik, Snowflake, or Databricks.',
+      ],
     },
     matrix: {
       paradigm: 'frequency',
       dataModel: {
-        de: 'Relationales Modell (n:m), In-Memory',
-        en: 'Relational model (n:m), in-memory',
+        de: 'Datenplattform-natives Modell (Qlik/Snowflake/Databricks), OCPM',
+        en: 'Data-platform-native model (Qlik/Snowflake/Databricks), OCPM',
       },
       lockIn: 'high',
       causal: 'none',
+      enterpriseAi: {
+        level: 'medium',
+        rationale: {
+          de: 'Mit objektzentriertem Process Mining im Standardumfang erfasst mpmX mehrere Objekttypen und liefert damit brauchbaren Kontext; das Modell lebt jedoch auf der jeweiligen Datenplattform und wird nicht als eigenständiger, um Dokumente und Unternehmenswissen erweiterbarer Wissensgraph geführt.',
+          en: 'With object-centric process mining in its standard scope, mpmX captures multiple object types and thus provides usable context; however, the model lives on the respective data platform and is not maintained as a dedicated knowledge graph extensible with documents and enterprise knowledge.',
+        },
+      },
     },
   },
 ];
@@ -1102,6 +1335,62 @@ export const causalLabel: Record<CausalMaturity, { de: string; en: string }> = {
   partial: { de: 'Teilweise', en: 'Partial' },
   native: { de: 'Nativ', en: 'Native' },
 };
+
+export const enterpriseAiLabel: Record<EnterpriseAiCapability, { de: string; en: string }> = {
+  low: { de: 'Gering', en: 'Low' },
+  medium: { de: 'Mittel', en: 'Medium' },
+  high: { de: 'Hoch', en: 'High' },
+};
+
+/**
+ * Offenlegung der Bewertungslogik für die Spalte „Unternehmens-KI-Fähigkeit".
+ * Wird unter der Vergleichsmatrix gerendert, damit der graphzentrierte Maßstab
+ * und seine Grenzen für Leser:innen nachvollziehbar sind.
+ */
+export const enterpriseAiScale = {
+  de: {
+    title: 'Bewertungslogik: Unternehmens-KI-Fähigkeit (graphzentriert)',
+    intro:
+      'Diese Spalte bewertet ausschließlich, wie gut das jeweilige Datenmodell als Kontext- und Wissensbasis für unternehmensspezifische KI trägt. Maßstab ist ein zentraler Event Knowledge Graph, der Ereignisse, Objekte, Beziehungen, Zeitbezüge und Unternehmenswissen verbindet und schrittweise um weitere Prozesse, Dokumente und Organisationseinheiten erweitert werden kann.',
+    levels: [
+      {
+        label: 'Hoch',
+        text: 'Zentraler Event Knowledge Graph mit den genannten Eigenschaften – Ereignisse, Objekte, Beziehungen, Zeitbezüge und Unternehmenswissen in einem erweiterbaren Modell.',
+      },
+      {
+        label: 'Mittel',
+        text: 'Objektzentrierter Event Log: mehrere Objekttypen je Ereignis, aber kein durchgängiger, persistenter Wissensgraph.',
+      },
+      {
+        label: 'Gering',
+        text: 'Case-zentrierter Event Log oder Workflow-Logs: auf eine einzige Fallnotion bzw. die Plattformgrenze reduziert.',
+      },
+    ],
+    disclosure:
+      'Transparenzhinweis: Der Maßstab ist bewusst graphzentriert gewählt und begünstigt damit strukturell Architekturen mit Wissensgraph – einschließlich Noreja. Bewertet wird allein die Eignung des Datenmodells als Wissensbasis, nicht der Funktionsumfang, die Marktreife oder die KI-Funktionen der Produkte selbst. Datenmodelle, die keiner der drei Kategorien exakt entsprechen (etwa relationale In-Memory-Modelle), werden nach struktureller Nähe eingeordnet.',
+  },
+  en: {
+    title: 'Rating logic: enterprise AI capability (graph-centric)',
+    intro:
+      'This column assesses only how well the respective data model serves as a context and knowledge base for enterprise-specific AI. The benchmark is a central Event Knowledge Graph that connects events, objects, relationships, temporal references, and enterprise knowledge, and can be incrementally extended with further processes, documents, and organizational units.',
+    levels: [
+      {
+        label: 'High',
+        text: 'Central Event Knowledge Graph with the properties above – events, objects, relationships, temporal references, and enterprise knowledge in one extensible model.',
+      },
+      {
+        label: 'Medium',
+        text: 'Object-centric event log: multiple object types per event, but no end-to-end, persistent knowledge graph.',
+      },
+      {
+        label: 'Low',
+        text: 'Case-centric event log or workflow logs: reduced to a single case notion or to the platform boundary.',
+      },
+    ],
+    disclosure:
+      'Transparency note: the benchmark is deliberately graph-centric and therefore structurally favors architectures with a knowledge graph – including Noreja. It rates only the suitability of the data model as a knowledge base, not the feature scope, market maturity, or the AI capabilities of the products themselves. Data models that do not match any of the three categories exactly (such as relational in-memory models) are classified by structural proximity.',
+  },
+} as const;
 
 export const getLocalized = (value: { de: string; en: string }, language: Language): string =>
   value[language];
