@@ -447,6 +447,30 @@ export const eventData: EventData[] = [
       url: 'https://icpmconference.org/2027/',
       type: 'learn-more'
     }
+  },
+  {
+    id: '21',
+    title: 'All about Process Management',
+    description: {
+      de: '„All about Process Management“ verfolgt einen ganzheitlichen Ansatz im Prozessmanagement und möchte eine Community fördern, die einen offenen und praxisnahen Austausch über Branchengrenzen hinweg ermöglicht. Die Veranstaltung richtet sich an ein breites Fachpublikum: Ob Entwickler:innen oder Geschäftsführer:innen – die Konferenz bringt Expert:innen aus Bereichen wie Finanzwesen, Automotive und öffentlicher Verwaltung zusammen. Von der Identifikation über die Dokumentation und Optimierung von Prozessen bis hin zum Change Management sowie der Digitalisierung und Automatisierung von Prozessen deckt die Konferenz in verschiedenen Formaten alle relevanten Themen ab.',
+      en: '"All about Process Management" takes a holistic approach to process management and aims to foster a community that promotes open and practical exchange across industries. The event is aimed at a broad professional audience. Whether developers or managing directors, the conference brings together professionals from sectors such as finance, automotive, and public administration. From identifying processes to documenting and optimizing them, all the way to change management as well as the digitalization and automation of processes — the conference covers all relevant topics through various formats.'
+    },
+    date: new Date('2026-09-30'),
+    endDate: new Date('2026-10-01'),
+    location: {
+      type: 'onsite',
+      address: 'Messe Stuttgart, Stuttgart, Germany',
+    },
+    registration: {
+      required: false,
+      url: 'https://www.messe-stuttgart.de/all-about-process-management/'
+    },
+    type: 'conference',
+    cta: {
+      text: 'Learn more',
+      url: 'https://www.messe-stuttgart.de/all-about-process-management/',
+      type: 'learn-more'
+    }
   }
 ];
 
