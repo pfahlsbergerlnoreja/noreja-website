@@ -624,17 +624,30 @@ const Functionalities = () => {
                   <p className="text-muted-foreground max-w-3xl mx-auto">
                     {t.pages.functionalities.learnMoreSubtitle}
                   </p>
-                  <Button
-                    size="lg"
-                    variant="secondary"
-                    className="group"
-                    asChild
-                  >
-                    <Link to={getRoutePath('pricing', language)}>
-                      {t.pages.functionalities.learnMoreCta}
-                      <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
-                    </Link>
-                  </Button>
+                  <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <Button
+                      size="lg"
+                      variant="secondary"
+                      className="group"
+                      asChild
+                    >
+                      <Link to={getRoutePath('pricing', language)}>
+                        {t.pages.functionalities.learnMoreCta}
+                        <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+                      </Link>
+                    </Button>
+                    <Button
+                      size="lg"
+                      variant="outline"
+                      className="group"
+                      asChild
+                    >
+                      <Link to={getRoutePath('battleCards', language)}>
+                        {t.pages.functionalities.learnMoreCtaComparison}
+                        <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+                      </Link>
+                    </Button>
+                  </div>
                 </div>
               </div>
             </motion.div>

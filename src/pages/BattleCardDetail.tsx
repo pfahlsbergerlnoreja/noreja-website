@@ -158,7 +158,6 @@ const BattleCardDetail = () => {
       <BreadcrumbSchema
         items={[
           { name: language === 'de' ? 'Startseite' : 'Home', url: `${SITE_URL}${getRoutePath('home', language)}` },
-          { name: language === 'de' ? 'Definitionen' : 'Definitions', url: `${SITE_URL}${getRoutePath('definitions', language)}` },
           { name: language === 'de' ? 'Battle Cards' : 'Battle Cards', url: `${SITE_URL}${getRoutePath('battleCards', language)}` },
           { name: title, url: detailUrl },
         ]}

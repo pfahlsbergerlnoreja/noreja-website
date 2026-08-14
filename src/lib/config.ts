@@ -15,6 +15,7 @@ export const siteConfig = {
     linkedin: "https://linkedin.com/company/noreja",
     twitter: "https://twitter.com/noreja_",
     youtube: "https://www.youtube.com/@noreja_intelligence",
+    medium: "https://medium.com/@lukas.pfahlsberger",
     referralProgram: "https://144242473.fs1.hubspotusercontent-eu1.net/hubfs/144242473/Noreja%20Referral%20Program%20DE.pdf"
   },
   hubspot: {

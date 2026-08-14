@@ -8,6 +8,21 @@ import logo from "@/assets/noreja_logo_white.webp";
 import isoBadge from "@/assets/privacy/iso_white.webp";
 import gdprBadge from "@/assets/privacy/gdpr_white.webp";
 
+/** Medium logo — lucide-react ships no Medium brand icon, so it is inlined here. */
+function MediumIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zM20.96 12c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z" />
+    </svg>
+  );
+}
+
 export function Footer() {
   const currentYear = new Date().getFullYear();
   const { t, language } = useLanguage();
@@ -22,6 +37,7 @@ export function Footer() {
     { name: t.navigation.events, routeKey: 'events' as const, external: false },
     { name: t.navigation.careers, routeKey: 'careers' as const, external: false },
     { name: t.navigation.definitions, routeKey: 'definitions' as const, external: false },
+    { name: t.navigation.battleCards, routeKey: 'battleCards' as const, external: false },
     { name: t.footer.sections.documentation, href: documentationHref, external: true },
     { name: t.footer.sections.referralProgram, href: siteConfig.links.referralProgram, external: true }
   ];
@@ -101,6 +117,17 @@ export function Footer() {
                 aria-label="Noreja on YouTube"
               >
                 <Youtube className="h-5 w-5" />
+              </motion.a>
+              <motion.a
+                href={siteConfig.links.medium}
+                className="text-muted-foreground hover:text-primary transition-fast"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Noreja on Medium"
+              >
+                <MediumIcon className="h-5 w-5" />
               </motion.a>
             </div>
           </div>

@@ -15,6 +15,7 @@ export interface Translations {
     events: string;
     careers: string;
     definitions: string;
+    battleCards: string;
     quickNavigation: string;
   };
   pages: {
@@ -26,6 +27,7 @@ export interface Translations {
       learnMoreHighlight: string;
       learnMoreSubtitle: string;
       learnMoreCta: string;
+      learnMoreCtaComparison: string;
       videoHeadline: string;
       discoverVideoSeries: string;
       capabilities: {
@@ -670,6 +672,7 @@ export const translations: Record<Language, Translations> = {
       events: "Events",
       careers: "Careers",
       definitions: "Definitions",
+      battleCards: "Battle Cards",
       quickNavigation: "Quick Navigation",
     },
     pages: {
@@ -681,6 +684,7 @@ export const translations: Record<Language, Translations> = {
         learnMoreHighlight: "Find out what Noreja costs",
         learnMoreSubtitle: "Compare transparent packages and pick the setup that fits your team.",
         learnMoreCta: "View Pricing",
+        learnMoreCtaComparison: "Vendor Comparison",
         videoHeadline: "Minerva AI in detail",
         discoverVideoSeries: "Discover Minerva in our video series",
         capabilities: {
@@ -1446,6 +1450,7 @@ export const translations: Record<Language, Translations> = {
       events: "Veranstaltungen",
       careers: "Karriere",
       definitions: "Definitionen",
+      battleCards: "Battle Cards",
       quickNavigation: "Schnellnavigation",
     },
     pages: {
@@ -1457,6 +1462,7 @@ export const translations: Record<Language, Translations> = {
         learnMoreHighlight: "Erfahre was Noreja kostet",
         learnMoreSubtitle: "Vergleiche transparente Pakete und finde das Setup, das zu deinem Team passt.",
         learnMoreCta: "Zu den Preisen",
+        learnMoreCtaComparison: "Anbietervergleich",
         videoHeadline: "Minerva AI im Detail",
         discoverVideoSeries: "Entdecke Minerva in unserer Videoreihe",
         capabilities: {

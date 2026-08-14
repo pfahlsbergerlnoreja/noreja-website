@@ -139,7 +139,7 @@ const teamMembersBase: TeamMemberBase[] = [
   {
     id: "8",
     name: "Temuçin Damdinjamts-Kintaert",
-    role: "Software Developer",
+    role: "Senior Software Developer",
     oneLiner: "Optimizing processes that scale with our growing global impact.",
     linkedInUrl: "https://www.linkedin.com/in/temucin-damdinjamts-kintaert/",
     imageFilename: "Temu-new.webp",

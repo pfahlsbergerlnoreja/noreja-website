@@ -74,7 +74,7 @@ export const definitions: Definition[] = [
       de: 'Prozessdaten plus Kontext und KI – von reiner Sichtbarkeit zu Verständnis und Handlung.',
       en: 'Process data plus context and AI – from mere visibility to understanding and action.',
     },
-    related: ['process-mining', 'causal-process-mining', 'event-knowledge-graph'],
+    related: ['process-mining', 'causal-process-mining', 'event-knowledge-graph', 'agentic-process-intelligence'],
   },
   {
     id: 'graph-databases',
@@ -114,7 +114,7 @@ export const definitions: Definition[] = [
       de: 'Ereignisse, Objekte und Beziehungen im Graphen – mehrere Perspektiven auf einmal.',
       en: 'Events, objects, and relationships in a graph – multiple perspectives at once.',
     },
-    related: ['graph-databases', 'object-centric-process-mining', 'event-log'],
+    related: ['graph-databases', 'object-centric-process-mining', 'event-log', 'process-grounding'],
   },
   {
     id: 'causal-process-mining',
@@ -134,7 +134,7 @@ export const definitions: Definition[] = [
       de: 'Ursache statt bloßer Reihenfolge – echte Zusammenhänge zwischen Prozessschritten.',
       en: 'Cause instead of mere sequence – the real relationships between process steps.',
     },
-    related: ['process-mining', 'directly-follows-limitations', 'event-knowledge-graph'],
+    related: ['process-mining', 'directly-follows-limitations', 'event-knowledge-graph', 'causal-ai'],
   },
   {
     id: 'directly-follows-limitations',
@@ -194,7 +194,7 @@ export const definitions: Definition[] = [
       de: 'Die Disziplin, Prozesse systematisch zu gestalten, zu steuern und zu verbessern.',
       en: 'The discipline of systematically designing, steering, and improving processes.',
     },
-    related: ['process-mining', 'process-intelligence', 'what-is-a-process'],
+    related: ['process-mining', 'process-intelligence', 'what-is-a-process', 'bpmn', 'epk'],
   },
   {
     id: 'what-is-a-process',
@@ -274,7 +274,7 @@ export const definitions: Definition[] = [
       de: 'Ist-Ablauf gegen Soll-Modell prüfen – Abweichungen und Regelverstöße aufdecken.',
       en: 'Check the actual flow against a target model – reveal deviations and violations.',
     },
-    related: ['process-discovery', 'to-be-vs-as-is-process', 'business-process-management'],
+    related: ['process-discovery', 'to-be-vs-as-is-process', 'bpmn', 'agent-conformance-checking'],
   },
   {
     id: 'task-mining',
@@ -294,7 +294,7 @@ export const definitions: Definition[] = [
       de: 'Manuelle Tätigkeiten am Desktop erfassen – die Ergänzung zum Process Mining.',
       en: 'Capture manual desktop activities – the complement to Process Mining.',
     },
-    related: ['process-mining', 'process-intelligence'],
+    related: ['process-mining', 'process-intelligence', 'agent-mining'],
   },
   {
     id: 'ocel-2',
@@ -422,7 +422,343 @@ export const definitions: Definition[] = [
       de: 'Soll-Prozess und Ist-Prozess',
       en: 'To-Be and As-Is Process',
     },
-    related: ['conformance-checking', 'business-process-management', 'process-mining'],
+    related: ['conformance-checking', 'business-process-management', 'process-mining', 'bpmn'],
+  },
+  {
+    id: 'bpmn',
+    question: {
+      de: 'Was ist BPMN?',
+      en: 'What is BPMN?',
+    },
+    definition: {
+      de: 'BPMN (Business Process Model and Notation) ist ein international standardisierter Notationsstandard zur grafischen Modellierung von Geschäftsprozessen, gepflegt von der Object Management Group. Er definiert Symbole für Aktivitäten, Ereignisse, Verzweigungen, Rollen (Pools und Lanes) sowie Nachrichtenflüsse, sodass Fachbereich und IT dieselbe Darstellung lesen können. BPMN-Modelle sind zugleich für Menschen lesbar und technisch ausführbar.',
+      en: 'BPMN (Business Process Model and Notation) is an internationally standardized notation for graphically modeling business processes, maintained by the Object Management Group. It defines symbols for activities, events, gateways, roles (pools and lanes), and message flows, so that business and IT can read the same representation. BPMN models are both human-readable and technically executable.',
+    },
+    whyImportant: {
+      de: 'In vielen Organisationen ist BPMN die Sprache, in der Soll-Prozesse dokumentiert sind. Damit ist es der natürliche Bezugspunkt für Conformance Checking: Der aus Daten rekonstruierte Ist-Prozess wird gegen das BPMN-Modell gehalten, um Abweichungen objektiv zu bestimmen.',
+      en: 'In many organizations, BPMN is the language in which target processes are documented. That makes it the natural reference point for Conformance Checking: the as-is process reconstructed from data is compared against the BPMN model to determine deviations objectively.',
+    },
+    teaser: {
+      de: 'Der internationale Standard zur grafischen Modellierung von Geschäftsprozessen.',
+      en: 'The international standard for graphically modeling business processes.',
+    },
+    term: {
+      de: 'BPMN',
+      en: 'BPMN',
+    },
+    related: ['epk', 'business-process-management', 'to-be-vs-as-is-process'],
+  },
+  {
+    id: 'epk',
+    question: {
+      de: 'Was ist eine ereignisgesteuerte Prozesskette (EPK)?',
+      en: 'What is an Event-driven Process Chain (EPC)?',
+    },
+    definition: {
+      de: 'Die ereignisgesteuerte Prozesskette (EPK) ist eine Modellierungsnotation, die einen Prozess als strenge Abfolge von Ereignissen und Funktionen darstellt, verknüpft durch logische Operatoren (UND, ODER, XOR). Sie entstand Anfang der 1990er-Jahre an der Universität des Saarlandes und verbreitete sich über SAP R/3 und ARIS im deutschsprachigen Raum. Charakteristisch ist der strikte Wechsel: Auf jedes Ereignis folgt eine Funktion und auf jede Funktion ein Ereignis.',
+      en: 'The Event-driven Process Chain (EPC) is a modeling notation that represents a process as a strict alternation of events and functions, linked by logical operators (AND, OR, XOR). It originated in the early 1990s at Saarland University and spread through SAP R/3 and ARIS across German-speaking countries. Its defining characteristic is the strict alternation: every event is followed by a function and every function by an event.',
+    },
+    whyImportant: {
+      de: 'In vielen deutschen Unternehmen liegt die bestehende Prozessdokumentation bis heute als EPK vor – häufig in ARIS. Wer Process Mining einführt, trifft daher fast immer auf EPK-Modelle als Soll-Referenz und muss sie mit den tatsächlich gemessenen Abläufen abgleichen.',
+      en: 'In many German companies, existing process documentation still exists as EPCs – frequently in ARIS. Anyone introducing Process Mining therefore almost always encounters EPC models as the target reference and has to reconcile them with the flows actually measured.',
+    },
+    teaser: {
+      de: 'Die im deutschsprachigen Raum verbreitete Notation aus Ereignissen und Funktionen.',
+      en: 'The notation of events and functions widely used in German-speaking countries.',
+    },
+    term: {
+      de: 'Ereignisgesteuerte Prozesskette (EPK)',
+      en: 'Event-driven Process Chain (EPC)',
+    },
+    related: ['bpmn', 'business-process-management', 'conformance-checking'],
+  },
+  {
+    id: 'agentic-process-intelligence',
+    question: {
+      de: 'Was ist Agentic Process Intelligence?',
+      en: 'What is Agentic Process Intelligence?',
+    },
+    definition: {
+      de: 'Agentic Process Intelligence bezeichnet den Einsatz autonomer KI-Agenten, die kontinuierlich auf dem Prozessmodell und den Prozessdaten eines Unternehmens arbeiten, statt nur auf einzelne Nutzeranfragen zu antworten. Die Agenten beobachten Kennzahlen, bilden und prüfen Hypothesen, erkennen Abweichungen und melden Ergebnisse proaktiv zurück. Damit verschiebt sich Process Intelligence von einer Analyse auf Abruf hin zu einer dauerhaft mitlaufenden Beobachtung.',
+      en: 'Agentic Process Intelligence describes the use of autonomous AI agents that work continuously on an organization’s process model and process data, rather than only responding to individual user queries. The agents monitor metrics, form and test hypotheses, detect deviations, and report results back proactively. This shifts Process Intelligence from analysis on demand to continuous, always-on observation.',
+    },
+    whyImportant: {
+      de: 'Klassische Prozessanalyse ist an die Aufmerksamkeit von Menschen gebunden: Was niemand abfragt, bleibt unentdeckt. Agentische Ansätze skalieren die Beobachtung über alle Prozesse hinweg und verkürzen die Zeit zwischen dem Entstehen eines Problems und seiner Erkennung erheblich.',
+      en: 'Classic process analysis is bound to human attention: whatever nobody queries stays undiscovered. Agentic approaches scale observation across all processes and substantially shorten the time between a problem arising and being noticed.',
+    },
+    teaser: {
+      de: 'Autonome KI-Agenten, die dauerhaft auf Prozessdaten arbeiten statt nur auf Abruf.',
+      en: 'Autonomous AI agents working continuously on process data instead of on demand.',
+    },
+    term: {
+      de: 'Agentic Process Intelligence',
+      en: 'Agentic Process Intelligence',
+    },
+    related: ['process-intelligence', 'agentic-root-cause-analysis', 'process-grounding'],
+  },
+  {
+    id: 'agent-mining',
+    question: {
+      de: 'Was ist Agent Mining?',
+      en: 'What is Agent Mining?',
+    },
+    definition: {
+      de: 'Agent Mining überträgt die Methoden des Process Mining auf die Aktivität von KI-Agenten: Deren Aufrufe, Werkzeugnutzungen und Entscheidungen werden als Ereignisdaten erfasst und wie ein Prozess analysiert. So wird sichtbar, welche Wege ein Agent tatsächlich genommen hat, wo er scheitert, sich im Kreis dreht oder unnötig teure Schritte ausführt. Agent Mining verhält sich zu KI-Agenten wie Task Mining zu menschlicher Desktop-Arbeit.',
+      en: 'Agent Mining applies Process Mining methods to the activity of AI agents: their calls, tool invocations, and decisions are captured as event data and analyzed like a process. This reveals which paths an agent actually took, where it fails, loops, or performs unnecessarily expensive steps. Agent Mining relates to AI agents the way Task Mining relates to human desktop work.',
+    },
+    whyImportant: {
+      de: 'Sobald Agenten in produktiven Abläufen mitarbeiten, werden sie selbst zu einem Prozessbestandteil – mit Laufzeiten, Kosten, Fehlerquoten und Varianten. Ohne Agent Mining bleibt ihr Verhalten eine Blackbox, die sich weder gezielt optimieren noch gegenüber Fachbereich und Revision belegen lässt.',
+      en: 'As soon as agents take part in productive workflows, they become part of the process themselves – with runtimes, costs, error rates, and variants. Without Agent Mining their behavior remains a black box that can neither be optimized deliberately nor evidenced to business owners and auditors.',
+    },
+    teaser: {
+      de: 'Process Mining, angewendet auf die Spuren von KI-Agenten.',
+      en: 'Process Mining applied to the traces left by AI agents.',
+    },
+    term: {
+      de: 'Agent Mining',
+      en: 'Agent Mining',
+    },
+    related: ['task-mining', 'process-mining', 'agent-conformance-checking'],
+  },
+  {
+    id: 'agent-conformance-checking',
+    question: {
+      de: 'Was ist Agent Conformance Checking?',
+      en: 'What is Agent Conformance Checking?',
+    },
+    definition: {
+      de: 'Agent Conformance Checking prüft, ob ein autonom handelnder KI-Agent innerhalb der für ihn erlaubten Prozess-, Rollen- und Regelgrenzen geblieben ist. Dazu wird das tatsächliche Verhalten des Agenten gegen ein Soll-Modell abgeglichen – analog zum klassischen Conformance Checking, aber mit dem Agenten als handelndem Akteur. Abweichungen wie nicht erlaubte Werkzeugaufrufe, übersprungene Freigaben oder Handlungen außerhalb des Mandats werden dadurch sichtbar.',
+      en: 'Agent Conformance Checking verifies whether an autonomously acting AI agent stayed within the process, role, and policy boundaries defined for it. The agent’s actual behavior is compared against a target model – analogous to classic Conformance Checking, but with the agent as the acting party. Deviations such as disallowed tool calls, skipped approvals, or actions outside its mandate become visible.',
+    },
+    whyImportant: {
+      de: 'Mit steigender Autonomie verschiebt sich die Verantwortungsfrage: Nicht mehr nur Menschen, sondern auch Agenten müssen nachweisen können, dass sie regelkonform gehandelt haben. Regulatorische Anforderungen wie der EU AI Act verlangen Nachvollziehbarkeit und Protokollierung – Agent Conformance Checking liefert dafür die prüfbare Grundlage.',
+      en: 'As autonomy increases, the accountability question shifts: not only humans but also agents must be able to demonstrate that they acted in compliance. Regulatory requirements such as the EU AI Act demand traceability and logging – Agent Conformance Checking provides the auditable basis for this.',
+    },
+    teaser: {
+      de: 'Der Nachweis, dass ein KI-Agent innerhalb seiner erlaubten Grenzen gehandelt hat.',
+      en: 'The proof that an AI agent acted within its permitted boundaries.',
+    },
+    term: {
+      de: 'Agent Conformance Checking',
+      en: 'Agent Conformance Checking',
+    },
+    related: ['conformance-checking', 'agent-mining', 'agentic-process-intelligence'],
+  },
+  {
+    id: 'process-grounding',
+    question: {
+      de: 'Was ist Process Grounding?',
+      en: 'What is Process Grounding?',
+    },
+    definition: {
+      de: 'Process Grounding bezeichnet die Verankerung eines Sprachmodells in den realen Prozess- und Ereignisdaten eines Unternehmens, sodass seine Aussagen auf überprüfbaren Fakten statt auf Sprachwahrscheinlichkeiten beruhen. Statt Dokumente als Textschnipsel bereitzustellen, greift das Modell auf ein strukturiertes Prozessmodell – etwa einen Event Knowledge Graph – mit Fällen, Objekten, Zeitpunkten und Beziehungen zu. Jede Antwort lässt sich damit auf konkrete Prozessinstanzen zurückführen.',
+      en: 'Process Grounding means anchoring a language model in an organization’s real process and event data, so that its statements rest on verifiable facts rather than on linguistic probability. Instead of supplying documents as text snippets, the model queries a structured process model – such as an Event Knowledge Graph – containing cases, objects, timestamps, and relationships. Every answer can therefore be traced back to concrete process instances.',
+    },
+    whyImportant: {
+      de: 'Ein Sprachmodell ohne Prozesskontext erzeugt plausibel klingende, aber unbelegte Aussagen über Durchlaufzeiten, Ursachen oder Verantwortlichkeiten. Grounding macht den Unterschied zwischen einem Assistenten, dem man glauben muss, und einem, dessen Aussagen man nachprüfen kann – die Voraussetzung dafür, KI überhaupt in Entscheidungen einzubinden.',
+      en: 'A language model without process context produces plausible-sounding but unsubstantiated claims about throughput times, causes, or responsibilities. Grounding is the difference between an assistant you have to believe and one whose statements you can verify – the precondition for involving AI in decisions at all.',
+    },
+    teaser: {
+      de: 'KI-Antworten in echten Prozessdaten verankern statt in Sprachwahrscheinlichkeit.',
+      en: 'Anchoring AI answers in real process data instead of linguistic probability.',
+    },
+    term: {
+      de: 'Process Grounding',
+      en: 'Process Grounding',
+    },
+    related: ['event-knowledge-graph', 'agentic-process-intelligence', 'process-ontology'],
+  },
+  {
+    id: 'causal-ai',
+    question: {
+      de: 'Was ist Causal AI?',
+      en: 'What is Causal AI?',
+    },
+    definition: {
+      de: 'Causal AI ist ein Zweig der künstlichen Intelligenz, der Ursache-Wirkungs-Beziehungen modelliert, statt nur statistische Zusammenhänge zu erkennen. Während klassisches Machine Learning aus Korrelationen Vorhersagen ableitet, beantwortet Causal AI Fragen der Form „Was passiert, wenn ich X verändere?". Grundlage dafür sind kausale Modelle, Interventionen und kontrafaktische Betrachtungen.',
+      en: 'Causal AI is a branch of artificial intelligence that models cause-and-effect relationships instead of only detecting statistical associations. While classic machine learning derives predictions from correlations, Causal AI answers questions of the form "what happens if I change X?". It rests on causal models, interventions, and counterfactual reasoning.',
+    },
+    whyImportant: {
+      de: 'Für operative Entscheidungen reicht eine Vorhersage nicht aus – gebraucht wird die Wirkung einer Maßnahme. Ein Modell, das erkennt, dass verspätete Lieferungen mit Reklamationen korrelieren, sagt nichts darüber, ob schnellere Lieferung die Reklamationen senkt. Causal AI schließt genau diese Lücke zwischen Beobachtung und Handlung.',
+      en: 'For operational decisions a prediction is not enough – what is needed is the effect of an action. A model that finds late deliveries correlate with complaints says nothing about whether faster delivery reduces complaints. Causal AI closes exactly this gap between observation and action.',
+    },
+    teaser: {
+      de: 'KI, die Ursache und Wirkung modelliert statt nur Korrelationen zu finden.',
+      en: 'AI that models cause and effect instead of merely finding correlations.',
+    },
+    term: {
+      de: 'Causal AI',
+      en: 'Causal AI',
+    },
+    related: ['causal-process-mining', 'directly-follows-limitations', 'agentic-root-cause-analysis'],
+  },
+  {
+    id: 'model-context-protocol',
+    question: {
+      de: 'Was ist das Model Context Protocol (MCP)?',
+      en: 'What is the Model Context Protocol (MCP)?',
+    },
+    definition: {
+      de: 'Das Model Context Protocol (MCP) ist ein offener Standard, über den KI-Modelle und Agenten auf externe Datenquellen, Werkzeuge und Systeme zugreifen. Statt für jede Kombination aus Modell und System eine eigene Schnittstelle zu bauen, stellt ein MCP-Server seine Fähigkeiten einmal standardisiert bereit, und jeder MCP-fähige Client kann sie nutzen. Für Prozessdaten bedeutet das: Ein Agent kann Prozessmodell, Kennzahlen und Fallhistorien abfragen, ohne dass eine maßgeschneiderte Integration nötig ist.',
+      en: 'The Model Context Protocol (MCP) is an open standard through which AI models and agents access external data sources, tools, and systems. Instead of building a separate interface for every model-and-system combination, an MCP server exposes its capabilities once in a standardized way, and any MCP-capable client can use them. For process data this means an agent can query the process model, metrics, and case histories without a bespoke integration.',
+    },
+    whyImportant: {
+      de: 'Der begrenzende Faktor agentischer KI ist selten das Modell, sondern der Zugang zu belastbarem Kontext. Ein offener Zugriffsstandard entkoppelt die Werkzeuglandschaft vom eingesetzten Modell und verhindert, dass sich Unternehmen dauerhaft an einen einzelnen Anbieter binden.',
+      en: 'The limiting factor for agentic AI is rarely the model but access to reliable context. An open access standard decouples the tool landscape from the model in use and prevents organizations from permanently locking themselves to a single vendor.',
+    },
+    teaser: {
+      de: 'Der offene Standard, über den KI-Agenten an externe Daten und Werkzeuge kommen.',
+      en: 'The open standard through which AI agents reach external data and tools.',
+    },
+    term: {
+      de: 'Model Context Protocol (MCP)',
+      en: 'Model Context Protocol (MCP)',
+    },
+    related: ['agentic-process-intelligence', 'process-grounding', 'agent-readiness'],
+  },
+  {
+    id: 'agentic-automation-vs-rpa',
+    question: {
+      de: 'Was unterscheidet Agentic Automation von RPA?',
+      en: 'What distinguishes Agentic Automation from RPA?',
+    },
+    definition: {
+      de: 'RPA (Robotic Process Automation) führt fest definierte Regeln und Klickfolgen aus: Der Roboter tut exakt das, was vorher modelliert wurde, und bricht ab, sobald die Realität davon abweicht. Agentic Automation gibt stattdessen ein Ziel vor und überlässt dem Agenten den Weg dorthin – er wählt Werkzeuge, reagiert auf unerwartete Zustände und plant um. Der Unterschied liegt also nicht im Automatisierungsgrad, sondern darin, ob der Ablauf vorgeschrieben oder zur Laufzeit entschieden wird.',
+      en: 'RPA (Robotic Process Automation) executes strictly defined rules and click sequences: the robot does exactly what was modeled beforehand and breaks as soon as reality deviates from it. Agentic Automation instead sets a goal and leaves the path to the agent – it selects tools, reacts to unexpected states, and re-plans. The difference is therefore not the degree of automation but whether the sequence is prescribed or decided at runtime.',
+    },
+    whyImportant: {
+      de: 'RPA scheitert typischerweise an Ausnahmen – und genau dort liegt in den meisten Prozessen der größte Aufwand. Agentische Ansätze decken diesen Ausnahmebereich ab, verlangen dafür aber neue Kontrollmechanismen: Wer den Weg nicht vorschreibt, muss ihn im Nachhinein überprüfen können.',
+      en: 'RPA typically fails on exceptions – and in most processes that is exactly where the greatest effort sits. Agentic approaches cover this exception space, but demand new control mechanisms in return: whoever does not prescribe the path must be able to review it afterwards.',
+    },
+    teaser: {
+      de: 'Vorgeschriebener Ablauf gegen zielgetriebene Entscheidung zur Laufzeit.',
+      en: 'A prescribed sequence versus a goal-driven decision at runtime.',
+    },
+    term: {
+      de: 'Agentic Automation',
+      en: 'Agentic Automation',
+    },
+    related: ['agent-conformance-checking', 'task-mining', 'agentic-process-intelligence'],
+  },
+  {
+    id: 'ai-agent-vs-copilot',
+    question: {
+      de: 'Was ist der Unterschied zwischen einem KI-Agenten und einem Copilot?',
+      en: 'What is the difference between an AI agent and a copilot?',
+    },
+    definition: {
+      de: 'Ein Copilot arbeitet reaktiv und im Takt des Menschen: Er wartet auf eine Eingabe, liefert einen Vorschlag und überlässt die Ausführung der Nutzerin oder dem Nutzer. Ein KI-Agent verfolgt dagegen ein Ziel über längere Zeit, entscheidet selbst über Zwischenschritte und wird auch dann tätig, wenn ihn niemand fragt. Der Unterschied liegt in Initiative, Zeithorizont und Handlungsspielraum – nicht im zugrunde liegenden Modell.',
+      en: 'A copilot works reactively and at human pace: it waits for input, offers a suggestion, and leaves execution to the user. An AI agent, by contrast, pursues a goal over a longer period, decides on intermediate steps itself, and acts even when nobody asks. The difference lies in initiative, time horizon, and scope of action – not in the underlying model.',
+    },
+    whyImportant: {
+      de: 'Die Begriffe werden im Marketing häufig synonym verwendet, führen aber zu völlig unterschiedlichen Erwartungen und Kontrollanforderungen. Wer einen Agenten einführt, braucht Mandat, Grenzen und Protokollierung; wer einen Copilot einführt, braucht vor allem gute Vorschlagsqualität.',
+      en: 'The terms are often used interchangeably in marketing, yet they create entirely different expectations and control requirements. Introducing an agent requires a mandate, boundaries, and logging; introducing a copilot mainly requires good suggestion quality.',
+    },
+    teaser: {
+      de: 'Reaktiver Vorschlag gegen eigenständiges Verfolgen eines Ziels.',
+      en: 'A reactive suggestion versus independently pursuing a goal.',
+    },
+    term: {
+      de: 'KI-Agent und Copilot',
+      en: 'AI Agent and Copilot',
+    },
+    related: ['agentic-process-intelligence', 'agentic-automation-vs-rpa', 'agent-conformance-checking'],
+  },
+  {
+    id: 'self-improving-processes',
+    question: {
+      de: 'Was sind selbstverbessernde Prozesse?',
+      en: 'What are self-improving processes?',
+    },
+    definition: {
+      de: 'Selbstverbessernde Prozesse sind Abläufe, die ihre eigene Ausführung messen, Schwachstellen erkennen und Anpassungen anstoßen, ohne dass dafür ein Verbesserungsprojekt gestartet werden muss. Sie entstehen aus der Kopplung von kontinuierlicher Prozessbeobachtung, Ursachenanalyse und der Fähigkeit, Maßnahmen vorzuschlagen oder auszulösen. Der Regelkreis aus Messen, Verstehen und Eingreifen läuft dabei dauerhaft statt in Projektzyklen.',
+      en: 'Self-improving processes are workflows that measure their own execution, identify weaknesses, and trigger adjustments without an improvement project having to be launched. They emerge from coupling continuous process observation, root-cause analysis, and the ability to propose or initiate measures. The loop of measuring, understanding, and intervening runs permanently instead of in project cycles.',
+    },
+    whyImportant: {
+      de: 'Klassische Prozessoptimierung ist projektförmig: Sie erzeugt einen Verbesserungssprung, der danach langsam wieder erodiert. Ein dauerhaft laufender Regelkreis hält das erreichte Niveau und reagiert auf Veränderungen in Märkten, Systemen und Volumina, ohne auf die nächste Analysewelle zu warten.',
+      en: 'Classic process optimization is project-shaped: it produces a step change that then slowly erodes again. A permanently running control loop holds the level achieved and reacts to changes in markets, systems, and volumes without waiting for the next wave of analysis.',
+    },
+    teaser: {
+      de: 'Prozesse, die ihren eigenen Verbesserungskreislauf dauerhaft am Laufen halten.',
+      en: 'Processes that keep their own improvement loop running permanently.',
+    },
+    term: {
+      de: 'Selbstverbessernde Prozesse',
+      en: 'Self-Improving Processes',
+    },
+    related: ['agentic-process-intelligence', 'business-process-management', 'digital-process-twin'],
+  },
+  {
+    id: 'process-ontology',
+    question: {
+      de: 'Was ist eine Prozess-Ontologie?',
+      en: 'What is a process ontology?',
+    },
+    definition: {
+      de: 'Eine Prozess-Ontologie ist eine formale Beschreibung der Begriffe eines Prozessbereichs und ihrer Beziehungen: welche Objekttypen es gibt, welche Ereignisse an ihnen auftreten und wie beides zusammenhängt. Sie hält fest, dass etwa Bestellung, Lieferung und Rechnung eigenständige Objekte mit definierten Verbindungen sind – und nicht bloß Spaltennamen in einer Tabelle. Damit wird aus Rohdaten ein Modell, das auch von Maschinen interpretiert werden kann.',
+      en: 'A process ontology is a formal description of the concepts in a process domain and their relationships: which object types exist, which events occur on them, and how the two connect. It records that a purchase order, a delivery, and an invoice are distinct objects with defined links – not merely column names in a table. This turns raw data into a model that machines can interpret as well.',
+    },
+    whyImportant: {
+      de: 'KI-Agenten können nur so präzise arbeiten, wie die Bedeutung der Daten hinterlegt ist. Ohne Ontologie muss jedes Modell die Semantik erraten; mit Ontologie kann es Fragen entlang echter Zusammenhänge beantworten und Fehlschlüsse durch falsch verknüpfte Objekte vermeiden.',
+      en: 'AI agents can only work as precisely as the meaning of the data is recorded. Without an ontology, every model has to guess the semantics; with one, it can answer questions along real relationships and avoid false conclusions from wrongly linked objects.',
+    },
+    teaser: {
+      de: 'Die semantische Schicht, die Prozessdaten für Mensch und Maschine interpretierbar macht.',
+      en: 'The semantic layer that makes process data interpretable for humans and machines.',
+    },
+    term: {
+      de: 'Prozess-Ontologie',
+      en: 'Process Ontology',
+    },
+    related: ['event-knowledge-graph', 'graph-databases', 'process-grounding'],
+  },
+  {
+    id: 'agentic-root-cause-analysis',
+    question: {
+      de: 'Was ist agentische Ursachenanalyse?',
+      en: 'What is agentic root cause analysis?',
+    },
+    definition: {
+      de: 'Bei der agentischen Ursachenanalyse übernimmt ein KI-Agent die Schrittfolge, die sonst eine Analystin oder ein Analyst manuell durchläuft: Auffälligkeit erkennen, Hypothesen bilden, sie gegen die Prozessdaten prüfen, verwerfen oder bestätigen und das Ergebnis begründen. Der Agent arbeitet iterativ und kann viele Hypothesen parallel prüfen, statt sich auf die naheliegendsten zu beschränken. Das Ergebnis ist keine Kennzahl, sondern eine belegte Erklärung samt der zugehörigen Fälle.',
+      en: 'In agentic root cause analysis, an AI agent takes over the sequence of steps an analyst would otherwise perform manually: spot an anomaly, form hypotheses, test them against the process data, reject or confirm them, and justify the result. The agent works iteratively and can test many hypotheses in parallel rather than being limited to the most obvious ones. The output is not a metric but a substantiated explanation together with the underlying cases.',
+    },
+    whyImportant: {
+      de: 'Der Engpass in der Prozessverbesserung ist selten das Erkennen einer Abweichung, sondern das Erklären ihrer Ursache – dieser Schritt ist zeitaufwendig und stark erfahrungsabhängig. Wird er automatisiert, verschiebt sich der menschliche Beitrag vom Suchen zum Bewerten und Entscheiden.',
+      en: 'The bottleneck in process improvement is rarely spotting a deviation but explaining its cause – a step that is time-consuming and heavily experience-dependent. Automating it shifts the human contribution from searching to judging and deciding.',
+    },
+    teaser: {
+      de: 'Ein Agent, der Ursachen-Hypothesen selbst bildet und an den Daten prüft.',
+      en: 'An agent that forms root-cause hypotheses itself and tests them against the data.',
+    },
+    term: {
+      de: 'Agentische Ursachenanalyse',
+      en: 'Agentic Root Cause Analysis',
+    },
+    related: ['causal-process-mining', 'agentic-process-intelligence', 'causal-ai'],
+  },
+  {
+    id: 'agent-readiness',
+    question: {
+      de: 'Wann sind Prozessdaten bereit für KI-Agenten?',
+      en: 'When is process data ready for AI agents?',
+    },
+    definition: {
+      de: 'Agent Readiness beschreibt, ob die Prozessdaten eines Unternehmens so beschaffen sind, dass KI-Agenten verlässlich darauf arbeiten können. Dazu gehören eindeutige Identifikatoren, verlässliche Zeitstempel, klar benannte Aktivitäten, abgebildete Objektbeziehungen und ein hinterlegtes semantisches Modell. Fehlt eine dieser Voraussetzungen, liefert ein Agent zwar Antworten – aber keine belastbaren.',
+      en: 'Agent Readiness describes whether an organization’s process data is structured such that AI agents can work on it reliably. This includes unambiguous identifiers, dependable timestamps, clearly named activities, modeled object relationships, and a documented semantic model. If any of these is missing, an agent will still produce answers – just not dependable ones.',
+    },
+    whyImportant: {
+      de: 'Die meisten gescheiterten KI-Initiativen scheitern nicht am Modell, sondern an der Datengrundlage. Agent Readiness früh zu prüfen verhindert, dass Aufwand in Agenten fließt, für deren Aussagen später niemand einstehen kann.',
+      en: 'Most failed AI initiatives fail not on the model but on the data foundation. Assessing Agent Readiness early prevents effort flowing into agents whose statements nobody can later stand behind.',
+    },
+    teaser: {
+      de: 'Die Voraussetzungen, die Prozessdaten erfüllen müssen, damit Agenten verlässlich arbeiten.',
+      en: 'The conditions process data must meet for agents to work reliably.',
+    },
+    term: {
+      de: 'Agent Readiness von Prozessdaten',
+      en: 'Agent Readiness of Process Data',
+    },
+    related: ['event-log', 'process-grounding', 'process-ontology'],
   },
 ];
 

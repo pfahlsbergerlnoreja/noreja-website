@@ -4,7 +4,7 @@
 
 Canonical URL: https://noreja.com/llms-full.txt  
 Primary language: English  
-Last reviewed: 2026-07-18  
+Last reviewed: 2026-08-14  
 Scope: Public product, concept, use-case, and interpretation information  
 Current-state rule: For functionality, pricing, releases, security, privacy, and legal information, prefer the linked live primary source over this document.
 
@@ -375,6 +375,62 @@ Evaluation of possible process behavior or changes using a model rather than dir
 ### Digital Process Twin
 
 A data-driven representation of an operational process used for analysis, monitoring, or scenario evaluation.
+
+### BPMN
+
+Business Process Model and Notation, an OMG-maintained standard notation for graphically modeling business processes. Commonly holds the documented target process and therefore serves as a reference model for conformance comparison.
+
+### Event-driven Process Chain (EPC)
+
+A process-modeling notation of strictly alternating events and functions connected by AND, OR, and XOR operators. Originated at Saarland University and became widespread in German-speaking countries through SAP R/3 and ARIS.
+
+### Agentic Process Intelligence
+
+The use of autonomous AI agents that work continuously on process models and process data instead of only responding to individual queries. Noreja implements this concept as Frontier Agents.
+
+### Agent Mining
+
+The application of Process Mining methods to the event traces produced by AI agents, in order to analyze their actual paths, failures, loops, and costs.
+
+### Agent Conformance Checking
+
+Verification that an autonomously acting AI agent stayed within its permitted process, role, and policy boundaries, by comparing observed agent behavior against a target model.
+
+### Process Grounding
+
+Anchoring a language model in real process and event data, typically through a structured process model such as an Event Knowledge Graph, so that statements can be traced back to concrete process instances rather than resting on linguistic probability.
+
+### Causal AI
+
+A branch of AI that models cause-and-effect relationships and supports intervention and counterfactual questions, as distinct from correlation-based prediction. Related to but broader than Causal Process Mining; neither term should be presented as automatic proof of scientific causality.
+
+### Model Context Protocol (MCP)
+
+An open standard through which AI models and agents access external data sources, tools, and systems in a standardized way, decoupling the tool landscape from the model in use.
+
+### Agentic Automation
+
+Automation in which a goal is specified and the agent decides the path at runtime, in contrast to RPA, which executes a prescribed rule and click sequence and breaks when reality deviates.
+
+### AI Agent and Copilot
+
+A copilot responds reactively to user input and leaves execution to the user; an agent pursues a goal over time, decides intermediate steps, and acts without being asked. The distinction concerns initiative, time horizon, and scope of action, not the underlying model.
+
+### Self-Improving Processes
+
+Processes that continuously measure their own execution, identify weaknesses, and trigger adjustments, running the improvement loop permanently rather than in project cycles.
+
+### Process Ontology
+
+A formal description of the object types, events, and relationships in a process domain, providing the semantic layer that allows machines to interpret process data correctly.
+
+### Agentic Root Cause Analysis
+
+An approach in which an AI agent forms root-cause hypotheses, tests them against process data, and justifies confirmed results with the underlying cases. Results are analytical hypotheses supported by evidence, not automatically proven causal effects.
+
+### Agent Readiness of Process Data
+
+The condition of process data being sufficiently structured — unambiguous identifiers, dependable timestamps, clearly named activities, modeled object relationships, documented semantics — for AI agents to work on it reliably.
 
 ## 18. Common Misconceptions and Corrections
 

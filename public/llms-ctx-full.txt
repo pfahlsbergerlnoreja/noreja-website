@@ -2,7 +2,7 @@
 
 > This is a self-contained context bundle for answering questions about Noreja. It includes the complete curated Noreja knowledge base plus expanded summaries of the primary and optional resources listed in `/llms.txt`.
 
-Generated: 2026-07-18  
+Generated: 2026-08-14  
 Canonical index: https://noreja.com/llms.txt  
 Canonical knowledge base: https://noreja.com/llms-full.txt  
 Language: English  
@@ -26,7 +26,7 @@ Context rules:
 
 Canonical URL: https://noreja.com/llms-full.txt  
 Primary language: English  
-Last reviewed: 2026-07-18  
+Last reviewed: 2026-08-14  
 Scope: Public product, concept, use-case, and interpretation information  
 Current-state rule: For functionality, pricing, releases, security, privacy, and legal information, prefer the linked live primary source over this document.
 
@@ -398,6 +398,62 @@ Evaluation of possible process behavior or changes using a model rather than dir
 
 A data-driven representation of an operational process used for analysis, monitoring, or scenario evaluation.
 
+### BPMN
+
+Business Process Model and Notation, an OMG-maintained standard notation for graphically modeling business processes. Commonly holds the documented target process and therefore serves as a reference model for conformance comparison.
+
+### Event-driven Process Chain (EPC)
+
+A process-modeling notation of strictly alternating events and functions connected by AND, OR, and XOR operators. Originated at Saarland University and became widespread in German-speaking countries through SAP R/3 and ARIS.
+
+### Agentic Process Intelligence
+
+The use of autonomous AI agents that work continuously on process models and process data instead of only responding to individual queries. Noreja implements this concept as Frontier Agents.
+
+### Agent Mining
+
+The application of Process Mining methods to the event traces produced by AI agents, in order to analyze their actual paths, failures, loops, and costs.
+
+### Agent Conformance Checking
+
+Verification that an autonomously acting AI agent stayed within its permitted process, role, and policy boundaries, by comparing observed agent behavior against a target model.
+
+### Process Grounding
+
+Anchoring a language model in real process and event data, typically through a structured process model such as an Event Knowledge Graph, so that statements can be traced back to concrete process instances rather than resting on linguistic probability.
+
+### Causal AI
+
+A branch of AI that models cause-and-effect relationships and supports intervention and counterfactual questions, as distinct from correlation-based prediction. Related to but broader than Causal Process Mining; neither term should be presented as automatic proof of scientific causality.
+
+### Model Context Protocol (MCP)
+
+An open standard through which AI models and agents access external data sources, tools, and systems in a standardized way, decoupling the tool landscape from the model in use.
+
+### Agentic Automation
+
+Automation in which a goal is specified and the agent decides the path at runtime, in contrast to RPA, which executes a prescribed rule and click sequence and breaks when reality deviates.
+
+### AI Agent and Copilot
+
+A copilot responds reactively to user input and leaves execution to the user; an agent pursues a goal over time, decides intermediate steps, and acts without being asked. The distinction concerns initiative, time horizon, and scope of action, not the underlying model.
+
+### Self-Improving Processes
+
+Processes that continuously measure their own execution, identify weaknesses, and trigger adjustments, running the improvement loop permanently rather than in project cycles.
+
+### Process Ontology
+
+A formal description of the object types, events, and relationships in a process domain, providing the semantic layer that allows machines to interpret process data correctly.
+
+### Agentic Root Cause Analysis
+
+An approach in which an AI agent forms root-cause hypotheses, tests them against process data, and justifies confirmed results with the underlying cases. Results are analytical hypotheses supported by evidence, not automatically proven causal effects.
+
+### Agent Readiness of Process Data
+
+The condition of process data being sufficiently structured — unambiguous identifiers, dependable timestamps, clearly named activities, modeled object relationships, documented semantics — for AI agents to work on it reliably.
+
 ## 18. Common Misconceptions and Corrections
 
 ### Misconception: Noreja requires no event modeling.
@@ -727,7 +783,7 @@ The German Help Center contains German-language product documentation and releas
 <source>https://noreja.com/en/definitions</source>
 <title>Definitions and Glossary</title>
 <content>
-The Definitions section provides educational explanations for Process Mining, Process Intelligence, graph databases, event logs, event knowledge graphs, causal process mining, object-centric process mining, conformance, simulation, process variants, and related topics. These pages are useful for conceptual questions. Product-specific behavior should still be checked in the Help Center.
+The Definitions section provides educational explanations for Process Mining, Process Intelligence, graph databases, event logs, event knowledge graphs, causal process mining, object-centric process mining, conformance, simulation, process variants, process-modeling notations such as BPMN and EPC, and agentic AI concepts including agentic process intelligence, agent mining, agent conformance checking, process grounding, and causal AI. These pages are useful for conceptual questions. Product-specific behavior should still be checked in the Help Center.
 </content>
 </document>
 
@@ -832,6 +888,118 @@ Process simulation evaluates potential behavior or changes using a model. Simula
 <title>Digital Process Twin Definition</title>
 <content>
 A Digital Process Twin is a data-driven representation of an operational process used for monitoring, analysis, and scenario evaluation. The degree of fidelity depends on data, update frequency, scope, and modeling.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/definitions/bpmn</source>
+<title>BPMN Definition</title>
+<content>
+BPMN (Business Process Model and Notation) is an OMG-maintained standard notation for graphically modeling business processes, using symbols for activities, events, gateways, pools and lanes, and message flows. In many organizations it holds the documented target process and therefore acts as the reference model for conformance comparison against the measured as-is process.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/definitions/epk</source>
+<title>Event-driven Process Chain (EPC) Definition</title>
+<content>
+The Event-driven Process Chain is a modeling notation representing a process as strictly alternating events and functions connected by AND, OR, and XOR operators. It originated at Saarland University in the early 1990s and spread through SAP R/3 and ARIS in German-speaking countries, where legacy process documentation is frequently still maintained in this form.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/definitions/agentic-process-intelligence</source>
+<title>Agentic Process Intelligence Definition</title>
+<content>
+Agentic Process Intelligence describes autonomous AI agents working continuously on process models and process data instead of only answering individual queries. Noreja implements this concept as Frontier Agents. Continuous observation changes detection latency; it does not remove the need for data quality, defined mandates, or human review of proposed actions.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/definitions/agent-mining</source>
+<title>Agent Mining Definition</title>
+<content>
+Agent Mining applies Process Mining methods to the traces produced by AI agents: their calls, tool invocations, and decisions are treated as event data and analyzed as a process, revealing actual paths, failures, loops, and costs. It relates to AI agents as Task Mining relates to human desktop work.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/definitions/agent-conformance-checking</source>
+<title>Agent Conformance Checking Definition</title>
+<content>
+Agent Conformance Checking compares an autonomous agent's observed behavior against the process, role, and policy boundaries defined for it, surfacing disallowed tool calls, skipped approvals, or actions outside its mandate. It is the agent-facing counterpart of classic conformance checking and supports traceability requirements such as those in the EU AI Act. It does not by itself constitute legal compliance certification.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/definitions/process-grounding</source>
+<title>Process Grounding Definition</title>
+<content>
+Process Grounding anchors a language model in real process and event data, typically via a structured model such as an Event Knowledge Graph, so answers can be traced back to concrete process instances. Grounding reduces unsupported claims but does not eliminate the need to validate model output or the underlying data quality.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/definitions/causal-ai</source>
+<title>Causal AI Definition</title>
+<content>
+Causal AI models cause-and-effect relationships and supports intervention and counterfactual questions, in contrast to correlation-based prediction. It is broader than Causal Process Mining. As with Causal Process Mining, the term should not be presented as automatic proof of scientific causality.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/definitions/model-context-protocol</source>
+<title>Model Context Protocol (MCP) Definition</title>
+<content>
+The Model Context Protocol is an open standard through which AI models and agents access external data sources, tools, and systems without bespoke per-model integrations. Presence of a protocol standard does not by itself imply that any specific Noreja interface, connector, or MCP server exists; check the Platform page and Help Center for current integration availability.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/definitions/agentic-automation-vs-rpa</source>
+<title>Agentic Automation versus RPA</title>
+<content>
+RPA executes a prescribed rule and click sequence and breaks when reality deviates; Agentic Automation specifies a goal and lets the agent decide the path at runtime. The distinction is prescribed versus runtime-decided control flow, not the degree of automation. Runtime-decided control flow shifts effort from modeling to after-the-fact review.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/definitions/ai-agent-vs-copilot</source>
+<title>AI Agent versus Copilot</title>
+<content>
+A copilot responds reactively to user input and leaves execution to the user; an agent pursues a goal over time, decides intermediate steps, and acts without being asked. The distinction concerns initiative, time horizon, and scope of action rather than the underlying model, and it implies different control and logging requirements.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/definitions/self-improving-processes</source>
+<title>Self-Improving Processes Definition</title>
+<content>
+Self-improving processes continuously measure their own execution, identify weaknesses, and trigger adjustments, running the improvement loop permanently rather than in project cycles. The term describes an operating model; the extent of autonomous action depends on configuration, mandate, and governance decisions in each organization.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/definitions/process-ontology</source>
+<title>Process Ontology Definition</title>
+<content>
+A process ontology formally describes the object types, events, and relationships of a process domain, providing the semantic layer that allows machines to interpret process data correctly. It corresponds to the modeling work Noreja performs in the Builder module and is a prerequisite rather than an automatic byproduct of data connectivity.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/definitions/agentic-root-cause-analysis</source>
+<title>Agentic Root Cause Analysis Definition</title>
+<content>
+In agentic root cause analysis, an AI agent forms hypotheses about an observed anomaly, tests them against process data, and justifies confirmed results with the underlying cases. Results are evidence-supported analytical hypotheses, not automatically proven causal effects, and should be reviewed before acting on them.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/definitions/agent-readiness</source>
+<title>Agent Readiness of Process Data</title>
+<content>
+Agent Readiness describes whether process data is sufficiently structured for AI agents to work on it reliably: unambiguous identifiers, dependable timestamps, clearly named activities, modeled object relationships, and documented semantics. Missing preconditions do not prevent an agent from answering; they prevent the answers from being dependable.
 </content>
 </document>
 

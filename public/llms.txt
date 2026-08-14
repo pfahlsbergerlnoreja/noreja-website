@@ -31,7 +31,7 @@ Interpretation guidance:
 
 ## Knowledge and Concepts
 
-- [Definitions and Glossary](https://noreja.com/en/definitions): Index of Noreja's English-language explanations of Process Intelligence, Process Mining, causal modeling, event data, and related concepts.
+- [Definitions and Glossary](https://noreja.com/en/definitions): Index of Noreja's English-language explanations of Process Intelligence, Process Mining, causal modeling, event data, process-modeling notations (BPMN, EPC), and agentic AI concepts.
 - [The Origin of Causal Process Mining](https://docs.noreja.com/en/article/the-origin-of-causal-process-mining): Research-oriented explanation of causal process models, relational event data, and limitations of directly-follows approaches.
 - [Contextualizing Knowledge for Minerva](https://docs.noreja.com/en/article/contextualizing-knowledge-for-minerva-ai): Explains how process data is enriched with case, process, organizational, and external context for AI-supported analysis.
 - [Using LLMs with Noreja](https://docs.noreja.com/en/article/minerva-using-llms-with-noreja): Describes cloud, Noreja-managed, dedicated, and customer-operated LLM deployment options and associated data-control considerations.
@@ -92,6 +92,20 @@ Interpretation guidance:
 - [Process Simulation](https://noreja.com/en/definitions/process-simulation): Explanation of evaluating potential process changes through simulation.
 - [Digital Process Twin](https://noreja.com/en/definitions/digital-process-twin): Explanation of a data-driven digital representation of an operational process.
 - [To-Be and As-Is Processes](https://noreja.com/en/definitions/to-be-vs-as-is-process): Explanation of current-state and target-state process models.
+- [BPMN](https://noreja.com/en/definitions/bpmn): Explanation of the Business Process Model and Notation standard for graphical process modeling.
+- [Event-driven Process Chain (EPC)](https://noreja.com/en/definitions/epk): Explanation of the EPC notation of alternating events and functions, widely used in German-speaking countries.
+- [Agentic Process Intelligence](https://noreja.com/en/definitions/agentic-process-intelligence): Explanation of autonomous AI agents working continuously on process models and process data.
+- [Agent Mining](https://noreja.com/en/definitions/agent-mining): Explanation of applying Process Mining methods to the event traces produced by AI agents.
+- [Agent Conformance Checking](https://noreja.com/en/definitions/agent-conformance-checking): Explanation of verifying that an autonomous agent stayed within its permitted process, role, and policy boundaries.
+- [Process Grounding](https://noreja.com/en/definitions/process-grounding): Explanation of anchoring language-model output in real process and event data rather than linguistic probability.
+- [Causal AI](https://noreja.com/en/definitions/causal-ai): Explanation of AI that models cause-and-effect relationships rather than statistical association alone.
+- [Model Context Protocol (MCP)](https://noreja.com/en/definitions/model-context-protocol): Explanation of the open standard through which AI models and agents access external data sources and tools.
+- [Agentic Automation versus RPA](https://noreja.com/en/definitions/agentic-automation-vs-rpa): Explanation of the difference between prescribed rule execution and goal-driven decisions at runtime.
+- [AI Agent versus Copilot](https://noreja.com/en/definitions/ai-agent-vs-copilot): Explanation of the difference in initiative, time horizon, and scope of action between agents and copilots.
+- [Self-Improving Processes](https://noreja.com/en/definitions/self-improving-processes): Explanation of processes that run their own continuous measure-understand-intervene loop.
+- [Process Ontology](https://noreja.com/en/definitions/process-ontology): Explanation of the semantic layer describing object types, events, and their relationships in a process domain.
+- [Agentic Root Cause Analysis](https://noreja.com/en/definitions/agentic-root-cause-analysis): Explanation of agents forming and testing root-cause hypotheses against process data.
+- [Agent Readiness of Process Data](https://noreja.com/en/definitions/agent-readiness): Explanation of the data conditions required for AI agents to work reliably on process data.
 - [Blog](https://blog.noreja.com): Articles, business cases, process-management guidance, and company perspectives.
 - [Downloads](https://noreja.com/en/downloads): White papers, guides, and downloadable resources.
 - [Team](https://noreja.com/en/team): Current team, founders, and advisory-board information.
