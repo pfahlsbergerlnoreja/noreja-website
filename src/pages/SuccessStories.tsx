@@ -5,6 +5,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { Card, CardContent, CardDescription, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { HubSpotBlogTeaser } from "@/components/HubSpotBlogTeaser";
+import { CostOfInactionCalculator } from "@/components/CostOfInactionCalculator";
 import { successStories } from "@/lib/successStories";
 import { useCases } from "@/lib/useCases";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, type CarouselApi } from "@/components/ui/carousel";
@@ -104,6 +105,9 @@ const SuccessStories = () => {
           </motion.div>
         </div>
       </section>
+
+      {/* Cost of Inaction Calculator */}
+      <CostOfInactionCalculator />
 
       {/* Success Stories Carousel */}
       <section className="pb-20">
