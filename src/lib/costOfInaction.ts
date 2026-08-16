@@ -1079,7 +1079,9 @@ export const coiCopy = {
     badge: "Cost-of-Inaction Rechner",
     title: "Was kostet es, nichts zu tun?",
     subtitle:
-      "Berechne in 30 Sekunden, wie viele versteckte Kosten pro Jahr in deinem End-to-End-Prozess stecken – entlang der vier Prozessdimensionen Zeit, Kosten, Qualität und Komplexität.",
+      "Berechne in 5 min, wie viele versteckte Kosten pro Jahr in deinem End-to-End-Prozess stecken – entlang der vier Prozessdimensionen Zeit, Kosten, Qualität und Komplexität.",
+    openCalculator: "Cost-of-Inaction jetzt berechnen",
+    closeCalculator: "Rechner ausblenden",
     companySection: "Unternehmen & Geschäftsmodell",
     processSection: "Welchen Prozess willst du rechnen?",
     calculationSection: "Berechnung",
@@ -1132,6 +1134,8 @@ export const coiCopy = {
     ofRevenue: "vom Umsatz",
     recoverable: "Davon typischerweise kurzfristig hebbar",
     cta: "Potenzial im Gespräch validieren",
+    downloadPdf: "Meine Einstellungen als PDF herunterladen",
+    downloadPdfBusy: "PDF wird erstellt …",
     methodToggleOpen: "Wie wird gerechnet?",
     methodToggleClose: "Berechnung ausblenden",
     method: [
@@ -1149,7 +1153,9 @@ export const coiCopy = {
     badge: "Cost-of-Inaction Calculator",
     title: "What does doing nothing cost you?",
     subtitle:
-      "Calculate in 30 seconds how much hidden cost per year sits in your end-to-end process – along the four process dimensions time, cost, quality and complexity.",
+      "Calculate in 5 min how much hidden cost per year sits in your end-to-end process – along the four process dimensions time, cost, quality and complexity.",
+    openCalculator: "Calculate Cost-of-Inaction now",
+    closeCalculator: "Hide calculator",
     companySection: "Company & business model",
     processSection: "Which process do you want to calculate?",
     calculationSection: "Calculation",
@@ -1201,6 +1207,8 @@ export const coiCopy = {
     ofRevenue: "of revenue",
     recoverable: "Typically addressable in the short term",
     cta: "Validate your potential with us",
+    downloadPdf: "Download my settings as PDF",
+    downloadPdfBusy: "Creating PDF …",
     methodToggleOpen: "How is this calculated?",
     methodToggleClose: "Hide calculation",
     method: [

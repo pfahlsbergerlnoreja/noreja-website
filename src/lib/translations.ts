@@ -74,6 +74,7 @@ export interface Translations {
       titleHighlight: string;
       subtitle: string;
       readCaseStudy: string;
+      comingSoon: string;
       backButton?: string;
       downloadSection?: {
         title: string;
@@ -731,6 +732,7 @@ export const translations: Record<Language, Translations> = {
         titleHighlight: "Success Stories",
         subtitle: "See how other organizations use Noreja Process Intelligence to move faster, work more efficiently, and stay data-driven—and what you can apply to your own processes.",
         readCaseStudy: "Read Case Study",
+        comingSoon: "Coming soon",
         backButton: "Back to Success Stories",
         downloadSection: {
           title: "Still unsure?",
@@ -1509,6 +1511,7 @@ export const translations: Record<Language, Translations> = {
         titleHighlight: "Success Stories",
         subtitle: "Unsere Success Stories zeigen dir, wie andere Unternehmen mit Noreja Process Intelligence schneller, effizienter und datengetriebener arbeiten. Gewinne Einblicke, die du direkt auf deine eigenen Prozesse übertragen kannst.",
         readCaseStudy: "Success Story lesen",
+        comingSoon: "Coming soon",
         backButton: "Zurück zu Success Stories",
         downloadSection: {
           title: "Noch unsicher?",

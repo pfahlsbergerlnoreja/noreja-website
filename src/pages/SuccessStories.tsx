@@ -1,26 +1,19 @@
 import { motion } from "framer-motion";
-import { ArrowRight, Package, Factory, Shield, Building2, Trophy } from "lucide-react";
+import { ArrowRight, Package, Factory, Shield, Building2, Trophy, Clock } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { Card, CardContent, CardDescription, CardHeader } from "@/components/ui/card";
+import { Card, CardContent, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { HubSpotBlogTeaser } from "@/components/HubSpotBlogTeaser";
 import { CostOfInactionCalculator } from "@/components/CostOfInactionCalculator";
-import { successStories } from "@/lib/successStories";
+import { successStories, upcomingSuccessStories } from "@/lib/successStories";
 import { useCases } from "@/lib/useCases";
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, type CarouselApi } from "@/components/ui/carousel";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { AnimatedHeading } from "@/components/AnimatedHeading";
 import { getRoutePath } from "@/lib/routes";
-import { useIsMobile } from "@/hooks/use-mobile";
 
 const SuccessStories = () => {
   const { t, language } = useLanguage();
-  const isMobile = useIsMobile();
-  const [api, setApi] = useState<CarouselApi>();
-  const [current, setCurrent] = useState(0);
-  const [count, setCount] = useState(0);
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 
   // Language-specific heading texts
   const headingTexts = {
@@ -36,41 +29,32 @@ const SuccessStories = () => {
 
   const currentHeading = headingTexts[language];
 
+  // Upcoming case studies are listed first, the published ones follow at the bottom
+  const storyCards = [
+    ...upcomingSuccessStories.map((story) => ({
+      id: story.id,
+      companyName: story.companyName,
+      logoUrl: story.logoUrl,
+      imageUrl: story.cardImageUrl,
+      industry: story.industry[language],
+      summary: story.summary[language],
+      detailPath: undefined as string | undefined
+    })),
+    ...successStories.map((story) => ({
+      id: story.id,
+      companyName: story.companyName,
+      logoUrl: story.logoUrl,
+      imageUrl: story.cardImageUrl || story.coverImageUrl,
+      industry: story.industry[language],
+      summary: story.summary[language],
+      detailPath: getRoutePath('successStoryDetail', language, { companyName: story.id })
+    }))
+  ];
+
   // Scroll to top when component mounts
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
-  useEffect(() => {
-    if (!api) return;
-
-    setCount(api.scrollSnapList().length);
-    setCurrent(api.selectedScrollSnap() + 1);
-
-    api.on("select", () => {
-      setCurrent(api.selectedScrollSnap() + 1);
-    });
-  }, [api]);
-
-  useEffect(() => {
-    if (!api || !isAutoPlaying) return;
-
-    const interval = setInterval(() => {
-      api.scrollNext();
-    }, 3000);
-
-    return () => clearInterval(interval);
-  }, [api, isAutoPlaying]);
-
-  const handleMouseEnter = () => setIsAutoPlaying(false);
-  const handleMouseLeave = () => setIsAutoPlaying(true);
-
-  const handleDotClick = (index: number) => {
-    api?.scrollTo(index);
-    setIsAutoPlaying(false);
-    // Resume autoplay after 5 seconds
-    setTimeout(() => setIsAutoPlaying(true), 5000);
-  };
 
   const gradientStyle = {
     background: `
@@ -109,128 +93,79 @@ const SuccessStories = () => {
       {/* Cost of Inaction Calculator */}
       <CostOfInactionCalculator />
 
-      {/* Success Stories Carousel */}
-      <section className="pb-20">
-        <div className="w-full max-w-7xl mx-auto px-4 lg:px-8">
-          {/* Tag Badge */}
-          {current > 0 && successStories[current - 1] && (
-            <motion.div
-              key={current}
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.3 }}
-              className="flex justify-center mb-8"
-            >
-              <div className="inline-flex items-center px-4 py-2 rounded-full bg-primary/10 border border-primary/20">
-                <Trophy className="w-4 h-4 mr-2 text-noreja-tertiary" />
-                <span className="text-sm font-medium">{successStories[current - 1].industry[language]}</span>
-              </div>
-            </motion.div>
-          )}
-          
-          <div 
-            className="relative"
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-          >
-            <Carousel
-              setApi={setApi}
-              opts={{
-                align: "center",
-                loop: true,
-              }}
-              className="w-full max-w-4xl mx-auto"
-            >
-              <CarouselContent className="-ml-4">
-                {successStories.map((story, index) => (
-                  <CarouselItem key={story.id} className="pl-4 basis-full">
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.6, delay: index * 0.1 }}
-                      className="h-full"
-                    >
-                      <Card className="h-full group hover:shadow-md transition-all duration-300 cursor-pointer border-border/30 hover:border-noreja-main/20 max-w-4xl mx-auto overflow-hidden aspect-[45/44] md:aspect-video relative">
-                        {/* Background Image */}
-                        <div 
-                          className="absolute inset-0 bg-cover bg-center"
-                          style={{
-                            backgroundImage: `url(${story.coverImageUrl})`,
-                            backgroundSize: 'cover',
-                            backgroundPosition: 'center'
-                          }}
-                        />
-                        
-                        {/* Dark Overlay */}
-                        <div className="absolute inset-0 bg-black/60" />
-                        
-                        {/* Company Logo - Top Right (hidden on mobile) */}
-                        <div className="absolute top-4 right-4 z-20 w-20 h-auto hidden md:block">
+      {/* Success Stories Grid */}
+      <section className="pb-20 px-4 lg:px-8">
+        <div className="w-full max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+            {storyCards.map((story, index) => (
+              <motion.div
+                key={story.id}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: (index % 2) * 0.1 }}
+                viewport={{ once: true, margin: "-60px" }}
+                className="h-full"
+              >
+                <Card className="story-card group h-full overflow-hidden border-border/40 bg-card/80 backdrop-blur-sm">
+                  <div className="flex h-full flex-col sm:flex-row">
+                    {/* Cover Image */}
+                    <div className="relative shrink-0 overflow-hidden sm:w-2/5">
+                      <img
+                        src={story.imageUrl}
+                        alt={`${story.companyName} – ${story.industry}`}
+                        loading="lazy"
+                        className="h-48 w-full object-cover transition-transform duration-500 group-hover:scale-105 sm:h-full sm:min-h-[16rem]"
+                      />
+                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/10" />
+
+                      {/* Company Logo */}
+                      {story.logoUrl && (
+                        <div className="absolute bottom-4 left-4 z-10 w-24">
                           <img
                             src={story.logoUrl}
                             alt={`${story.companyName} logo`}
-                            className="w-full h-auto object-contain"
+                            className="h-auto w-full object-contain drop-shadow-lg"
                             loading="lazy"
                           />
                         </div>
-                        
-                        {/* Content */}
-                        <div className="relative z-10 h-full flex flex-col justify-center items-center p-8 text-white">
-                          <CardHeader className="pb-4">
-                            {/* Company Info */}
-                            <div className="space-y-3">
-                              <h2 className="text-4xl font-bold text-white text-center">
-                                {story.companyName}
-                              </h2>
-                            </div>
-                          </CardHeader>
-                          
-                          <CardContent className="pt-0 px-4 max-w-3xl md:px-6 md:max-w-none">
-                            {/* Summary */}
-                            <CardDescription className="text-base leading-relaxed mb-6 text-center text-white/90">
-                              {isMobile ? story.subtitle[language] : story.summary[language]}
-                            </CardDescription>
-                            
-                            {/* Read More Button */}
-                            <div className="flex justify-center">
-                              <Button
-                                variant="outline"
-                                size="lg"
-                                className="w-auto bg-white/10 border-white/30 text-white hover:bg-white/20 hover:border-white/50 transition-all"
-                                asChild
-                              >
-                                <Link to={getRoutePath('successStoryDetail', language, { companyName: story.id })}>
-                                  {t.pages.successStories.readCaseStudy}
-                                  <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
-                                </Link>
-                              </Button>
-                            </div>
-                          </CardContent>
-                        </div>
-                      </Card>
-                    </motion.div>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              <CarouselPrevious className="hidden md:flex" />
-              <CarouselNext className="hidden md:flex" />
-            </Carousel>
-            
-            {/* Dot Navigation */}
-            <div className="flex justify-center mt-12 space-x-3">
-              {Array.from({ length: count }, (_, index) => (
-                <button
-                  key={index}
-                  className={`rounded-full transition-all duration-200 hover:scale-110 ${
-                    index + 1 === current 
-                      ? 'w-5 h-5 bg-muted-foreground/30 ring-2 ring-accent' 
-                      : 'w-4 h-4 bg-muted-foreground/30 hover:bg-muted-foreground/60'
-                  }`}
-                  onClick={() => handleDotClick(index)}
-                  aria-label={`Go to slide ${index + 1}`}
-                />
-              ))}
-            </div>
+                      )}
+                    </div>
+
+                    {/* Text */}
+                    <div className="flex flex-1 flex-col p-6">
+                      <div className="mb-3 inline-flex w-fit items-center rounded-full border border-primary/20 bg-primary/10 px-3 py-1">
+                        <Trophy className="mr-2 h-3.5 w-3.5 text-noreja-tertiary" />
+                        <span className="text-xs font-medium">{story.industry}</span>
+                      </div>
+
+                      <h2 className="mb-2 text-2xl font-bold text-foreground transition-colors group-hover:text-noreja-main">
+                        {story.companyName}
+                      </h2>
+
+                      <CardDescription className="text-sm leading-relaxed text-muted-foreground">
+                        {story.summary}
+                      </CardDescription>
+
+                      <div className="mt-auto pt-6">
+                        {story.detailPath ? (
+                          <Button variant="outline" className="group/btn w-full sm:w-auto" asChild>
+                            <Link to={story.detailPath}>
+                              {t.pages.successStories.readCaseStudy}
+                              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
+                            </Link>
+                          </Button>
+                        ) : (
+                          <Button variant="outline" className="w-full sm:w-auto" disabled>
+                            <Clock className="mr-2 h-4 w-4" />
+                            {t.pages.successStories.comingSoon}
+                          </Button>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </Card>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
@@ -273,7 +208,7 @@ const SuccessStories = () => {
                   viewport={{ once: true }}
                 >
                   <Link to={getRoutePath('useCases', language, { useCaseName: useCase.id })}>
-                    <Card className="h-full group hover:shadow-lg transition-all duration-300 cursor-pointer border-border/30 hover:border-noreja-main/40 hover:scale-105">
+                    <Card className="story-card h-full group cursor-pointer border-border/40">
                       <CardContent className="p-6 text-center">
                         <div className="flex justify-center mb-4">
                           <div className="w-16 h-16 rounded-full bg-noreja-main/10 group-hover:bg-noreja-main/20 flex items-center justify-center transition-colors">

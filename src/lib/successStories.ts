@@ -12,6 +12,12 @@ const successStoryImages = import.meta.glob<{ default: string }>(
   { eager: true }
 );
 
+// Dynamically import white partner logos (some case study companies are partners)
+const partnerLogoImages = import.meta.glob<{ default: string }>(
+  '../assets/partners/partners_white/*.{png,jpg,jpeg,svg,webp}',
+  { eager: true }
+);
+
 // Dynamically import all cover images
 const coverImages = import.meta.glob<{ default: string }>(
   '../assets/success_stories/cover_images/*.{png,jpg,jpeg,svg,webp}',
@@ -66,6 +72,8 @@ export interface SuccessStory {
   companyName: string;
   logoUrl: string;
   coverImageUrl: string;
+  /** Square image used on the success stories overview grid */
+  cardImageUrl?: string;
   summary: Record<Language, string>;
   subtitle: Record<Language, string>;
   whoIsSection: Record<Language, {
@@ -113,6 +121,7 @@ export const successStories: SuccessStory[] = [
     companyName: "Hector",
     logoUrl: getImagePath(customerLogoImages, "hector_logo_white.webp"),
     coverImageUrl: getCoverImagePath("Insurance"),
+    cardImageUrl: getSuccessStoryImagePath("use_case_images/claims_noreja.webp"),
     summary: {
       en: "Hector identified critical blind spots in their insurance claims processing, including high rates of reopened claims and bottlenecks from delayed repair invoices.",
       de: "Hector identifizierte kritische Blind-Spots in der Schadensabwicklung, darunter hohe Raten an wiedereröffneten Schadenfällen und Engpässe durch verzögerte Reparaturrechnungen."
@@ -277,6 +286,7 @@ export const successStories: SuccessStory[] = [
     companyName: "IDM Wärmepumpen",
     logoUrl: getImagePath(customerLogoImages, "idm_logo_white.webp"),
     coverImageUrl: getCoverImagePath("Manufacturing"),
+    cardImageUrl: getSuccessStoryImagePath("use_case_images/high_tech_production_noreja.webp"),
     summary: {
       en: "IDM gained complete visibility into their Order-to-Cash process within three weeks, identifying critical bottlenecks in manual data entry and invoice processing.",
       de: "IDM gewann innerhalb von drei Wochen vollständige Transparenz über ihren Order-to-Cash-Prozess und identifizierte kritische Engpässe bei der manuellen Dateneingabe und Rechnungsstellung."
@@ -416,6 +426,7 @@ export const successStories: SuccessStory[] = [
     companyName: "CIB",
     logoUrl: getImagePath(customerLogoImages, "cib_logo_white.webp"),
     coverImageUrl: getCoverImagePath("Software Development"),
+    cardImageUrl: getSuccessStoryImagePath("use_case_images/hr_noreja.webp"),
     summary: {
       en: "CIB mapped their entire hiring process in just one month, identifying delays in initial applicant contact and bottlenecks in decision-making.",
       de: "CIB bildete ihren gesamten Einstellungsprozess in nur einem Monat ab und identifizierte Verzögerungen beim ersten Kontakt mit Bewerbern und Engpässe bei Entscheidungen."
@@ -593,6 +604,122 @@ Keine **Nachverfolgung der Prozess-Conformance** für die Bewerber-Experience.
     metaDescription: {
       en: "CIB mapped their entire hiring process in just one month, identifying delays in initial applicant contact and bottlenecks in decision-making. The analysis revealed opportunities to reduce hiring time by up to one week and improve candidate experience, achieving 40% faster diagnosis of process issues.",
       de: "CIB bildete ihren gesamten Einstellungsprozess in nur einem Monat ab und identifizierte Verzögerungen beim ersten Kontakt mit Bewerbern und Engpässe bei Entscheidungen. Die Analyse ergab Möglichkeiten, die Einstellungszeit um bis zu einer Woche zu verkürzen und die Kandidatenerfahrung zu verbessern, was zu 40% schnellerer Diagnose von Prozessproblemen führte."
+    }
+  }
+];
+
+/**
+ * Case studies that are announced but not published yet. They are rendered on the
+ * success stories overview with a "Coming soon" button instead of a link, and are
+ * deliberately kept out of `successStories` so that no detail route or sitemap
+ * entry is generated for them.
+ */
+export interface UpcomingSuccessStory {
+  id: string;
+  companyName: string;
+  logoUrl?: string;
+  cardImageUrl: string;
+  summary: Record<Language, string>;
+  industry: Record<Language, string>;
+}
+
+export const upcomingSuccessStories: UpcomingSuccessStory[] = [
+  {
+    id: "nordlb",
+    companyName: "NordLB",
+    logoUrl: getImagePath(customerLogoImages, "nordlb_logo_white.webp"),
+    cardImageUrl: getSuccessStoryImagePath("use_case_images/banking_noreja.webp"),
+    summary: {
+      en: "Process Intelligence in banking: how NordLB creates transparency across complex end-to-end processes.",
+      de: "Process Intelligence im Banking: Wie die NordLB Transparenz über komplexe End-to-End-Prozesse schafft."
+    },
+    industry: {
+      en: "Banking",
+      de: "Banking"
+    }
+  },
+  {
+    id: "sesotec",
+    companyName: "Sesotec GmbH",
+    logoUrl: getImagePath(customerLogoImages, "sesotec_logo_white.webp"),
+    cardImageUrl: getSuccessStoryImagePath("use_case_images/production_noreja.webp"),
+    summary: {
+      en: "At Sesotec we looked deeply into the production process, down to work station level, to spot waiting times and stuck working capital.",
+      de: "Bei Sesotec haben wir den Produktionsprozess bis auf Arbeitsplatzebene analysiert, um Wartezeiten und gebundenes Working Capital aufzudecken."
+    },
+    industry: {
+      en: "Machine Production",
+      de: "Maschinenbau"
+    }
+  },
+  {
+    id: "von-eicken",
+    companyName: "Von Eicken",
+    logoUrl: getImagePath(customerLogoImages, "Von_Eicken_logo_white.webp"),
+    cardImageUrl: getSuccessStoryImagePath("use_case_images/packaging_noreja.webp"),
+    summary: {
+      en: "At Von Eicken we are looking into the Order-to-Delivery and Purchase-to-Pay processes.",
+      de: "Bei Von Eicken betrachten wir die Prozesse Order-to-Delivery und Purchase-to-Pay."
+    },
+    industry: {
+      en: "Tobacco Production",
+      de: "Tabakproduktion"
+    }
+  },
+  {
+    id: "kbc-consultants",
+    companyName: "KBC Consultants",
+    logoUrl: getImagePath(partnerLogoImages, "kbc_white.webp"),
+    cardImageUrl: getSuccessStoryImagePath("use_case_images/office_noreja.webp"),
+    summary: {
+      en: "KBC uses the solution to gain a quick overview of processes during consulting projects – for instance to look at Order-to-Cash or Purchase-to-Pay.",
+      de: "KBC nutzt die Lösung, um sich in Beratungsprojekten schnell einen Überblick über Prozesse zu verschaffen – zum Beispiel für Order-to-Cash oder Purchase-to-Pay."
+    },
+    industry: {
+      en: "Consulting",
+      de: "Beratung"
+    }
+  },
+  {
+    id: "grundeigentuemer-versicherung",
+    companyName: "Grundeigentümer Versicherung",
+    logoUrl: getImagePath(customerLogoImages, "versicherung_logo_white.webp"),
+    cardImageUrl: getSuccessStoryImagePath("use_case_images/process_management_noreja.webp"),
+    summary: {
+      en: "At Grundeigentümer Versicherung we analyzed the operating processes, such as a change of ownership.",
+      de: "Bei der Grundeigentümer-Versicherung haben wir die operativen Prozesse analysiert, etwa den Eigentümerwechsel."
+    },
+    industry: {
+      en: "Insurance",
+      de: "Versicherung"
+    }
+  },
+  {
+    id: "untha",
+    companyName: "UNTHA",
+    logoUrl: getImagePath(customerLogoImages, "untha_logo_white.webp"),
+    cardImageUrl: getSuccessStoryImagePath("use_case_images/logistic_noreja.webp"),
+    summary: {
+      en: "At UNTHA we looked into the Order-to-Cash process for spare parts.",
+      de: "Bei UNTHA haben wir den Order-to-Cash-Prozess für Ersatzteile betrachtet."
+    },
+    industry: {
+      en: "Machine Production",
+      de: "Maschinenbau"
+    }
+  },
+  {
+    id: "friwo",
+    companyName: "FRIWO",
+    logoUrl: getImagePath(customerLogoImages, "friwo_logo_white_xlarge.webp"),
+    cardImageUrl: getSuccessStoryImagePath("use_case_images/fast_packaging_noreja.webp"),
+    summary: {
+      en: "Process transparency at a manufacturer of charging technology and power supply solutions.",
+      de: "Prozesstransparenz beim Hersteller von Ladetechnik und Stromversorgungslösungen."
+    },
+    industry: {
+      en: "Charging Technology",
+      de: "Ladetechnik"
     }
   }
 ];

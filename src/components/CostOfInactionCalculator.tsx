@@ -5,8 +5,10 @@ import {
   ArrowRight,
   Building2,
   Calculator,
+  ChevronDown,
   Clock,
   Cog,
+  Download,
   Euro,
   Factory,
   Gauge,
@@ -225,6 +227,9 @@ export const CostOfInactionCalculator = () => {
   const [maturity, setMaturity] = useState(2);
   const [years, setYears] = useState(5);
   const [showMethod, setShowMethod] = useState(false);
+  /** The calculator is collapsed by default and expanded via the CTA below the heading */
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [isExporting, setIsExporting] = useState(false);
 
   const process = getProcessById(processId);
   const itemsPerOrder = itemsPerOrderOverride ?? suggestItemsPerOrder(unitValue);
@@ -282,6 +287,33 @@ export const CostOfInactionCalculator = () => {
   const animatedPerYear = useAnimatedValue(result.perYear);
   const animatedTotal = useAnimatedValue(result.total);
 
+  const handleDownloadPdf = async () => {
+    setIsExporting(true);
+    try {
+      const { downloadCoiPdf } = await import("@/lib/coiPdf");
+      await downloadCoiPdf({
+        language,
+        industryId,
+        companySizeId,
+        businessModelId,
+        processId,
+        units,
+        unitValue,
+        customers,
+        itemsPerOrder,
+        recurringPercent,
+        materialPercent,
+        instances,
+        maturity,
+        years,
+        primitives,
+        result,
+      });
+    } finally {
+      setIsExporting(false);
+    }
+  };
+
   const nearestIndex = (steps: number[], value: number) => {
     let closest = 0;
     steps.forEach((step, index) => {
@@ -324,15 +356,33 @@ export const CostOfInactionCalculator = () => {
           </div>
           <h2 className="mb-4 text-3xl font-bold text-foreground md:text-4xl">{copy.title}</h2>
           <p className="mx-auto max-w-3xl text-lg text-muted-foreground">{copy.subtitle}</p>
+
+          <Button
+            size="lg"
+            variant="outline"
+            className="story-cta group mt-8 bg-background/60"
+            onClick={() => setIsExpanded((open) => !open)}
+            aria-expanded={isExpanded}
+            aria-controls="cost-of-inaction-panel"
+          >
+            <Calculator className="mr-2 h-5 w-5" />
+            {isExpanded ? copy.closeCalculator : copy.openCalculator}
+            <ChevronDown
+              className={`ml-2 h-4 w-4 transition-transform duration-300 ${isExpanded ? "rotate-180" : "group-hover:translate-y-0.5"}`}
+            />
+          </Button>
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.1 }}
-          viewport={{ once: true }}
-          className="relative overflow-hidden rounded-3xl border border-border/60 bg-card/80 shadow-card backdrop-blur-xl"
+        {/* CSS-only collapse: the content stays mounted (and crawlable) while folded */}
+        <div
+          id="cost-of-inaction-panel"
+          aria-hidden={!isExpanded}
+          className={`grid transition-all duration-500 ease-in-out ${
+            isExpanded ? "grid-rows-[1fr] opacity-100" : "pointer-events-none grid-rows-[0fr] opacity-0"
+          }`}
         >
+          <div className="overflow-hidden">
+            <div className="relative overflow-hidden rounded-3xl border border-border/60 bg-card/80 shadow-card backdrop-blur-xl">
           <div
             className="pointer-events-none absolute inset-0 opacity-80"
             style={{
@@ -836,6 +886,16 @@ export const CostOfInactionCalculator = () => {
                   </Link>
                 </Button>
 
+                <Button
+                  variant="outline"
+                  className="mt-3 w-full bg-background/60"
+                  onClick={handleDownloadPdf}
+                  disabled={isExporting}
+                >
+                  <Download className="mr-2 h-4 w-4" />
+                  {isExporting ? copy.downloadPdfBusy : copy.downloadPdf}
+                </Button>
+
                 <button
                   type="button"
                   onClick={() => setShowMethod((open) => !open)}
@@ -865,7 +925,9 @@ export const CostOfInactionCalculator = () => {
               </div>
             </div>
           </div>
-        </motion.div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );
