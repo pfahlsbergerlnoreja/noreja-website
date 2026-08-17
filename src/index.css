@@ -93,14 +93,18 @@
       radial-gradient(at 20% 50%, hsl(var(--noreja-main) / 0.05) 0px, transparent 50%),
       radial-gradient(at 80% 20%, hsl(var(--noreja-secondary) / 0.05) 0px, transparent 50%),
       radial-gradient(at 40% 80%, hsl(var(--noreja-secondary) / 0.05) 0px, transparent 50%);
-    overflow-x: hidden;
+    /* `clip` instead of `hidden`: `overflow-x: hidden` forces overflow-y to
+       `auto`, turning the element into a scroll container and breaking every
+       `position: sticky` descendant. `clip` prevents horizontal overflow
+       without creating a scrollport. */
+    overflow-x: clip;
     width: 100%;
     max-width: 100vw;
   }
 
   html {
     scroll-behavior: smooth;
-    overflow-x: hidden;
+    overflow-x: clip;
   }
   
   /* Prevent horizontal overflow on all elements */
@@ -113,7 +117,7 @@
   html, body, #root {
     width: 100%;
     max-width: 100vw;
-    overflow-x: hidden;
+    overflow-x: clip;
     position: relative;
   }
   
@@ -126,7 +130,7 @@
   /* Prevent horizontal overflow without causing scrollbar conflicts */
   .container {
     max-width: 100vw;
-    overflow-x: hidden;
+    overflow-x: clip;
   }
   
   /* Ensure text containers don't overflow */
@@ -138,7 +142,7 @@
   /* Prevent white blocks during resize by ensuring all containers respect viewport */
   .container, .container-fluid, section, article, aside, header, footer, nav, main {
     max-width: 100vw;
-    overflow-x: hidden;
+    overflow-x: clip;
   }
   
   /* Smooth transitions for responsive elements */

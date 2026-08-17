@@ -3,7 +3,7 @@ import { IntegratedHeroSection } from "@/components/IntegratedHeroSection";
 import { AnimationSection } from "@/components/AnimationSection";
 import LogoBanner from "@/components/LogoBanner";
 import { USPsShowcase } from "@/components/USPsShowcase";
-import { FunctionalitiesTeaser } from "@/components/FunctionalitiesTeaser";
+import { LoopTeaser } from "@/components/platform/LoopTeaser";
 import { HubSpotBlogTeaser } from "@/components/HubSpotBlogTeaser";
 import { PartnerPhotosGrid } from "@/components/PartnerPhotosGrid";
 import { FinalCTA } from "@/components/FinalCTA";
@@ -34,8 +34,8 @@ const Index = () => {
         <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-background pointer-events-none z-0" />
       </section>
 
-      {/* Platform features */}
-      <section aria-label="Platform Features" className="relative overflow-hidden" style={{
+      {/* Platform loop */}
+      <section aria-label="Platform Loop" className="relative overflow-hidden" style={{
         background: `
           linear-gradient(45deg, hsl(var(--background)) 0%, hsl(var(--noreja-secondary) / 0.12) 30%, hsl(var(--background)) 100%),
           radial-gradient(ellipse 1200px 900px at 30% 70%, hsl(var(--noreja-main) / 0.08) 0%, transparent 60%)
@@ -46,8 +46,7 @@ const Index = () => {
         {/* Gradient fade to next section */}
         <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-background pointer-events-none z-0" />
         <div className="relative z-10">
-          {/* TODO: add workbench to features teaser */}
-          <FunctionalitiesTeaser />
+          <LoopTeaser />
         </div>
       </section>
 

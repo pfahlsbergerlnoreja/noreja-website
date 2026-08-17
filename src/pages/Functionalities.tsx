@@ -1,610 +1,657 @@
-import { motion, useScroll, useTransform, useInView } from "framer-motion";
-import { HubSpotBlogTeaser } from "@/components/HubSpotBlogTeaser";
-import { useLanguage } from "@/contexts/LanguageContext";
-import { useEffect, useRef, useState } from "react";
-import { LayoutDashboard, Search, Brain, Wrench, Code, ArrowRight, LucideIcon, RotateCw } from "lucide-react";
-import { AnimatedHeading } from "@/components/AnimatedHeading";
-import { SoftwareApplicationSchema } from "@/components/StructuredData";
-import { Button } from "@/components/ui/button";
+import { Fragment, useEffect, useRef, useState } from "react";
+import { motion, useInView } from "framer-motion";
 import { Link } from "react-router-dom";
-import { getRoutePath } from "@/lib/routes";
-import dashboardImg from "@/assets/platform/dashboard.webp";
-import analyzerImg from "@/assets/platform/analyzer.webp";
-import minervaImg from "@/assets/platform/minerva.webp";
-import builderImg from "@/assets/platform/builder.webp";
-import workbenchImg from "@/assets/platform/workbench.webp";
-import backDashboardImg from "@/assets/platform/dashboard_platform.webp";
-import backAnalyzerImg from "@/assets/platform/analyzer_platform.webp";
-import backMinervaImg from "@/assets/platform/manager_platform.webp";
-import backBuilderImg from "@/assets/platform/builder_platform.webp";
-import backWorkbenchImg from "@/assets/platform/workbench_platform.webp";
+import {
+  Activity,
+  ArrowRight,
+  Bell,
+  Clock,
+  Coins,
+  Euro,
+  LayoutGrid,
+  ListTodo,
+  Lock,
+  LucideIcon,
+  RefreshCw,
+  Search,
+  Shield,
+  TrendingUp,
+  Workflow,
+} from "lucide-react";
 
-// Feature Section Component with advanced scroll animations
-interface FeatureSectionProps {
-  feature: {
-    id: string;
-    icon: LucideIcon;
-    title: string;
-    description: string;
-    imagePath: string | null;
-    backImagePath: string | null;
-  };
-  Icon: LucideIcon;
-  layout: {
-    imageOrder: number;
-    imageSize: string;
-    gridCols: string;
-    imageOffset: string;
-    imagePadding: string;
-  };
+import { CostOfInactionCalculator } from "@/components/CostOfInactionCalculator";
+import { HubSpotBlogTeaser } from "@/components/HubSpotBlogTeaser";
+import { SoftwareApplicationSchema } from "@/components/StructuredData";
+import { AgentEquipper } from "@/components/platform/AgentEquipper";
+import { LoopLedgerHub } from "@/components/platform/LoopLedgerHub";
+import { PhaseRing } from "@/components/platform/PhaseRing";
+import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { useAutoPhase, useLoopLedger } from "@/hooks/use-loop-motion";
+import {
+  agentRoster,
+  comparisonRows,
+  heroWords,
+  loopPhases,
+  platformCopy,
+  statusQuoGaps,
+  type CapabilityIcon,
+  type LoopPhase,
+} from "@/lib/platformLoop";
+import { getRoutePath } from "@/lib/routes";
+
+/**
+ * Brand colours must be written as `hsl(var(--noreja-*) / a)`.
+ * The `noreja-*` Tailwind colour utilities resolve to bare HSL components
+ * (`256 77% 56%`) and therefore produce invalid CSS.
+ */
+const MINT = "hsl(var(--noreja-tertiary))";
+
+const CAPABILITY_ICONS: Record<CapabilityIcon, LucideIcon> = {
+  search: Search,
+  clock: Clock,
+  coins: Coins,
+  shield: Shield,
+  bell: Bell,
+  workflow: Workflow,
+  listTodo: ListTodo,
+  euro: Euro,
+  trending: TrendingUp,
+  lock: Lock,
+  activity: Activity,
+  layout: LayoutGrid,
+  refresh: RefreshCw,
+};
+
+const Eyebrow = ({ children }: { children: React.ReactNode }) => (
+  <p className="font-mono text-[0.72rem] uppercase tracking-[0.22em]" style={{ color: MINT }}>
+    {children}
+  </p>
+);
+
+/* ------------------------------------------------------------------ *
+ * Phase panel — one per loop phase, reports itself to the sticky ring
+ * ------------------------------------------------------------------ */
+
+interface PhasePanelProps {
+  phase: LoopPhase;
   index: number;
-  animationStyle: {
-    imageInitial: any;
-    imageAnimate: any;
-    textInitial: any;
-    textAnimate: any;
-    iconInitial: any;
-    iconAnimate: any;
-    titleInitial: any;
-    titleAnimate: any;
-    descInitial: any;
-    descAnimate: any;
-  };
+  isActive: boolean;
+  onEnter: (index: number) => void;
 }
 
-const FeatureSection = ({ feature, Icon, layout, index, animationStyle }: FeatureSectionProps) => {
-  const { t } = useLanguage();
-  const [isFlipped, setIsFlipped] = useState(false);
-  const sectionRef = useRef<HTMLElement>(null);
-  const imageRef = useRef<HTMLDivElement>(null);
-  const textRef = useRef<HTMLDivElement>(null);
-  
-  // Use scroll-based animations for parallax effect
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"]
-  });
-  
-  // Parallax transforms for image
-  const imageY = useTransform(scrollYProgress, [0, 1], [0, -50]);
-  const imageOpacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0, 1, 1, 0.8]);
-  const imageScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.9, 1, 0.95]);
-  
-  // Parallax transforms for text
-  const textY = useTransform(scrollYProgress, [0, 1], [0, 30]);
-  
-  // In-view detection for triggering animations
-  const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
-  const imageInView = useInView(imageRef, { once: true, margin: "-50px" });
-  const textInView = useInView(textRef, { once: true, margin: "-50px" });
-  
-  // Animation variants with staggered delays
-  const imageVariants = {
-    initial: animationStyle.imageInitial,
-    animate: imageInView ? animationStyle.imageAnimate : animationStyle.imageInitial,
-  };
-  
-  const textVariants = {
-    initial: animationStyle.textInitial,
-    animate: textInView ? animationStyle.textAnimate : animationStyle.textInitial,
-  };
-  
-  const iconVariants = {
-    initial: animationStyle.iconInitial,
-    animate: isInView ? animationStyle.iconAnimate : animationStyle.iconInitial,
-  };
-  
-  const titleVariants = {
-    initial: animationStyle.titleInitial,
-    animate: textInView ? animationStyle.titleAnimate : animationStyle.titleInitial,
-  };
-  
-  const descVariants = {
-    initial: animationStyle.descInitial,
-    animate: textInView ? animationStyle.descAnimate : animationStyle.descInitial,
-  };
-  
-  // Transition configurations
-  const imageTransition = {
-    duration: 0.8,
-    ease: [0.16, 1, 0.3, 1] as [number, number, number, number], // Custom easing for smooth motion
-    delay: index * 0.1,
-  };
-  
-  const textTransition = {
-    duration: 0.8,
-    ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
-    delay: index * 0.1 + 0.2,
-  };
-  
-  const iconTransition = {
-    duration: 0.6,
-    ease: [0.34, 1.56, 0.64, 1] as [number, number, number, number], // Bounce effect
-    delay: index * 0.1 + 0.3,
-  };
-  
-  const titleTransition = {
-    duration: 0.6,
-    ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
-    delay: index * 0.1 + 0.4,
-  };
-  
-  const descTransition = {
-    duration: 0.6,
-    ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
-    delay: index * 0.1 + 0.5,
-  };
+const PhasePanel = ({ phase, index, isActive, onEnter }: PhasePanelProps) => {
+  const { language } = useLanguage();
+  const ref = useRef<HTMLElement>(null);
+  const inView = useInView(ref, { margin: "-45% 0px -45% 0px" });
+
+  useEffect(() => {
+    if (inView) onEnter(index);
+  }, [inView, index, onEnter]);
+
+  const { agent } = phase;
+  const message = agent.message[language];
+  const highlight = agent.highlight[language];
+  const [before, after] = message.includes(highlight)
+    ? [message.slice(0, message.indexOf(highlight)), message.slice(message.indexOf(highlight) + highlight.length)]
+    : [message, ""];
 
   return (
-    <motion.section
-      ref={sectionRef}
-      id={feature.id}
-      className="scroll-mt-24 py-0 lg:py-8"
-      initial={{ opacity: 0 }}
-      animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-      transition={{ duration: 0.3 }}
+    <article
+      ref={ref}
+      id={phase.id}
+      className={`flex scroll-mt-24 flex-col justify-center gap-5 border-t py-9 transition-opacity duration-500 lg:min-h-screen lg:border-t-0 lg:py-[10vh] ${
+        isActive ? "lg:opacity-100" : "lg:opacity-30"
+      }`}
+      style={{ borderColor: "hsl(var(--border))" }}
     >
-      <div className={`grid ${layout.gridCols} gap-16 lg:gap-12 items-stretch overflow-hidden`}>
-        {/* Image Section with Parallax */}
-        <motion.div
-          ref={imageRef}
-          className={`${layout.imageOrder === 1 ? "order-2 lg:order-1" : "order-2 lg:order-2"} ${layout.imageOffset} h-full`}
-          style={{ y: imageY, opacity: imageOpacity, scale: imageScale }}
+      <div className="flex flex-wrap items-center gap-3.5">
+        <span
+          className="rounded-full border px-3 py-1.5 font-mono text-[0.72rem] tracking-[0.18em]"
+          style={{
+            color: MINT,
+            borderColor: "hsl(var(--noreja-tertiary) / 0.35)",
+            background: "hsl(var(--noreja-tertiary) / 0.06)",
+          }}
         >
-          <motion.div
-            className={`relative w-full h-full overflow-visible group ${layout.imagePadding}`}
-            variants={imageVariants}
-            initial="initial"
-            animate="animate"
-            transition={imageTransition}
+          {platformCopy.phaseBadge[language].replace("{n}", String(index + 1).padStart(2, "0"))}
+        </span>
+        <span className="font-mono text-[0.8rem] text-muted-foreground">
+          {phase.question[language]}
+        </span>
+      </div>
+
+      <h2 className="text-3xl font-extrabold leading-tight tracking-tight text-foreground lg:text-[2.6rem]">
+        <span className="bg-gradient-accent bg-clip-text text-transparent">
+          {phase.name[language]}
+        </span>{" "}
+        — {phase.headlineRest[language]}
+      </h2>
+
+      <p className="max-w-[62ch] text-base leading-relaxed text-muted-foreground lg:text-lg">
+        {phase.lede[language]}
+      </p>
+
+      <div className="grid gap-2.5">
+        {phase.capabilities.map((capability) => {
+          const Icon = CAPABILITY_ICONS[capability.icon];
+          return (
+            <div
+              key={capability.title.en}
+              className="grid grid-cols-[20px_1fr] items-start gap-3 rounded-xl border bg-card px-4 py-3.5 transition-all duration-200 hover:translate-x-1"
+              style={{ borderColor: "hsl(var(--border))" }}
+            >
+              <Icon className="mt-0.5 h-5 w-5" style={{ color: MINT }} strokeWidth={1.6} />
+              <div>
+                <b className="block text-[0.97rem] font-semibold tracking-tight text-foreground">
+                  {capability.title[language]}
+                </b>
+                <span className="text-[0.9rem] text-muted-foreground">
+                  {capability.text[language]}
+                </span>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Agent output card */}
+      <div
+        className="overflow-hidden rounded-2xl border"
+        style={{
+          borderColor: "hsl(var(--border))",
+          background: "linear-gradient(160deg, hsl(var(--secondary)), hsl(var(--card)))",
+          boxShadow: "0 24px 60px -34px hsl(var(--noreja-main) / 0.7)",
+        }}
+      >
+        <div
+          className="flex items-center gap-2.5 border-b px-4 py-3 font-mono text-[0.72rem] uppercase tracking-[0.13em] text-muted-foreground"
+          style={{ borderColor: "hsl(var(--border))", background: "hsl(var(--noreja-main) / 0.1)" }}
+        >
+          {agent.name[language]}
+          <span
+            className="ml-auto rounded-full border px-2.5 py-0.5 text-[0.62rem] tracking-[0.1em]"
             style={{
-              transformStyle: "preserve-3d",
-              perspective: "1000px",
+              color: MINT,
+              background: "hsl(var(--noreja-tertiary) / 0.12)",
+              borderColor: "hsl(var(--noreja-tertiary) / 0.3)",
             }}
           >
-            {feature.imagePath ? (
-              <div
-                className="relative z-10 w-full h-full cursor-pointer"
-                onClick={() => feature.backImagePath && setIsFlipped(!isFlipped)}
-                style={{ perspective: "1000px" }}
-              >
-                <motion.div
-                  className="relative w-full h-full"
-                  animate={{ rotateY: isFlipped ? 180 : 0 }}
-                  transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                  style={{ transformStyle: "preserve-3d" }}
-                >
-                  {/* Vorderseite */}
-                  <div
-                    className="absolute inset-0 w-full h-full"
-                    style={{ backfaceVisibility: "hidden" }}
-                  >
-                    <img
-                      src={feature.imagePath}
-                      alt={feature.title}
-                      className="w-full h-full object-contain"
-                    />
-                    {feature.backImagePath && (
-                      <motion.div
-                        className="absolute bottom-3 right-3 w-8 h-8 rounded-full bg-black/30 backdrop-blur-sm flex items-center justify-center"
-                        animate={{ scale: [1, 1.1, 1] }}
-                        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                      >
-                        <RotateCw className="w-4 h-4 text-white/60" />
-                      </motion.div>
-                    )}
-                  </div>
-                  {/* Rückseite */}
-                  {feature.backImagePath && (
-                    <div
-                      className="absolute inset-0 w-full h-full"
-                      style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
-                    >
-                      <img
-                        src={feature.backImagePath}
-                        alt={`${feature.title} – Detail`}
-                        className="w-full h-full object-contain"
-                      />
-                    </div>
-                  )}
-                </motion.div>
-              </div>
-            ) : (
-              <div className="relative z-10 w-full h-full flex items-center justify-center bg-background">
-                <motion.div
-                  className="text-center space-y-4"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={imageInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 + 0.6 }}
-                >
-                  <motion.div
-                    className="w-24 h-24 bg-primary/20 rounded-full flex items-center justify-center mx-auto group-hover:bg-primary/30 transition-colors"
-                    whileHover={{ scale: 1.1, rotate: 5 }}
-                    transition={{ type: "spring", stiffness: 300 }}
-                  >
-                    <Icon className="w-12 h-12 text-noreja-tertiary" />
-                  </motion.div>
-                  <p className="text-sm text-muted-foreground px-4">
-                    Image placeholder for {feature.title}
-                  </p>
-                </motion.div>
-              </div>
-            )}
-          </motion.div>
-        </motion.div>
+            {agent.status[language]}
+          </span>
+        </div>
 
-        {/* Text Section with Staggered Animations */}
-        <motion.div
-          ref={textRef}
-          className={`${layout.imageOrder === 1 ? "order-1 lg:order-2" : "order-1 lg:order-1"}`}
-          style={{ y: textY }}
-          variants={textVariants}
-          initial="initial"
-          animate="animate"
-          transition={textTransition}
-        >
-          <div className="space-y-4 lg:space-y-6 lg:py-4 pb-4 lg:pb-8">
-            <motion.div
-              className="flex items-center gap-4 mb-4 lg:mb-6"
-              initial={{ opacity: 0 }}
-              animate={textInView ? { opacity: 1 } : { opacity: 0 }}
-              transition={{ duration: 0.3 }}
+        <div className="flex flex-col gap-3.5 px-[18px] py-[17px]">
+          <p className="text-[0.97rem] leading-relaxed text-foreground">
+            {before}
+            <strong className="font-semibold" style={{ color: MINT }}>
+              {highlight}
+            </strong>
+            {after}
+          </p>
+
+          {agent.metrics && (
+            <div
+              className="flex flex-wrap gap-x-6 gap-y-2 border-t border-dashed pt-3 font-mono text-[0.71rem] text-muted-foreground"
+              style={{ borderColor: "hsl(var(--border))" }}
             >
-              <motion.div
-                className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center border border-primary/20 flex-shrink-0"
-                variants={iconVariants}
-                initial="initial"
-                animate="animate"
-                transition={iconTransition}
-                whileHover={{ scale: 1.1, rotate: 5, boxShadow: "0 0 20px hsl(var(--noreja-tertiary) / 0.3)" }}
-              >
-                <Icon className="w-8 h-8 text-noreja-tertiary" />
-              </motion.div>
-              <motion.h2
-                className="text-3xl lg:text-4xl font-bold text-foreground"
-                variants={titleVariants}
-                initial="initial"
-                animate="animate"
-                transition={titleTransition}
-              >
-                {feature.title}
-              </motion.h2>
-            </motion.div>
-            <motion.div
-              className="text-muted-foreground leading-relaxed space-y-4"
-              variants={descVariants}
-              initial="initial"
-              animate="animate"
-              transition={descTransition}
-            >
-              {feature.description.split('\n\n').map((paragraph, index) => (
-                <p key={index}>{paragraph.trim()}</p>
+              {agent.metrics.map((metric) => (
+                <span key={metric.label.en}>
+                  {metric.label[language]}{" "}
+                  <b className="font-semibold tabular-nums text-foreground">
+                    {metric.value[language]}
+                  </b>
+                </span>
               ))}
-            </motion.div>
-            {feature.id === "ai-analytics" && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={textInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                transition={{ duration: 0.6, delay: index * 0.1 + 0.6 }}
-                className="mt-6"
-              >
-                <Button
-                  variant="secondary"
-                  size="lg"
-                  onClick={() => {
-                    const element = document.getElementById("minerva-videos");
-                    if (element) {
-                      element.scrollIntoView({ behavior: "smooth", block: "start" });
-                    }
-                  }}
-                  className="group"
+            </div>
+          )}
+
+          {agent.actions && (
+            <div className="flex flex-wrap gap-2">
+              {agent.actions.map((action, i) => (
+                <span
+                  key={action.en}
+                  className="cursor-default rounded-lg border px-3 py-1.5 font-mono text-[0.7rem] tracking-[0.06em]"
+                  style={
+                    i === 0
+                      ? {
+                          background: "hsl(var(--noreja-main))",
+                          borderColor: "hsl(var(--noreja-main))",
+                          color: "#fff",
+                        }
+                      : { borderColor: "hsl(var(--border))", color: "hsl(var(--muted-foreground))" }
+                  }
                 >
-                  {t.pages.functionalities.discoverVideoSeries}
-                  <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
-                </Button>
-              </motion.div>
-            )}
-          </div>
-        </motion.div>
+                  {action[language]}
+                </span>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
-    </motion.section>
+    </article>
   );
 };
 
+/* ------------------------------------------------------------------ *
+ * Page
+ * ------------------------------------------------------------------ */
+
 const Functionalities = () => {
   const { t, language } = useLanguage();
+  const [activePhase, setActivePhase] = useState(0);
+  const heroPhase = useAutoPhase(loopPhases.length);
+  const heroLedger = useLoopLedger(heroPhase, loopPhases.length);
 
-  // Language-specific heading texts
-  const headingTexts = {
-    en: {
-      fixedText: "Discover The",
-      rotatingWords: ["Dashboard", "Analyzer", "Workbench", "Builder", "Minerva AI"]
-    },
-    de: {
-      fixedText: "Entdecke",
-      rotatingWords: ["das Dashboard", "den Analyzer", "die Workbench", "den Builder", "Minerva AI"]
-    }
-  };
-
-  const currentHeading = headingTexts[language];
-
-  // Scroll to top when component mounts
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  
-  const features = [
-    {
-      id: "security",
-      icon: LayoutDashboard,
-      title: t.functionalities.features.security.title,
-      description: t.functionalities.features.security.description,
-      imagePath: dashboardImg,
-      backImagePath: backDashboardImg
-    },
-    {
-      id: "data-integration",
-      icon: Search,
-      title: t.functionalities.features.dataIntegration.title,
-      description: t.functionalities.features.dataIntegration.description,
-      imagePath: analyzerImg,
-      backImagePath: backAnalyzerImg
-    },
-    {
-      id: "ai-analytics",
-      icon: Brain,
-      title: t.functionalities.features.aiAnalytics.title,
-      description: t.functionalities.features.aiAnalytics.description,
-      imagePath: minervaImg,
-      backImagePath: backMinervaImg
-    },
-    {
-      id: "real-time",
-      icon: Wrench,
-      title: t.functionalities.features.realTime.title,
-      description: t.functionalities.features.realTime.description,
-      imagePath: builderImg,
-      backImagePath: backBuilderImg
-    },
-    {
-      id: "workbench",
-      icon: Code,
-      title: t.functionalities.features.workbench.title,
-      description: t.functionalities.features.workbench.description,
-      imagePath: workbenchImg,
-      backImagePath: backWorkbenchImg
-    }
-  ];
+
+  const phaseNames = loopPhases.map((phase) => phase.name[language]);
+
+  const scrollToPhase = (index: number) => {
+    document.getElementById(loopPhases[index].id)?.scrollIntoView({
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+      block: "center",
+    });
+  };
 
   return (
     <div className="min-h-screen bg-background">
       <SoftwareApplicationSchema />
-      {/* Hero Section */}
-      <div className="relative">
-        <section className="relative py-12 lg:py-24">
-          <div className="relative z-10 w-full max-w-7xl mx-auto px-4 lg:px-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="text-center mb-8 lg:mb-16"
-            >
-              <AnimatedHeading 
-                fixedText={currentHeading.fixedText}
-                rotatingWords={currentHeading.rotatingWords}
-                size="md"
-                className="text-foreground mb-6"
-              />
-              <p className="text-muted-foreground max-w-3xl mx-auto">
-                {t.functionalities.subtitle}
-              </p>
-            </motion.div>
-          </div>
-        </section>
-      </div>
 
-      {/* Features Section with Gradient Background */}
-      <div className="relative overflow-hidden" style={{
-        background: `
-          linear-gradient(135deg, hsl(var(--background)) 0%, hsl(var(--noreja-main) / 0.14) 50%, hsl(var(--background)) 100%),
-          radial-gradient(ellipse 1000px 800px at 50% 50%, hsl(var(--noreja-secondary) / 0.10) 0%, transparent 60%)
-        `
-      }}>
-        {/* Gradient fade from previous section */}
-        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-background to-transparent pointer-events-none z-0" />
-        {/* Gradient fade to next section */}
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-background pointer-events-none z-0" />
-        
-        <div className="relative z-10 w-full max-w-[90rem] mx-auto px-6 lg:px-12 py-2 lg:py-20">
-          <div className="space-y-8 lg:space-y-40">
-            {features.map((feature, index) => {
-              const Icon = feature.icon;
-              
-              // Varied layout patterns with consistent 30% text / 70% image split
-              const layouts = [
-                { 
-                  imageOrder: 1, 
-                  imageSize: "h-full", 
-                  gridCols: "lg:grid-cols-[0.7fr_0.3fr]",
-                  imageOffset: "",
-                  imagePadding: "pt-10 pl-10 pr-6 pb-6"
-                },
-                { 
-                  imageOrder: 2, 
-                  imageSize: "h-full", 
-                  gridCols: "lg:grid-cols-[0.3fr_0.7fr]",
-                  imageOffset: "lg:mt-8",
-                  imagePadding: "pt-6 pl-6 pr-10 pb-6"
-                },
-                { 
-                  imageOrder: 1, 
-                  imageSize: "h-full", 
-                  gridCols: "lg:grid-cols-[0.7fr_0.3fr]",
-                  imageOffset: "",
-                  imagePadding: "pt-6 pl-10 pr-6 pb-6"
-                },
-                { 
-                  imageOrder: 2, 
-                  imageSize: "h-full", 
-                  gridCols: "lg:grid-cols-[0.3fr_0.7fr]",
-                  imageOffset: "lg:mt-4",
-                  imagePadding: "pt-6 pl-6 pr-10 pb-6"
-                },
-                { 
-                  imageOrder: 1, 
-                  imageSize: "h-full", 
-                  gridCols: "lg:grid-cols-[0.7fr_0.3fr]",
-                  imageOffset: "lg:mt-12",
-                  imagePadding: "pt-6 pl-10 pr-6 pb-6"
-                }
-              ];
-              
-              const layout = layouts[index % layouts.length];
-              
-              // Different animation styles for each section
-              const animationStyles = [
-                {
-                  // Section 1: Slide from left with scale
-                  imageInitial: { opacity: 0, x: -100, scale: 0.8, rotateY: -15 },
-                  imageAnimate: { opacity: 1, x: 0, scale: 1, rotateY: 0 },
-                  textInitial: { opacity: 0, x: 50, scale: 0.95 },
-                  textAnimate: { opacity: 1, x: 0, scale: 1 },
-                  iconInitial: { opacity: 0, scale: 0, rotate: -180 },
-                  iconAnimate: { opacity: 1, scale: 1, rotate: 0 },
-                  titleInitial: { opacity: 0, y: 20 },
-                  titleAnimate: { opacity: 1, y: 0 },
-                  descInitial: { opacity: 0, y: 20 },
-                  descAnimate: { opacity: 1, y: 0 },
-                },
-                {
-                  // Section 2: Slide from right with parallax
-                  imageInitial: { opacity: 0, x: 100, scale: 0.9, rotateY: 15 },
-                  imageAnimate: { opacity: 1, x: 0, scale: 1, rotateY: 0 },
-                  textInitial: { opacity: 0, x: -50, scale: 0.95 },
-                  textAnimate: { opacity: 1, x: 0, scale: 1 },
-                  iconInitial: { opacity: 0, scale: 0, rotate: 180 },
-                  iconAnimate: { opacity: 1, scale: 1, rotate: 0 },
-                  titleInitial: { opacity: 0, y: 20 },
-                  titleAnimate: { opacity: 1, y: 0 },
-                  descInitial: { opacity: 0, y: 20 },
-                  descAnimate: { opacity: 1, y: 0 },
-                },
-                {
-                  // Section 3: Fade with scale
-                  imageInitial: { opacity: 0, scale: 0.7, y: 50 },
-                  imageAnimate: { opacity: 1, scale: 1, y: 0 },
-                  textInitial: { opacity: 0, scale: 0.95 },
-                  textAnimate: { opacity: 1, scale: 1 },
-                  iconInitial: { opacity: 0, scale: 0, rotate: 360 },
-                  iconAnimate: { opacity: 1, scale: 1, rotate: 0 },
-                  titleInitial: { opacity: 0, y: 30 },
-                  titleAnimate: { opacity: 1, y: 0 },
-                  descInitial: { opacity: 0, y: 30 },
-                  descAnimate: { opacity: 1, y: 0 },
-                },
-                {
-                  // Section 4: Slide up with 3D rotation
-                  imageInitial: { opacity: 0, y: 100, rotateX: -20, scale: 0.85 },
-                  imageAnimate: { opacity: 1, y: 0, rotateX: 0, scale: 1 },
-                  textInitial: { opacity: 0, y: -50, scale: 0.95 },
-                  textAnimate: { opacity: 1, y: 0, scale: 1 },
-                  iconInitial: { opacity: 0, scale: 0, rotate: -90 },
-                  iconAnimate: { opacity: 1, scale: 1, rotate: 0 },
-                  titleInitial: { opacity: 0, y: -20, scale: 0.9 },
-                  titleAnimate: { opacity: 1, y: 0, scale: 1 },
-                  descInitial: { opacity: 0, y: -20, scale: 0.9 },
-                  descAnimate: { opacity: 1, y: 0, scale: 1 },
-                },
-                {
-                  // Section 5: Diagonal slide with perspective
-                  imageInitial: { opacity: 0, x: -80, y: 80, scale: 0.8, rotateZ: -5 },
-                  imageAnimate: { opacity: 1, x: 0, y: 0, scale: 1, rotateZ: 0 },
-                  textInitial: { opacity: 0, x: 80, y: -80, scale: 0.95 },
-                  textAnimate: { opacity: 1, x: 0, y: 0, scale: 1 },
-                  iconInitial: { opacity: 0, scale: 0, rotate: 90 },
-                  iconAnimate: { opacity: 1, scale: 1, rotate: 0 },
-                  titleInitial: { opacity: 0, x: 30, y: 20 },
-                  titleAnimate: { opacity: 1, x: 0, y: 0 },
-                  descInitial: { opacity: 0, x: 30, y: 20 },
-                  descAnimate: { opacity: 1, x: 0, y: 0 },
-                },
-              ];
-              
-              const animStyle = animationStyles[index % animationStyles.length];
-              
-              return (
-                <FeatureSection
-                  key={feature.id}
-                  feature={feature}
-                  Icon={Icon}
-                  layout={layout}
-                  index={index}
-                  animationStyle={animStyle}
-                />
-              );
-            })}
+      {/* ---------------- Hero ---------------- */}
+      <section className="relative overflow-hidden py-20 lg:py-32">
+        <div
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background: `
+              radial-gradient(ellipse 60% 50% at 22% 18%, hsl(var(--noreja-main) / 0.34), transparent 62%),
+              radial-gradient(ellipse 45% 45% at 84% 62%, hsl(var(--noreja-tertiary) / 0.13), transparent 60%)
+            `,
+          }}
+        />
+        <div className="relative z-10 mx-auto grid w-full max-w-7xl grid-cols-1 items-center gap-12 px-4 lg:grid-cols-[1.08fr_0.92fr] lg:gap-20 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="order-2 flex flex-col items-start gap-6 lg:order-1"
+          >
+            <Eyebrow>{platformCopy.heroEyebrow[language]}</Eyebrow>
+
+            <h1 className="text-[2.6rem] font-extrabold leading-[0.98] tracking-[-0.045em] text-foreground lg:text-[4.6rem]">
+              {heroWords(language).map((verb, i) => (
+                <span key={verb} className="block">
+                  <span
+                    className="transition-colors duration-500"
+                    style={{ color: i === heroPhase ? "hsl(var(--foreground))" : "hsl(var(--muted-foreground) / 0.55)" }}
+                  >
+                    {verb}
+                  </span>
+                  {i === heroPhase && (
+                    <span
+                      aria-hidden="true"
+                      className="ml-2 inline-block h-[0.22em] w-[0.22em] rounded-full align-middle"
+                      style={{ background: MINT, boxShadow: `0 0 18px ${MINT}` }}
+                    />
+                  )}
+                </span>
+              ))}
+            </h1>
+
+            <p className="max-w-[62ch] text-lg leading-relaxed text-muted-foreground">
+              {platformCopy.heroLedeBefore[language]}
+              <strong className="font-semibold text-foreground">
+                {platformCopy.heroLedeStrong[language]}
+              </strong>
+              {platformCopy.heroLedeAfter[language]}
+            </p>
+
+            <div className="flex flex-wrap items-center gap-3">
+              <Button size="lg" className="group" asChild>
+                <a href="#loop">
+                  {platformCopy.heroCtaPrimary[language]}
+                  <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+                </a>
+              </Button>
+              <Button size="lg" variant="outline" asChild>
+                <a href="#cost-of-inaction">{platformCopy.heroCtaSecondary[language]}</a>
+              </Button>
+            </div>
+
+            <p className="flex flex-wrap gap-x-[18px] gap-y-1 font-mono text-[0.74rem] tracking-[0.06em] text-muted-foreground">
+              {platformCopy.heroTrust[language].map((item) => (
+                <span key={item}>{item}</span>
+              ))}
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+            className="order-1 mx-auto w-full max-w-[440px] lg:order-2"
+          >
+            <PhaseRing
+              activeIndex={heroPhase}
+              labels={phaseNames}
+              hub={<LoopLedgerHub ledger={heroLedger} />}
+            />
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ---------------- Status quo ---------------- */}
+      <section
+        className="border-y py-16 lg:py-24"
+        style={{ borderColor: "hsl(var(--border))", background: "hsl(var(--card))" }}
+      >
+        <div className="mx-auto grid w-full max-w-7xl grid-cols-1 items-start gap-10 px-4 lg:grid-cols-2 lg:gap-[72px] lg:px-8">
+          <div className="flex flex-col gap-4">
+            <Eyebrow>{platformCopy.problemEyebrow[language]}</Eyebrow>
+            <h2 className="text-3xl font-extrabold leading-tight tracking-tight text-foreground lg:text-[2.7rem]">
+              {platformCopy.problemHeadBefore[language]}
+              <span className="text-muted-foreground">{platformCopy.problemHeadStrike[language]}</span>
+              {platformCopy.problemHeadAfter[language]}
+            </h2>
+          </div>
+
+          {/* One grid for the whole list, not one per row — otherwise the label
+              column is sized per row and "Business Case?" pushes its row out of line. */}
+          <div className="grid grid-cols-[max-content_1fr] items-baseline gap-x-5">
+            {statusQuoGaps.map((gap, i) => (
+              <Fragment key={gap.q.en}>
+                <span className="whitespace-nowrap py-4 font-mono text-[0.74rem] tracking-[0.1em] text-amber-400">
+                  {gap.q[language]}
+                </span>
+                <span className="py-4 text-[0.97rem] text-muted-foreground">
+                  {gap.text[language]}
+                </span>
+                {i < statusQuoGaps.length - 1 && (
+                  <div
+                    aria-hidden="true"
+                    className="col-span-2 border-b border-dashed"
+                    style={{ borderColor: "hsl(var(--border))" }}
+                  />
+                )}
+              </Fragment>
+            ))}
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* Blog Teasers Section */}
-      <div className="relative" style={{
-        background: `
-          linear-gradient(180deg, hsl(var(--background)) 0%, hsl(var(--noreja-main) / 0.16) 40%, hsl(var(--noreja-secondary) / 0.15) 80%, hsl(var(--background)) 100%),
-          radial-gradient(ellipse 1000px 700px at 70% 20%, hsl(var(--noreja-secondary) / 0.14) 0%, transparent 60%)
-        `
-      }}>
-        {/* Gradient fade from previous section */}
-        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-background to-transparent pointer-events-none z-0" />
-        <section className="relative z-10 py-2 lg:py-20">
-          <div className="w-full max-w-7xl mx-auto px-4 lg:px-8">
-            {/* YouTube Video Section */}
-            <div id="minerva-videos" className="mb-12 scroll-mt-24">
+      {/* ---------------- The loop ---------------- */}
+      <section id="loop" className="scroll-mt-20 pt-16 lg:pt-28">
+        <div className="mx-auto w-full max-w-7xl px-4 lg:px-8">
+          <div className="mb-12 flex max-w-[68ch] flex-col gap-4 lg:mb-20">
+            <Eyebrow>{platformCopy.loopEyebrow[language]}</Eyebrow>
+            <h2 className="text-3xl font-extrabold leading-tight tracking-tight text-foreground lg:text-[3rem]">
+              {platformCopy.loopHeadline[language]}
+            </h2>
+            <p className="text-lg leading-relaxed text-muted-foreground">
+              {platformCopy.loopLede[language]}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-[0.86fr_1.14fr] lg:gap-16">
+            {/* Sticky ring + agent log */}
+            <div className="sticky top-0 hidden h-screen flex-col justify-center gap-6 lg:flex">
+              <div className="mx-auto w-full max-w-[380px]">
+                <PhaseRing
+                  activeIndex={activePhase}
+                  labels={phaseNames}
+                  hubLabel={platformCopy.loopPhaseOf[language].replace(
+                    "{n}",
+                    String(activePhase + 1)
+                  )}
+                  hubValue={loopPhases[activePhase].name[language]}
+                  onNodeClick={scrollToPhase}
+                />
+              </div>
+
+              <div
+                className="mx-auto w-full max-w-[420px] rounded-[14px] border bg-card px-[18px] py-4 font-mono text-[0.79rem] leading-relaxed"
+                style={{ borderColor: "hsl(var(--border))" }}
+              >
+                <div
+                  className="mb-2.5 flex items-center gap-2.5 text-[0.7rem] uppercase tracking-[0.16em]"
+                  style={{ color: MINT }}
+                >
+                  <span
+                    className="h-[7px] w-[7px] animate-pulse rounded-full"
+                    style={{ background: MINT, boxShadow: `0 0 10px ${MINT}` }}
+                  />
+                  {platformCopy.agentLogLabel[language]}
+                </div>
+                <div className="text-foreground">
+                  <span className="text-muted-foreground">&gt;&nbsp;</span>
+                  {loopPhases[activePhase].log[language]}
+                </div>
+              </div>
+            </div>
+
+            {/* Scrolling phase panels */}
+            <div className="flex flex-col lg:gap-0">
+              {loopPhases.map((phase, i) => (
+                <PhasePanel
+                  key={phase.id}
+                  phase={phase}
+                  index={i}
+                  isActive={activePhase === i}
+                  onEnter={setActivePhase}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ---------------- Agents + customising ---------------- */}
+      <section
+        className="border-y py-20 lg:py-28"
+        style={{ borderColor: "hsl(var(--border))", background: "hsl(var(--card))" }}
+      >
+        <div className="mx-auto w-full max-w-7xl px-4 lg:px-8">
+          <div className="flex max-w-[66ch] flex-col gap-4">
+            <Eyebrow>{platformCopy.agentsEyebrow[language]}</Eyebrow>
+            <h2 className="text-3xl font-extrabold leading-tight tracking-tight text-foreground lg:text-[2.8rem]">
+              {platformCopy.agentsHeadline[language]}
+            </h2>
+            <p className="text-lg leading-relaxed text-muted-foreground">
+              {platformCopy.agentsLede[language]}
+            </p>
+          </div>
+
+          <div className="mt-11 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {agentRoster.map((agent, i) => (
               <motion.div
+                key={agent.name.en}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
                 viewport={{ once: true }}
-                className="w-full"
+                transition={{ duration: 0.5, delay: i * 0.08 }}
+                className="group relative flex flex-col gap-3 overflow-hidden rounded-2xl border bg-background px-5 py-6 transition-transform duration-300 hover:-translate-y-1"
+                style={{ borderColor: "hsl(var(--border))" }}
               >
-                <div className="relative overflow-hidden rounded-3xl border border-border/60 bg-background/95 shadow-xl shadow-noreja-main/10">
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-noreja-main/10 via-transparent to-noreja-secondary/20 opacity-70 z-10" />
-                  
-                  <div className="relative z-20 p-4 lg:p-8">
-                    <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-6 text-center">
-                      {(() => {
-                        const headline = t.pages.functionalities.videoHeadline;
-                        // Highlight "im Detail" or "in Detail"
-                        const parts = headline.split(/(im Detail|in Detail)/i);
-                        return parts.map((part, index) => 
-                          /^(im Detail|in Detail)$/i.test(part) ? (
-                            <span key={index} className="bg-gradient-primary bg-clip-text text-transparent">
-                              {part}
-                            </span>
-                          ) : (
-                            <span key={index}>{part}</span>
-                          )
-                        );
-                      })()}
-                    </h3>
-                    
-                    {/* Responsive iframe container with 16:9 aspect ratio */}
-                    <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
-                      <iframe
-                        className="absolute top-0 left-0 w-full h-full rounded-lg"
-                        src="https://www.youtube.com/embed/_ZjG8y1s-os?list=PLOV__tuMtsoB3bmkSGmh3wI6PonkG8x7d"
-                        title="YouTube video player"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        referrerPolicy="strict-origin-when-cross-origin"
-                        allowFullScreen
-                        loading="lazy"
-                      />
-                    </div>
-                  </div>
-                </div>
+                <span
+                  aria-hidden="true"
+                  className="absolute inset-x-0 top-0 h-0.5 origin-left scale-x-0 transition-transform duration-500 group-hover:scale-x-100"
+                  style={{
+                    background:
+                      "linear-gradient(90deg, hsl(var(--noreja-main)), hsl(var(--noreja-tertiary)))",
+                  }}
+                />
+                <span
+                  className="font-mono text-[0.78rem] uppercase tracking-[0.12em]"
+                  style={{ color: MINT }}
+                >
+                  {agent.name[language]}
+                </span>
+                <h3 className="text-xl font-bold tracking-tight text-foreground">
+                  {agent.role[language]}
+                </h3>
+                <p className="text-[0.92rem] text-muted-foreground">{agent.text[language]}</p>
+                <span
+                  className="mt-auto border-t border-dashed pt-3 font-mono text-[0.7rem] text-muted-foreground"
+                  style={{ borderColor: "hsl(var(--border))" }}
+                >
+                  {agent.runs[language]}
+                </span>
               </motion.div>
+            ))}
+          </div>
+
+          {/* Customising */}
+          <div className="mt-16 flex flex-col gap-8 lg:mt-24">
+            <div className="flex max-w-[66ch] flex-col gap-4">
+              <Eyebrow>{platformCopy.equipEyebrow[language]}</Eyebrow>
+              <h2 className="text-3xl font-extrabold leading-tight tracking-tight text-foreground lg:text-[2.6rem]">
+                {platformCopy.equipHeadline[language]}
+              </h2>
+              <p className="text-lg leading-relaxed text-muted-foreground">
+                {platformCopy.equipLedeBefore[language]}
+                <strong className="font-semibold text-foreground">
+                  {platformCopy.equipLedeTools[language]}
+                </strong>
+                {platformCopy.equipLedeAnd[language]}
+                <strong className="font-semibold text-foreground">
+                  {platformCopy.equipLedeKb[language]}
+                </strong>
+                {platformCopy.equipLedeAfter[language]}
+              </p>
             </div>
-            
+
+            <AgentEquipper />
+          </div>
+        </div>
+      </section>
+
+      {/* ---------------- Cost of inaction ---------------- */}
+      <div className="scroll-mt-20 pt-20 lg:pt-28">
+        <CostOfInactionCalculator />
+      </div>
+
+      {/* ---------------- Comparison ---------------- */}
+      <section
+        className="border-y py-20 lg:py-28"
+        style={{ borderColor: "hsl(var(--border))", background: "hsl(var(--card))" }}
+      >
+        <div className="mx-auto w-full max-w-7xl px-4 lg:px-8">
+          <div className="flex max-w-[60ch] flex-col gap-4">
+            <Eyebrow>{platformCopy.compareEyebrow[language]}</Eyebrow>
+            <h2 className="text-3xl font-extrabold leading-tight tracking-tight text-foreground lg:text-[2.8rem]">
+              {platformCopy.compareHeadline[language]}
+            </h2>
+          </div>
+
+          <div
+            className="mt-10 overflow-x-auto rounded-[18px] border"
+            style={{ borderColor: "hsl(var(--border))" }}
+          >
+            <table className="w-full min-w-[640px] border-collapse">
+              <thead>
+                <tr>
+                  {[
+                    platformCopy.comparePhase[language],
+                    platformCopy.compareClassic[language],
+                    platformCopy.compareNoreja[language],
+                  ].map((heading, i) => (
+                    <th
+                      key={heading}
+                      className="border-b px-5 py-4 text-left font-mono text-[0.7rem] uppercase tracking-[0.15em]"
+                      style={{
+                        borderColor: "hsl(var(--border))",
+                        background: "hsl(var(--secondary))",
+                        color: i === 2 ? MINT : "hsl(var(--muted-foreground))",
+                      }}
+                    >
+                      {heading}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {comparisonRows.map((row, i) => {
+                  const last = i === comparisonRows.length - 1;
+                  const cell = "px-5 py-4 text-left align-top text-[0.94rem]";
+                  const border = {
+                    borderBottom: last ? "none" : "1px solid hsl(var(--border))",
+                  };
+                  return (
+                    <tr key={row.phase.en}>
+                      <td className={`${cell} font-semibold text-foreground`} style={border}>
+                        {row.phase[language]}
+                      </td>
+                      <td className={`${cell} text-muted-foreground`} style={border}>
+                        {row.classic[language]}
+                      </td>
+                      <td
+                        className={`${cell} text-foreground`}
+                        style={{ ...border, background: "hsl(var(--noreja-main) / 0.07)" }}
+                      >
+                        {row.noreja[language]}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      {/* ---------------- Closing CTA ---------------- */}
+      <section className="relative overflow-hidden py-20 lg:py-32">
+        <div
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(ellipse 55% 70% at 50% 50%, hsl(var(--noreja-main) / 0.3), transparent 66%)",
+          }}
+        />
+        <div className="relative z-10 mx-auto flex w-full max-w-5xl flex-col items-center gap-6 px-4 text-center lg:px-8">
+          <Eyebrow>{platformCopy.closeEyebrow[language]}</Eyebrow>
+          <h2 className="text-3xl font-extrabold leading-tight tracking-tight text-foreground lg:text-[3rem]">
+            {platformCopy.closeHeadline[language]}
+          </h2>
+          <p className="max-w-[62ch] text-lg leading-relaxed text-muted-foreground">
+            {platformCopy.closeLede[language]}
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            <Button size="lg" className="group" asChild>
+              <Link to={getRoutePath("contact", language)}>
+                {platformCopy.closeCtaPrimary[language]}
+                <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+              </Link>
+            </Button>
+            <Button size="lg" variant="secondary" asChild>
+              <Link to={getRoutePath("pricing", language)}>
+                {platformCopy.closeCtaSecondary[language]}
+              </Link>
+            </Button>
+            <Button size="lg" variant="outline" asChild>
+              <Link to={getRoutePath("battleCards", language)}>
+                {platformCopy.closeCtaTertiary[language]}
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* ---------------- Video + blog ---------------- */}
+      <div
+        className="relative"
+        style={{
+          background: `
+            linear-gradient(180deg, hsl(var(--background)) 0%, hsl(var(--noreja-main) / 0.16) 40%, hsl(var(--noreja-secondary) / 0.15) 80%, hsl(var(--background)) 100%),
+            radial-gradient(ellipse 1000px 700px at 70% 20%, hsl(var(--noreja-secondary) / 0.14) 0%, transparent 60%)
+          `,
+        }}
+      >
+        <div className="pointer-events-none absolute inset-x-0 top-0 z-0 h-32 bg-gradient-to-b from-background to-transparent" />
+        <section className="relative z-10 py-12 lg:py-20">
+          <div className="mx-auto w-full max-w-7xl px-4 lg:px-8">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -612,46 +659,36 @@ const Functionalities = () => {
               viewport={{ once: true }}
               className="mb-12"
             >
-              <div className="relative overflow-hidden rounded-3xl border border-border/60 bg-background/95 px-8 py-12 text-center shadow-xl shadow-noreja-main/10">
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-noreja-main/10 via-transparent to-noreja-secondary/20 opacity-70" />
-                <div className="relative z-10 space-y-6">
-                  <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-                    {t.pages.functionalities.learnMore}{" "}
-                    <span className="bg-gradient-primary bg-clip-text text-transparent">
-                      {t.pages.functionalities.learnMoreHighlight}
-                    </span>
+              <div
+                className="relative overflow-hidden rounded-3xl border bg-background/95 shadow-xl"
+                style={{ borderColor: "hsl(var(--border))" }}
+              >
+                <div
+                  className="pointer-events-none absolute inset-0 z-10 opacity-70"
+                  style={{
+                    background:
+                      "linear-gradient(90deg, hsl(var(--noreja-main) / 0.1), transparent, hsl(var(--noreja-secondary) / 0.2))",
+                  }}
+                />
+                <div className="relative z-20 p-4 lg:p-8">
+                  <h2 className="mb-6 text-center text-2xl font-bold text-foreground md:text-3xl">
+                    {t.pages.functionalities.videoHeadline}
                   </h2>
-                  <p className="text-muted-foreground max-w-3xl mx-auto">
-                    {t.pages.functionalities.learnMoreSubtitle}
-                  </p>
-                  <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                    <Button
-                      size="lg"
-                      variant="secondary"
-                      className="group"
-                      asChild
-                    >
-                      <Link to={getRoutePath('pricing', language)}>
-                        {t.pages.functionalities.learnMoreCta}
-                        <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
-                      </Link>
-                    </Button>
-                    <Button
-                      size="lg"
-                      variant="outline"
-                      className="group"
-                      asChild
-                    >
-                      <Link to={getRoutePath('battleCards', language)}>
-                        {t.pages.functionalities.learnMoreCtaComparison}
-                        <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
-                      </Link>
-                    </Button>
+                  <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
+                    <iframe
+                      className="absolute left-0 top-0 h-full w-full rounded-lg"
+                      src="https://www.youtube.com/embed/_ZjG8y1s-os?list=PLOV__tuMtsoB3bmkSGmh3wI6PonkG8x7d"
+                      title="YouTube video player"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      referrerPolicy="strict-origin-when-cross-origin"
+                      allowFullScreen
+                      loading="lazy"
+                    />
                   </div>
                 </div>
               </div>
             </motion.div>
-            
+
             <HubSpotBlogTeaser />
           </div>
         </section>
