@@ -1,49 +1,19 @@
 import { motion } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { useMemo } from "react";
-import mainAnimation from "@/assets/animation/main_animation_transparent.webm";
-import dashboardImg from "@/assets/platform/dashboard.webp";
-import analyzerImg from "@/assets/platform/analyzer.webp";
-import minervaImg from "@/assets/platform/minerva.webp";
-import builderImg from "@/assets/platform/builder.webp";
-import workbenchImg from "@/assets/platform/workbench.webp";
+import { ProcessGraphAnimation } from "@/components/ProcessGraphAnimation";
 
 interface AnimationSectionProps {
   size?: "default" | "large";
 }
 
-// Detect Safari browser
-const isSafari = (): boolean => {
-  if (typeof window === 'undefined') return false;
-  const ua = window.navigator.userAgent.toLowerCase();
-  return ua.indexOf('safari') > -1 && ua.indexOf('chrome') === -1 && ua.indexOf('chromium') === -1;
-};
-
 export function AnimationSection({ size = "default" }: AnimationSectionProps) {
   const { t } = useLanguage();
-
-  // Platform images array
-  const platformImages = [
-    dashboardImg,
-    analyzerImg,
-    minervaImg,
-    builderImg,
-    workbenchImg,
-  ];
-
-  // Randomly select one image on mount (changes on each reload)
-  const randomImage = useMemo(() => {
-    const randomIndex = Math.floor(Math.random() * platformImages.length);
-    return platformImages[randomIndex];
-  }, []); // Empty deps means it only runs once on mount
-
-  const isSafariBrowser = useMemo(() => isSafari(), []);
 
   // Size configurations
   const sizeConfig = {
     default: {
       sectionHeight: "h-[700px] lg:h-[800px]",
-      maxWidth: "max-w-6xl",
+      maxWidth: "max-w-[1440px]",
     },
     large: {
       sectionHeight: "h-[1650px] lg:h-[1800px]",
@@ -55,7 +25,7 @@ export function AnimationSection({ size = "default" }: AnimationSectionProps) {
 
   return (
     <section className={`${config.sectionHeight} overflow-hidden hidden min-[500px]:block`}>
-      <div className="container mx-auto px-4 lg:px-8 h-full">
+      <div className="mx-auto w-full px-2 sm:px-4 lg:px-6 h-full">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -63,28 +33,15 @@ export function AnimationSection({ size = "default" }: AnimationSectionProps) {
           viewport={{ once: true }}
           className={`text-center ${config.maxWidth} mx-auto h-full flex items-center justify-center -mt-16 lg:-mt-20`}
         >
-          {/* Video animation for non-Safari, random platform image for Safari */}
+          {/* Procedural process-graph animation (transparent, composites over the page) */}
           <div className="relative w-full h-full">
-            {isSafariBrowser ? (
-              <img
-                src={randomImage}
-                alt="Noreja Platform"
-                className="w-full h-full rounded-2xl object-contain"
-              />
-            ) : (
-              <video
-                src={mainAnimation}
-                autoPlay
-                loop
-                muted
-                playsInline
-                className="w-full h-full rounded-2xl object-contain"
-              />
-            )}
+            <ProcessGraphAnimation
+              className="w-full h-full rounded-2xl"
+              hint={t.processGraph.hint}
+            />
           </div>
         </motion.div>
       </div>
     </section>
   );
 }
-

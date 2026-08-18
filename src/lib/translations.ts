@@ -281,6 +281,10 @@ export interface Translations {
       description: string;
     };
   };
+  processGraph: {
+    /** Intentionally English in both locales; only STRG/CTRL differs. */
+    hint: string;
+  };
   functionalities: {
     title: string;
     titleHighlight: string;
@@ -1141,6 +1145,9 @@ export const translations: Record<Language, Translations> = {
         buttonLabel: "Learn more"
       }
     },
+    processGraph: {
+      hint: "Click, move, hold, and CTRL scroll"
+    },
     usps: {
       title: "Four strengths —",
       highlight: "one clear advantage",
@@ -1838,7 +1845,7 @@ export const translations: Record<Language, Translations> = {
       badge: "Generative Process Intelligence",
       title: "Die Zukunft der",
       titleHighlight: "Innovation",
-      subtitle: "Elevating Process Knowledge with the Power of GenAI – Prozessanalyse zum kontinuierlichen ROI-Treiber machen. Enterprise-Technologie für Effizienz im Mittelstand.",
+      subtitle: "Verborgene Prozesspotenziale mit der Power von GenAI heben und zum kontinuierlichen ROI-Treiber machen. Enterprise-Technologie für Effizienz im Mittelstand.",
       ctaPrimary: "Loslegen",
       ctaSecondary: "Mehr erfahren",
       getStarted: "Demo buchen",
@@ -1931,6 +1938,10 @@ export const translations: Record<Language, Translations> = {
         subtitle: "Autonome KI-Agenten, die deine Abläufe analysieren, entscheiden und gemeinsam mit deinem Team optimieren.",
         buttonLabel: "Mehr erfahren"
       }
+    },
+    processGraph: {
+      /* English on purpose - only the key label differs (STRG vs CTRL) */
+      hint: "Click, move, hold, and STRG scroll"
     },
     usps: {
       title: "Vier Stärken —",
