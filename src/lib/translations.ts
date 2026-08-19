@@ -285,6 +285,13 @@ export interface Translations {
   processGraph: {
     /** Intentionally English in both locales; only STRG/CTRL differs. */
     hint: string;
+    /** Header above the findings panel in the animation. */
+    findingsHeader: string;
+    /**
+     * Illustrative order-to-cash findings shown in the animation's alert panel.
+     * These are example figures for the demo graph, not customer data.
+     */
+    findings: { title: string; meta: string }[];
   };
   functionalities: {
     title: string;
@@ -1148,7 +1155,18 @@ export const translations: Record<Language, Translations> = {
       }
     },
     processGraph: {
-      hint: "Click, move, hold, and CTRL scroll"
+      hint: "Click, move, hold, and CTRL scroll",
+      findingsHeader: "EXAMPLE FINDINGS · ORDER TO CASH",
+      findings: [
+        { title: "Long waiting time at step Invoice", meta: "avg. 6.4 d idle · 12,310 cases" },
+        { title: "Violation patterns in the dunning levels", meta: "3 levels skipped · 8% of receivables" },
+        { title: "€54,000 of trapped working capital found", meta: "payment terms exceeded · DSO +11 d" },
+        { title: "Rework loop at Credit Check", meta: "1.8 repetitions per order" },
+        { title: "Duplicate invoice postings detected", meta: "216 cases · €91,400 exposure" },
+        { title: "Manual price override before billing", meta: "4,120 cases · approval missing" },
+        { title: "Early payment discount lost", meta: "27% of invoices · €18,700 forgone" },
+        { title: "Delivery blocked after credit limit hit", meta: "avg. 3.1 d added lead time" }
+      ]
     },
     usps: {
       title: "Four strengths —",
@@ -1944,7 +1962,18 @@ export const translations: Record<Language, Translations> = {
     },
     processGraph: {
       /* English on purpose - only the key label differs (STRG vs CTRL) */
-      hint: "Click, move, hold, and STRG scroll"
+      hint: "Click, move, hold, and STRG scroll",
+      findingsHeader: "BEISPIELBEFUNDE · ORDER TO CASH",
+      findings: [
+        { title: "Lange Wartezeit bei Schritt Rechnung", meta: "Ø 6,4 Tage Liegezeit · 12.310 Fälle" },
+        { title: "Verstoßmuster in den Mahnstufen", meta: "3 Stufen übersprungen · 8 % der Forderungen" },
+        { title: "54.000 € gebundenes Working Capital gefunden", meta: "Zahlungsziel überschritten · DSO +11 Tage" },
+        { title: "Nacharbeitsschleife bei der Kreditprüfung", meta: "1,8 Wiederholungen je Auftrag" },
+        { title: "Doppelte Rechnungsbuchungen erkannt", meta: "216 Fälle · 91.400 € Exposure" },
+        { title: "Manuelle Preisänderung vor der Fakturierung", meta: "4.120 Fälle · Freigabe fehlt" },
+        { title: "Skonto nicht genutzt", meta: "27 % der Rechnungen · 18.700 € entgangen" },
+        { title: "Lieferung nach Kreditlimit blockiert", meta: "Ø 3,1 Tage zusätzliche Durchlaufzeit" }
+      ]
     },
     usps: {
       title: "Vier Stärken —",

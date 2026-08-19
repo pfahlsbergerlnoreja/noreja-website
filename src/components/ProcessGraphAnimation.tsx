@@ -30,6 +30,7 @@ const C = {
   err: "#FF6B6B",
   ok: "#5BE8A8",
   dust: "rgba(150,200,255,0.35)",
+  panelFill: "rgba(26,7,11,0.74)",
 };
 
 /* ---------------- authored timeline ---------------- */
@@ -162,10 +163,21 @@ interface GPath {
   edges: GEdge[];
   marks: GMark[];
 }
+/** One exception marker that gets its own box in the findings panel. */
+interface GFinding {
+  pi: number;
+  idx: number;
+  node: number;
+  /** Position in the rotating copy pool; resolved against the copy actually passed in. */
+  copyOrder: number;
+}
 interface Variant {
   paths: GPath[];
   nodeMap: Map<number, { pi: number; hidx: number }>;
   edgeSet: Set<GEdge>;
+  /** At most one hop per path, and only ~55% of paths get one: 2-3 red segments overall. */
+  crit: Set<GEdge>;
+  findings: GFinding[];
 }
 interface Graph {
   nodes: GNode[];
@@ -234,6 +246,7 @@ function buildGraph(): Graph {
   /* several alternative sets of dominant paths - click cycles through them */
   function makeVariant(vi: number): Variant {
     const rv = rng(4400 + vi * 971);
+    const crit = new Set<GEdge>();
     const used = new Set<number>();
     const paths: GPath[] = [];
     const entries = layers[0].slice().sort(() => rv() - 0.5);
@@ -265,6 +278,7 @@ function buildGraph(): Graph {
       [3 + Math.floor(rv() * 2), 7 + Math.floor(rv() * 2), 11 + Math.floor(rv() * 2)].forEach((s, k) => {
         if (s < path.length) marks.push({ node: path[s], idx: s, kind: (pi + k + vi) % 3 === 1 ? "err" : "ok" });
       });
+      if (rv() < 0.55) crit.add(pedges[2 + Math.floor(rv() * (pedges.length - 3))]);
       paths.push({ pi, nodes: path, edges: pedges, marks });
     }
     const nodeMap = new Map<number, { pi: number; hidx: number }>();
@@ -273,7 +287,18 @@ function buildGraph(): Graph {
       p.nodes.forEach((n, i) => nodeMap.set(n, { pi: p.pi, hidx: i }));
       p.edges.forEach((e) => edgeSet.add(e));
     });
-    return { paths, nodeMap, edgeSet };
+    /* Findings fire in marker order, so the panel fills top-down as the graph builds. */
+    const findings: GFinding[] = [];
+    paths.forEach((p) =>
+      p.marks.forEach((m) => {
+        if (m.kind === "err") findings.push({ pi: p.pi, idx: m.idx, node: m.node, copyOrder: 0 });
+      })
+    );
+    findings.sort((a, b) => a.idx - b.idx || a.pi - b.pi);
+    findings.forEach((f, i) => {
+      f.copyOrder = i + vi * 3;
+    });
+    return { paths, nodeMap, edgeSet, crit, findings };
   }
   const variants = [0, 1, 2, 3].map(makeVariant);
 
@@ -322,6 +347,8 @@ interface Pt {
 interface Proj extends Pt {
   s: number;
   d: number;
+  /** Near fade: geometry dissolves as it passes the camera instead of being hard-clipped. */
+  nf: number;
   vis: boolean;
 }
 
@@ -337,12 +364,14 @@ function project(p: Vec3, cam: Cam): Proj {
   const f = 2100;
   const den = f + z + 1450 - (cam.dolly || 0);
   const s = f / Math.max(den, 150);
+  const nf = clamp01((den - 175) / 620);
   return {
     x: 960 + (x - cam.fx) * s * cam.zoom,
     y: 540 + (y - cam.fy) * s * cam.zoom,
     s: s * cam.zoom,
     d: s,
-    vis: den > 170,
+    nf,
+    vis: nf > 0.015,
   };
 }
 function ctrl(a: Vec3, b: Vec3): [Vec3, Vec3] {
@@ -399,6 +428,9 @@ function GraphFrame({
   accent,
   density,
   scale,
+  findings,
+  findingsHeader,
+  findingsScale,
   route,
   orbit,
 }: {
@@ -406,6 +438,9 @@ function GraphFrame({
   accent: string;
   density: number;
   scale: number;
+  findings: FindingCopy[];
+  findingsHeader: string;
+  findingsScale: number;
   route: Route;
   orbit: Orbit;
 }) {
@@ -445,11 +480,13 @@ function GraphFrame({
         [2.55, 2.0, 1.42, 1.22, 1.62, 1.18, 1.24, 1.3],
         MOTION.draw
       )(T),
-    fx: interpolate(
-      [0, CUES.Spread, CUES.Weave, CUES.Paths, CUES.Paths + 2.6, CUES.Reveal, AUTHORED_TOTAL],
-      [-760, -420, 60, 0, 280, 0, 0],
-      MOTION.draw
-    )(T),
+    fx:
+      (findings.length ? 190 * findingsScale : 0) +
+      interpolate(
+        [0, CUES.Spread, CUES.Weave, CUES.Paths, CUES.Paths + 2.6, CUES.Reveal, AUTHORED_TOTAL],
+        [-760, -420, 60, 0, 280, 0, 0],
+        MOTION.draw
+      )(T),
     fy: interpolate([0, CUES.Weave, CUES.Paths + 2.6, AUTHORED_TOTAL], [-40, 0, -60, 0], MOTION.draw)(T),
     dolly: orbit.dolly || 0,
   };
@@ -476,6 +513,9 @@ function GraphFrame({
   /* ---- mesh edges, bucketed by depth ---- */
   const BUCKETS = 4;
   const buckets: string[][] = Array.from({ length: BUCKETS }, () => []);
+  /* Near-camera geometry carries its own opacity, so it leaves the batched
+     buckets and is drawn individually - only that geometry pays the cost. */
+  const softMesh: JSX.Element[] = [];
   const heads: string[] = [];
   GRAPH.edges.forEach((e, i) => {
     if (heroEdges.has(e)) return;
@@ -491,7 +531,23 @@ function GraphFrame({
     const q2 = project(c2, cam);
     const seg = p < 1 ? splitHead(p0, q1, q2, p3, p) : [p0, q1, q2, p3];
     const depth = clamp01(((p0.d + p3.d) / 2) * 1.35 - 0.35);
-    buckets[Math.min(BUCKETS - 1, Math.floor(depth * BUCKETS))].push(segD(seg[0], seg[1], seg[2], seg[3]));
+    const bi = Math.min(BUCKETS - 1, Math.floor(depth * BUCKETS));
+    const nf = Math.min(p0.nf, p3.nf);
+    if (nf < 0.96) {
+      softMesh.push(
+        <path
+          key={"sm" + i}
+          d={segD(seg[0], seg[1], seg[2], seg[3])}
+          fill="none"
+          stroke={`rgba(${C.edge},${(0.09 + bi * 0.055).toFixed(3)})`}
+          strokeWidth={0.7 + bi * 0.42}
+          strokeLinecap="round"
+          opacity={nf}
+        />
+      );
+      return;
+    }
+    buckets[bi].push(segD(seg[0], seg[1], seg[2], seg[3]));
     if (p > 0.55 && p < 1) heads.push(dotD(seg[3].x, seg[3].y, 1.6 + 1.6 * depth) + "Z");
   });
   const meshEls = buckets.map((ds, bi) =>
@@ -510,6 +566,7 @@ function GraphFrame({
   /* ---- nodes ---- */
   const nBuckets: string[][] = Array.from({ length: BUCKETS }, () => []);
   const nGlow: string[][] = Array.from({ length: BUCKETS }, () => []);
+  const softNodes: JSX.Element[] = [];
   const heroNodes: JSX.Element[] = [];
   GRAPH.nodes.forEach((n, i) => {
     const t0 = at(n.u);
@@ -517,6 +574,7 @@ function GraphFrame({
     if (p <= 0) return;
     const pr = P[i];
     if (!pr.vis) return;
+    const nf = pr.nf;
     const flash = 1 - ease((T - t0) / 0.9, MOTION.enter);
     const h = V.nodeMap.get(i);
     const heroOn = h ? clamp01((T - (base + h.pi * 0.5 + h.hidx * 0.12)) / 0.5) : 0;
@@ -524,7 +582,7 @@ function GraphFrame({
     const r = (1.4 + n.w * 3.2) * pr.s * p * breath * (1 + 0.35 * heroOn);
     if (heroOn > 0.02) {
       heroNodes.push(
-        <g key={"hn" + i} opacity={Math.min(1, p * 1.4)}>
+        <g key={"hn" + i} opacity={Math.min(1, p * 1.4) * nf}>
           <circle cx={pr.x} cy={pr.y} r={r * 5.2} fill="url(#pgHaloHero)" opacity={0.55 * heroOn + 0.3 * flash} />
           <circle cx={pr.x} cy={pr.y} r={r} fill={C.heroCore} />
         </g>
@@ -532,6 +590,19 @@ function GraphFrame({
       return;
     }
     const bi = Math.min(BUCKETS - 1, Math.floor(depth * BUCKETS));
+    if (nf < 0.96) {
+      softNodes.push(
+        <circle
+          key={"sn" + i}
+          cx={pr.x}
+          cy={pr.y}
+          r={Math.max(0.5, r)}
+          fill={bi > 1 ? C.nodeCore : C.nodeLive}
+          opacity={(0.35 + bi * 0.17) * nf}
+        />
+      );
+      return;
+    }
     nBuckets[bi].push(dotD(pr.x, pr.y, Math.max(0.5, r)) + "Z");
     if (depth > 0.35 || flash > 0.1) nGlow[bi].push(dotD(pr.x, pr.y, Math.max(1, r * 3.4)) + "Z");
   });
@@ -570,14 +641,19 @@ function GraphFrame({
         const seg = p < 1 ? splitHead(p0, q1, q2, p3, p) : [p0, q1, q2, p3];
         const d = segD(seg[0], seg[1], seg[2], seg[3]);
         const sc = (p0.s + p3.s) / 2;
+        const nf = Math.min(p0.nf, p3.nf);
+        /* A critical hop renders red, thicker and with a faster pulse. */
+        const bad = variant.crit.has(e);
+        const col = bad ? C.err : accent;
+        const beat = bad ? 0.72 + 0.28 * Math.sin(T * 5.2 + j) : 1;
         glow.push(
           <path
             key={"g" + j}
             d={d}
             fill="none"
-            stroke={accent}
-            strokeWidth={9 * sc}
-            strokeOpacity={0.15}
+            stroke={col}
+            strokeWidth={(bad ? 14 : 9) * sc}
+            strokeOpacity={0.15 * beat * nf}
             strokeLinecap="round"
           />
         );
@@ -586,9 +662,9 @@ function GraphFrame({
             key={"c" + j}
             d={d}
             fill="none"
-            stroke={accent}
-            strokeWidth={2.4 * sc}
-            strokeOpacity={0.95}
+            stroke={col}
+            strokeWidth={(bad ? 3.2 : 2.4) * sc}
+            strokeOpacity={0.95 * (bad ? beat : 1) * nf}
             strokeLinecap="round"
           />
         );
@@ -659,7 +735,7 @@ function GraphFrame({
           <g
             key={tag + "m" + path.pi + mi}
             transform={`translate(${pr.x} ${y}) scale(${p})`}
-            opacity={Math.min(1, p * 1.3)}
+            opacity={Math.min(1, p * 1.3) * pr.nf}
           >
             <circle r={k * 2.4} fill={col} opacity={0.1} />
             {ring < 1 && (
@@ -714,34 +790,156 @@ function GraphFrame({
         cy={pr.y}
         r={d.s * pr.s}
         fill={C.dust}
-        opacity={d.a * Math.sin(Math.PI * ph)}
+        opacity={d.a * Math.sin(Math.PI * ph) * pr.nf}
       />
     );
   });
+
+  /* ---- findings panel: one red alert box per exception marker ---- */
+  const findingEls: JSX.Element[] = [];
+  /* Leaders live outside the panel's scale transform: one end is a graph node. */
+  const findingLeaders: JSX.Element[] = [];
+  if (findings.length) {
+    const BX = 1352;
+    const BW = 528;
+    const BH = 84;
+    const GAP = 15;
+    const TOP = 132;
+    const per = 0.1;
+    /* The piece was authored full-bleed at 1920x1080. In a page-sized container
+       the panel would render at ~8 px, so it is scaled up about the top-right
+       corner (x = W, y = 0) to stay readable. */
+    const K = findingsScale;
+    const sx = (x: number) => W + (x - W) * K;
+    const sy = (y: number) => y * K;
+    const live = V.findings
+      .map((f) => {
+        const ignite = base + V.paths[f.pi].pi * 0.28;
+        return { f, t0: ignite + f.idx * per + 0.55 };
+      })
+      .sort((a, b) => a.t0 - b.t0);
+    live.forEach((it, i) => {
+      const p = ease((T - it.t0) / 0.5, MOTION.pop);
+      if (p <= 0) return;
+      const copy = findings[it.f.copyOrder % findings.length];
+      const y = TOP + i * (BH + GAP);
+      const slide = (1 - ease((T - it.t0) / 0.6, MOTION.enter)) * 54;
+      const blink = 0.55 + 0.45 * Math.sin((T - it.t0) * 4.4);
+      const pr = P[it.f.node];
+      if (pr.vis && pr.x < sx(BX) - 20) {
+        const ty = sy(y + BH / 2);
+        findingLeaders.push(
+          <path
+            key={"fl" + i}
+            d={`M${f1(pr.x)} ${f1(pr.y)}L${f1(sx(BX) - 26)} ${f1(ty)}L${f1(sx(BX) - 6)} ${f1(ty)}`}
+            fill="none"
+            stroke={C.err}
+            strokeWidth="1"
+            strokeDasharray="5 7"
+            opacity={0.24 * pr.nf * Math.min(1, p * 1.3)}
+          />
+        );
+      }
+      findingEls.push(
+        <g key={"fb" + i} opacity={Math.min(1, p * 1.3)} transform={`translate(${slide} 0)`}>
+          <rect x={BX} y={y} width={BW} height={BH} rx="5" fill={C.panelFill} />
+          <rect
+            x={BX}
+            y={y}
+            width={BW}
+            height={BH}
+            rx="5"
+            fill="none"
+            stroke={C.err}
+            strokeWidth="1.4"
+            opacity={0.35 + 0.5 * blink}
+          />
+          <rect x={BX} y={y} width={BW} height={BH} rx="5" fill={C.err} opacity={0.05 + 0.07 * blink} />
+          <rect x={BX} y={y} width="3.5" height={BH} fill={C.err} opacity={0.6 + 0.4 * blink} />
+          <g transform={`translate(${BX + 34} ${y + 34})`}>
+            <path
+              d="M0 -11 L10 7 L-10 7 Z"
+              fill="none"
+              stroke={C.err}
+              strokeWidth="1.7"
+              strokeLinejoin="round"
+              opacity={0.7 + 0.3 * blink}
+            />
+            <rect x="-0.9" y="-5" width="1.8" height="7" fill={C.err} />
+            <rect x="-0.9" y="3.4" width="1.8" height="1.8" fill={C.err} />
+          </g>
+          <text
+            x={BX + 58}
+            y={y + 34}
+            fill="#FFE4E4"
+            fontSize="19"
+            fontWeight="500"
+            fontFamily="system-ui, -apple-system, 'Segoe UI', sans-serif"
+          >
+            {copy.title}
+          </text>
+          <text
+            x={BX + 58}
+            y={y + 60}
+            fill="rgba(255,190,190,0.62)"
+            fontSize="14.5"
+            fontFamily="ui-monospace, SFMono-Regular, Menlo, monospace"
+          >
+            {copy.meta}
+          </text>
+        </g>
+      );
+    });
+    if (findingEls.length) {
+      findingEls.unshift(
+        <g key="fh" opacity={0.85}>
+          <text
+            x={BX}
+            y={TOP - 34}
+            fill="rgba(255,150,150,0.85)"
+            fontSize="15"
+            letterSpacing="3.4"
+            fontFamily="ui-monospace, SFMono-Regular, Menlo, monospace"
+          >
+            {findingsHeader}
+          </text>
+          <rect x={BX} y={TOP - 21} width={BW} height="1" fill={C.err} opacity="0.28" />
+        </g>
+      );
+    }
+  }
 
   /* reroute shockwave from the click point */
   const wave = route.prev >= 0 ? ease(age / 0.9, Easing.easeOutQuart) : 1;
 
   return (
     <g opacity={fade}>
-      <g opacity={0.6}>{dust}</g>
-      <g>{meshEls}</g>
-      {heads.length > 0 && <path d={heads.join("")} fill={C.nodeLive} opacity={0.5} />}
-      <g>{nodeEls}</g>
-      {outgoing && outFade > 0.02 ? renderSet(outgoing, CUES.Paths, outFade * 0.7, "out") : null}
-      {renderSet(V, base, 1, "live")}
-      <g>{heroNodes}</g>
-      {wave < 1 && route.px != null && (
-        <circle
-          cx={route.px}
-          cy={route.py}
-          r={40 + wave * 780}
-          fill="none"
-          stroke={accent}
-          strokeWidth={2.5 * (1 - wave)}
-          opacity={(1 - wave) * 0.5}
-        />
-      )}
+      {/* The graph is feathered at the frame edges; the panel sits outside the
+          mask and outside the camera, so it never orbits, zooms or fades out. */}
+      <g mask="url(#pgSoftFrame)">
+        <g opacity={0.6}>{dust}</g>
+        <g>{meshEls}</g>
+        <g>{softMesh}</g>
+        {heads.length > 0 && <path d={heads.join("")} fill={C.nodeLive} opacity={0.5} />}
+        <g>{nodeEls}</g>
+        <g>{softNodes}</g>
+        {outgoing && outFade > 0.02 ? renderSet(outgoing, CUES.Paths, outFade * 0.7, "out") : null}
+        {renderSet(V, base, 1, "live")}
+        <g>{heroNodes}</g>
+        {wave < 1 && route.px != null && (
+          <circle
+            cx={route.px}
+            cy={route.py}
+            r={40 + wave * 780}
+            fill="none"
+            stroke={accent}
+            strokeWidth={2.5 * (1 - wave)}
+            opacity={(1 - wave) * 0.5}
+          />
+        )}
+      </g>
+      <g>{findingLeaders}</g>
+      <g transform={`translate(${f1(W * (1 - findingsScale))} 0) scale(${findingsScale})`}>{findingEls}</g>
     </g>
   );
 }
@@ -772,6 +970,12 @@ function useInView<T extends Element>(ref: React.RefObject<T>) {
   return inView;
 }
 
+/** One box in the findings panel. */
+export interface FindingCopy {
+  title: string;
+  meta: string;
+}
+
 interface ProcessGraphAnimationProps {
   /** Highlight color for dominant paths, pulses and halos. Defaults to the Noreja tertiary token. */
   accent?: string;
@@ -785,6 +989,20 @@ interface ProcessGraphAnimationProps {
   wheelZoom?: boolean;
   /** Usage hint rendered above the graph. Only shown when interaction is available. */
   hint?: React.ReactNode;
+  /**
+   * Copy for the findings panel, one entry per exception marker (the pool
+   * rotates per route set). Pass an empty array to hide the panel, which also
+   * recenters the graph.
+   */
+  findings?: FindingCopy[];
+  /** Header above the findings panel. */
+  findingsHeader?: string;
+  /**
+   * Enlarges the findings panel about the frame's top-right corner. The piece is
+   * authored for a full-bleed 1920x1080 view; inside a page-width container the
+   * authored 14.5 px meta line renders at ~8 px, so it is scaled up by default.
+   */
+  findingsScale?: number;
   className?: string;
 }
 
@@ -795,6 +1013,9 @@ export function ProcessGraphAnimation({
   interactive = true,
   wheelZoom = true,
   hint,
+  findings = [],
+  findingsHeader = "FINDINGS",
+  findingsScale = 1.35,
   className,
 }: ProcessGraphAnimationProps) {
   const svgRef = useRef<SVGSVGElement>(null);
@@ -916,8 +1137,42 @@ export function ProcessGraphAnimation({
             <stop offset="34%" stopColor={accent} stopOpacity="0.18" />
             <stop offset="100%" stopColor={accent} stopOpacity="0" />
           </radialGradient>
+          <linearGradient id="pgFadeT" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#000" />
+            <stop offset="100%" stopColor="#000" stopOpacity="0" />
+          </linearGradient>
+          <linearGradient id="pgFadeB" x1="0" y1="1" x2="0" y2="0">
+            <stop offset="0%" stopColor="#000" />
+            <stop offset="100%" stopColor="#000" stopOpacity="0" />
+          </linearGradient>
+          <linearGradient id="pgFadeL" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stopColor="#000" />
+            <stop offset="100%" stopColor="#000" stopOpacity="0" />
+          </linearGradient>
+          <linearGradient id="pgFadeR" x1="1" y1="0" x2="0" y2="0">
+            <stop offset="0%" stopColor="#000" />
+            <stop offset="100%" stopColor="#000" stopOpacity="0" />
+          </linearGradient>
+          {/* Feathered frame: nothing is hard-clipped at the edges when zoomed in. */}
+          <mask id="pgSoftFrame" maskUnits="userSpaceOnUse" x="0" y="0" width={W} height={H}>
+            <rect x="0" y="0" width={W} height={H} fill="#fff" />
+            <rect x="0" y="0" width={W} height="132" fill="url(#pgFadeT)" />
+            <rect x="0" y={H - 132} width={W} height="132" fill="url(#pgFadeB)" />
+            <rect x="0" y="0" width="150" height={H} fill="url(#pgFadeL)" />
+            <rect x={W - 150} y="0" width="150" height={H} fill="url(#pgFadeR)" />
+          </mask>
         </defs>
-        <GraphFrame T={T} accent={accent} density={density} scale={scale} route={{ ...route, age }} orbit={orbit} />
+        <GraphFrame
+          T={T}
+          accent={accent}
+          density={density}
+          scale={scale}
+          findings={findings}
+          findingsHeader={findingsHeader}
+          findingsScale={findingsScale}
+          route={{ ...route, age }}
+          orbit={orbit}
+        />
       </svg>
     </div>
   );

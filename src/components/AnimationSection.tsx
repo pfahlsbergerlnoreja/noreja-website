@@ -1,6 +1,30 @@
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { ProcessGraphAnimation } from "@/components/ProcessGraphAnimation";
+
+/**
+ * The findings panel is authored for a full-bleed 1920x1080 frame. The animation
+ * container caps out around 1110 px wide, so the panel's 14.5 px meta line lands
+ * near 11 px on a desktop and keeps shrinking below that. Under the lg breakpoint
+ * the panel is turned off, which also recenters the graph. Initialised
+ * synchronously so the first render is already correct.
+ */
+const FINDINGS_MIN_WIDTH = 1024;
+
+function useFindingsFit() {
+  const [fits, setFits] = useState(() =>
+    typeof window !== "undefined" ? window.innerWidth >= FINDINGS_MIN_WIDTH : true
+  );
+  useEffect(() => {
+    const mql = window.matchMedia(`(min-width: ${FINDINGS_MIN_WIDTH}px)`);
+    const onChange = () => setFits(mql.matches);
+    onChange();
+    mql.addEventListener("change", onChange);
+    return () => mql.removeEventListener("change", onChange);
+  }, []);
+  return fits;
+}
 
 interface AnimationSectionProps {
   size?: "default" | "large";
@@ -8,6 +32,7 @@ interface AnimationSectionProps {
 
 export function AnimationSection({ size = "default" }: AnimationSectionProps) {
   const { t } = useLanguage();
+  const showFindings = useFindingsFit();
 
   // Size configurations
   const sizeConfig = {
@@ -38,6 +63,8 @@ export function AnimationSection({ size = "default" }: AnimationSectionProps) {
             <ProcessGraphAnimation
               className="w-full h-full rounded-2xl"
               hint={t.processGraph.hint}
+              findings={showFindings ? t.processGraph.findings : []}
+              findingsHeader={t.processGraph.findingsHeader}
             />
           </div>
         </motion.div>
