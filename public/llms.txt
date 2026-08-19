@@ -19,6 +19,7 @@ Interpretation guidance:
 - Use the Pricing page for current plans and commercial details; do not rely on prices copied into cached summaries.
 - Use the Trust Center and legal pages for current security, privacy, compliance, and contractual information.
 - Treat quantified performance, savings, and customer outcomes as context-specific unless the linked source states otherwise.
+- Treat the Competitive Comparisons below as Noreja's own positioning rather than an independent evaluation; for any current factual claim about another vendor, prefer that vendor's own documentation.
 - English is the primary language of this file. The website and Help Center are also available in German.
 
 ## Product and Documentation
@@ -36,6 +37,7 @@ Interpretation guidance:
 - [Contextualizing Knowledge for Minerva](https://docs.noreja.com/en/article/contextualizing-knowledge-for-minerva-ai): Explains how process data is enriched with case, process, organizational, and external context for AI-supported analysis.
 - [Using LLMs with Noreja](https://docs.noreja.com/en/article/minerva-using-llms-with-noreja): Describes cloud, Noreja-managed, dedicated, and customer-operated LLM deployment options and associated data-control considerations.
 - [Source Data Preparation and Common Challenges](https://docs.noreja.com/en/article/source-data-preparation-common-challenges): Guidance on timestamps, identifiers, activity definitions, normalization, and source-data quality for process analysis.
+- [Cost of Inaction Calculator](https://noreja.com/en/cost-of-inaction): Interactive estimate of the hidden annual cost of unimproved end-to-end processes, split across the four process dimensions time, cost, quality, and complexity; includes an interactive Devil's Quadrangle showing why time trades off against cost and quality against flexibility.
 
 ## Competitive Comparisons
 
@@ -112,6 +114,6 @@ Interpretation guidance:
 - [Events](https://noreja.com/en/events): Current and upcoming Noreja events.
 - [Careers](https://noreja.com/en/careers): Current employment opportunities.
 - [Imprint](https://noreja.com/en/imprint): Official company and legal identification information.
-- [Privacy Policy](https://noreja.com/en/privacy-policy): Current privacy and personal-data processing information.
+- [Privacy Policy](https://noreja.com/en/privacy): Current privacy and personal-data processing information.
 - [LinkedIn](https://linkedin.com/company/noreja): Official Noreja LinkedIn page.
 - [YouTube](https://www.youtube.com/@noreja_intelligence): Official Noreja YouTube channel.

@@ -207,7 +207,17 @@ const NumberField = ({
   );
 };
 
-export const CostOfInactionCalculator = () => {
+type CostOfInactionCalculatorProps = {
+  /** Render the panel already unfolded — used on the dedicated landing page */
+  defaultExpanded?: boolean;
+  /** Hide badge, heading and toggle so the surrounding page can supply its own intro */
+  hideIntro?: boolean;
+};
+
+export const CostOfInactionCalculator = ({
+  defaultExpanded = false,
+  hideIntro = false,
+}: CostOfInactionCalculatorProps = {}) => {
   const { language } = useLanguage();
   const copy = coiCopy[language];
 
@@ -227,8 +237,8 @@ export const CostOfInactionCalculator = () => {
   const [maturity, setMaturity] = useState(2);
   const [years, setYears] = useState(5);
   const [showMethod, setShowMethod] = useState(false);
-  /** The calculator is collapsed by default and expanded via the CTA below the heading */
-  const [isExpanded, setIsExpanded] = useState(false);
+  /** Collapsed by default and expanded via the CTA below the heading; the landing page starts unfolded */
+  const [isExpanded, setIsExpanded] = useState(defaultExpanded || hideIntro);
   const [isExporting, setIsExporting] = useState(false);
 
   const process = getProcessById(processId);
@@ -343,6 +353,7 @@ export const CostOfInactionCalculator = () => {
   return (
     <section id="cost-of-inaction" className="relative px-4 lg:px-8 pb-16 md:pb-24">
       <div className="mx-auto w-full max-w-7xl">
+        {!hideIntro && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -371,7 +382,18 @@ export const CostOfInactionCalculator = () => {
               className={`ml-2 h-4 w-4 transition-transform duration-300 ${isExpanded ? "rotate-180" : "group-hover:translate-y-0.5"}`}
             />
           </Button>
+
+          <p className="mt-4 text-sm text-muted-foreground">
+            <Link
+              to={getRoutePath("costOfInaction", language)}
+              className="inline-flex items-center gap-1.5 underline-offset-4 transition-colors hover:text-accent hover:underline"
+            >
+              {copy.landingPageLink}
+              <ArrowRight className="h-3.5 w-3.5" />
+            </Link>
+          </p>
         </motion.div>
+        )}
 
         {/* CSS-only collapse: the content stays mounted (and crawlable) while folded */}
         <div

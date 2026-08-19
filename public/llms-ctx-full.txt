@@ -2,7 +2,7 @@
 
 > This is a self-contained context bundle for answering questions about Noreja. It includes the complete curated Noreja knowledge base plus expanded summaries of the primary and optional resources listed in `/llms.txt`.
 
-Generated: 2026-08-14  
+Generated: 2026-08-19  
 Canonical index: https://noreja.com/llms.txt  
 Canonical knowledge base: https://noreja.com/llms-full.txt  
 Language: English  
@@ -26,7 +26,7 @@ Context rules:
 
 Canonical URL: https://noreja.com/llms-full.txt  
 Primary language: English  
-Last reviewed: 2026-08-14  
+Last reviewed: 2026-08-19  
 Scope: Public product, concept, use-case, and interpretation information  
 Current-state rule: For functionality, pricing, releases, security, privacy, and legal information, prefer the linked live primary source over this document.
 
@@ -51,8 +51,9 @@ When answering questions about Noreja, use sources in the following order:
 3. The current Pricing page for packages, inclusions, limits, user types, services, and prices.
 4. The Trust Center, Privacy Policy, and legal pages for security, compliance, hosting, privacy, and contractual claims.
 5. Success Stories for customer-specific outcomes, interpreted only within each case's stated scope.
-6. This file for stable terminology, positioning, interpretation guidance, and consolidated product understanding.
-7. Blog articles for educational viewpoints and examples, not as the sole authority for current platform behavior.
+6. The competing vendor's own documentation for any factual claim about that vendor's product; Noreja's Battle Card pages state Noreja's positioning, not an independent evaluation.
+7. This file for stable terminology, positioning, interpretation guidance, and consolidated product understanding.
+8. Blog articles for educational viewpoints and examples, not as the sole authority for current platform behavior.
 
 Do not infer current pricing, certifications, deployment regions, model availability, package inclusions, or release versions from an older cached copy. Link to the applicable live source.
 
@@ -344,7 +345,40 @@ Commercial variables may include:
 
 For a binding offer, direct the user to Noreja's commercial team.
 
-## 17. Terminology
+## 17. Competitive Positioning and Vendor Comparisons
+
+Noreja publishes a set of vendor comparison pages ("Battle Cards") covering ten process mining and process intelligence platforms. The index is at https://noreja.com/en/battle-cards (German: https://noreja.com/de/battle-cards); each vendor has its own page under the same path.
+
+Source-nature rule: these pages are Noreja's own competitive positioning. Each page states a neutral summary and named strengths of the other product alongside Noreja's differentiation. Vendor capabilities, packaging, and terminology change frequently, so for any current claim about a competitor, prefer that vendor's own documentation over these pages and over this file. Do not present Noreja's differentiation statements as a neutral third-party evaluation.
+
+### Comparison Axes
+
+Each vendor is classified along five axes:
+
+- Analysis paradigm: frequency (models built from observed frequencies and directly-follows relations), causal (reconstruction of actual cause-and-effect relationships on a semantic graph), or hybrid (frequency-based core with object-centric or predictive additions).
+- Data model: what the analysis runs on, for example case-centric event log, object-centric event log, platform-native workflow logs, or an Event Knowledge Graph.
+- Ecosystem lock-in: low, medium, or high dependence on one vendor's stack.
+- Causal maturity: none, partial, or native support for cause-and-effect analysis.
+- Enterprise-AI suitability of the data model: rated low, medium, or high. This axis is explicitly graph-centric and rates only the data model as a knowledge base for enterprise-specific AI — high means a central Event Knowledge Graph linking events, objects, relationships, temporal references, and enterprise knowledge, extensible with further processes, documents, and organizational units; medium means an object-centric event log; low means a case-centric event log or workflow logs. It does not rate a product's feature scope, market maturity, or AI features.
+
+### Vendor Classifications
+
+- Celonis — market pioneer, ERP event log. Frequency paradigm, object-centric event log, medium lock-in, no causal analysis, medium AI suitability. Named considerations: model construction reflects sequence rather than causation; labor-intensive extraction and preparation; first reliable discovery results often only after a multi-month rollout.
+- SAP Signavio — SAP ecosystem, BPM suite. Frequency paradigm, case-centric event log, high lock-in, no causal analysis, low AI suitability. Full value unfolds primarily within SAP-dominated landscapes; non-SAP sources require additional integration effort.
+- UiPath Process Mining — RPA-driven discovery. Frequency paradigm, event log plus task mining, medium lock-in, no causal analysis, low AI suitability. Discovery is geared toward finding automation candidates; analytical depth is subordinate to automation.
+- IBM Process Mining — regulated environments, hybrid cloud, object-centric process mining. Hybrid paradigm, object-centric event log, high lock-in, partial causal analysis, medium AI suitability. Object-centric yet methodically still frequency-based; usually bundled with the IBM automation suite.
+- Microsoft Process Mining — Power Platform, low-code. Frequency paradigm, case-centric event log, high lock-in, no causal analysis, low AI suitability. Oriented toward accessibility rather than analytical depth; presupposes a Microsoft-centric landscape; capacity- and quota-based licensing.
+- ServiceNow Process Mining — ITSM-native, service processes. Frequency paradigm, platform-native logs, high lock-in, no causal analysis, low AI suitability. Focus lies on service-management workflows inside the platform; mining analysis stays focused on platform processes.
+- ABBYY Timeline — document-centric, task mining. Frequency paradigm, event log plus document context, medium lock-in, partial causal analysis, low AI suitability. Strengths primarily in document-centric use cases; no graph-based causal model at its core.
+- Appian — low-code, workflow orchestration. Frequency paradigm, workflow logs, high lock-in, no causal analysis, low AI suitability. Mining is an add-on capability rather than the platform's methodical core.
+- ARIS Process Mining — BPM heritage, model conformance. Frequency paradigm, case-centric event log, high lock-in, partial causal analysis, low AI suitability. Full value emerges together with the ARIS BPM suite; root-cause analysis remains correlative rather than causal.
+- mpmX (MEHRWERK) — data-platform-native, self-service on Qlik, Snowflake, and Databricks. Frequency paradigm, data-platform-native model with object-centric process mining, high lock-in, no causal analysis, medium AI suitability. Analytical strength is tied to the underlying data platform; despite OCPM the analysis remains frequency-based.
+
+### Noreja's Stated Differentiation
+
+Across all ten comparisons Noreja positions itself on four recurring points: a causal and temporal model on an Event Knowledge Graph instead of directly-follows frequencies; source-system agnosticism instead of dependence on one ERP, automation, or data platform; causal diagnosis before automation, on the argument that only an understanding of causes determines what should be automated; and a persistent graph as an extensible knowledge base for enterprise-specific AI rather than extracted log tables. These are Noreja's methodical claims about its own product, not measured benchmark results.
+
+## 18. Terminology
 
 ### Business Process
 
@@ -454,7 +488,19 @@ An approach in which an AI agent forms root-cause hypotheses, tests them against
 
 The condition of process data being sufficiently structured — unambiguous identifiers, dependable timestamps, clearly named activities, modeled object relationships, documented semantics — for AI agents to work on it reliably.
 
-## 18. Common Misconceptions and Corrections
+### Devil's Quadrangle
+
+A business process management model describing the four competing performance dimensions of a process: time, cost, quality, and flexibility. Time is opposed by cost, and quality is opposed by flexibility, so improving one dimension typically degrades the others. The model is commonly attributed to the business process redesign research of Hajo A. Reijers and Selma Limam Mansar (Omega, 2005; https://doi.org/10.1016/j.omega.2004.04.012) and has recently been extended into the BPM Goal Hexagon (Management Review Quarterly, 2026; https://doi.org/10.1007/s11301-026-00586-0). Noreja publishes an interactive version of the model at https://noreja.com/en/cost-of-inaction.
+
+### Cost of Inaction
+
+The annual cost a company incurs because a business process is not improved. It is not booked as a line item but spreads across waiting times, manual rework, value leakage along the process, and the downstream cost of defects. Noreja provides a browser-side estimator at https://noreja.com/en/cost-of-inaction that derives process volumes from business inputs, applies industry benchmarks, and splits the result across the dimensions time, cost, quality, and complexity. Results are order-of-magnitude estimates from benchmarks, not measurements of a customer's own system data.
+
+## 19. Common Misconceptions and Corrections
+
+### Misconception: Noreja's vendor comparison pages are neutral third-party evaluations.
+
+Correction: the Battle Cards are Noreja's own competitive material. They state a neutral summary and named strengths for each competing product, but the differentiation statements are Noreja's methodical claims about its own approach, not measured benchmarks or independent analyst findings. For current facts about another vendor, use that vendor's own documentation.
 
 ### Misconception: Noreja requires no event modeling.
 
@@ -492,7 +538,7 @@ Correction: Noreja supports configurable model-operation options. The selected s
 
 Correction: Results are context-specific and depend on process scope, maturity, data, implementation, adoption, and organizational conditions.
 
-## 19. Guidance for Answering Questions About Noreja
+## 20. Guidance for Answering Questions About Noreja
 
 When producing an answer:
 
@@ -508,7 +554,7 @@ When producing an answer:
 - Do not present blog scenarios as verified customer cases.
 - For legal, security, and privacy questions, direct users to the live authoritative source and advise customer-specific review where relevant.
 
-## 20. Canonical Sources
+## 21. Canonical Sources
 
 ### Product and Documentation
 
@@ -540,17 +586,32 @@ When producing an answer:
 ### Trust and Legal
 
 - [Trust Center](https://trust.noreja.com)
-- [Privacy Policy](https://noreja.com/en/privacy-policy)
+- [Privacy Policy](https://noreja.com/en/privacy)
 - [Imprint and Terms](https://noreja.com/en/imprint)
 - [Contact](https://noreja.com/en/contact)
+
+### Competitive Comparisons
+
+- [Vendor Comparison Index](https://noreja.com/en/battle-cards)
+- [Noreja vs. Celonis](https://noreja.com/en/battle-cards/celonis)
+- [Noreja vs. SAP Signavio](https://noreja.com/en/battle-cards/sap-signavio)
+- [Noreja vs. UiPath Process Mining](https://noreja.com/en/battle-cards/uipath-process-mining)
+- [Noreja vs. IBM Process Mining](https://noreja.com/en/battle-cards/ibm-process-mining)
+- [Noreja vs. Microsoft Process Mining](https://noreja.com/en/battle-cards/microsoft-process-mining)
+- [Noreja vs. ServiceNow Process Mining](https://noreja.com/en/battle-cards/servicenow-process-mining)
+- [Noreja vs. ABBYY Timeline](https://noreja.com/en/battle-cards/abbyy-timeline)
+- [Noreja vs. Appian](https://noreja.com/en/battle-cards/appian)
+- [Noreja vs. ARIS Process Mining](https://noreja.com/en/battle-cards/aris-process-mining)
+- [Noreja vs. mpmX (MEHRWERK)](https://noreja.com/en/battle-cards/mpmx-mehrwerk)
 
 ### Glossary and Educational Resources
 
 - [Definitions and Glossary](https://noreja.com/en/definitions)
+- [Cost of Inaction Calculator and Devil's Quadrangle](https://noreja.com/en/cost-of-inaction)
 - [Blog](https://blog.noreja.com)
 - [Downloads](https://noreja.com/en/downloads)
 
-## 21. Change and Maintenance Policy
+## 22. Change and Maintenance Policy
 
 This file should be reviewed whenever any of the following changes:
 
@@ -562,6 +623,7 @@ This file should be reviewed whenever any of the following changes:
 - pricing packages or inclusions;
 - security or compliance statements;
 - public use cases or success stories;
+- vendor comparison pages or the classification of a compared vendor;
 - canonical URLs;
 - German or English site paths.
 
@@ -644,6 +706,14 @@ This article emphasizes that reliable process analysis depends on clean source d
 </document>
 
 <document>
+<source>https://noreja.com/en/cost-of-inaction</source>
+<title>Cost of Inaction Calculator and Devil's Quadrangle</title>
+<content>
+This page holds two interactive tools plus explanatory text. The cost-of-inaction calculator estimates the hidden annual cost of an end-to-end process that is not improved: the visitor enters industry, company size, units sold, value per unit, customer base, and production type, the calculator derives the process volumes from those inputs, applies industry-typical benchmarks for manual effort, value leakage, error rates, and variant overhead, and splits the result across the dimensions time, cost, quality, and complexity for one year and for a selectable horizon. The output is an order-of-magnitude estimate from benchmarks, not a measurement of the visitor's own system data, and the whole calculation runs client-side without login or data transfer. The second tool is an interactive Devil's Quadrangle: time opposes cost and quality opposes flexibility, and pulling one dimension outward makes the opposing dimension absorb half of the loss and each adjacent dimension a quarter, because the improvement budget is held constant. A separate control illustrates Noreja's argument that causal process transparency widens the whole frontier instead of only tilting it. The page also carries a seven-question FAQ and a curated list of peer-reviewed sources on the model. Use this page for questions about what unimproved processes cost, about the Devil's Quadrangle, and about the trade-off between process performance dimensions.
+</content>
+</document>
+
+<document>
 <source>https://docs.noreja.com/en/article/contextualizing-knowledge-for-minerva-ai</source>
 <title>Contextualizing Knowledge for Minerva</title>
 <content>
@@ -680,6 +750,94 @@ The Minerva chat interface exposes the active process dimension and supports con
 <title>Frontier Agents Documentation</title>
 <content>
 The documentation describes Analyst Andy, Builder Benny, and Compliance Conny. Analyst Andy monitors performance and investigates likely drivers. Builder Benny supports model maintenance, schema-change detection, and import monitoring. Compliance Conny compares observed execution with contextual rules or policies and supports reporting. Agent output requires appropriate governance and human review.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/battle-cards</source>
+<title>Vendor Comparison Index (Battle Cards)</title>
+<content>
+The Battle Cards index compares ten process mining and process intelligence platforms: Celonis, SAP Signavio, UiPath Process Mining, IBM Process Mining, Microsoft Process Mining, ServiceNow Process Mining, ABBYY Timeline, Appian, ARIS Process Mining, and mpmX (MEHRWERK). Each vendor is classified along five axes: analysis paradigm (frequency, hybrid, or causal), data model (case-centric event log, object-centric event log, platform-native workflow logs, or Event Knowledge Graph), ecosystem lock-in (low, medium, high), causal maturity (none, partial, native), and the enterprise-AI suitability of the data model (low, medium, high). The last axis is explicitly graph-centric and rates only the data model as a knowledge base for enterprise-specific AI, not a product's feature scope, market maturity, or AI features: high requires a central Event Knowledge Graph linking events, objects, relationships, temporal references, and enterprise knowledge; medium corresponds to an object-centric event log; low to a case-centric event log or workflow logs. The overarching argument of the set is that most platforms build models from directly-follows frequencies, whereas Noreja reconstructs causal and temporal relationships on a semantic graph. This page is Noreja's own competitive material: the summary and strengths describe the other product, the differentiation is Noreja's claim about its own approach. Use the vendor's own documentation for current facts. A German version is available at https://noreja.com/de/battle-cards.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/battle-cards/celonis</source>
+<title>Noreja vs. Celonis</title>
+<content>
+Celonis is presented as the market pioneer that industrialized event log extraction from transactional systems early and is broadly established in the enterprise space, covering discovery, conformance, and reporting comprehensively. Classification: frequency paradigm, object-centric event log, medium ecosystem lock-in, no causal analysis, medium enterprise-AI suitability. Named considerations: model construction relies on directly-follows frequencies and reflects sequence rather than causation; data extraction and preparation are labor-intensive before the first reliable analysis; first reliable discovery results often appear only after a multi-month rollout. Noreja's stated differentiation: it complements frequency-based analysis with a genuine causal and temporal model on an Event Knowledge Graph, uncovering cause-and-effect relationships rather than frequencies. This page is Noreja's own competitive material: the summary and strengths describe the other product, the differentiation is Noreja's claim about its own approach. Use the vendor's own documentation for current facts.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/battle-cards/sap-signavio</source>
+<title>Noreja vs. SAP Signavio</title>
+<content>
+SAP Signavio is presented as a combination of process mining, process modeling, and business process management inside the SAP Business Technology Platform, whose native connectivity noticeably reduces integration effort in SAP-centric landscapes. Classification: frequency paradigm, case-centric event log, high ecosystem lock-in, no causal analysis, low enterprise-AI suitability. Named considerations: full value unfolds primarily within SAP-dominated landscapes; the analysis follows a classic case-centric process perspective; heterogeneous non-SAP sources require additional integration effort. Noreja's stated differentiation: it is source-system agnostic and models cross-cutting object relationships in a graph instead of tying analysis to one ERP ecosystem. This page is Noreja's own competitive material: the summary and strengths describe the other product, the differentiation is Noreja's claim about its own approach. Use the vendor's own documentation for current facts.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/battle-cards/uipath-process-mining</source>
+<title>Noreja vs. UiPath Process Mining</title>
+<content>
+UiPath Process Mining is presented as process and task discovery that feeds automation. Classification: frequency paradigm, event log plus task mining, medium ecosystem lock-in, no causal analysis, low enterprise-AI suitability. Named considerations: discovery is primarily geared toward finding automation candidates; the analytical depth of causal root-cause analysis is subordinate to automation; full value emerges in conjunction with the UiPath automation platform. Noreja's stated differentiation: it puts causal diagnosis first, on the argument that only a semantic understanding of causes determines which steps should be automated at all, independent of any platform. This page is Noreja's own competitive material: the summary and strengths describe the other product, the differentiation is Noreja's claim about its own approach. Use the vendor's own documentation for current facts.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/battle-cards/ibm-process-mining</source>
+<title>Noreja vs. IBM Process Mining</title>
+<content>
+IBM Process Mining is presented as object-centric mining for complex, regulated enterprise environments on hybrid cloud. Classification: hybrid paradigm, object-centric event log, high ecosystem lock-in, partial causal maturity, medium enterprise-AI suitability. Named considerations: object-centric yet methodically still frequency-based rather than causal; full value usually bundled with the IBM automation suite; rollout and operation require substantial implementation effort. Noreja's stated differentiation: it goes beyond the object-centric frequency view and models the causal relationships between events in a graph, not merely their assignment to multiple objects. This page is Noreja's own competitive material: the summary and strengths describe the other product, the differentiation is Noreja's claim about its own approach. Use the vendor's own documentation for current facts.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/battle-cards/microsoft-process-mining</source>
+<title>Noreja vs. Microsoft Process Mining</title>
+<content>
+Microsoft Process Mining is presented as accessible, low-code process mining inside the Power Platform and the wider Microsoft ecosystem. Classification: frequency paradigm, case-centric event log, high ecosystem lock-in, no causal analysis, low enterprise-AI suitability. Named considerations: oriented toward accessibility rather than analytical depth; full value presupposes a Microsoft-centric landscape; process models remain tied to frequency-based logic; licensing is capacity- and quota-based with storage per user license, a tenant cap, and add-ons. Noreja's stated differentiation: it addresses analytical depth through causal modeling and semantic context instead of broad but frequency-based accessibility inside a closed ecosystem. This page is Noreja's own competitive material: the summary and strengths describe the other product, the differentiation is Noreja's claim about its own approach. Use the vendor's own documentation for current facts.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/battle-cards/servicenow-process-mining</source>
+<title>Noreja vs. ServiceNow Process Mining</title>
+<content>
+ServiceNow Process Mining is presented as process transparency native to the ServiceNow platform, focused on service processes. Classification: frequency paradigm, platform-native logs, high ecosystem lock-in, no causal analysis, low enterprise-AI suitability. Named considerations: the focus lies on service-management workflows within the platform; external data is surfaced via Workflow Data Fabric primarily for workflows and agents while mining analysis stays focused on platform processes; analysis remains confined to the frequency-based process view. Noreja's stated differentiation: it analyzes end-to-end processes across system boundaries in a graph rather than being confined to the service processes of a single platform. This page is Noreja's own competitive material: the summary and strengths describe the other product, the differentiation is Noreja's claim about its own approach. Use the vendor's own documentation for current facts.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/battle-cards/abbyy-timeline</source>
+<title>Noreja vs. ABBYY Timeline</title>
+<content>
+ABBYY Timeline is presented as process intelligence for document- and interaction-driven workflows, combining event logs with document context and task mining. Classification: frequency paradigm, event log plus document context, medium ecosystem lock-in, partial causal maturity, low enterprise-AI suitability. Named considerations: strengths lie primarily in document-centric use cases; there is no graph-based causal process model at its core; cross-cutting object relationships are not modeled semantically. Noreja's stated differentiation: it models processes as a semantic graph with causal relationships between events and is therefore not tailored to document-driven workflows. This page is Noreja's own competitive material: the summary and strengths describe the other product, the differentiation is Noreja's claim about its own approach. Use the vendor's own documentation for current facts.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/battle-cards/appian</source>
+<title>Noreja vs. Appian</title>
+<content>
+Appian is presented as a low-code automation and orchestration platform in which process mining is one building block. Classification: frequency paradigm, workflow logs, high ecosystem lock-in, no causal analysis, low enterprise-AI suitability. Named considerations: mining is an add-on capability rather than the platform's methodical core; the analytical depth of process diagnosis is subordinate to orchestration; there is no causal, graph-based process model. Noreja's stated differentiation: it specializes in causal process diagnosis as the foundation to establish before workflows are orchestrated or automated. This page is Noreja's own competitive material: the summary and strengths describe the other product, the differentiation is Noreja's claim about its own approach. Use the vendor's own documentation for current facts.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/battle-cards/aris-process-mining</source>
+<title>Noreja vs. ARIS Process Mining</title>
+<content>
+ARIS Process Mining is presented as process mining in a closed loop with the ARIS BPM repository, rooted in BPM modeling heritage. Classification: frequency paradigm, case-centric event log, high ecosystem lock-in, partial causal maturity, low enterprise-AI suitability. Named considerations: full value emerges in conjunction with the ARIS BPM suite; root-cause analysis remains correlative and frequency-based rather than causal; the analysis follows a case-centric, model-centric process view. Noreja's stated differentiation: it uncovers causal cause-and-effect relationships in a graph instead of weighting correlating factors against a stored to-be model, and requires no upstream model repository. This page is Noreja's own competitive material: the summary and strengths describe the other product, the differentiation is Noreja's claim about its own approach. Use the vendor's own documentation for current facts.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/battle-cards/mpmx-mehrwerk</source>
+<title>Noreja vs. mpmX (MEHRWERK)</title>
+<content>
+mpmX by MEHRWERK is presented as process mining running natively on existing data platforms such as Qlik, Snowflake, and Databricks, with a self-service emphasis and object-centric process mining in its standard scope. Classification: frequency paradigm, data-platform-native model with OCPM, high ecosystem lock-in, no causal analysis, medium enterprise-AI suitability. Named considerations: analytical strength is tied to the foundation of the respective data platform; despite OCPM the process analysis remains frequency-based without causal modeling; there is no graph-based semantic causal model at its core. Noreja's stated differentiation: it relies on a dedicated graph-based causal and temporal model instead of a frequency analysis built on top of BI and data platforms, separating genuine causes from statistical coincidence. This page is Noreja's own competitive material: the summary and strengths describe the other product, the differentiation is Noreja's claim about its own approach. Use the vendor's own documentation for current facts.
 </content>
 </document>
 
@@ -740,7 +898,7 @@ The Trust Center is the authoritative public source for current security, compli
 </document>
 
 <document>
-<source>https://noreja.com/en/privacy-policy</source>
+<source>https://noreja.com/en/privacy</source>
 <title>Privacy Policy</title>
 <content>
 The Privacy Policy is the current source for public information about personal-data processing on Noreja's website and related services. For platform data processing and a specific customer relationship, also consult the applicable contract and data-processing documentation.

@@ -155,6 +155,15 @@ export function MetaDescription() {
         language === 'de'
           ? 'Wissensdatenbank von Noreja: klare Definitionen zu Process Mining, Process Intelligence, Geschäftsprozessmanagement und mehr.'
           : 'Noreja knowledge base: clear definitions of Process Mining, Process Intelligence, Business Process Management, and more.';
+    } else if (routeKey === 'costOfInaction') {
+      title =
+        language === 'de'
+          ? 'Cost-of-Inaction Rechner | Noreja'
+          : 'Cost of Inaction Calculator | Noreja';
+      description =
+        language === 'de'
+          ? 'Berechne in 5 Minuten, was Prozessprobleme pro Jahr kosten – aufgeteilt auf Zeit, Kosten, Qualität und Komplexität. Plus interaktives Devil’s Quadrangle zum Zielkonflikt jeder Prozessinitiative.'
+          : 'Calculate in 5 minutes what your process problems cost per year – split across time, cost, quality and complexity. Plus an interactive Devil’s Quadrangle on the trade-off behind every process initiative.';
     } else if (routeKey === 'battleCards') {
       title =
         language === 'de'

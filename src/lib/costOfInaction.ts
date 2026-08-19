@@ -1082,6 +1082,8 @@ export const coiCopy = {
       "Berechne in 5 min, wie viele versteckte Kosten pro Jahr in deinem End-to-End-Prozess stecken – entlang der vier Prozessdimensionen Zeit, Kosten, Qualität und Komplexität.",
     openCalculator: "Cost-of-Inaction jetzt berechnen",
     closeCalculator: "Rechner ausblenden",
+    landingPageLink:
+      "Mehr zum Cost of Inaction und zum Devil's Quadrangle der Prozessdimensionen",
     companySection: "Unternehmen & Geschäftsmodell",
     processSection: "Welchen Prozess willst du rechnen?",
     calculationSection: "Berechnung",
@@ -1156,6 +1158,8 @@ export const coiCopy = {
       "Calculate in 5 min how much hidden cost per year sits in your end-to-end process – along the four process dimensions time, cost, quality and complexity.",
     openCalculator: "Calculate Cost-of-Inaction now",
     closeCalculator: "Hide calculator",
+    landingPageLink:
+      "More on the cost of inaction and the Devil's Quadrangle of process dimensions",
     companySection: "Company & business model",
     processSection: "Which process do you want to calculate?",
     calculationSection: "Calculation",

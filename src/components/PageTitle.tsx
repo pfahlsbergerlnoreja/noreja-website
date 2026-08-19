@@ -73,6 +73,10 @@ const pageTitles: Record<string, Record<'en' | 'de', string>> = {
     en: 'Process Intelligence Compared – Battle Cards | Noreja',
     de: 'Process Intelligence im Vergleich – Battle Cards | Noreja',
   },
+  costOfInaction: {
+    en: 'Cost of Inaction Calculator | Noreja',
+    de: 'Cost-of-Inaction Rechner | Noreja',
+  },
 };
 
 export function PageTitle() {

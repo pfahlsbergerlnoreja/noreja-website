@@ -16,6 +16,7 @@ export interface Translations {
     careers: string;
     definitions: string;
     battleCards: string;
+    costOfInaction: string;
     quickNavigation: string;
   };
   pages: {
@@ -678,6 +679,7 @@ export const translations: Record<Language, Translations> = {
       careers: "Careers",
       definitions: "Definitions",
       battleCards: "Battle Cards",
+      costOfInaction: "Cost of Inaction",
       quickNavigation: "Quick Navigation",
     },
     pages: {
@@ -1460,6 +1462,7 @@ export const translations: Record<Language, Translations> = {
       careers: "Karriere",
       definitions: "Definitionen",
       battleCards: "Battle Cards",
+      costOfInaction: "Cost of Inaction",
       quickNavigation: "Schnellnavigation",
     },
     pages: {

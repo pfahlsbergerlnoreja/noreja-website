@@ -38,6 +38,7 @@ export function Footer() {
     { name: t.navigation.careers, routeKey: 'careers' as const, external: false },
     { name: t.navigation.definitions, routeKey: 'definitions' as const, external: false },
     { name: t.navigation.battleCards, routeKey: 'battleCards' as const, external: false },
+    { name: t.navigation.costOfInaction, routeKey: 'costOfInaction' as const, external: false },
     { name: t.footer.sections.documentation, href: documentationHref, external: true },
     { name: t.footer.sections.referralProgram, href: siteConfig.links.referralProgram, external: true }
   ];

@@ -34,6 +34,7 @@ const CareerDetail = lazy(() => import("./pages/CareerDetail"));
 const Definitions = lazy(() => import("./pages/Definitions"));
 const DefinitionDetail = lazy(() => import("./pages/DefinitionDetail"));
 const BattleCards = lazy(() => import("./pages/BattleCards"));
+const CostOfInaction = lazy(() => import("./pages/CostOfInaction"));
 const BattleCardDetail = lazy(() => import("./pages/BattleCardDetail"));
 const Imprint = lazy(() => import("./pages/Imprint"));
 const TermsOfService = lazy(() => import("./pages/TermsOfService"));
@@ -140,6 +141,10 @@ const App = () => (
               <Route path="/en/battle-cards" element={<BattleCards />} />
               <Route path="/de/battle-cards/:slug" element={<BattleCardDetail />} />
               <Route path="/en/battle-cards/:slug" element={<BattleCardDetail />} />
+
+              {/* Cost-of-Inaction calculator landing page */}
+              <Route path="/de/cost-of-inaction" element={<CostOfInaction />} />
+              <Route path="/en/cost-of-inaction" element={<CostOfInaction />} />
 
               {/* Downloads */}
               <Route path="/de/downloads" element={<Downloads />} />
