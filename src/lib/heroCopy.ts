@@ -37,8 +37,8 @@ export const homeHero = {
     en: "continuous ROI engine",
   } satisfies Localized,
   ledeAfter: {
-    de: " machen. Jeder Durchlauf hebt deine Wettbewerbsfähigkeit messbar an — anfangs stark, dann immer näher am erreichbaren Maximum.",
-    en: ". Every pass lifts your competitiveness measurably — steeply at first, then ever closer to the achievable maximum.",
+    de: " machen.",
+    en: ".",
   } satisfies Localized,
   ctaPrimary: { de: "Demo buchen", en: "Book a demo" } satisfies Localized,
   ctaSecondary: { de: "Plattform ansehen", en: "See the platform" } satisfies Localized,
@@ -152,8 +152,8 @@ export const successHero = {
     en: "with a calculated effect instead of a statement of intent",
   } satisfies Localized,
   ledeAfter: {
-    de: ". Jede Story folgt derselben Kurve: Befund, Maßnahme, Nachweis.",
-    en: ". Every story follows the same curve: finding, action, proof.",
+    de: ".",
+    en: ".",
   } satisfies Localized,
   ctaPrimary: { de: "Demo buchen", en: "Book a demo" } satisfies Localized,
   ctaSecondary: { de: "Use Cases ansehen", en: "See use cases" } satisfies Localized,
