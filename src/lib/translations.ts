@@ -265,6 +265,10 @@ export interface Translations {
     };
   hero: {
     badge: string;
+    /** Static lead-in line of the H1. Must name the brand and the topic. */
+    headingFixed: string;
+    /** Words stacked under the lead-in. All are rendered; only the highlight moves. */
+    headingWords: string[];
     title: string;
     titleHighlight: string;
     subtitle: string;
@@ -1058,6 +1062,8 @@ export const translations: Record<Language, Translations> = {
     },
     hero: {
       badge: "Generative Process Intelligence",
+      headingFixed: "Noreja makes processes",
+      headingWords: ["transparent", "understandable", "efficient", "compliant"],
       title: "The Future of",
       titleHighlight: "Innovation",
       subtitle: "Elevating Process Knowledge with the Power of GenAI – Turn Process Analysis into a Continuous ROI Engine. Enterprise technology, built for efficiency in medium-sized businesses.",
@@ -1864,6 +1870,8 @@ export const translations: Record<Language, Translations> = {
     },
     hero: {
       badge: "Generative Process Intelligence",
+      headingFixed: "Noreja macht Prozesse",
+      headingWords: ["transparent", "verständlich", "effizient", "compliant"],
       title: "Die Zukunft der",
       titleHighlight: "Innovation",
       subtitle: "Verborgene Prozesspotenziale mit der Power von GenAI heben und zum kontinuierlichen ROI-Treiber machen. Enterprise-Technologie für Effizienz im Mittelstand.",

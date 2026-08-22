@@ -12,7 +12,11 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { AnimatedGradientBox } from "@/components/AnimatedGradientBox";
 import { AnimatedGridBackground } from "@/components/AnimatedGridBackground";
 import { FAQSchema } from "@/components/StructuredData";
-import { AnimatedHeading } from "@/components/AnimatedHeading";
+import { HeroShell } from "@/components/hero/HeroShell";
+import { PricingStaircase } from "@/components/hero/PricingStaircase";
+import { useHeroCycle } from "@/hooks/use-hero-cycle";
+import { pricingHero } from "@/lib/heroCopy";
+import { siteConfig } from "@/lib/config";
 import { getRoutePath } from "@/lib/routes";
 
 // --- Factors: Fill these in as needed ---
@@ -71,20 +75,9 @@ const toEventSuffix = (label: string) =>
 const Pricing = () => {
   const { t, language } = useLanguage();
   
-  // Language-specific heading texts - memoized to prevent animation restart on slider changes
-  const currentHeading = useMemo(() => {
-    const headingTexts = {
-      en: {
-        fixedText: "Choose A Plan That",
-        rotatingWords: ["Fits", "Growths", "Delivers"]
-      },
-      de: {
-        fixedText: "Wähle einen Plan, der",
-        rotatingWords: ["passt", "mitwächst", "liefert"]
-      }
-    };
-    return headingTexts[language];
-  }, [language]);
+  // Drives both the H1 highlight and the staircase, so the two stay in sync.
+  const heroStep = useHeroCycle();
+  const planWords = pricingHero.words[language];
 
   const extractPowerUserCount = (usersText?: string | string[]) => {
     if (!usersText) return 1;
@@ -170,24 +163,35 @@ const Pricing = () => {
   return (
     <div className="min-h-screen bg-background">
       <FAQSchema items={t.pages.pricing.faq.items} />
-      {/* Section with animated grid background - Sliders and Pricing Cards */}
-      <div className="relative">
-        <AnimatedGridBackground key="animated-grid-pricing" />
-        
-        <div className="container mx-auto px-4 py-16 relative z-10">
-          {/* Header */}
-          <div className="text-center mb-12">
-            <AnimatedHeading 
-              fixedText={currentHeading.fixedText}
-              rotatingWords={currentHeading.rotatingWords}
-              size="md"
-              className="text-foreground mb-4"
-            />
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              {t.pages.pricing.subtitle}
-            </p>
-          </div>
 
+      <HeroShell
+        eyebrow={pricingHero.eyebrow[language]}
+        headingLead={pricingHero.headingLead[language]}
+        words={planWords}
+        activeWord={heroStep % planWords.length}
+        lede={
+          <>
+            {pricingHero.ledeBefore[language]}
+            <strong className="font-semibold text-foreground">
+              {pricingHero.ledeStrong[language]}
+            </strong>
+            {pricingHero.ledeAfter[language]}
+          </>
+        }
+        primaryCta={{
+          label: pricingHero.ctaPrimary[language],
+          href: siteConfig.hubspot.appointmentBooking,
+        }}
+        secondaryCta={{ label: pricingHero.ctaSecondary[language], href: "#pakete" }}
+        trust={pricingHero.trust[language]}
+        visual={<PricingStaircase step={heroStep} labels={planWords} />}
+      />
+
+      {/* Section with animated grid background - Sliders and Pricing Cards */}
+      <div className="relative" id="pakete">
+        <AnimatedGridBackground key="animated-grid-pricing" />
+
+        <div className="container mx-auto px-4 py-16 relative z-10">
           {/* Pricing Sliders */}
           <div className="max-w-6xl mx-auto mb-16">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -875,18 +879,25 @@ const Pricing = () => {
               </p>
             </div>
 
-            <Accordion type="single" collapsible className="w-full">
+            {/* Rendered as a description list, not an accordion: Radix unmounts
+                collapsed accordion panels, which left all 17 answers out of the
+                DOM entirely. Crawlers saw questions with no answers. Same
+                pattern as CostOfInactionFaq. */}
+            <dl className="grid gap-5 md:grid-cols-2">
               {t.pages.pricing.faq.items.map((item, index) => (
-                <AccordionItem key={index} value={`item-${index}`} className="border rounded-lg mb-2">
-                  <AccordionTrigger className="px-6 py-4 text-left font-medium text-foreground hover:no-underline">
+                <div
+                  key={index}
+                  className="rounded-2xl border border-border/50 bg-card/60 p-6 backdrop-blur-sm"
+                >
+                  <dt className="mb-2 text-base font-semibold text-foreground">
                     {item.question}
-                  </AccordionTrigger>
-                  <AccordionContent className="px-6 pb-4 text-muted-foreground">
+                  </dt>
+                  <dd className="text-sm leading-relaxed text-muted-foreground">
                     {item.answer}
-                  </AccordionContent>
-                </AccordionItem>
+                  </dd>
+                </div>
               ))}
-            </Accordion>
+            </dl>
           </div>
 
           {/* Contact Form Section */}

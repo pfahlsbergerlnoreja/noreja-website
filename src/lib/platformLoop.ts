@@ -554,8 +554,17 @@ export const homeTeaserCopy = {
 /** Section-level copy. */
 export const platformCopy = {
   heroEyebrow: {
-    de: "Generative Process Intelligence",
-    en: "Generative Process Intelligence",
+    de: "Plattform",
+    en: "Platform",
+  },
+  /**
+   * Static lead-in line of the H1, above the four stacked phase names. The
+   * phase names alone carry no topic — this line is what tells a reader (and a
+   * search or answer engine) what the page is about.
+   */
+  heroHeadingLead: {
+    de: "Noreja durchläuft vier Phasen",
+    en: "Noreja runs through four phases",
   },
   heroLedeBefore: {
     de: "Noreja liefert keine weitere Sammlung von Dashboards, sondern ",

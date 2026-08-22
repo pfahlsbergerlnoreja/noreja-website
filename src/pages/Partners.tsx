@@ -8,7 +8,10 @@ import { Button } from "@/components/ui/button";
 import { partners, initializePartnersData, type PartnerCategory, type PartnerLogoSize, type Partner } from "@/lib/partners";
 import { useEffect, useState } from "react";
 import { HubSpotContactForm } from "@/components/HubSpotContactForm";
-import { AnimatedHeading } from "@/components/AnimatedHeading";
+import { HeroShell } from "@/components/hero/HeroShell";
+import { PartnerNetwork } from "@/components/hero/PartnerNetwork";
+import { useHeroCycle } from "@/hooks/use-hero-cycle";
+import { partnersHero } from "@/lib/heroCopy";
 import { AnimatedGridBackground } from "@/components/AnimatedGridBackground";
 import { getRoutePath } from "@/lib/routes";
 
@@ -35,19 +38,9 @@ export default function Partners() {
     loadData();
   }, []);
 
-  // Language-specific heading texts
-  const headingTexts = {
-    en: {
-      fixedText: "Partnerships That",
-      rotatingWords: ["Last", "Grow", "Innovate", "Impact"]
-    },
-    de: {
-      fixedText: "Partnerschaften, die",
-      rotatingWords: ["bestehen", "wachsen", "innovieren", "Wirkung zeigen"]
-    }
-  };
-
-  const currentHeading = headingTexts[language];
+  // Drives the H1 highlight. The network graph runs on its own faster tick.
+  const heroStep = useHeroCycle();
+  const heroWords = partnersHero.words[language];
 
   // Scroll to top when component mounts
   useEffect(() => {
@@ -100,6 +93,21 @@ export default function Partners() {
     .filter((category) => category !== 'uncategorized' && partnersByCategory[category]?.length)
     .concat(partnersByCategory.uncategorized?.length ? ['uncategorized'] : []);
 
+  // Counted from the partner data rather than hardcoded, so the hero can never
+  // claim more partners than the page actually lists.
+  const partnerTrust =
+    language === 'de'
+      ? [
+          `${uniquePartnerList.length} Partner`,
+          `${categoryOrder.length} Kategorien`,
+          'Technologie, Beratung, Forschung',
+        ]
+      : [
+          `${uniquePartnerList.length} partners`,
+          `${categoryOrder.length} categories`,
+          'Technology, consulting, research',
+        ];
+
   const baseLogoWrapperClass =
     "w-40 h-32 md:w-48 md:h-40 lg:w-56 lg:h-44 rounded-2xl bg-gradient-to-br from-noreja-main/10 to-noreja-main/5 flex items-center justify-center p-5 md:p-6";
 
@@ -136,27 +144,31 @@ export default function Partners() {
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-noreja-main/5 to-transparent pointer-events-none" />
 
       <div className="relative z-10">
-        {/* Hero Section */}
-        <section className="py-20 lg:py-24">
-          <div className="max-w-6xl mx-auto px-4 lg:px-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="text-center space-y-6"
-            >
-              <AnimatedHeading 
-                fixedText={currentHeading.fixedText}
-                rotatingWords={currentHeading.rotatingWords}
-                size="md"
-                className="text-foreground"
-              />
-              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                {t.pages.partners.subtitle}
-              </p>
-            </motion.div>
-          </div>
-        </section>
+        <HeroShell
+          eyebrow={partnersHero.eyebrow[language]}
+          headingLead={partnersHero.headingLead[language]}
+          words={heroWords}
+          activeWord={heroStep % heroWords.length}
+          lede={
+            <>
+              {partnersHero.ledeBefore[language]}
+              <strong className="font-semibold text-foreground">
+                {partnersHero.ledeStrong[language]}
+              </strong>
+              {partnersHero.ledeAfter[language]}
+            </>
+          }
+          primaryCta={{
+            label: partnersHero.ctaPrimary[language],
+            to: getRoutePath("contact", language),
+          }}
+          secondaryCta={{
+            label: partnersHero.ctaSecondary[language],
+            to: getRoutePath("successStories", language),
+          }}
+          trust={partnerTrust}
+          visual={<PartnerNetwork />}
+        />
 
         {/* Partners Grid */}
         <section className="pb-24">

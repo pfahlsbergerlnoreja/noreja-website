@@ -281,22 +281,31 @@ const Functionalities = () => {
             <Eyebrow>{platformCopy.heroEyebrow[language]}</Eyebrow>
 
             <h1 className="text-[2.6rem] font-extrabold leading-[0.98] tracking-[-0.045em] text-foreground lg:text-[4.6rem]">
+              <span className="mb-3 block text-[1.15rem] font-bold leading-snug tracking-[-0.02em] text-muted-foreground lg:mb-5 lg:text-[1.6rem]">
+                {platformCopy.heroHeadingLead[language]}
+              </span>{" "}
+              {/* The trailing `{" "}` collapses away visually (the spans are
+                  block level) but keeps `textContent` from reading as
+                  "Insights.Action.Impact.Feedback." for anything that
+                  extracts the heading without honouring layout. */}
               {heroWords(language).map((verb, i) => (
-                <span key={verb} className="block">
-                  <span
-                    className="transition-colors duration-500"
-                    style={{ color: i === heroPhase ? "hsl(var(--foreground))" : "hsl(var(--muted-foreground) / 0.55)" }}
-                  >
-                    {verb}
-                  </span>
-                  {i === heroPhase && (
+                <Fragment key={verb}>
+                  <span className="block">
                     <span
-                      aria-hidden="true"
-                      className="ml-2 inline-block h-[0.22em] w-[0.22em] rounded-full align-middle"
-                      style={{ background: MINT, boxShadow: `0 0 18px ${MINT}` }}
-                    />
-                  )}
-                </span>
+                      className="transition-colors duration-500"
+                      style={{ color: i === heroPhase ? "hsl(var(--foreground))" : "hsl(var(--muted-foreground) / 0.55)" }}
+                    >
+                      {verb}
+                    </span>
+                    {i === heroPhase && (
+                      <span
+                        aria-hidden="true"
+                        className="ml-2 inline-block h-[0.22em] w-[0.22em] rounded-full align-middle"
+                        style={{ background: MINT, boxShadow: `0 0 18px ${MINT}` }}
+                      />
+                    )}
+                  </span>{" "}
+                </Fragment>
               ))}
             </h1>
 

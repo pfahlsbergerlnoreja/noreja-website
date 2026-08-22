@@ -9,25 +9,19 @@ import { CostOfInactionCalculator } from "@/components/CostOfInactionCalculator"
 import { successStories, upcomingSuccessStories } from "@/lib/successStories";
 import { useCases } from "@/lib/useCases";
 import { useEffect } from "react";
-import { AnimatedHeading } from "@/components/AnimatedHeading";
+import { HeroShell } from "@/components/hero/HeroShell";
+import { PrincipleStack } from "@/components/hero/PrincipleStack";
+import { useHeroCycle } from "@/hooks/use-hero-cycle";
+import { successHero } from "@/lib/heroCopy";
+import { siteConfig } from "@/lib/config";
 import { getRoutePath } from "@/lib/routes";
 
 const SuccessStories = () => {
   const { t, language } = useLanguage();
 
-  // Language-specific heading texts
-  const headingTexts = {
-    en: {
-      fixedText: "Our Clients Achieve",
-      rotatingWords: ["Success", "Efficiency", "Impact", "Growth"]
-    },
-    de: {
-      fixedText: "Erfolge, die",
-      rotatingWords: ["überzeugen", "bewegen", "skalieren", "Zukunft formen"]
-    }
-  };
-
-  const currentHeading = headingTexts[language];
+  // Drives both the H1 highlight and the block stack, so they stay in sync.
+  const heroStep = useHeroCycle();
+  const heroWords = successHero.words[language];
 
   // Upcoming case studies are listed first, the published ones follow at the bottom
   const storyCards = [
@@ -51,6 +45,12 @@ const SuccessStories = () => {
     }))
   ];
 
+  // Counted from the data, so the hero can never claim more than the page shows.
+  const storyTrust = [
+    `${successStories.length + upcomingSuccessStories.length} Case Studies`,
+    `${useCases.length} Verticals`,
+  ];
+
   // Scroll to top when component mounts
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -68,27 +68,28 @@ const SuccessStories = () => {
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-noreja-main/5 to-transparent pointer-events-none" />
       
       <div className="relative z-10">
-      {/* Hero Section */}
-      <section className="relative py-12 md:py-20 lg:py-24">
-        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-8 md:mb-16"
-          >
-            <AnimatedHeading 
-              fixedText={currentHeading.fixedText}
-              rotatingWords={currentHeading.rotatingWords}
-              size="md"
-              className="text-foreground mb-6"
-            />
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              {t.pages.successStories.subtitle}
-            </p>
-          </motion.div>
-        </div>
-      </section>
+      <HeroShell
+        eyebrow={successHero.eyebrow[language]}
+        headingLead={successHero.headingLead[language]}
+        words={heroWords}
+        activeWord={heroStep % heroWords.length}
+        lede={
+          <>
+            {successHero.ledeBefore[language]}
+            <strong className="font-semibold text-foreground">
+              {successHero.ledeStrong[language]}
+            </strong>
+            {successHero.ledeAfter[language]}
+          </>
+        }
+        primaryCta={{
+          label: successHero.ctaPrimary[language],
+          href: siteConfig.hubspot.appointmentBooking,
+        }}
+        secondaryCta={{ label: successHero.ctaSecondary[language], href: "#use-cases" }}
+        trust={storyTrust}
+        visual={<PrincipleStack step={heroStep} labels={heroWords} />}
+      />
 
       {/* Cost of Inaction Calculator */}
       <CostOfInactionCalculator />
@@ -171,7 +172,7 @@ const SuccessStories = () => {
       </section>
 
       {/* Use Cases Section */}
-      <section className="px-4 lg:px-8 pb-20">
+      <section className="px-4 lg:px-8 pb-20" id="use-cases">
         <div className="w-full max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
