@@ -325,12 +325,18 @@
       </div><!--PRERENDER-BODY-END-->
     </div>
     <script>
-      // Remove the crawler fallback before the browser paints it. React would
-      // wipe it on mount anyway, but that happens after the (deferred) bundle
-      // has loaded, which would flash unstyled content on slow connections.
+      // Empty #root before the browser paints it. React wipes it on mount
+      // anyway, but that only happens once the (deferred, module) bundle has
+      // executed — long enough to flash the fallback markup, which carries no
+      // classes and would render as unstyled HTML.
+      //
+      // This clears whatever is inside #root rather than one known element:
+      // the block above is only the default for the root document, and
+      // scripts/prerender.ts replaces it per route with that page's markup.
       (function () {
-        var el = document.getElementById('static-fallback');
-        if (el && el.parentNode) el.parentNode.removeChild(el);
+        var root = document.getElementById('root');
+        if (!root) return;
+        while (root.firstChild) root.removeChild(root.firstChild);
       })();
     </script>
     <script type="module" src="/src/main.tsx"></script>
