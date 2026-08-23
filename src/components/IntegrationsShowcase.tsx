@@ -124,6 +124,9 @@ export const IntegrationsShowcase: React.FC<IntegrationsShowcaseProps> = ({
   // Initialized synchronously so the first paint already uses the correct
   // layout instead of correcting itself after mount (layout shift)
   const getScreenSize = () => {
+    // No window during the build-time prerender (src/entry-server.tsx); assume
+    // the desktop layout there, the browser corrects it on mount.
+    if (typeof window === 'undefined') return 'desktop' as const;
     const width = window.innerWidth;
     if (width < 768) return 'mobile' as const;
     if (width < 1024) return 'medium' as const;

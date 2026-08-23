@@ -1,4 +1,5 @@
 import { EventData } from '@/lib/events';
+import { SITE_URL } from '@/lib/config';
 
 interface EventSchemaProps {
   events: EventData[];
@@ -24,7 +25,7 @@ export function EventSchema({ events }: EventSchemaProps) {
       "location": event.location.type === 'online' 
         ? {
             "@type": "VirtualLocation",
-            "url": event.cta?.url || window.location.origin
+            "url": event.cta?.url || SITE_URL
           }
         : {
             "@type": "Place",
@@ -34,11 +35,11 @@ export function EventSchema({ events }: EventSchemaProps) {
       "organizer": {
         "@type": "Organization",
         "name": "Noreja Intelligence GmbH",
-        "url": window.location.origin
+        "url": SITE_URL
       },
       "offers": event.registration.required ? {
         "@type": "Offer",
-        "url": event.cta?.url || event.registration.url || window.location.origin,
+        "url": event.cta?.url || event.registration.url || SITE_URL,
         "price": "Contact for pricing",
         "priceCurrency": "EUR",
         "availability": event.registration.spotsLeft 

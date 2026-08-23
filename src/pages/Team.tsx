@@ -13,9 +13,15 @@ import { TeamSchema } from "@/components/StructuredData";
 
 export default function Team() {
   const { t, language } = useLanguage();
-  const [isLoading, setIsLoading] = useState(true);
-  const [loadedTeamMembers, setLoadedTeamMembers] = useState<TeamMember[]>([]);
-  const [loadedAdvisoryMembers, setLoadedAdvisoryMembers] = useState<AdvisoryMember[]>([]);
+  // Seeded from the synchronously populated data in lib/team.ts, so the first
+  // render already has the members: no "Loading..." frame for visitors and real
+  // content in the prerendered HTML for crawlers. The effect below still runs
+  // initializeTeamData() so nothing depends on the ordering.
+  const [isLoading, setIsLoading] = useState(teamMembers.length === 0);
+  const [loadedTeamMembers, setLoadedTeamMembers] = useState<TeamMember[]>(() => [...teamMembers]);
+  const [loadedAdvisoryMembers, setLoadedAdvisoryMembers] = useState<AdvisoryMember[]>(() => [
+    ...advisoryMembers,
+  ]);
 
   // Initialize team data on mount
   useEffect(() => {

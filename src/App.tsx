@@ -67,17 +67,23 @@ function ScrollDepthTracker() {
   return null;
 }
 
-const App = () => (
+/**
+ * Providers that do not depend on a router. Exported so the build-time
+ * prerender entry (src/entry-server.tsx) can mount the same tree.
+ */
+export const AppProviders = ({ children }: { children: React.ReactNode }) => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter
-        future={{
-          v7_startTransition: true,
-          v7_relativeSplatPath: true,
-        }}
-      >
+    <TooltipProvider>{children}</TooltipProvider>
+  </QueryClientProvider>
+);
+
+/**
+ * Everything below the router. The browser entry wraps this in a
+ * <BrowserRouter>, the prerender entry in a <StaticRouter>, so both render
+ * exactly the same page for a given URL.
+ */
+export const AppRoutes = () => (
+  <>
         <HubSpotPageViewTracker />
         <ScrollDepthTracker />
         <CanonicalUrl />
@@ -87,7 +93,7 @@ const App = () => (
           <PageTitle />
           <HreflangTags />
           <ConditionalLayout>
-            <Suspense fallback={<div className="min-h-screen" />}>
+            <Suspense fallback={<div className="min-h-screen" data-suspense-fallback="" />}>
             <Routes>
               {/* Redirect root to German home */}
               <Route path="/" element={<Navigate to="/de" replace />} />
@@ -189,9 +195,22 @@ const App = () => (
             </Suspense>
           </ConditionalLayout>
         </LanguageProvider>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
+  </>
+);
+
+const App = () => (
+  <AppProviders>
+    <Toaster />
+    <Sonner />
+    <BrowserRouter
+      future={{
+        v7_startTransition: true,
+        v7_relativeSplatPath: true,
+      }}
+    >
+      <AppRoutes />
+    </BrowserRouter>
+  </AppProviders>
 );
 
 export default App;

@@ -220,9 +220,20 @@ export const getAdvisoryMembers = async (): Promise<AdvisoryMember[]> => {
 let teamMembersCache: TeamMember[] | null = null;
 let advisoryMembersCache: AdvisoryMember[] | null = null;
 
-// Synchronous getters that return cached data (loads on first access)
-export const teamMembers: TeamMember[] = [];
-export const advisoryMembers: AdvisoryMember[] = [];
+// Populated at module load: the image globs above are eager, so resolving an
+// image URL is a synchronous lookup and there is nothing to wait for. Building
+// these arrays up front means the team page renders its content on the first
+// pass — during the build-time prerender (which never runs effects) as well as
+// in the browser, where it used to show "Loading..." for a frame.
+// The async getters below are kept for callers that still await them.
+export const teamMembers: TeamMember[] = teamMembersBase.map((member) => ({
+  ...member,
+  imageUrl: getTeamImagePath(member.imageFilename),
+}));
+export const advisoryMembers: AdvisoryMember[] = advisoryMembersBase.map((member) => ({
+  ...member,
+  imageUrl: getTeamImagePath(member.imageFilename),
+}));
 
 // Initialize function to load images
 let initializationPromise: Promise<void> | null = null;

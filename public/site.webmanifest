@@ -1,0 +1,22 @@
+{
+  "name": "Noreja | Generative Process Intelligence",
+  "short_name": "Noreja",
+  "description": "Noreja is a Generative Process Intelligence platform that combines causal process mining, contextual knowledge and generative AI to analyse and improve business processes.",
+  "id": "/",
+  "start_url": "/de",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "lang": "de",
+  "dir": "ltr",
+  "background_color": "#0b0f1c",
+  "theme_color": "#452BE9",
+  "categories": ["business", "productivity"],
+  "icons": [
+    { "src": "/favicon.svg", "type": "image/svg+xml", "sizes": "any", "purpose": "any" },
+    { "src": "/apple-touch-icon.png", "type": "image/png", "sizes": "180x180" },
+    { "src": "/icon-192.png", "type": "image/png", "sizes": "192x192" },
+    { "src": "/icon-512.png", "type": "image/png", "sizes": "512x512" },
+    { "src": "/icon-512.png", "type": "image/png", "sizes": "512x512", "purpose": "maskable" }
+  ]
+}

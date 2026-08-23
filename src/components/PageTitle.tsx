@@ -1,89 +1,13 @@
 import { useEffect, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 import { LanguageContext } from '@/contexts/LanguageContext';
-import { getRouteKeyFromPath } from '@/lib/routes';
-import { successStories } from '@/lib/successStories';
-import { useCases } from '@/lib/useCases';
-import { getDefinitionById } from '@/lib/definitions';
-import { getBattleCardById, getBattleCardVsTitle } from '@/lib/battle-cards';
-import { getJobById } from '@/lib/careers';
-import { SITE_NAME } from '@/lib/config';
+import { getPageMeta } from '@/lib/pageMeta';
 
-const pageTitles: Record<string, Record<'en' | 'de', string>> = {
-  home: {
-    en: 'Noreja | Generative Process Intelligence Platform',
-    de: 'Noreja | Generative Process Intelligence Plattform',
-  },
-  functionalities: {
-    en: 'Platform & Features | Noreja',
-    de: 'Plattform & Funktionen | Noreja',
-  },
-  pricing: {
-    en: 'Pricing & Plans | Noreja',
-    de: 'Preise & Pakete | Noreja',
-  },
-  successStories: {
-    en: 'Success Stories | Noreja',
-    de: 'Success Stories | Noreja',
-  },
-  partners: {
-    en: 'Partners | Noreja',
-    de: 'Partner | Noreja',
-  },
-  team: {
-    en: 'Team | Noreja',
-    de: 'Team | Noreja',
-  },
-  events: {
-    en: 'Events | Noreja',
-    de: 'Veranstaltungen | Noreja',
-  },
-  downloads: {
-    en: 'Downloads | Noreja',
-    de: 'Downloads | Noreja',
-  },
-  downloadThankYou: {
-    en: 'Thank You | Noreja',
-    de: 'Vielen Dank | Noreja',
-  },
-  contact: {
-    en: 'Contact | Noreja',
-    de: 'Kontakt | Noreja',
-  },
-  imprint: {
-    en: 'Imprint | Noreja',
-    de: 'Impressum | Noreja',
-  },
-  privacy: {
-    en: 'Privacy Policy | Noreja',
-    de: 'Datenschutz | Noreja',
-  },
-  terms: {
-    en: 'Terms of Service | Noreja',
-    de: 'Nutzungsbedingungen | Noreja',
-  },
-  aiAgents: {
-    en: 'Frontier Agents | Noreja',
-    de: 'Frontier Agents | Noreja',
-  },
-  careers: {
-    en: 'Careers | Noreja',
-    de: 'Karriere | Noreja',
-  },
-  definitions: {
-    en: 'Definitions | Noreja',
-    de: 'Definitionen | Noreja',
-  },
-  battleCards: {
-    en: 'Process Intelligence Compared – Battle Cards | Noreja',
-    de: 'Process Intelligence im Vergleich – Battle Cards | Noreja',
-  },
-  costOfInaction: {
-    en: 'Cost of Inaction Calculator | Noreja',
-    de: 'Cost-of-Inaction Rechner | Noreja',
-  },
-};
-
+/**
+ * Keeps document.title in sync with the route during client-side navigation.
+ * The initial title of a page comes from the prerendered HTML
+ * (scripts/prerender.ts), which resolves it from the same getPageMeta().
+ */
 export function PageTitle() {
   const location = useLocation();
   const context = useContext(LanguageContext);
@@ -96,59 +20,7 @@ export function PageTitle() {
     // previous render" on the next render that has it.
     if (!language) return;
 
-    const routeKey = getRouteKeyFromPath(location.pathname);
-    let title = `${SITE_NAME} | Generative Process Intelligence`;
-
-    if (routeKey === 'successStoryDetail') {
-      const match = location.pathname.match(/^\/(?:de|en)\/success-story\/(.+)$/);
-      if (match) {
-        const story = successStories.find(
-          s => s.id.toLowerCase() === match[1].toLowerCase()
-        );
-        if (story) {
-          title = `${story.companyName} – Success Story | ${SITE_NAME}`;
-        }
-      }
-    } else if (routeKey === 'useCases') {
-      const match = location.pathname.match(/^\/(?:de|en)\/use-cases\/(.+)$/);
-      if (match) {
-        const useCase = useCases.find(
-          uc => uc.id.toLowerCase() === match[1].toLowerCase()
-        );
-        if (useCase) {
-          title = `${useCase.title[language]} – Use Case | ${SITE_NAME}`;
-        }
-      }
-    } else if (routeKey === 'definitionDetail') {
-      const match = location.pathname.match(/^\/(?:de|en)\/(?:definitionen|definitions)\/(.+)$/);
-      if (match) {
-        const definition = getDefinitionById(match[1].toLowerCase());
-        if (definition) {
-          title = `${definition.question[language]} | ${SITE_NAME}`;
-        }
-      }
-    } else if (routeKey === 'battleCardDetail') {
-      const match = location.pathname.match(/^\/(?:de|en)\/battle-cards\/(.+)$/);
-      if (match) {
-        const card = getBattleCardById(match[1].toLowerCase());
-        if (card) {
-          title = `${getBattleCardVsTitle(card.id, language)} | ${SITE_NAME}`;
-        }
-      }
-    } else if (routeKey === 'careerDetail') {
-      const match = location.pathname.match(/^\/(?:de|en)\/(?:karriere|careers)\/(.+)$/);
-      if (match) {
-        const job = getJobById(match[1]);
-        if (job) {
-          const label = language === 'de' ? 'Karriere' : 'Careers';
-          title = `${job.title} – ${label} | ${SITE_NAME}`;
-        }
-      }
-    } else if (routeKey && routeKey in pageTitles) {
-      title = pageTitles[routeKey][language];
-    }
-
-    document.title = title;
+    document.title = getPageMeta(location.pathname, language).title;
   }, [location.pathname, language]);
 
   return null;

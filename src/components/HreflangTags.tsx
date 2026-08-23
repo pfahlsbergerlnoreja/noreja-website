@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { translateRoute } from '@/lib/routes';
+import { translateRoute, getLanguageFromPath } from '@/lib/routes';
 import { SITE_URL } from '@/lib/config';
+import { getPageMeta } from '@/lib/pageMeta';
 
 export function HreflangTags() {
   const location = useLocation();
@@ -11,6 +12,15 @@ export function HreflangTags() {
 
     // Skip for maintenance page
     if (path === '/maintenance') return;
+
+    // Unknown routes are served with a 404 status; advertising language
+    // alternates for a page that does not exist only confuses crawlers.
+    if (!getPageMeta(path, getLanguageFromPath(path)).known) {
+      document
+        .querySelectorAll('link[rel="alternate"][hreflang]')
+        .forEach((el) => el.remove());
+      return;
+    }
 
     const dePath = translateRoute(path, 'de');
     const enPath = translateRoute(path, 'en');

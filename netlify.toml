@@ -11,17 +11,44 @@
 [build.processing.html]
   pretty_urls = false
 
-# NOTE: Prerendering (so bots/AI crawlers get real HTML, not the empty SPA
-# shell) is NOT configured here — it needs no netlify.toml changes at all.
-# The legacy "Post processing -> Prerendering" toggle is deprecated; this site
-# uses the "Netlify Prerender Extension" instead, enabled per-project in the
-# Netlify UI (Extensions -> Netlify Prerender -> Enable prerendering + redeploy).
-# Verify after deploy via the X-Prerendered response header on a bot user-agent.
+# NOTE ON PRERENDERING
+# The build now prerenders every route itself: `npm run build` renders each URL
+# in the sitemap with react-dom/server and writes dist/<route>/index.html, so
+# every path is a real HTML file with its own title, canonical, hreflang,
+# JSON-LD and copy (see scripts/prerender.ts). That works for every crawler,
+# not only for the user agents a prerender service recognises, which is why the
+# catch-all rewrite at the bottom of this file can answer 404 for unknown URLs.
+#
+# Netlify's own "Netlify Prerender Extension" (enabled per-project in the
+# Netlify UI, not from this file) is therefore no longer required. If it is
+# still enabled it is harmless — it just serves bots a headless-browser render
+# of a page that already contains its content. Its X-Prerendered response
+# header is how you tell whether it is active.
 
 
 # ============================================
 # Headers
 # ============================================
+
+# Baseline security headers for every response.
+#
+# The CSP is deliberately host-permissive (`https:` rather than an allowlist):
+# the site loads third-party scripts from Google Tag Manager, CookieYes and
+# several HubSpot origins (js-eu1.hs-scripts.com, js.hsforms.net,
+# forms-eu1.hsforms.com, hubspotusercontent-eu1.net, blog/docs subdomains), and
+# HubSpot rotates those hostnames. What it does buy: no plugin/object
+# embedding, no <base> hijacking, no framing by third parties, and no
+# plain-http subresources. Tighten to an explicit allowlist only together with
+# a staging deploy that exercises the contact form and the gated downloads.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), accelerometer=()"
+    Cross-Origin-Opener-Policy = "same-origin-allow-popups"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: blob: https:; font-src 'self' data: https:; connect-src 'self' https: wss:; media-src 'self' data: blob: https:; frame-src 'self' https:; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' https:; frame-ancestors 'self'; upgrade-insecure-requests"
 
 # Default: HTML / SPA shell should not be cached aggressively
 # (All SPA routes are rewritten to /index.html, so this matters most)
@@ -29,6 +56,35 @@
   for = "/index.html"
   [headers.values]
     Cache-Control = "public, max-age=0, must-revalidate"
+
+# RFC 9116 security contact + the LLM plain-text summaries must be served as
+# text/plain, otherwise Netlify guesses application/octet-stream for /.well-known
+[[headers]]
+  for = "/.well-known/security.txt"
+  [headers.values]
+    Content-Type = "text/plain; charset=utf-8"
+    Cache-Control = "public, max-age=86400"
+
+[[headers]]
+  for = "/llms.txt"
+  [headers.values]
+    Content-Type = "text/plain; charset=utf-8"
+
+[[headers]]
+  for = "/llms-full.txt"
+  [headers.values]
+    Content-Type = "text/plain; charset=utf-8"
+
+[[headers]]
+  for = "/llms-ctx-full.txt"
+  [headers.values]
+    Content-Type = "text/plain; charset=utf-8"
+
+[[headers]]
+  for = "/site.webmanifest"
+  [headers.values]
+    Content-Type = "application/manifest+json; charset=utf-8"
+    Cache-Control = "public, max-age=86400"
 
 # Sitemap: cache a bit
 [[headers]]
@@ -1371,8 +1427,44 @@
   to = "https://blog.noreja.com/de-de/cost-cutting-ohne-prozesseinblick"
   status = 301
 
-# SPA fallback (LAST)
+# Safety net for the prerendered route files.
+#
+# Netlify resolves /de/plattform to dist/de/plattform/index.html on its own, so
+# in the normal case these rules never fire (a matching static file always wins
+# over a non-forced redirect). They exist so that a change in that resolution
+# behaviour cannot take the whole site down: the rewrite names the file
+# explicitly. A path with no prerendered file still ends up as a 404.
+[[redirects]]
+  from = "/de"
+  to = "/de/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/en"
+  to = "/en/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/de/*"
+  to = "/de/:splat/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/en/*"
+  to = "/en/:splat/index.html"
+  status = 200
+
+# Unmatched URLs (LAST).
+#
+# Every real route is now a prerendered HTML file in dist/ (see
+# scripts/prerender.ts, which fails the build if a route declared in App.tsx has
+# no file), so a request that falls through to this rule genuinely does not
+# exist. It used to be rewritten to /index.html with status 200, which made
+# every typo, every dead backlink and every probe look like a real page to
+# crawlers. /404.html is the same SPA shell, so the router still renders the
+# NotFound page for visitors — only the status code and the prerendered content
+# differ.
 [[redirects]]
   from = "/*"
-  to = "/index.html"
-  status = 200
+  to = "/404.html"
+  status = 404

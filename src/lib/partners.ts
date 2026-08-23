@@ -555,8 +555,35 @@ export const getPartners = async (): Promise<Partner[]> => {
 // Cache for loaded partners
 let partnersCache: Partner[] | null = null;
 
-// Synchronous getter that returns cached data (loads on first access)
-export const partners: Partner[] = [];
+/** Resolve one base entry into a Partner. Purely synchronous: the logo globs
+ *  above are eager, so this is a lookup in an already-loaded map. */
+const buildPartner = (partner: (typeof partnersBase)[number]): Partner => ({
+  id: partner.id,
+  name: partner.name,
+  isPartner: partner.isPartner,
+  partnerType: partner.partnerType,
+  logoUrl: partner.logoFilename
+    ? getImagePath(getImageCollection(partner.logoSource), partner.logoFilename)
+    : '',
+  logoUrlWhite: partner.logoFilenameWhite
+    ? getImagePath(partnerLogoImagesWhite, partner.logoFilenameWhite)
+    : undefined,
+  logoSize: partner.logoSize,
+  personPhotoUrl: partner.personPhotoFilename
+    ? getImagePath(partnerFaceImages, partner.personPhotoFilename)
+    : undefined,
+  website: partner.website,
+  category: partner.category,
+  quote: partner.quote,
+  quoteAuthor: partner.quoteAuthor,
+  linkedin: partner.linkedin,
+  preferOriginalLogo: partner.preferOriginalLogo,
+});
+
+// Populated at module load so the partners page renders its content on the
+// first pass — both in the build-time prerender (which never runs effects) and
+// in the browser, which used to paint a "Loading..." frame first.
+export const partners: Partner[] = partnersBase.map(buildPartner);
 
 // Initialize function to load images
 let initializationPromise: Promise<void> | null = null;

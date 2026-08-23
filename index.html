@@ -1,8 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- ------------------------------------------------------------------
+         Head signals below are the STATIC baseline: they are what a crawler
+         that does not execute JavaScript sees. `scripts/prerender.ts` rewrites
+         them per route at build time (canonical, hreflang, og:url, title,
+         description, JSON-LD), and the runtime components in src/components
+         (CanonicalUrl, MetaDescription, PageTitle, HreflangTags) keep them
+         correct during client-side navigation.
+         The values here are the defaults for the root document, which the
+         server 301-redirects to /de.
+         ------------------------------------------------------------------ -->
+
+    <link rel="canonical" href="https://noreja.com/de" />
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+
+    <link rel="alternate" hreflang="de" href="https://noreja.com/de" />
+    <link rel="alternate" hreflang="en" href="https://noreja.com/en" />
+    <link rel="alternate" hreflang="x-default" href="https://noreja.com/de" />
+
+    <!-- Icons / installability -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#452BE9" />
+
+    <!-- Plain-text summary of the site for LLM crawlers (llmstxt.org) -->
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="LLMs.txt" />
+    <link rel="alternate" type="text/plain" href="/llms-full.txt" title="LLMs-full.txt" />
 
     <!-- Warm up the connection to the blog origin early. It is otherwise only
          discovered late, via the runtime RSS fetch in the blog teaser, so
@@ -16,16 +45,139 @@
     <meta name="keywords" content="AI technology, real-time processing, enterprise solutions,Generative Process Intelligence, GenAI,  Contextualization, Causal Process Mining" />
 
     <meta property="og:title" content="Noreja | Generative Process Intelligence" />
-    <meta property="og:description" content="Revolutionary technology solutions for the future. Experience cutting-edge AI, real-time processing, and enterprise security." />
+    <meta property="og:description" content="Noreja is a Generative Process Intelligence platform: causal process mining, contextual knowledge and generative AI for analysing and improving end-to-end business processes." />
     <meta property="og:type" content="website" />
     <meta property="og:image" content="https://noreja.com/og-image.png" />
-    <meta property="og:url" content="https://noreja.com" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Noreja — Generative Process Intelligence" />
+    <meta property="og:url" content="https://noreja.com/de" />
+    <meta property="og:site_name" content="Noreja" />
+    <meta property="og:locale" content="de_DE" />
+    <meta property="og:locale:alternate" content="en_US" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@noreja" />
     <meta name="twitter:title" content="Noreja | Generative Process Intelligence" />
-    <meta name="twitter:description" content="Revolutionary technology solutions for the future. Experience cutting-edge AI, real-time processing, and enterprise security." />
+    <meta name="twitter:description" content="Noreja is a Generative Process Intelligence platform: causal process mining, contextual knowledge and generative AI for analysing and improving end-to-end business processes." />
     <meta name="twitter:image" content="https://noreja.com/og-image.png" />
+
+    <!-- Static Organization + WebSite graph. It is in the raw HTML on purpose:
+         crawlers and AI agents that do not execute JavaScript never see the
+         JSON-LD that src/components/StructuredData.tsx injects at runtime.
+         `scripts/prerender.ts` appends page-specific nodes (WebPage,
+         BreadcrumbList) per route on top of this. -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://noreja.com/#organization",
+          "name": "Noreja Intelligence GmbH",
+          "alternateName": "Noreja",
+          "legalName": "Noreja Intelligence GmbH",
+          "url": "https://noreja.com/",
+          "logo": {
+            "@type": "ImageObject",
+            "@id": "https://noreja.com/#logo",
+            "url": "https://noreja.com/icon-512.png",
+            "width": 512,
+            "height": 512,
+            "caption": "Noreja Intelligence GmbH"
+          },
+          "image": "https://noreja.com/og-image.png",
+          "description": "Noreja is a Generative Process Intelligence platform that contextualises operational data, causal process models and human knowledge for the application of generative AI to business process analysis and optimisation.",
+          "foundingDate": "2022",
+          "founders": [
+            { "@type": "Person", "name": "Philipp Waibel" },
+            { "@type": "Person", "name": "Lukas Pfahlsberger" }
+          ],
+          "vatID": "ATU76827034",
+          "email": "info@noreja.com",
+          "telephone": "+43-690-10149533",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Bruck 12",
+            "postalCode": "6914",
+            "addressLocality": "Hohenweiler",
+            "addressRegion": "Vorarlberg",
+            "addressCountry": "AT"
+          },
+          "contactPoint": [
+            {
+              "@type": "ContactPoint",
+              "contactType": "sales",
+              "email": "info@noreja.com",
+              "telephone": "+43-690-10149533",
+              "url": "https://noreja.com/en/contact",
+              "availableLanguage": ["English", "German"]
+            }
+          ],
+          "sameAs": [
+            "https://linkedin.com/company/noreja",
+            "https://twitter.com/noreja_",
+            "https://www.youtube.com/@noreja_intelligence",
+            "https://blog.noreja.com/"
+          ],
+          "knowsAbout": [
+            "Generative Process Intelligence",
+            "Causal Process Mining",
+            "Process Mining",
+            "Process Intelligence",
+            "Business Process Management",
+            "Event Knowledge Graph",
+            "Object-Centric Process Mining",
+            "Process Optimisation",
+            "Supply Chain Analytics",
+            "Order-to-Cash Process Analysis"
+          ],
+          "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "Noreja Generative Process Intelligence",
+            "itemListElement": [
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "SoftwareApplication",
+                  "name": "Noreja Process Intelligence Platform",
+                  "applicationCategory": "BusinessApplication",
+                  "operatingSystem": "Web-based",
+                  "url": "https://noreja.com/en/platform"
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Causal Process Mining Proof of Value",
+                  "url": "https://noreja.com/en/pricing"
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Minerva Frontier Agents",
+                  "url": "https://noreja.com/en/frontier-agents"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://noreja.com/#website",
+          "url": "https://noreja.com/",
+          "name": "Noreja",
+          "alternateName": "Noreja Intelligence",
+          "description": "Generative Process Intelligence for analysing and improving business processes.",
+          "publisher": { "@id": "https://noreja.com/#organization" },
+          "inLanguage": ["de-DE", "en-US"]
+        }
+      ]
+    }
+    </script>
 
     <!-- Google Consent Mode v2: deny all storage until CookieYes pushes a consent update.
          This must run before gtag.js so no cookies are set pre-consent, which in turn
@@ -56,7 +208,131 @@
   </head>
 
   <body>
-    <div id="root"></div>
+    <noscript>
+      <p>
+        Noreja Intelligence GmbH — Generative Process Intelligence. Diese Seite
+        funktioniert auch ohne JavaScript: der Inhalt unten ist statisch
+        ausgeliefert. / This page works without JavaScript: the content below is
+        served statically.
+      </p>
+      <ul>
+        <li><a href="/de">Startseite (DE)</a></li>
+        <li><a href="/en">Home (EN)</a></li>
+        <li><a href="/de/plattform">Plattform</a></li>
+        <li><a href="/en/platform">Platform</a></li>
+        <li><a href="/de/preise">Preise</a></li>
+        <li><a href="/en/pricing">Pricing</a></li>
+        <li><a href="/de/kontakt">Kontakt</a></li>
+        <li><a href="/en/contact">Contact</a></li>
+        <li><a href="/sitemap.xml">Sitemap</a></li>
+        <li><a href="/llms.txt">llms.txt</a></li>
+      </ul>
+    </noscript>
+    <div id="root"><!--PRERENDER-BODY-START-->
+      <!-- Static no-JavaScript fallback. Crawlers and AI agents that do not run
+           JavaScript would otherwise see an empty document: no heading, no
+           links, no text. `scripts/prerender.ts` replaces this block per route with
+           the copy of that page; the markup below is the default for the root
+           document. The inline script underneath removes it synchronously
+           (before first paint) whenever JavaScript is available, so real
+           visitors never see an unstyled flash of it. -->
+      <div id="static-fallback">
+        <header>
+          <a href="/de">Noreja</a>
+          <nav aria-label="Hauptnavigation">
+            <ul>
+              <li><a href="/de">Startseite</a></li>
+              <li><a href="/de/plattform">Plattform</a></li>
+              <li><a href="/de/preise">Preise</a></li>
+              <li><a href="/de/success-stories">Success Stories</a></li>
+              <li><a href="/de/definitionen">Definitionen</a></li>
+              <li><a href="/de/battle-cards">Vergleich</a></li>
+              <li><a href="/de/cost-of-inaction">Cost of Inaction</a></li>
+              <li><a href="/de/team">Team</a></li>
+              <li><a href="/de/kontakt">Kontakt</a></li>
+              <li><a href="/en">English</a></li>
+            </ul>
+          </nav>
+        </header>
+        <main>
+          <h1>Noreja — Generative Process Intelligence</h1>
+          <p>
+            Noreja Intelligence GmbH entwickelt eine Generative-Process-Intelligence-Plattform,
+            die operative Daten, kausale Prozessmodelle, Kontextwissen und generative KI verbindet.
+            Unternehmen analysieren damit ihre End-to-End-Prozesse — von Order-to-Cash über
+            Purchase-to-Pay bis zur Schadenbearbeitung — und erkennen, warum Durchlaufzeiten,
+            Kosten und Qualität voneinander abweichen.
+          </p>
+          <h2>Was ist Generative Process Intelligence?</h2>
+          <p>
+            Generative Process Intelligence kombiniert Causal Process Mining mit KI-Assistenz.
+            Statt Häufigkeiten von Aktivitätsfolgen zu zählen, modelliert Noreja Events,
+            Geschäftsobjekte und ihre Beziehungen in einem Event Knowledge Graph. Daraus
+            entstehen kausale, mehrdimensionale Prozesssichten statt einer einzelnen
+            Directly-Follows-Ansicht.
+          </p>
+          <h2>Wie unterscheidet sich Noreja von klassischem Process Mining?</h2>
+          <p>
+            Noreja verbindet sich direkt mit relationalen Datenquellen wie SAP, ServiceNow,
+            PostgreSQL, Oracle oder REST-APIs. Ein klassischer, flacher Event Log muss dafür
+            nicht vorbereitet werden — das ist typischerweise der aufwendigste Schritt eines
+            Process-Mining-Projekts. Prozesswissen, Regeln und SLAs werden als Kontext ergänzt,
+            damit Analysen und KI-Antworten die Realität des Unternehmens abbilden.
+          </p>
+          <h2>Woraus besteht die Plattform?</h2>
+          <p>
+            Die Plattform umfasst fünf Module: <strong>Dashboard</strong> für Kennzahlen, Trends
+            und Anomalien, <strong>Analyzer</strong> für die interaktive Analyse von Prozessen,
+            Varianten und Engpässen, <strong>Minerva</strong> als kontextbewusste KI-Assistenz,
+            <strong>Builder</strong> für Datenanbindung sowie Event- und Dimensionsmodellierung
+            und <strong>Workbench</strong> mit integrierten Jupyter Notebooks für eigene Analysen
+            auf dem Noreja Knowledge Graph. Ergänzend übernehmen Frontier Agents laufende
+            Aufgaben wie Modellpflege, Überwachung und Compliance-Prüfungen.
+          </p>
+          <h2>Wie startet ein Projekt mit Noreja?</h2>
+          <p>
+            85 % der Kunden beginnen mit einem Proof of Value: Noreja bindet innerhalb von drei
+            bis vier Wochen einen Teilprozess an, importiert die Daten, analysiert sie und zeigt
+            erste Optimierungspotenziale. Danach sind rund 60 % der Datenintegration erledigt,
+            sodass der Produktivbetrieb in wenigen Tagen folgen kann. Der Betrieb ist
+            ISO-27001-zertifiziert; Sprachmodelle lassen sich auch dediziert oder im eigenen
+            Rechenzentrum betreiben.
+          </p>
+          <h2>Wo finde ich weitere Informationen?</h2>
+          <ul>
+            <li><a href="/de/plattform">Plattform und Funktionen</a></li>
+            <li><a href="/de/preise">Preise und Pakete</a></li>
+            <li><a href="/de/success-stories">Success Stories aus Fertigung, Versicherung und Banking</a></li>
+            <li><a href="/de/definitionen">Definitionen zu Process Mining und Process Intelligence</a></li>
+            <li><a href="/de/battle-cards">Vergleich mit Celonis, SAP Signavio, UiPath, IBM und Microsoft</a></li>
+            <li><a href="https://blog.noreja.com/de-de">Blog</a></li>
+            <li><a href="https://docs.noreja.com/de">Dokumentation und Help Center</a></li>
+            <li><a href="/llms.txt">llms.txt — Kurzüberblick für KI-Agenten</a></li>
+          </ul>
+        </main>
+        <footer>
+          <p>Noreja Intelligence GmbH, Bruck 12, 6914 Hohenweiler, Österreich — info@noreja.com</p>
+          <ul>
+            <li><a href="/de/impressum">Impressum</a></li>
+            <li><a href="/de/datenschutz">Datenschutz</a></li>
+            <li><a href="/de/nutzungsbedingungen">Nutzungsbedingungen</a></li>
+            <li><a href="/de/karriere">Karriere</a></li>
+            <li><a href="/de/downloads">Downloads</a></li>
+            <li><a href="/de/veranstaltungen">Veranstaltungen</a></li>
+            <li><a href="/de/partner">Partner</a></li>
+          </ul>
+        </footer>
+      </div><!--PRERENDER-BODY-END-->
+    </div>
+    <script>
+      // Remove the crawler fallback before the browser paints it. React would
+      // wipe it on mount anyway, but that happens after the (deferred) bundle
+      // has loaded, which would flash unstyled content on slow connections.
+      (function () {
+        var el = document.getElementById('static-fallback');
+        if (el && el.parentNode) el.parentNode.removeChild(el);
+      })();
+    </script>
     <script type="module" src="/src/main.tsx"></script>
     <!-- Start of HubSpot Embed Code (defer only, no async: guarantees CookieYes
          executes first so its auto-blocking can intercept HubSpot cookies) -->

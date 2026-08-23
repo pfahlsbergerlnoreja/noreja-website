@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { SITE_URL, siteConfig } from '@/lib/config';
 
 interface StructuredDataProps {
@@ -6,24 +5,26 @@ interface StructuredDataProps {
   id: string;
 }
 
+/**
+ * Emits a JSON-LD block as part of the React tree.
+ *
+ * This used to append the <script> to <head> from an effect, which meant the
+ * structured data only existed once JavaScript had run — invisible to crawlers
+ * that fetch the raw HTML. Rendering it inline puts it in the server-rendered
+ * markup instead (the build-time prerenderer lifts these blocks into <head>),
+ * and a JSON-LD script tag inside <body> is valid for search engines either
+ * way.
+ */
 export function StructuredData({ schema, id }: StructuredDataProps) {
-  useEffect(() => {
-    const scriptId = `structured-data-${id}`;
-    let script = document.getElementById(scriptId) as HTMLScriptElement | null;
-    if (!script) {
-      script = document.createElement('script');
-      script.id = scriptId;
-      script.type = 'application/ld+json';
-      document.head.appendChild(script);
-    }
-    script.textContent = JSON.stringify(schema);
-
-    return () => {
-      script?.remove();
-    };
-  }, [schema, id]);
-
-  return null;
+  return (
+    <script
+      type="application/ld+json"
+      id={`structured-data-${id}`}
+      // Escaping "<" keeps a stray "</script>" inside any string value from
+      // ending the block early.
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/</g, '\\u003c') }}
+    />
+  );
 }
 
 export function OrganizationSchema() {

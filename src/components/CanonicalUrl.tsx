@@ -1,30 +1,34 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { SITE_URL } from '@/lib/config';
+import { getLanguageFromPath } from '@/lib/routes';
+import { getPageMeta } from '@/lib/pageMeta';
 
 /**
- * Component that dynamically updates the canonical link tag in <head>
- * based on the current route. Always points to the no-trailing-slash variant.
+ * Keeps <link rel="canonical"> in sync with the route during client-side
+ * navigation. Always points to the no-trailing-slash variant, and drops the tag
+ * entirely on unknown routes — those are served with a 404 status and must not
+ * claim a canonical URL.
  */
 export function CanonicalUrl() {
   const location = useLocation();
 
   useEffect(() => {
-    // Normalize: remove trailing slash (except root)
-    let path = location.pathname;
-    if (path.length > 1 && path.endsWith('/')) {
-      path = path.slice(0, -1);
+    const { canonical, known } = getPageMeta(
+      location.pathname,
+      getLanguageFromPath(location.pathname)
+    );
+
+    const existing = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
+
+    if (!known) {
+      existing?.remove();
+      return;
     }
 
-    const canonicalUrl = `${SITE_URL}${path}`;
-
-    let link = document.querySelector('link[rel="canonical"]') as HTMLLinkElement;
-    if (!link) {
-      link = document.createElement('link');
-      link.rel = 'canonical';
-      document.head.appendChild(link);
-    }
-    link.href = canonicalUrl;
+    const link = existing ?? document.createElement('link');
+    link.rel = 'canonical';
+    link.href = canonical;
+    if (!existing) document.head.appendChild(link);
   }, [location.pathname]);
 
   return null;

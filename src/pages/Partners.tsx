@@ -17,8 +17,11 @@ import { getRoutePath } from "@/lib/routes";
 
 export default function Partners() {
   const { t, language } = useLanguage();
-  const [isLoading, setIsLoading] = useState(true);
-  const [loadedPartners, setLoadedPartners] = useState<Partner[]>([]);
+  // Seeded from the synchronously populated data in lib/partners.ts: the first
+  // render already has the partners, so visitors skip the "Loading..." frame
+  // and the prerendered HTML contains the real page.
+  const [isLoading, setIsLoading] = useState(partners.length === 0);
+  const [loadedPartners, setLoadedPartners] = useState<Partner[]>(() => [...partners]);
   const [flippedCardId, setFlippedCardId] = useState<string | null>(null);
 
   // Initialize partners data on mount
