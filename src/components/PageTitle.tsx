@@ -6,6 +6,7 @@ import { successStories } from '@/lib/successStories';
 import { useCases } from '@/lib/useCases';
 import { getDefinitionById } from '@/lib/definitions';
 import { getBattleCardById, getBattleCardVsTitle } from '@/lib/battle-cards';
+import { getJobById } from '@/lib/careers';
 import { SITE_NAME } from '@/lib/config';
 
 const pageTitles: Record<string, Record<'en' | 'de', string>> = {
@@ -65,6 +66,10 @@ const pageTitles: Record<string, Record<'en' | 'de', string>> = {
     en: 'Frontier Agents | Noreja',
     de: 'Frontier Agents | Noreja',
   },
+  careers: {
+    en: 'Careers | Noreja',
+    de: 'Karriere | Noreja',
+  },
   definitions: {
     en: 'Definitions | Noreja',
     de: 'Definitionen | Noreja',
@@ -82,14 +87,15 @@ const pageTitles: Record<string, Record<'en' | 'de', string>> = {
 export function PageTitle() {
   const location = useLocation();
   const context = useContext(LanguageContext);
-
-  if (!context) {
-    return null;
-  }
-
-  const { language } = context;
+  const language = context?.language;
 
   useEffect(() => {
+    // Guard lives inside the effect on purpose. It used to be an early
+    // `return null` above this hook, which changed the hook order whenever the
+    // provider was missing — React throws "rendered more hooks than during the
+    // previous render" on the next render that has it.
+    if (!language) return;
+
     const routeKey = getRouteKeyFromPath(location.pathname);
     let title = `${SITE_NAME} | Generative Process Intelligence`;
 
@@ -127,6 +133,15 @@ export function PageTitle() {
         const card = getBattleCardById(match[1].toLowerCase());
         if (card) {
           title = `${getBattleCardVsTitle(card.id, language)} | ${SITE_NAME}`;
+        }
+      }
+    } else if (routeKey === 'careerDetail') {
+      const match = location.pathname.match(/^\/(?:de|en)\/(?:karriere|careers)\/(.+)$/);
+      if (match) {
+        const job = getJobById(match[1]);
+        if (job) {
+          const label = language === 'de' ? 'Karriere' : 'Careers';
+          title = `${job.title} – ${label} | ${SITE_NAME}`;
         }
       }
     } else if (routeKey && routeKey in pageTitles) {

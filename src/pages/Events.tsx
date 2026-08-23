@@ -235,7 +235,7 @@ const Events = () => {
   return (
     <>
       <EventSchema events={upcomingEvents} />
-      <main className="min-h-screen relative overflow-hidden" style={gradientStyle}>
+      <div className="min-h-screen relative overflow-hidden" style={gradientStyle}>
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-noreja-main/5 to-transparent pointer-events-none" />
         
         <div className="relative z-10">
@@ -336,7 +336,7 @@ const Events = () => {
         </section>
       )}
         </div>
-      </main>
+      </div>
     </>
   );
 };

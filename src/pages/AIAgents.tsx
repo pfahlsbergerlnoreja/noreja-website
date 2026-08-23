@@ -85,9 +85,9 @@ function AgentCard({ image, title, description, efficiencyTag, index }: AgentCar
 
       {/* Card Content */}
       <div className="p-6 lg:p-8">
-        <h3 className="text-xl lg:text-2xl font-bold mb-3 text-foreground group-hover:text-noreja-main transition-colors">
+        <h2 className="text-xl lg:text-2xl font-bold mb-3 text-foreground group-hover:text-noreja-main transition-colors">
           {title}
-        </h3>
+        </h2>
         <p className="text-muted-foreground leading-relaxed">
           {description}
         </p>

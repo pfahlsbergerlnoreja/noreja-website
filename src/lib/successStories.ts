@@ -422,7 +422,7 @@ export const successStories: SuccessStory[] = [
     }
   },
   {
-    id: "CIB",
+    id: "cib",
     companyName: "CIB",
     logoUrl: getImagePath(customerLogoImages, "cib_logo_white.webp"),
     coverImageUrl: getCoverImagePath("Software Development"),

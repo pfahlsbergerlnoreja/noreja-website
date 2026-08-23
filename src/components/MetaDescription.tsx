@@ -6,6 +6,7 @@ import { successStories } from '@/lib/successStories';
 import { useCases } from '@/lib/useCases';
 import { getDefinitionById } from '@/lib/definitions';
 import { getBattleCardById, getBattleCardVsName, getBattleCardVsTitle } from '@/lib/battle-cards';
+import { getJobById } from '@/lib/careers';
 import { SITE_URL } from '@/lib/config';
 
 // Page titles for OG tags (mirrors PageTitle.tsx)
@@ -66,6 +67,10 @@ const ogPageTitles: Record<string, Record<'en' | 'de', string>> = {
     en: 'Frontier Agents | Noreja',
     de: 'Frontier Agents | Noreja',
   },
+  careers: {
+    en: 'Careers | Noreja',
+    de: 'Karriere | Noreja',
+  },
   definitions: {
     en: 'Definitions | Noreja',
     de: 'Definitionen | Noreja',
@@ -101,14 +106,16 @@ export function MetaDescription() {
   const location = useLocation();
   const context = useContext(LanguageContext);
 
-  // Gracefully skip if provider isn't ready (avoids crash during router transitions/HMR)
-  if (!context) {
-    return null;
-  }
-
-  const { language, t } = context;
+  const language = context?.language;
+  const t = context?.t;
 
   useEffect(() => {
+    // Guard lives inside the effect on purpose. It used to be an early
+    // `return null` above this hook, which changed the hook order whenever the
+    // provider was missing — React throws "rendered more hooks than during the
+    // previous render" on the next render that has it.
+    if (!language || !t) return;
+
     const routeKey = getRouteKeyFromPath(location.pathname);
     let description = '';
     let title = '';
@@ -184,6 +191,19 @@ export function MetaDescription() {
             language === 'de'
               ? `Noreja vs. ${vsName}: sachlicher Vergleich von Analyse-Paradigma, Datenmodell und Ökosystem-Bindung – kausale Process Intelligence gegenüber frequenzbasiertem Process Mining.`
               : `Noreja vs. ${vsName}: a factual comparison of analysis paradigm, data model, and ecosystem lock-in – causal process intelligence versus frequency-based process mining.`;
+        }
+      }
+    } else if (routeKey === 'careerDetail') {
+      const match = location.pathname.match(/^\/(?:de|en)\/(?:karriere|careers)\/(.+)$/);
+      if (match) {
+        const job = getJobById(match[1]);
+        if (job) {
+          const label = language === 'de' ? 'Karriere' : 'Careers';
+          title = `${job.title} – ${label} | Noreja`;
+          description =
+            language === 'de'
+              ? `${job.title} bei Noreja Intelligence: Aufgaben, Profil und Rahmenbedingungen der Stelle im Bereich Generative Process Intelligence.`
+              : `${job.title} at Noreja Intelligence: responsibilities, profile and terms for this role in generative process intelligence.`;
         }
       }
     } else if (routeKey && routeKey in t.metaDescriptions) {

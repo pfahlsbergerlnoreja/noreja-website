@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { teaserHeadings } from "@/lib/heroCopy";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import {
@@ -195,7 +196,7 @@ const CostOfInaction = () => {
   } as const;
 
   return (
-    <main className="relative min-h-screen overflow-hidden" style={gradientStyle}>
+    <div className="relative min-h-screen overflow-hidden" style={gradientStyle}>
       <StructuredData schema={articleSchema} id="coi-article" />
       <StructuredData schema={calculatorSchema} id="coi-calculator" />
       <BreadcrumbSchema
@@ -295,9 +296,12 @@ const CostOfInaction = () => {
         {/* ------------------------------------------- external reference links */}
         <ProcessTradeOffReferences />
 
-        <FinalCTA />
+        <FinalCTA
+          heading={teaserHeadings.finalCta.costOfInaction.lead[language]}
+          headingHighlight={teaserHeadings.finalCta.costOfInaction.highlight[language]}
+        />
       </div>
-    </main>
+    </div>
   );
 };
 

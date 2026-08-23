@@ -135,8 +135,8 @@ export function Footer() {
 
           {/* Navigation */}
           <div className="md:col-span-2">
-            <h3 className="font-semibold mb-4">{t.footer.sections.resources}</h3>
-            <div className="grid grid-cols-2 gap-x-4 gap-y-2">
+            <p id="footer-nav-resources" className="font-semibold mb-4">{t.footer.sections.resources}</p>
+            <nav aria-labelledby="footer-nav-resources" className="grid grid-cols-2 gap-x-4 gap-y-2">
               {resourcesLinks.map((item) => (
                 item.external ? (
                   <a
@@ -158,13 +158,13 @@ export function Footer() {
                   </Link>
                 )
               ))}
-            </div>
+            </nav>
           </div>
 
           {/* Legal */}
           <div className="md:col-span-1">
-            <h3 className="font-semibold mb-4">{t.footer.sections.legal}</h3>
-            <div className="flex flex-col space-y-2">
+            <p id="footer-nav-legal" className="font-semibold mb-4">{t.footer.sections.legal}</p>
+            <nav aria-labelledby="footer-nav-legal" className="flex flex-col space-y-2">
               {legalLinks.map((item) => (
                 item.external ? (
                   <a
@@ -186,13 +186,13 @@ export function Footer() {
                   </Link>
                 )
               ))}
-            </div>
+            </nav>
           </div>
 
           {/* Contact */}
           <div className="md:col-span-1">
-            <h3 className="font-semibold mb-4">{t.footer.sections.contact}</h3>
-            <div className="flex flex-col space-y-2">
+            <p id="footer-nav-contact" className="font-semibold mb-4">{t.footer.sections.contact}</p>
+            <nav aria-labelledby="footer-nav-contact" className="flex flex-col space-y-2">
               {contactFormLink.external && contactFormLink.href ? (
                 <a
                   href={contactFormLink.href}
@@ -224,7 +224,7 @@ export function Footer() {
               >
                 {bookAppointmentLink.name}
               </a>
-            </div>
+            </nav>
           </div>
         </div>
 

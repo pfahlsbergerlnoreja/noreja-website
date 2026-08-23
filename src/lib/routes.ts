@@ -260,11 +260,7 @@ export function getRouteKeyFromPath(pathname: string): keyof typeof routes | nul
   if (pathname === '/maintenance') {
     return 'maintenance';
   }
-  
-  // Remove language prefix
-  const basePath = pathname.replace(/^\/(de|en)/, '') || '/';
-  const normalizedPath = basePath === '/' ? '/de' : `/de${basePath}`;
-  
+
   // Check for dynamic routes first
   if (pathname.match(/^\/(?:de|en)\/success-story\//)) {
     return 'successStoryDetail';
@@ -278,15 +274,14 @@ export function getRouteKeyFromPath(pathname: string): keyof typeof routes | nul
   if (pathname.match(/^\/(?:de|en)\/(?:definitionen|definitions)\/.+/)) {
     return 'definitionDetail';
   }
-  if (pathname === '/de/definitionen' || pathname === '/en/definitions') {
-    return 'definitions';
-  }
   if (pathname.match(/^\/(?:de|en)\/battle-cards\/.+/)) {
     return 'battleCardDetail';
   }
-  if (pathname === '/de/battle-cards' || pathname === '/en/battle-cards') {
-    return 'battleCards';
-  }
 
-  return pathToRouteKey[normalizedPath] || null;
+  // pathToRouteKey is keyed by the real path in BOTH languages, so the path
+  // is looked up as-is. It used to be rewritten to its German form first
+  // ("/en/pricing" -> "/de/pricing"), which only matched when the two slugs
+  // happened to be identical; every English page with its own slug fell
+  // through to null and rendered the generic title and meta description.
+  return pathToRouteKey[pathname] ?? null;
 }

@@ -36,6 +36,8 @@ const DefinitionDetail = () => {
       ? {
           back: 'Zurück zu den Definitionen',
           why: 'Warum ist das wichtig?',
+          example: 'Wie sieht das konkret aus?',
+          delimitation: 'Nicht zu verwechseln mit',
           related: 'Verwandte Begriffe',
           ctaTitle: 'Prozesse besser verstehen mit Noreja',
           ctaText:
@@ -46,6 +48,8 @@ const DefinitionDetail = () => {
       : {
           back: 'Back to Definitions',
           why: 'Why does this matter?',
+          example: 'What does this look like in practice?',
+          delimitation: 'Not to be confused with',
           related: 'Related terms',
           ctaTitle: 'Understand your processes better with Noreja',
           ctaText:
@@ -55,7 +59,16 @@ const DefinitionDetail = () => {
         };
 
   const detailUrl = `${SITE_URL}${getRoutePath('definitionDetail', language, { slug: definition.id })}`;
-  const answerText = `${definition.definition[language]} ${definition.whyImportant[language]}`;
+  // Everything the page actually answers, so the DefinedTerm schema carries the
+  // full answer rather than only the opening two sections.
+  const answerText = [
+    definition.definition[language],
+    definition.whyImportant[language],
+    definition.example?.[language],
+    definition.delimitation?.[language],
+  ]
+    .filter(Boolean)
+    .join(' ');
   // Derive a clean glossary term from the question for the DefinedTerm schema,
   // e.g. "Was ist ein Event Knowledge Graph?" -> "Event Knowledge Graph".
   // An explicit term overrides the heuristic when the question doesn't reduce cleanly.
@@ -71,7 +84,7 @@ const DefinitionDetail = () => {
       .trim();
 
   return (
-    <main className="min-h-screen relative overflow-hidden" style={gradientStyle}>
+    <div className="min-h-screen relative overflow-hidden" style={gradientStyle}>
       <BreadcrumbSchema
         items={[
           { name: language === 'de' ? 'Startseite' : 'Home', url: `${SITE_URL}${getRoutePath('home', language)}` },
@@ -115,6 +128,25 @@ const DefinitionDetail = () => {
             <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
               {definition.whyImportant[language]}
             </p>
+
+            {/* Both optional: filled in per term over time, skipped where absent. */}
+            {definition.example && (
+              <>
+                <h2 className="text-2xl md:text-3xl font-bold mb-4 mt-12">{labels.example}</h2>
+                <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
+                  {definition.example[language]}
+                </p>
+              </>
+            )}
+
+            {definition.delimitation && (
+              <>
+                <h2 className="text-2xl md:text-3xl font-bold mb-4 mt-12">{labels.delimitation}</h2>
+                <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
+                  {definition.delimitation[language]}
+                </p>
+              </>
+            )}
           </motion.div>
 
           {/* Related terms */}
@@ -169,7 +201,7 @@ const DefinitionDetail = () => {
           </motion.div>
         </article>
       </div>
-    </main>
+    </div>
   );
 };
 

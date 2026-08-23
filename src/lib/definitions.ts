@@ -31,6 +31,23 @@ export interface Definition {
     de: string;
     en: string;
   };
+  /**
+   * "Wie sieht das konkret aus?" — a worked example. Optional so terms can be
+   * filled in over time; the section is skipped where it is missing.
+   *
+   * The detail pages carry roughly 120 words of substance, which is thin for
+   * the pages most likely to be cited by an answer engine. These two blocks
+   * are where that gets fixed, and they render as their own H2 sections.
+   */
+  example?: {
+    de: string;
+    en: string;
+  };
+  /** "Nicht zu verwechseln mit" — delimitation against adjacent terms. */
+  delimitation?: {
+    de: string;
+    en: string;
+  };
   /** Related definition ids for internal linking */
   related?: string[];
 }
@@ -54,6 +71,14 @@ export const definitions: Definition[] = [
       de: 'Die datengetriebene Methode, um reale Prozesse aus IT-Systemen sichtbar zu machen.',
       en: 'The data-driven method for making real processes visible from IT systems.',
     },
+    example: {
+      de: 'In einem Purchase-to-Pay-Prozess liegen die Spuren in SAP: Bestellung angelegt, Wareneingang gebucht, Rechnung erfasst, Zahlung freigegeben. Process Mining liest diese Zeitstempel je Fall aus und setzt sie zu den tatsächlich gelaufenen Pfaden zusammen. Sichtbar wird dann etwa, dass 12 % der Rechnungen vor dem Wareneingang eintreffen und im Schnitt sechs Tage liegen bleiben — ein Muster, das in keinem Prozessdiagramm steht.',
+      en: 'In a purchase-to-pay process the traces sit in SAP: purchase order created, goods receipt booked, invoice recorded, payment approved. Process mining reads those timestamps per case and assembles them into the paths that actually occurred. What surfaces is, for instance, that 12% of invoices arrive before the goods receipt and then sit idle for six days on average — a pattern no process diagram contains.',
+    },
+    delimitation: {
+      de: 'Nicht mit Task Mining: das erfasst Klicks und Tastatureingaben am Arbeitsplatz, Process Mining die Ereignisse in den Fachsystemen. Und nicht mit Business Intelligence: ein BI-Dashboard zeigt Kennzahlen zu einem Zeitpunkt, Process Mining rekonstruiert die Reihenfolge der Schritte, die zu diesen Kennzahlen geführt hat.',
+      en: 'Not to be confused with task mining, which records clicks and keystrokes at the desktop, whereas process mining reads events from the business systems. Nor with business intelligence: a BI dashboard shows metrics at a point in time, while process mining reconstructs the sequence of steps that produced them.',
+    },
     related: ['process-intelligence', 'event-log', 'causal-process-mining'],
   },
   {
@@ -73,6 +98,14 @@ export const definitions: Definition[] = [
     teaser: {
       de: 'Prozessdaten plus Kontext und KI – von reiner Sichtbarkeit zu Verständnis und Handlung.',
       en: 'Process data plus context and AI – from mere visibility to understanding and action.',
+    },
+    example: {
+      de: 'Eine Versicherung sieht im Process Mining, dass Schadenfälle zu oft wieder geöffnet werden. Process Intelligence geht weiter: Sie verknüpft den Prozess mit Vertragsart, Schadenhöhe und Sachbearbeiter, erkennt, dass Re-Openings vor allem bei nachträglich korrigierten Rückstellungswerten auftreten, und beziffert, was diese Schleife pro Jahr kostet.',
+      en: 'An insurer sees in process mining that claims are reopened too often. Process intelligence goes further: it links the process to policy type, claim size and case handler, identifies that reopenings cluster around reserves corrected after the fact, and quantifies what that loop costs per year.',
+    },
+    delimitation: {
+      de: 'Nicht mit Process Mining gleichzusetzen: Process Mining ist die Analysemethode, Process Intelligence die darüberliegende Disziplin, die Prozessdaten mit Kontext, Kennzahlen und Entscheidungen verbindet. Process Mining beantwortet, wie ein Prozess abläuft; Process Intelligence, warum er so abläuft, was das kostet und was daraus folgt.',
+      en: 'Not the same as process mining. Process mining is the analysis method; process intelligence is the wider discipline that connects process data with context, metrics and decisions. Process mining answers how a process runs; process intelligence answers why it runs that way, what it costs, and what follows from it.',
     },
     related: ['process-mining', 'causal-process-mining', 'event-knowledge-graph', 'agentic-process-intelligence'],
   },
@@ -94,6 +127,14 @@ export const definitions: Definition[] = [
       de: 'Daten als Knoten und Kanten – die natürliche Basis für vernetzte Prozessdaten.',
       en: 'Data as nodes and edges – the natural basis for connected process data.',
     },
+    example: {
+      de: 'Die Frage „welche Lieferanten hängen an Bestellungen, deren Rechnung länger als 30 Tage offen ist?" braucht relational mehrere Joins über Bestell-, Rechnungs- und Lieferantentabellen. In einer Graphdatenbank ist sie ein Pfad entlang bestehender Kanten — die Beziehung ist gespeichert, nicht zur Abfragezeit errechnet. Der Unterschied wächst mit jeder weiteren Ebene.',
+      en: 'The question "which suppliers are attached to orders whose invoice has been open for more than 30 days?" needs several joins across order, invoice and supplier tables in a relational database. In a graph database it is a walk along existing edges — the relationship is stored, not computed at query time. The gap widens with every additional hop.',
+    },
+    delimitation: {
+      de: 'Nicht mit einem Knowledge Graph gleichzusetzen: der ist ein Datenmodell, die Graphdatenbank die Technologie, die ihn speichert und abfragbar macht. Und nicht mit einer relationalen Datenbank samt Fremdschlüsseln: dort sind Beziehungen implizit über Schlüsselwerte, im Graph explizit als eigene Objekte mit eigenen Eigenschaften.',
+      en: 'Not the same as a knowledge graph, which is a data model; the graph database is the technology that stores and queries it. Nor the same as a relational database with foreign keys: there, relationships are implicit in key values, while in a graph they are explicit objects with properties of their own.',
+    },
     related: ['event-knowledge-graph', 'causal-process-mining'],
   },
   {
@@ -113,6 +154,14 @@ export const definitions: Definition[] = [
     teaser: {
       de: 'Ereignisse, Objekte und Beziehungen im Graphen – mehrere Perspektiven auf einmal.',
       en: 'Events, objects, and relationships in a graph – multiple perspectives at once.',
+    },
+    example: {
+      de: 'Ein Event-Log kennt genau eine Fall-ID, etwa die Bestellnummer. Ein Event Knowledge Graph modelliert Bestellung, Lieferung, Rechnung und Kunde als eigene Objekte mit Beziehungen zwischen ihnen. Eine Sammellieferung für drei Bestellungen ist damit ein Knoten mit drei Kanten — im flachen Log müsste derselbe Vorgang dreimal dupliziert werden.',
+      en: 'An event log knows exactly one case ID, the order number for example. An event knowledge graph models order, delivery, invoice and customer as separate objects with relationships between them. A consolidated shipment covering three orders becomes one node with three edges — in a flat log the same event would have to be duplicated three times.',
+    },
+    delimitation: {
+      de: 'Nicht mit einer Graphdatenbank gleichzusetzen: die ist die Speichertechnologie, der Event Knowledge Graph das Datenmodell darin. Und nicht mit einem Prozessmodell wie BPMN: das beschreibt den Soll-Ablauf, der Graph enthält die tatsächlich beobachteten Ereignisse und ihre Verknüpfungen.',
+      en: 'Not the same as a graph database, which is the storage technology; the event knowledge graph is the data model held inside it. Nor the same as a process model such as BPMN, which describes the intended flow — the graph holds the events actually observed and how they connect.',
     },
     related: ['graph-databases', 'object-centric-process-mining', 'event-log', 'process-grounding'],
   },
@@ -134,6 +183,14 @@ export const definitions: Definition[] = [
       de: 'Ursache statt bloßer Reihenfolge – echte Zusammenhänge zwischen Prozessschritten.',
       en: 'Cause instead of mere sequence – the real relationships between process steps.',
     },
+    example: {
+      de: 'Klassisches Process Mining zeigt, dass auf die Kreditprüfung häufig eine Nacharbeit folgt. Das ist eine Häufigkeit, keine Ursache. Causal Process Mining prüft, ob die Nacharbeit tatsächlich aus der Kreditprüfung folgt oder ob beide von einer dritten Größe abhängen — etwa unvollständigen Stammdaten. Erst diese Unterscheidung sagt dir, wo eine Maßnahme überhaupt wirken kann.',
+      en: 'Classic process mining shows that a credit check is frequently followed by rework. That is a frequency, not a cause. Causal process mining tests whether the rework actually follows from the credit check, or whether both depend on a third factor — incomplete master data, say. Only that distinction tells you where an intervention can work at all.',
+    },
+    delimitation: {
+      de: 'Nicht mit Directly-Follows-Analysen zu verwechseln: die zählen, welcher Schritt auf welchen folgt. Aufeinanderfolge ist aber keine Kausalität — zwei Schritte können regelmäßig hintereinander auftreten, ohne dass der eine den anderen auslöst. Genau diese Lücke schließt der kausale Ansatz.',
+      en: 'Not to be confused with directly-follows analysis, which counts which step follows which. Succession is not causation: two steps can occur in sequence regularly without one triggering the other. Closing that gap is precisely what the causal approach is for.',
+    },
     related: ['process-mining', 'directly-follows-limitations', 'event-knowledge-graph', 'causal-ai'],
   },
   {
@@ -153,6 +210,14 @@ export const definitions: Definition[] = [
     teaser: {
       de: 'Warum "A folgt auf B" für realistische Prozessmodelle nicht ausreicht.',
       en: 'Why "A is followed by B" is not enough for realistic process models.',
+    },
+    example: {
+      de: 'Laufen Bonitätsprüfung und Lagerprüfung parallel, erscheinen sie im Log mal in der einen, mal in der anderen Reihenfolge. Ein Directly-Follows-Graph zeichnet daraus Kanten in beide Richtungen und suggeriert eine Schleife, die es nie gab. Das Modell wirkt komplizierter als der Prozess — und die vermeintliche Schleife zieht Analysen auf sich, die ins Leere laufen.',
+      en: 'If a credit check and a stock check run in parallel, the log shows them sometimes in one order, sometimes the other. A directly-follows graph draws edges in both directions and suggests a loop that never existed. The model looks more complicated than the process — and the phantom loop attracts analysis that leads nowhere.',
+    },
+    delimitation: {
+      de: 'Nicht als genereller Einwand gegen Process Mining zu lesen: Directly-Follows-Graphen sind eine — allerdings sehr verbreitete — Modellierungsform unter mehreren. Verfahren wie Inductive Mining sowie objektzentrierte und kausale Ansätze umgehen genau diese Schwächen.',
+      en: 'Not to be read as a general objection to process mining: directly-follows graphs are one — admittedly very common — modelling form among several. Techniques such as inductive mining, and object-centric and causal approaches, avoid precisely these weaknesses.',
     },
     related: ['causal-process-mining', 'process-mining', 'event-log'],
   },
@@ -174,6 +239,14 @@ export const definitions: Definition[] = [
       de: 'Das klassische Eingabeformat für Process Mining – und seine Grenzen.',
       en: 'The classic input format for Process Mining – and its limits.',
     },
+    example: {
+      de: 'Drei Zeilen aus einem Order-to-Cash-Log: (Fall 4711, „Auftrag angelegt", 02.03. 09:14), (Fall 4711, „Kreditprüfung", 02.03. 11:02), (Fall 4711, „Lieferung", 05.03. 08:30). Mehr braucht Process Mining nicht, um daraus einen Pfad zu rekonstruieren. Zusätzliche Spalten wie Sachbearbeiter, Betrag oder Werk machen die Analyse reicher, sind aber nicht Pflicht.',
+      en: 'Three rows from an order-to-cash log: (case 4711, "order created", 2 Mar 09:14), (case 4711, "credit check", 2 Mar 11:02), (case 4711, "delivery", 5 Mar 08:30). That is all process mining needs to reconstruct a path. Extra columns such as handler, amount or plant make the analysis richer but are not required.',
+    },
+    delimitation: {
+      de: 'Nicht mit einem Application- oder Systemlog zu verwechseln: das protokolliert technische Ereignisse ohne Fallbezug. Und nicht mit einer Datenbanktabelle: die zeigt den aktuellen Zustand eines Objekts, der Event-Log die Historie, wie es dazu kam.',
+      en: 'Not to be confused with an application or system log, which records technical events with no case reference. Nor with a database table: that shows an object\'s current state, whereas the event log holds the history of how it got there.',
+    },
     related: ['process-mining', 'event-knowledge-graph', 'object-centric-process-mining'],
   },
   {
@@ -193,6 +266,14 @@ export const definitions: Definition[] = [
     teaser: {
       de: 'Die Disziplin, Prozesse systematisch zu gestalten, zu steuern und zu verbessern.',
       en: 'The discipline of systematically designing, steering, and improving processes.',
+    },
+    example: {
+      de: 'Ein Mittelständler dokumentiert seinen Reklamationsprozess, definiert Verantwortliche und Durchlaufzeit-Ziele, führt ein Ticketsystem ein und misst quartalsweise nach. Kommen aus der Messung Änderungen zurück in die Dokumentation, ist der BPM-Kreislauf geschlossen: modellieren, umsetzen, messen, verbessern.',
+      en: 'A mid-sized company documents its complaints process, defines owners and cycle-time targets, introduces a ticketing system and measures quarterly. Once those measurements feed changes back into the documentation, the BPM cycle is closed: model, implement, measure, improve.',
+    },
+    delimitation: {
+      de: 'Nicht mit Process Mining zu verwechseln: BPM ist die Management-Disziplin, Process Mining eine Analysemethode darin. BPM legt fest, wie ein Prozess laufen soll; Process Mining zeigt, wie er läuft. Und nicht mit Workflow-Automatisierung: die führt einzelne Abläufe technisch aus, BPM steuert den gesamten Lebenszyklus.',
+      en: 'Not to be confused with process mining: BPM is the management discipline, process mining one analysis method within it. BPM defines how a process should run; process mining shows how it does. Nor with workflow automation, which executes individual flows technically while BPM governs the whole lifecycle.',
     },
     related: ['process-mining', 'process-intelligence', 'what-is-a-process', 'bpmn', 'epk'],
   },
@@ -214,6 +295,14 @@ export const definitions: Definition[] = [
       de: 'Input, Aktivitäten, Output – was einen Prozess ausmacht und abgrenzt.',
       en: 'Input, activities, output – what makes and delineates a process.',
     },
+    example: {
+      de: 'Order-to-Cash ist ein Prozess: Er beginnt mit der Bestellung, endet mit dem Zahlungseingang, und dazwischen liegen Kreditprüfung, Kommissionierung, Versand und Rechnungsstellung. Jede einzelne Bestellung durchläuft ihn als eigene Instanz — mit eigenem Startzeitpunkt, eigenen Beteiligten und eigenem Ergebnis.',
+      en: 'Order-to-cash is a process: it starts with the order, ends with payment received, and in between sit credit check, picking, shipping and invoicing. Every single order runs through it as its own instance — with its own start time, its own participants and its own outcome.',
+    },
+    delimitation: {
+      de: 'Nicht mit einem Projekt zu verwechseln: das ist einmalig und hat ein definiertes Ende, ein Prozess wiederholt sich. Und nicht mit einer Funktion oder Abteilung: die beschreibt, wer etwas tut; der Prozess beschreibt, in welcher Reihenfolge es geschieht — meist quer über mehrere Abteilungen.',
+      en: 'Not to be confused with a project, which happens once and has a defined end, whereas a process repeats. Nor with a function or department, which describes who does something; a process describes the order in which things happen — usually across several departments.',
+    },
     related: ['business-process-management', 'process-mining'],
   },
   {
@@ -233,6 +322,14 @@ export const definitions: Definition[] = [
     teaser: {
       de: 'Prozesse rund um mehrere Objekte statt eine einzige Fall-ID.',
       en: 'Processes centered on multiple objects instead of a single case ID.',
+    },
+    example: {
+      de: 'Eine Rechnung deckt drei Bestellungen ab, eine Bestellung wird in zwei Teillieferungen erfüllt. Mit einer einzigen Fall-ID muss man sich entscheiden, ob man den Prozess aus Sicht der Bestellung oder der Rechnung betrachtet — und dupliziert die jeweils andere Seite. Das verzerrt Häufigkeiten und Durchlaufzeiten. OCPM behält beide Objekttypen und ihre Verknüpfung bei.',
+      en: 'One invoice covers three orders; one order is fulfilled in two partial deliveries. With a single case ID you have to choose whether to view the process from the order or the invoice side — and duplicate the other. That distorts frequencies and cycle times. OCPM keeps both object types and the link between them.',
+    },
+    delimitation: {
+      de: 'Nicht mit Multi-Perspektiven-Auswertungen zu verwechseln, bei denen man mehrere Sichten nacheinander auf denselben eindimensionalen Log legt. OCPM ändert das Datenmodell selbst, nicht nur die Auswertung darüber.',
+      en: 'Not to be confused with multi-perspective reporting, where several views are applied one after another to the same one-dimensional log. OCPM changes the data model itself, not just the analysis on top of it.',
     },
     related: ['event-knowledge-graph', 'event-log', 'causal-process-mining'],
   },
@@ -254,6 +351,14 @@ export const definitions: Definition[] = [
       de: 'Automatisch ein Prozessmodell aus Ereignisdaten erzeugen – ohne Vorannahmen.',
       en: 'Automatically generate a process model from event data – with no prior assumptions.',
     },
+    example: {
+      de: 'Aus 4.812 Purchase-to-Pay-Fällen entsteht binnen Sekunden ein Modell mit allen tatsächlich gelaufenen Pfaden — darunter 37 Varianten, von denen die Fachabteilung vier kannte. Filtert man auf die häufigsten 80 % der Fälle, bleibt ein lesbares Grundmodell; der Rest ist die Ausnahmelandschaft, und oft steckt dort das Geld.',
+      en: 'From 4,812 purchase-to-pay cases a model of every path actually taken appears within seconds — 37 variants among them, of which the business knew four. Filter to the most frequent 80% of cases and a readable base model remains; the rest is the exception landscape, and that is often where the money sits.',
+    },
+    delimitation: {
+      de: 'Nicht mit Prozessmodellierung zu verwechseln: dort zeichnet ein Mensch, wie ein Prozess laufen soll. Discovery leitet aus Daten ab, wie er gelaufen ist. Und nicht mit Conformance Checking: das setzt ein Modell bereits voraus und vergleicht die Realität dagegen.',
+      en: 'Not to be confused with process modelling, where a person draws how a process should run. Discovery derives from data how it did run. Nor with conformance checking, which already assumes a model and compares reality against it.',
+    },
     related: ['process-mining', 'event-log', 'conformance-checking'],
   },
   {
@@ -274,6 +379,14 @@ export const definitions: Definition[] = [
       de: 'Ist-Ablauf gegen Soll-Modell prüfen – Abweichungen und Regelverstöße aufdecken.',
       en: 'Check the actual flow against a target model – reveal deviations and violations.',
     },
+    example: {
+      de: 'Das Soll-Modell verlangt eine Vier-Augen-Freigabe ab 10.000 €. Der Abgleich mit dem Ist-Verlauf liefert 214 Fälle, in denen dieselbe Person angelegt und freigegeben hat — mit Zeitpunkt, Betrag und Verantwortlichem, statt einer Prozentzahl im Quartalsbericht.',
+      en: 'The target model requires dual approval above €10,000. Comparing it with the actual runs returns 214 cases in which the same person both created and approved — with timestamp, amount and owner, rather than a percentage in a quarterly report.',
+    },
+    delimitation: {
+      de: 'Nicht mit Process Discovery zu verwechseln: die erzeugt das Modell, Conformance Checking prüft dagegen. Und nicht mit einer Stichprobenprüfung: dort kontrolliert jemand einen Bruchteil der Fälle manuell, hier wird jeder Fall automatisch abgeglichen.',
+      en: 'Not to be confused with process discovery, which produces the model; conformance checking tests against it. Nor with sample-based auditing, where someone manually checks a fraction of cases — here every case is compared automatically.',
+    },
     related: ['process-discovery', 'to-be-vs-as-is-process', 'bpmn', 'agent-conformance-checking'],
   },
   {
@@ -293,6 +406,14 @@ export const definitions: Definition[] = [
     teaser: {
       de: 'Manuelle Tätigkeiten am Desktop erfassen – die Ergänzung zum Process Mining.',
       en: 'Capture manual desktop activities – the complement to Process Mining.',
+    },
+    example: {
+      de: 'Der Event-Log zeigt zwischen „Rechnung erfasst" und „Rechnung geprüft" eine Lücke von vier Stunden, aber nicht, was darin passiert. Task Mining zeichnet auf, dass in dieser Zeit Werte aus einer Excel-Liste in drei Masken übertragen werden — ein Arbeitsschritt, der in keinem Fachsystem als Ereignis existiert.',
+      en: 'The event log shows a four-hour gap between "invoice recorded" and "invoice checked", but not what happens inside it. Task mining records that values are being copied from a spreadsheet into three screens during that time — a step that exists as an event in no business system.',
+    },
+    delimitation: {
+      de: 'Nicht mit Process Mining zu verwechseln: das liest Ereignisse aus Fachsystemen, Task Mining Interaktionen am Arbeitsplatz. Und nicht mit Bildschirmaufzeichnung zur Leistungskontrolle: ausgewertet werden aggregierte Arbeitsmuster, was in der Praxis Datenschutz und Mitbestimmung einzubeziehen verlangt.',
+      en: 'Not to be confused with process mining, which reads events from business systems, whereas task mining captures desktop interactions. Nor with screen recording for performance monitoring: the output is aggregated work patterns, and in practice the approach requires data-protection and works-council involvement.',
     },
     related: ['process-mining', 'process-intelligence', 'agent-mining'],
   },
@@ -318,6 +439,14 @@ export const definitions: Definition[] = [
       de: 'OCEL 2.0',
       en: 'OCEL 2.0',
     },
+    example: {
+      de: 'In OCEL 2.0 verweist das Ereignis „Lieferung versandt" gleichzeitig auf drei Bestellungen und einen Lieferschein. In einem klassischen XES-Log müsste dasselbe Ereignis dreimal auftauchen, je einmal pro Bestell-Fall — mit allen Verzerrungen, die daraus für Häufigkeiten und Durchlaufzeiten folgen.',
+      en: 'In OCEL 2.0 the event "shipment sent" references three orders and one delivery note at once. In a classic XES log the same event would have to appear three times, once per order case — with all the distortion that introduces into frequencies and cycle times.',
+    },
+    delimitation: {
+      de: 'Nicht mit XES zu verwechseln, dem älteren Standard mit genau einer Fall-ID je Ereignis. Und nicht mit OCPM selbst: OCEL 2.0 ist das Austauschformat, OCPM die Analysemethode, die damit arbeitet.',
+      en: 'Not to be confused with XES, the older standard with exactly one case ID per event. Nor with OCPM itself: OCEL 2.0 is the exchange format, OCPM the analysis method that works on it.',
+    },
     related: ['object-centric-process-mining', 'event-log', 'event-knowledge-graph'],
   },
   {
@@ -337,6 +466,14 @@ export const definitions: Definition[] = [
     teaser: {
       de: 'Ein eindeutiger Pfad durch den Prozess – die Basis der Variantenanalyse.',
       en: 'A distinct path through the process – the basis of variant analysis.',
+    },
+    example: {
+      de: 'Von 12.000 Bestellungen laufen 7.400 über den Pfad Auftrag → Kreditprüfung → Lieferung → Rechnung. Das ist die Hauptvariante. Weitere 2.100 nehmen denselben Weg mit einer zusätzlichen Nacharbeit vor der Lieferung — schon eine eigene Variante, auch wenn der Unterschied nur ein Schritt ist.',
+      en: 'Of 12,000 orders, 7,400 run along the path order → credit check → delivery → invoice. That is the main variant. Another 2,100 take the same route with one extra rework step before delivery — already a variant of its own, even though the difference is a single step.',
+    },
+    delimitation: {
+      de: 'Nicht mit einer Prozessinstanz zu verwechseln: die ist ein einzelner Durchlauf, die Variante die Menge aller Durchläufe mit identischem Pfad. Und nicht mit einer Ausnahme: auch die häufigste Route ist eine Variante.',
+      en: 'Not to be confused with a process instance, which is a single run; a variant is the set of all runs sharing an identical path. Nor with an exception: the most frequent route is a variant too.',
     },
     related: ['process-instance', 'process-mining', 'directly-follows-limitations'],
   },
@@ -358,6 +495,14 @@ export const definitions: Definition[] = [
       de: 'Die konkrete Einzelausführung eines Prozesses – die Analyseeinheit im Process Mining.',
       en: 'The concrete single execution of a process – the unit of analysis in Process Mining.',
     },
+    example: {
+      de: 'Bestellung 4711 ist eine Instanz des Order-to-Cash-Prozesses: angelegt am 2. März, Kreditprüfung am selben Tag, Lieferung am 5. März, Zahlungseingang am 28. März. Alle Ereignisse mit dieser Fall-ID gehören zu ihr — und die Durchlaufzeit von 26 Tagen ist die genau dieser einen Instanz, nicht des Prozesses insgesamt.',
+      en: 'Order 4711 is one instance of the order-to-cash process: created 2 March, credit-checked the same day, delivered 5 March, paid 28 March. Every event carrying that case ID belongs to it — and the 26-day cycle time is that of this one instance, not of the process as a whole.',
+    },
+    delimitation: {
+      de: 'Nicht mit der Prozessvariante zu verwechseln: viele Instanzen können denselben Pfad nehmen und bilden dann gemeinsam eine Variante. Und nicht mit dem Prozessmodell: das beschreibt alle möglichen Abläufe, die Instanz genau einen tatsächlich gelaufenen.',
+      en: 'Not to be confused with a process variant: many instances can share the same path and together form one variant. Nor with the process model, which describes every possible run, whereas the instance is exactly one run that happened.',
+    },
     related: ['process-variant', 'event-log', 'what-is-a-process'],
   },
   {
@@ -378,6 +523,14 @@ export const definitions: Definition[] = [
       de: 'Prozesse rechnerisch durchspielen – Was-wäre-wenn-Szenarien vor der Umsetzung.',
       en: 'Play processes through computationally – what-if scenarios before implementation.',
     },
+    example: {
+      de: 'Die Analyse zeigt die Kreditprüfung als Engpass. Bevor zwei zusätzliche Prüfer eingestellt werden, spielt die Simulation durch, was sie bewirken: Die Durchlaufzeit sinkt um 3,1 Tage, der Engpass wandert aber zur Kommissionierung. Diese Verschiebung liefert keine Ist-Analyse, sondern erst der Durchlauf des veränderten Modells.',
+      en: 'Analysis points to the credit check as the bottleneck. Before hiring two more reviewers, simulation plays out what they achieve: cycle time drops by 3.1 days, but the bottleneck moves to picking. No as-is analysis produces that shift — only running the changed model does.',
+    },
+    delimitation: {
+      de: 'Nicht mit einer Prognose zu verwechseln: die schreibt beobachtete Entwicklungen fort. Die Simulation rechnet hypothetische Szenarien durch, die es so noch nie gab. Und nicht mit einem Digital Process Twin: der wird laufend mit Echtdaten gespeist, eine Simulation ist ein abgegrenzter Rechenlauf.',
+      en: 'Not to be confused with a forecast, which extrapolates observed trends. Simulation computes hypothetical scenarios that have never occurred. Nor with a digital process twin, which is continuously fed with live data — a simulation is a bounded computation.',
+    },
     related: ['digital-process-twin', 'process-intelligence', 'to-be-vs-as-is-process'],
   },
   {
@@ -397,6 +550,14 @@ export const definitions: Definition[] = [
     teaser: {
       de: 'Das lebende digitale Abbild eines Prozesses – für Analyse, Simulation und Steuerung.',
       en: 'The living digital replica of a process – for analysis, simulation, and control.',
+    },
+    example: {
+      de: 'Der Zwilling eines Schadenprozesses liest nächtlich neue Ereignisse ein. Verschiebt sich die durchschnittliche Bearbeitungszeit um mehr als zwei Tage, meldet er das, bevor es im Quartalsbericht auffällt — und erlaubt zugleich, eine geplante Regeländerung erst am Modell durchzurechnen, bevor sie produktiv geht.',
+      en: 'The twin of a claims process ingests new events nightly. If average handling time shifts by more than two days it flags that before a quarterly report would — and at the same time lets a planned rule change be computed against the model before it goes live.',
+    },
+    delimitation: {
+      de: 'Nicht mit einem BPMN-Prozessmodell zu verwechseln: das ist ein statisches Diagramm ohne Datenanbindung. Und nicht mit einem Digital Twin aus der Fertigung: der bildet eine physische Anlage ab, der Process Twin einen Ablauf.',
+      en: 'Not to be confused with a BPMN process model, which is a static diagram with no data feed. Nor with a digital twin in manufacturing, which mirrors a physical asset — the process twin mirrors a flow.',
     },
     related: ['process-simulation', 'process-intelligence', 'event-knowledge-graph'],
   },
@@ -422,6 +583,14 @@ export const definitions: Definition[] = [
       de: 'Soll-Prozess und Ist-Prozess',
       en: 'To-Be and As-Is Process',
     },
+    example: {
+      de: 'Im Soll-Prozess folgt auf die Bestellung die Freigabe, dann die Lieferung. Der Ist-Prozess zeigt, dass in 18 % der Fälle zuerst geliefert und die Freigabe nachgereicht wird. Beides nebeneinandergelegt, lautet die Frage nicht mehr „passiert das?", sondern „warum, wie oft, und was kostet es?".',
+      en: 'In the target process, approval follows the order and delivery follows approval. The as-is process shows that in 18% of cases delivery happens first and approval is filed afterwards. Put side by side, the question is no longer "does this happen?" but "why, how often, and what does it cost?".',
+    },
+    delimitation: {
+      de: 'Nicht mit „falsch und richtig" zu verwechseln: eine Abweichung kann ein sinnvoller Workaround sein, den das Soll-Modell noch nicht kennt. Manchmal ist die richtige Konsequenz, das Soll-Modell zu ändern, nicht die Praxis.',
+      en: 'Not to be read as "wrong versus right": a deviation can be a sensible workaround the target model does not yet know about. Sometimes the right conclusion is to change the target model, not the practice.',
+    },
     related: ['conformance-checking', 'business-process-management', 'process-mining', 'bpmn'],
   },
   {
@@ -445,6 +614,14 @@ export const definitions: Definition[] = [
     term: {
       de: 'BPMN',
       en: 'BPMN',
+    },
+    example: {
+      de: 'Eine Freigabe ab 10.000 € wird in BPMN als exklusives Gateway modelliert: ein Rautensymbol mit zwei ausgehenden Pfaden, beschriftet mit den Bedingungen. Weil die Symbole genormt sind, liest die Fachabteilung dasselbe Diagramm wie die Entwicklung, die daraus einen ausführbaren Workflow ableitet.',
+      en: 'An approval above €10,000 is modelled in BPMN as an exclusive gateway: a diamond with two outgoing paths labelled with the conditions. Because the symbols are standardised, the business reads the same diagram as the engineers who derive an executable workflow from it.',
+    },
+    delimitation: {
+      de: 'Nicht mit einem Flussdiagramm zu verwechseln: dessen Symbole sind weder genormt noch ausführbar. Und nicht mit der EPK, die dieselbe Aufgabe mit anderer Notation löst und vor allem im deutschsprachigen Raum verbreitet ist.',
+      en: 'Not to be confused with a flowchart, whose symbols are neither standardised nor executable. Nor with the EPC, which solves the same task in a different notation and is used mainly in German-speaking countries.',
     },
     related: ['epk', 'business-process-management', 'to-be-vs-as-is-process'],
   },
@@ -470,6 +647,14 @@ export const definitions: Definition[] = [
       de: 'Ereignisgesteuerte Prozesskette (EPK)',
       en: 'Event-driven Process Chain (EPC)',
     },
+    example: {
+      de: 'Eine EPK wechselt strikt zwischen Ereignis und Funktion: „Bestellung eingegangen" → „Bonität prüfen" → „Bonität geprüft" → „Auftrag freigeben". Diese Abwechslung macht Modelle länger als in BPMN, zwingt aber dazu, jeden Zustandswechsel ausdrücklich zu benennen.',
+      en: 'An EPC alternates strictly between event and function: "order received" → "check credit" → "credit checked" → "release order". That alternation makes models longer than in BPMN, but it forces every state change to be named explicitly.',
+    },
+    delimitation: {
+      de: 'Nicht mit BPMN zu verwechseln: BPMN ist der internationale Standard der Object Management Group, die EPK stammt aus dem ARIS-Umfeld. Und nicht mit einem Ereignis im Process-Mining-Sinn: das EPK-Ereignis ist ein modellierter Zustand, kein aufgezeichneter Zeitstempel.',
+      en: 'Not to be confused with BPMN, the international Object Management Group standard, whereas the EPC comes out of the ARIS world. Nor with an event in the process-mining sense: an EPC event is a modelled state, not a recorded timestamp.',
+    },
     related: ['bpmn', 'business-process-management', 'conformance-checking'],
   },
   {
@@ -493,6 +678,14 @@ export const definitions: Definition[] = [
     term: {
       de: 'Agentic Process Intelligence',
       en: 'Agentic Process Intelligence',
+    },
+    example: {
+      de: 'Statt dass ein Analyst ein Dashboard öffnet, arbeitet ein Agent den Fall ab: Er findet die Ursache einer Verzögerung, schlägt eine Maßnahme vor, rechnet den Business Case und misst nach dem Rollout den realisierten Effekt. Jeder Schritt ist dokumentiert, und vor einer Änderung am System holt der Agent eine Freigabe ein.',
+      en: 'Instead of an analyst opening a dashboard, an agent works the case: it finds the cause of a delay, proposes an action, calculates the business case, and measures the realised effect after rollout. Every step is documented, and the agent asks for approval before anything changes in a system.',
+    },
+    delimitation: {
+      de: 'Nicht mit einem Copilot zu verwechseln: der antwortet auf Fragen, die jemand stellt. Ein Agent verfolgt ein Ziel über mehrere Schritte hinweg und stößt Handlungen an. Und nicht mit RPA: die führt vorher festgelegte Klickfolgen aus, während der Agent entscheidet, welcher Schritt als Nächstes sinnvoll ist.',
+      en: 'Not to be confused with a copilot, which answers questions somebody asks. An agent pursues a goal across multiple steps and initiates actions. Nor with RPA, which replays predefined click sequences, whereas the agent decides which step makes sense next.',
     },
     related: ['process-intelligence', 'agentic-root-cause-analysis', 'process-grounding'],
   },
@@ -518,6 +711,14 @@ export const definitions: Definition[] = [
       de: 'Agent Mining',
       en: 'Agent Mining',
     },
+    example: {
+      de: 'Ein Agent bearbeitet 300 Anfragen. Agent Mining zeigt, dass er in 42 Fällen dieselbe Datenquelle zweimal abfragt, bevor er antwortet, und in 9 Fällen einen Klärungsschritt überspringt, den seine Anweisung vorsieht. Das sind Prozessbefunde über den Agenten — erhoben mit denselben Mitteln wie über einen menschlichen Ablauf.',
+      en: 'An agent handles 300 requests. Agent mining shows that in 42 of them it queries the same data source twice before answering, and in 9 it skips a clarification step its instructions require. These are process findings about the agent — produced with the same means as findings about a human workflow.',
+    },
+    delimitation: {
+      de: 'Nicht mit Model-Monitoring zu verwechseln: das misst Qualität und Drift der Modellausgaben. Agent Mining betrachtet die Abfolge der Schritte und ihre Häufigkeiten, nicht die Güte einer einzelnen Antwort.',
+      en: 'Not to be confused with model monitoring, which measures output quality and drift. Agent mining looks at the sequence of steps and how often they occur, not at the quality of any single answer.',
+    },
     related: ['task-mining', 'process-mining', 'agent-conformance-checking'],
   },
   {
@@ -541,6 +742,14 @@ export const definitions: Definition[] = [
     term: {
       de: 'Agent Conformance Checking',
       en: 'Agent Conformance Checking',
+    },
+    example: {
+      de: 'Ein Agent darf Bestellungen bis 2.500 € freigeben, darüber nur vorbereiten. Der Abgleich zeigt drei Fälle, in denen er eine Bestellung über 3.100 € freigegeben hat, weil ein Feld leer war und er den Betrag als 0 gelesen hat. Der Verstoß liegt mit Zeitpunkt, Fall und Auslöser dokumentiert vor.',
+      en: 'An agent may approve orders up to €2,500 and only prepare anything above. The comparison surfaces three cases where it approved an order of €3,100 because a field was empty and it read the amount as 0. The breach is documented with timestamp, case and trigger.',
+    },
+    delimitation: {
+      de: 'Nicht mit Guardrails zu verwechseln: die verhindern eine Handlung im Moment der Ausführung. Conformance Checking prüft im Nachhinein, was tatsächlich geschehen ist — beides ergänzt einander, ersetzt sich aber nicht.',
+      en: 'Not to be confused with guardrails, which block an action at the moment of execution. Conformance checking examines afterwards what actually happened — the two complement each other rather than substitute for one another.',
     },
     related: ['conformance-checking', 'agent-mining', 'agentic-process-intelligence'],
   },
@@ -566,6 +775,14 @@ export const definitions: Definition[] = [
       de: 'Process Grounding',
       en: 'Process Grounding',
     },
+    example: {
+      de: 'Auf die Frage „warum dauert die Rechnungsprüfung so lange?" antwortet ein ungegroundetes Modell mit Allgemeinplätzen aus seinem Trainingskorpus. Ein gegroundetes greift auf den Prozessgraphen zu und nennt die 1.203 Fälle, in denen die Freigabe auf einen einzelnen Prüfer wartete, samt durchschnittlicher Wartezeit.',
+      en: 'Asked "why does invoice checking take so long?", an ungrounded model answers with generalities from its training corpus. A grounded one reaches into the process graph and names the 1,203 cases in which approval waited on a single reviewer, with the average wait attached.',
+    },
+    delimitation: {
+      de: 'Nicht mit RAG allein zu verwechseln: das holt Textpassagen aus Dokumenten. Process Grounding verankert das Modell in strukturierten Ereignisdaten, sodass es zählen, vergleichen und Ursachen verfolgen kann, statt zu zitieren.',
+      en: 'Not to be confused with RAG on its own, which retrieves passages from documents. Process grounding anchors the model in structured event data, so it can count, compare and trace causes rather than quote.',
+    },
     related: ['event-knowledge-graph', 'agentic-process-intelligence', 'process-ontology'],
   },
   {
@@ -589,6 +806,14 @@ export const definitions: Definition[] = [
     term: {
       de: 'Causal AI',
       en: 'Causal AI',
+    },
+    example: {
+      de: 'Ein Modell erkennt, dass Bestellungen mit Expressversand seltener reklamiert werden. Die kausale Frage ist eine andere: Sinkt die Reklamationsquote, wenn man Expressversand einführt — oder wählen ohnehin zuverlässige Kunden diese Option? Nur die zweite Antwort trägt eine Entscheidung.',
+      en: 'A model finds that orders shipped by express are complained about less often. The causal question is a different one: does the complaint rate fall if you introduce express shipping — or do already reliable customers simply choose it? Only the second answer can carry a decision.',
+    },
+    delimitation: {
+      de: 'Nicht mit erklärbarer KI (XAI) zu verwechseln: die macht transparent, warum ein Modell so entschieden hat. Causal AI fragt, was in der Welt geschieht, wenn man eingreift — unabhängig davon, wie das Modell intern arbeitet.',
+      en: 'Not to be confused with explainable AI, which makes transparent why a model decided as it did. Causal AI asks what happens in the world if you intervene — independently of how the model works internally.',
     },
     related: ['causal-process-mining', 'directly-follows-limitations', 'agentic-root-cause-analysis'],
   },
@@ -614,6 +839,14 @@ export const definitions: Definition[] = [
       de: 'Model Context Protocol (MCP)',
       en: 'Model Context Protocol (MCP)',
     },
+    example: {
+      de: 'Statt für zwei Modelle je einen eigenen Konnektor zu SAP, Jira und dem Data Warehouse zu bauen — sechs Integrationen —, stellt jedes System einen MCP-Server bereit und jedes Modell nutzt denselben Client. Aus sechs Integrationen werden vier, und jedes weitere Modell kostet keine einzige neue.',
+      en: 'Instead of building a separate connector from each of two models to SAP, Jira and the data warehouse — six integrations — each system exposes an MCP server and every model uses the same client. Six integrations become four, and each additional model costs none at all.',
+    },
+    delimitation: {
+      de: 'Nicht mit einer gewöhnlichen REST-API zu verwechseln: MCP standardisiert, wie ein Modell Werkzeuge und Datenquellen entdeckt und aufruft, nicht was das einzelne System fachlich anbietet. Und nicht mit dem Function Calling eines einzelnen Anbieters: MCP ist offen und anbieterübergreifend.',
+      en: 'Not to be confused with an ordinary REST API: MCP standardises how a model discovers and calls tools and data sources, not what any individual system offers. Nor with one vendor\'s function calling: MCP is open and works across providers.',
+    },
     related: ['agentic-process-intelligence', 'process-grounding', 'agent-readiness'],
   },
   {
@@ -637,6 +870,14 @@ export const definitions: Definition[] = [
     term: {
       de: 'Agentic Automation',
       en: 'Agentic Automation',
+    },
+    example: {
+      de: 'Ein Lieferant ändert das Layout seines Rechnungsportals. Der RPA-Bot klickt ins Leere und bricht ab, bis jemand das Skript nachzieht. Ein Agent liest die Seite, erkennt die verschobenen Felder und arbeitet weiter — meldet die Änderung aber, weil sie eine Abweichung vom bekannten Ablauf ist.',
+      en: 'A supplier changes the layout of its invoicing portal. The RPA bot clicks into empty space and stops until someone updates the script. An agent reads the page, recognises the moved fields and carries on — but reports the change, because it is a deviation from the known flow.',
+    },
+    delimitation: {
+      de: 'Nicht als Ablösung zu verstehen: RPA bleibt die bessere Wahl, wo ein Ablauf stabil, hochvolumig und exakt spezifiziert ist. Agentic Automation lohnt dort, wo Varianz und Entscheidungen im Spiel sind — in der Praxis laufen beide häufig nebeneinander.',
+      en: 'Not to be read as a replacement: RPA remains the better choice where a flow is stable, high-volume and precisely specified. Agentic automation pays off where variance and judgement are involved — in practice the two often run side by side.',
     },
     related: ['agent-conformance-checking', 'task-mining', 'agentic-process-intelligence'],
   },
@@ -662,6 +903,14 @@ export const definitions: Definition[] = [
       de: 'KI-Agent und Copilot',
       en: 'AI Agent and Copilot',
     },
+    example: {
+      de: 'Ein Copilot schlägt beim Schreiben einer Mail eine Formulierung vor. Ein Agent bekommt „kläre die offene Reklamation zu Fall 4711", zieht sich Bestell- und Lieferdaten, verfasst die Antwort, holt eine Freigabe ein und verschickt sie — über mehrere Schritte hinweg, ohne dass jemand jeden einzelnen anstößt.',
+      en: 'A copilot suggests a phrasing while you write an email. An agent is given "resolve the open complaint on case 4711", pulls order and delivery data, drafts the reply, obtains approval and sends it — across several steps, without anyone triggering each one.',
+    },
+    delimitation: {
+      de: 'Nicht als Rangfolge zu verstehen: ein Copilot ist richtig, wo ein Mensch die Kontrolle Schritt für Schritt behalten soll. Der Agent lohnt, wo dasselbe Ziel über viele gleichartige Fälle hinweg verfolgt wird.',
+      en: 'Not a ranking: a copilot is the right choice where a person should keep control step by step. An agent pays off where the same goal is pursued across many similar cases.',
+    },
     related: ['agentic-process-intelligence', 'agentic-automation-vs-rpa', 'agent-conformance-checking'],
   },
   {
@@ -685,6 +934,14 @@ export const definitions: Definition[] = [
     term: {
       de: 'Selbstverbessernde Prozesse',
       en: 'Self-Improving Processes',
+    },
+    example: {
+      de: 'Nach einem Rollout misst das System zwölf Wochen weiter. Fällt die Durchlaufzeit geringer aus als prognostiziert, wird das nicht als Projektergebnis abgehakt, sondern als neuer Befund in die Analyse zurückgegeben — und löst den nächsten Vorschlag aus, ohne dass jemand ein Folgeprojekt beantragen muss.',
+      en: 'After a rollout the system keeps measuring for twelve weeks. If cycle time improves less than forecast, that is not filed as a project result but returned to the analysis as a new finding — triggering the next proposal without anyone having to raise a follow-up project.',
+    },
+    delimitation: {
+      de: 'Nicht mit selbstlernenden Modellen zu verwechseln: dort passt sich ein Algorithmus an Daten an, hier verändert sich der Geschäftsprozess selbst. Und nicht mit vollautomatisch: die Änderung wird vorbereitet und belegt, freigegeben wird sie weiterhin von Menschen.',
+      en: 'Not to be confused with self-learning models, where an algorithm adapts to data; here the business process itself changes. Nor with fully automatic: the change is prepared and evidenced, but people still approve it.',
     },
     related: ['agentic-process-intelligence', 'business-process-management', 'digital-process-twin'],
   },
@@ -710,6 +967,14 @@ export const definitions: Definition[] = [
       de: 'Prozess-Ontologie',
       en: 'Process Ontology',
     },
+    example: {
+      de: 'Die Ontologie hält fest, dass eine Rechnung sich auf eine oder mehrere Bestellungen bezieht, dass „storniert" ein Zustand der Bestellung und nicht der Lieferung ist, und dass „Freigabe" in Einkauf und Vertrieb dasselbe Ereignis meint. Ohne diese Festlegung zählt jede Auswertung etwas leicht anderes.',
+      en: 'The ontology records that an invoice relates to one or more orders, that "cancelled" is a state of the order and not of the delivery, and that "approval" means the same event in purchasing as in sales. Without those commitments, every report counts something slightly different.',
+    },
+    delimitation: {
+      de: 'Nicht mit einem Datenmodell zu verwechseln: das legt Tabellen und Felder fest, die Ontologie die fachliche Bedeutung dahinter. Und nicht mit einem Glossar: das erklärt Begriffe für Menschen, die Ontologie ist maschinenlesbar und auswertbar.',
+      en: 'Not to be confused with a data model, which defines tables and fields; the ontology defines the meaning behind them. Nor with a glossary, which explains terms for people — an ontology is machine-readable and can be reasoned over.',
+    },
     related: ['event-knowledge-graph', 'graph-databases', 'process-grounding'],
   },
   {
@@ -734,6 +999,14 @@ export const definitions: Definition[] = [
       de: 'Agentische Ursachenanalyse',
       en: 'Agentic Root Cause Analysis',
     },
+    example: {
+      de: 'Ein Agent bekommt „die Durchlaufzeit in Purchase-to-Pay ist um 12 % gestiegen". Er prüft nacheinander Lieferanten, Warengruppen und Freigabestufen, verwirft Hypothesen, die die Zahlen nicht tragen, und landet bei einem Lieferanten, dessen Wareneingänge seit sechs Wochen verspätet gebucht werden. Der Weg dorthin ist protokolliert und nachvollziehbar.',
+      en: 'An agent is given "purchase-to-pay cycle time is up 12%". It works through suppliers, material groups and approval tiers, discards hypotheses the numbers do not support, and lands on one supplier whose goods receipts have been booked late for six weeks. The path there is logged and reviewable.',
+    },
+    delimitation: {
+      de: 'Nicht mit Anomalie-Erkennung zu verwechseln: die meldet, dass etwas auffällig ist. Die Ursachenanalyse arbeitet weiter, bis eine erklärende Größe gefunden ist. Und nicht mit einem Dashboard-Drilldown: dort führt ein Mensch die Kette, hier der Agent.',
+      en: 'Not to be confused with anomaly detection, which reports that something is unusual. Root-cause analysis keeps going until an explanatory factor is found. Nor with a dashboard drilldown, where a person drives the chain — here the agent does.',
+    },
     related: ['causal-process-mining', 'agentic-process-intelligence', 'causal-ai'],
   },
   {
@@ -757,6 +1030,14 @@ export const definitions: Definition[] = [
     term: {
       de: 'Agent Readiness von Prozessdaten',
       en: 'Agent Readiness of Process Data',
+    },
+    example: {
+      de: 'Ein Agent soll Bestellfreigaben vorbereiten. Dafür muss er wissen, welches Feld den Betrag führt, dass „freigegeben" und „approved" dasselbe bedeuten und wer ab welcher Summe zuständig ist. Fehlt dieser Kontext, kann er zwar auf die Datenbank zugreifen, aber nicht verlässlich entscheiden.',
+      en: 'An agent is to prepare order approvals. For that it needs to know which field carries the amount, that "freigegeben" and "approved" mean the same thing, and who is responsible above which sum. Without that context it can reach the database but cannot decide reliably.',
+    },
+    delimitation: {
+      de: 'Nicht mit Datenqualität allein zu verwechseln: vollständige, saubere Daten sind notwendig, aber nicht hinreichend. Agent Readiness verlangt zusätzlich Semantik, Zuständigkeiten und Regeln in maschinenlesbarer Form.',
+      en: 'Not to be confused with data quality on its own: complete, clean data is necessary but not sufficient. Agent readiness additionally requires semantics, ownership and rules in machine-readable form.',
     },
     related: ['event-log', 'process-grounding', 'process-ontology'],
   },

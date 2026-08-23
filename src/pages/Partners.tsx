@@ -277,9 +277,9 @@ export default function Partners() {
                                       </Badge>
                                     )}
 
-                                    <h3 className="text-lg font-semibold text-foreground">
+                                    <p className="text-lg font-semibold text-foreground">
                                       {partner.name}
-                                    </h3>
+                                    </p>
 
                                     <p className="text-[13px] leading-relaxed text-muted-foreground">
                                       {description}

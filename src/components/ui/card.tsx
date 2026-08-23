@@ -29,11 +29,18 @@ const CardHeader = React.forwardRef<
 ))
 CardHeader.displayName = "CardHeader"
 
+/**
+ * Defaults to h3, which is right for a card sitting under a section heading.
+ * `as` exists because that default is wrong in two cases: a card grid that is
+ * the page's top-level content (h3 directly under the h1 is a level skip), and
+ * a card whose title is a second, CSS-hidden copy of one already in the outline
+ * — there it should carry no heading semantics at all.
+ */
 const CardTitle = React.forwardRef<
-  HTMLParagraphElement,
-  React.HTMLAttributes<HTMLHeadingElement>
->(({ className, ...props }, ref) => (
-  <h3
+  HTMLHeadingElement,
+  React.HTMLAttributes<HTMLHeadingElement> & { as?: "h2" | "h3" | "h4" | "p" }
+>(({ className, as: Tag = "h3", ...props }, ref) => (
+  <Tag
     ref={ref}
     className={cn(
       "text-2xl font-semibold leading-none tracking-tight",

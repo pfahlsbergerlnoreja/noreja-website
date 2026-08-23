@@ -154,7 +154,7 @@ const BattleCards = () => {
   const pillarIcons = [Network, GitCompareArrows, Sparkles];
 
   return (
-    <main className="min-h-screen relative overflow-hidden" style={gradientStyle}>
+    <div className="min-h-screen relative overflow-hidden" style={gradientStyle}>
       <BreadcrumbSchema
         items={[
           { name: language === 'de' ? 'Startseite' : 'Home', url: `${SITE_URL}${getRoutePath('home', language)}` },
@@ -475,7 +475,7 @@ const BattleCards = () => {
           </div>
         </section>
       </div>
-    </main>
+    </div>
   );
 };
 

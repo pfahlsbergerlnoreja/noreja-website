@@ -537,8 +537,8 @@ export const homeTeaserCopy = {
     en: "One loop instead of one-off analyses —",
   },
   headlineHighlight: {
-    de: "BPM auf Autopilot",
-    en: "BPM on autopilot",
+    de: "Process Intelligence auf Autopilot",
+    en: "Process intelligence on autopilot",
   },
   lede: {
     de: "Insights, Action, Impact, Feedback: Vier generische Agententypen drehen den Zyklus von der Ursache eines Prozessproblems bis zum belegten Euro-Effekt — jeder davon auf deine Systeme, Rollen und Richtlinien anpassbar.",
@@ -563,8 +563,8 @@ export const platformCopy = {
    * search or answer engine) what the page is about.
    */
   heroHeadingLead: {
-    de: "Noreja durchläuft vier Phasen",
-    en: "Noreja runs through four phases",
+    de: "Norejas Process-Intelligence-Plattform generiert",
+    en: "Noreja's Process Intelligence platform generates",
   },
   heroLedeBefore: {
     de: "Noreja liefert keine weitere Sammlung von Dashboards, sondern ",
@@ -601,8 +601,8 @@ export const platformCopy = {
 
   loopEyebrow: { de: "Die Lösung", en: "The solution" },
   loopHeadline: {
-    de: "Vier Phasen. Ein Kreislauf. BPM auf Autopilot.",
-    en: "Four phases. One loop. BPM on autopilot.",
+    de: "Vier Phasen. Ein Kreislauf. Process Intelligence auf Autopilot.",
+    en: "Four phases. One loop. Process intelligence on autopilot.",
   },
   loopLede: {
     de: "Jede Phase erzeugt den Input für die nächste — und Phase 4 startet Phase 1 neu. Das ist der Unterschied zwischen einem Analyse-Projekt und einem System, das deine Prozesse dauerhaft besser macht.",
@@ -616,6 +616,11 @@ export const platformCopy = {
   agentsHeadline: {
     de: "Ein Agenten-System, das für dich 24/7 im Hintergrund arbeitet",
     en: "An agent system that works for you 24/7 in the background",
+  },
+  /** Only inbound link to the Frontier Agents page. */
+  agentsLink: {
+    de: "Minerva Frontier Agents im Detail ansehen",
+    en: "See the Minerva Frontier Agents in detail",
   },
   agentsLede: {
     de: "Vier generische Agententypen, einer je Phase. Sie übergeben aneinander, dokumentieren jeden Schritt und holen sich eine Freigabe, bevor etwas passiert. Kein starres Produkt: Jeden Typ richtest du auf deine Prozesse, Systeme und Richtlinien aus.",

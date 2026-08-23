@@ -1,4 +1,5 @@
 import { Fragment, useEffect, useRef, useState } from "react";
+import { teaserHeadings } from "@/lib/heroCopy";
 import { motion, useInView } from "framer-motion";
 import { Link } from "react-router-dom";
 import {
@@ -283,6 +284,9 @@ const Functionalities = () => {
             <h1 className="text-[2.6rem] font-extrabold leading-[0.98] tracking-[-0.045em] text-foreground lg:text-[4.6rem]">
               <span className="mb-3 block text-[1.15rem] font-bold leading-snug tracking-[-0.02em] text-muted-foreground lg:mb-5 lg:text-[1.6rem]">
                 {platformCopy.heroHeadingLead[language]}
+                {/* Visually hidden: the layout is untouched, but the H1 text
+                    content reads as one phrase instead of a run-on. */}
+                <span className="sr-only"> – </span>
               </span>{" "}
               {/* The trailing `{" "}` collapses away visually (the spans are
                   block level) but keeps `textContent` from reading as
@@ -511,6 +515,18 @@ const Functionalities = () => {
             ))}
           </div>
 
+          {/* The Frontier Agents page had no inbound link anywhere on the site
+              after FunctionalitiesTeaser was retired. This is its natural home. */}
+          <p className="mt-6 text-[0.95rem] text-muted-foreground">
+            <Link
+              to={getRoutePath('aiAgents', language)}
+              className="group inline-flex items-center gap-2 font-medium text-foreground underline decoration-dotted underline-offset-4 hover:decoration-solid"
+            >
+              {platformCopy.agentsLink[language]}
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </Link>
+          </p>
+
           {/* Customising */}
           <div className="mt-16 flex flex-col gap-8 lg:mt-24">
             <div className="flex max-w-[66ch] flex-col gap-4">
@@ -698,7 +714,10 @@ const Functionalities = () => {
               </div>
             </motion.div>
 
-            <HubSpotBlogTeaser />
+            <HubSpotBlogTeaser
+              heading={teaserHeadings.blog.functionalities.lead[language]}
+              headingHighlight={teaserHeadings.blog.functionalities.highlight[language]}
+            />
           </div>
         </section>
       </div>

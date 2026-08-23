@@ -20,8 +20,8 @@ export const homeHero = {
     en: "Generative Process Intelligence",
   } satisfies Localized,
   headingLead: {
-    de: "Noreja schafft im Prozessmanagement",
-    en: "In process management, Noreja delivers",
+    de: "Norejas Process-Intelligence-Lösung schafft",
+    en: "Noreja's Process Intelligence solution delivers",
   } satisfies Localized,
   /** Also the three corners of the triangle. Order matters. */
   words: {
@@ -65,8 +65,8 @@ export const competitivenessCopy = {
 export const pricingHero = {
   eyebrow: { de: "Preise & Pakete", en: "Pricing & plans" } satisfies Localized,
   headingLead: {
-    de: "Noreja bietet drei Pakete",
-    en: "Noreja offers three plans",
+    de: "Norejas Process-Intelligence-Preise staffeln sich in",
+    en: "Noreja's Process Intelligence pricing comes in",
   } satisfies Localized,
   /** Also the three steps of the staircase, bottom to top. */
   words: {
@@ -103,8 +103,8 @@ export const pricingHero = {
 export const partnersHero = {
   eyebrow: { de: "Partnernetzwerk", en: "Partner network" } satisfies Localized,
   headingLead: {
-    de: "Noreja setzt bei Partnerschaften auf",
-    en: "In partnerships, Noreja relies on",
+    de: "Norejas Partnerschaften basieren auf",
+    en: "Noreja's partnerships are built on",
   } satisfies Localized,
   words: {
     de: ["Vertrauen", "Konstanz", "Augenhöhe"],
@@ -135,8 +135,8 @@ export const partnersHero = {
 export const successHero = {
   eyebrow: { de: "Success Stories", en: "Success stories" } satisfies Localized,
   headingLead: {
-    de: "Noreja fokussiert sich mit Kunden auf",
-    en: "With customers, Noreja focuses on",
+    de: "Norejas Kunden setzen bei Process Intelligence auf",
+    en: "In Process Intelligence, Noreja's customers rely on",
   } satisfies Localized,
   /** Also the three blocks of the stack, base first. */
   words: {
@@ -159,4 +159,40 @@ export const successHero = {
   ctaSecondary: { de: "Use Cases ansehen", en: "See use cases" } satisfies Localized,
   /** Caption beside the base block. */
   foundation: { de: "Basis", en: "Foundation" } satisfies Localized,
+};
+
+/* ------------------------------------------------------------------ *
+ * Shared teasers — page-specific headings
+ * ------------------------------------------------------------------ */
+
+/**
+ * The blog teaser and the final CTA appear on several pages. Without an
+ * override each of them renders the same h2 everywhere, which reads to a
+ * crawler as four pages sharing a section. The home page keeps the generic
+ * wording; the others say what the teaser means in their own context.
+ */
+export const teaserHeadings = {
+  blog: {
+    functionalities: {
+      lead: { de: "Mehr zur Plattform —", en: "More on the platform —" } satisfies Localized,
+      highlight: { de: "im Blog vertieft", en: "explored in the blog" } satisfies Localized,
+    },
+    successStories: {
+      lead: { de: "Aus der Praxis —", en: "From practice —" } satisfies Localized,
+      highlight: {
+        de: "Beiträge zu Prozessprojekten",
+        en: "posts on process projects",
+      } satisfies Localized,
+    },
+    team: {
+      lead: { de: "Wie wir denken —", en: "How we think —" } satisfies Localized,
+      highlight: { de: "Beiträge aus dem Team", en: "posts from the team" } satisfies Localized,
+    },
+  },
+  finalCta: {
+    costOfInaction: {
+      lead: { de: "Von der Zahl zur Maßnahme — ", en: "From the number to the action — " } satisfies Localized,
+      highlight: { de: "sprich mit uns", en: "talk to us" } satisfies Localized,
+    },
+  },
 };

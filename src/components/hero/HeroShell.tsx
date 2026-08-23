@@ -111,6 +111,11 @@ export function HeroShell({
           <h1 className="text-[2.6rem] font-extrabold leading-[0.98] tracking-[-0.045em] text-foreground lg:text-[4.6rem]">
             <span className="mb-3 block text-[1.15rem] font-bold leading-snug tracking-[-0.02em] text-muted-foreground lg:mb-5 lg:text-[1.6rem]">
               {headingLead}
+              {/* Visually hidden on purpose: the layout stays exactly as it is,
+                  but the H1 text content reads as one phrase — "…drei Pakete –
+                  Core Pro Excellence" instead of a run-on. Drop the sr-only
+                  class to make the dash visible. */}
+              <span className="sr-only"> – </span>
             </span>{" "}
             {/* The trailing `{" "}` collapses away visually (the spans are
                 block level) but stops `textContent` from gluing the lines into

@@ -6,13 +6,6 @@ interface LayoutProps {
   children: ReactNode;
 }
 
-// NOTE: The GlobalConnectionOverlay + data-global-connections wiring was removed
-// here: ProcessGraphSection (the only producer of that data) is not mounted on
-// any page, so the overlay never rendered anything — but its body-wide
-// MutationObservers still ran on every page and burned main-thread time on each
-// DOM/style mutation (Lighthouse "Script Evaluation" / forced reflow). If
-// ProcessGraphSection is reintroduced, render <GlobalConnectionOverlay /> on
-// that page directly instead of globally.
 
 export function Layout({ children }: LayoutProps) {
 
@@ -26,10 +19,6 @@ export function Layout({ children }: LayoutProps) {
         }} />
       </div>
       
-      {/* TODO: Add HubSpot tracking script */}
-      {/* 
-      <script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/YOUR_PORTAL_ID.js"></script>
-      */}
       
       <Header />
       <main className="flex-1 relative z-10 w-full max-w-full overflow-x-clip" role="main">
@@ -37,10 +26,6 @@ export function Layout({ children }: LayoutProps) {
       </main>
       <Footer />
 
-      {/* TODO: Add HubSpot chat widget */}
-      {/* 
-      <script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/YOUR_PORTAL_ID.js"></script>
-      */}
     </div>
   );
 }

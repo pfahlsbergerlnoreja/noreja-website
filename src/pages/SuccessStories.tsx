@@ -12,7 +12,7 @@ import { useEffect } from "react";
 import { HeroShell } from "@/components/hero/HeroShell";
 import { PrincipleStack } from "@/components/hero/PrincipleStack";
 import { useHeroCycle } from "@/hooks/use-hero-cycle";
-import { successHero } from "@/lib/heroCopy";
+import { successHero, teaserHeadings } from "@/lib/heroCopy";
 import { siteConfig } from "@/lib/config";
 import { getRoutePath } from "@/lib/routes";
 
@@ -279,7 +279,10 @@ const SuccessStories = () => {
       </section>
 
       {/* Blog Teasers Section */}
-      <HubSpotBlogTeaser />
+      <HubSpotBlogTeaser
+        heading={teaserHeadings.blog.successStories.lead[language]}
+        headingHighlight={teaserHeadings.blog.successStories.highlight[language]}
+      />
       </div>
     </div>
   );

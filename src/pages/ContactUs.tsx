@@ -36,6 +36,28 @@ const ContactUs = () => {
         </div>
       </section>
 
+      {/* The page used to be 94 words: an H1, a one-line subtitle and a HubSpot
+          form in an iframe, whose content is not part of this document at all.
+          These four cases give it something to actually say. */}
+      <section className="px-4 pb-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-4xl">
+          <h2 className="mb-8 text-center text-2xl font-bold text-foreground md:text-3xl">
+            {t.pages.contact.reasonsTitle}
+          </h2>
+          <dl className="grid gap-5 md:grid-cols-2">
+            {t.pages.contact.reasons.map((reason) => (
+              <div
+                key={reason.title}
+                className="rounded-2xl border border-border/50 bg-card/60 p-6 backdrop-blur-sm"
+              >
+                <dt className="mb-2 text-base font-semibold text-foreground">{reason.title}</dt>
+                <dd className="text-sm leading-relaxed text-muted-foreground">{reason.text}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </section>
+
       {/* Contact Form Section */}
       <section className="py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">

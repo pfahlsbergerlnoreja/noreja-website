@@ -5,7 +5,13 @@ import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { siteConfig } from "@/lib/config";
 
-export function FinalCTA() {
+interface FinalCTAProps {
+  /** Page-specific heading; falls back to the shared one. */
+  heading?: string;
+  headingHighlight?: string;
+}
+
+export function FinalCTA({ heading, headingHighlight }: FinalCTAProps = {}) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const { t } = useLanguage();
@@ -36,9 +42,9 @@ export function FinalCTA() {
             transition={{ delay: 0.4, duration: 0.8 }}
             className="text-4xl md:text-6xl font-bold mb-6 leading-tight"
           >
-            {t.finalCta.title}{" "}
+            {heading ?? t.finalCta.title}{" "}
             <span className="bg-gradient-primary bg-clip-text text-transparent">
-              {t.finalCta.titleHighlight}
+              {headingHighlight ?? t.finalCta.titleHighlight}
             </span>
           </motion.h2>
 

@@ -32,7 +32,7 @@ const Definitions = () => {
   const hubUrl = `${SITE_URL}${getRoutePath('definitions', language)}`;
 
   return (
-    <main className="min-h-screen relative overflow-hidden" style={gradientStyle}>
+    <div className="min-h-screen relative overflow-hidden" style={gradientStyle}>
       <BreadcrumbSchema
         items={[
           { name: language === 'de' ? 'Startseite' : 'Home', url: `${SITE_URL}${getRoutePath('home', language)}` },
@@ -90,7 +90,7 @@ const Definitions = () => {
                   >
                     <Card className="h-full flex flex-col transition-all duration-300 hover:shadow-lg hover:shadow-primary/20 border-border/50 hover:border-primary/30">
                       <CardHeader className="pb-3">
-                        <CardTitle className="text-lg leading-snug group-hover:text-primary transition-colors">
+                        <CardTitle as="h2" className="text-lg leading-snug group-hover:text-primary transition-colors">
                           {definition.question[language]}
                         </CardTitle>
                       </CardHeader>
@@ -111,7 +111,7 @@ const Definitions = () => {
           </div>
         </section>
       </div>
-    </main>
+    </div>
   );
 };
 

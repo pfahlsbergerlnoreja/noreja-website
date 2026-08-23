@@ -1,4 +1,3 @@
-import SimpleRectangleAnimation from "@/components/SimpleRectangleAnimation";
 import { IntegratedHeroSection } from "@/components/IntegratedHeroSection";
 import { AnimationSection } from "@/components/AnimationSection";
 import LogoBanner from "@/components/LogoBanner";
@@ -26,9 +25,6 @@ const Index = () => {
         <AnimatedGridBackground key="animated-grid-v2" />
         <IntegratedHeroSection />
         <LogoBanner />
-        {/* <SimpleRectangleAnimation />
-        TODO: kunden auch in banner anzeigen
-        */}
         <AnimationSection />
         {/* Gradient fade to next section */}
         <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-background pointer-events-none z-0" />

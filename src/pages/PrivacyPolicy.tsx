@@ -303,9 +303,9 @@ export default function PrivacyPolicy() {
             transition={{ duration: 0.8 }}
             className="text-center mb-16"
           >
-            <h1 className="text-4xl lg:text-6xl font-bold mb-6 text-foreground">
+            <h2 className="text-4xl lg:text-6xl font-bold mb-6 text-foreground">
               {t.footer.legal.privacy}
-            </h1>
+            </h2>
             <p className="text-xl text-muted-foreground">
               Informationen zum Schutz Ihrer personenbezogenen Daten
             </p>

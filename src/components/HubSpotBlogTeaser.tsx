@@ -25,9 +25,16 @@ interface BlogPost {
 
 interface HubSpotBlogTeaserProps {
   maxItems?: number;
+  /**
+   * Page-specific heading. Without it every page carrying this teaser shows the
+   * same h2, which reads to a crawler as four pages about the same section.
+   * `heading` replaces the plain part, `headingHighlight` the gradient part.
+   */
+  heading?: string;
+  headingHighlight?: string;
 }
 
-export function HubSpotBlogTeaser({ maxItems = 3 }: HubSpotBlogTeaserProps) {
+export function HubSpotBlogTeaser({ maxItems = 3, heading, headingHighlight }: HubSpotBlogTeaserProps) {
   const { t, language } = useLanguage();
   const isMobile = useIsMobile();
   const [posts, setPosts] = useState<BlogPost[]>([]);
@@ -342,9 +349,9 @@ export function HubSpotBlogTeaser({ maxItems = 3 }: HubSpotBlogTeaserProps) {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-8 md:mb-12">
           <h2 id="blog-teaser-heading" className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 md:mb-4 px-4">
-            <span className="whitespace-nowrap">{t.blog.title}</span>{" "}
+            <span className="whitespace-nowrap">{heading ?? t.blog.title}</span>{" "}
             <span className="bg-gradient-primary bg-clip-text text-transparent whitespace-nowrap">
-              {t.blog.titleHighlight}
+              {headingHighlight ?? t.blog.titleHighlight}
             </span>
           </h2>
           <p className="text-muted-foreground text-sm sm:text-base max-w-2xl mx-auto px-4">
@@ -500,7 +507,7 @@ export function HubSpotBlogTeaser({ maxItems = 3 }: HubSpotBlogTeaserProps) {
                     </div>
                   )}
                   <CardHeader className="pb-3">
-                    <CardTitle className="text-lg sm:text-xl line-clamp-2 leading-snug">
+                    <CardTitle as="p" className="text-lg sm:text-xl line-clamp-2 leading-snug">
                       {post.title}
                     </CardTitle>
                     <CardDescription className="text-xs sm:text-sm">

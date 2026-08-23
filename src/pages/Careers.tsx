@@ -166,6 +166,21 @@ const Careers = () => {
           </div>
         </section>
 
+        {/* The page was 186 words: a heading, a one-line subtitle and three job
+            links. Someone deciding whether to apply had nothing to read. */}
+        <section className="px-4 pb-4">
+          <div className="container mx-auto max-w-3xl">
+            <h2 className="mb-5 text-2xl font-bold text-foreground md:text-3xl">
+              {t.careers.aboutTitle}
+            </h2>
+            {t.careers.aboutParagraphs.map((paragraph) => (
+              <p key={paragraph.slice(0, 32)} className="mb-4 leading-relaxed text-muted-foreground">
+                {paragraph}
+              </p>
+            ))}
+          </div>
+        </section>
+
         {/* Job Listings Section */}
         <section className="py-16 px-4">
           <div className="container mx-auto max-w-6xl">

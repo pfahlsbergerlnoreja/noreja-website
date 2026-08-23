@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, Navigate } from "react-router-dom";
 import { ArrowLeft, Download } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Button } from "@/components/ui/button";
@@ -157,20 +157,13 @@ const SuccessStoryDetail = () => {
     return downloadAssets.find(asset => asset.id === assetId) || null;
   }, [successStory, language]);
 
+  // Redirect rather than render a "not found" page. The announced-but-unpublished
+  // stories share this route, so an unknown id used to return HTTP 200 with an
+  // English "Success Story Not Found" H1 and the generic site title — a soft 404
+  // that search and answer engines index as a real page. Same handling as
+  // DefinitionDetail.
   if (!successStory) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-background">
-        <div className="text-center space-y-4">
-          <h1 className="text-4xl font-bold mb-4">Success Story Not Found</h1>
-          <p className="text-muted-foreground">
-            {companyName ? `Success story for "${companyName}" not found.` : "No company name provided."}
-          </p>
-          <Link to={getRoutePath('successStories', language)}>
-            <Button>Back to Success Stories</Button>
-          </Link>
-        </div>
-      </div>
-    );
+    return <Navigate to={getRoutePath('successStories', language)} replace />;
   }
 
   const gradientStyle = {

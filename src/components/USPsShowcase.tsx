@@ -383,9 +383,9 @@ export function USPsShowcase() {
                   >
                     {/* Content */}
                     <div className="relative z-10 h-full flex flex-col justify-center items-center p-6">
-                      <h3 className="text-2xl font-bold text-foreground text-center mb-4">
+                      <p className="text-2xl font-bold text-foreground text-center mb-4">
                         {usp.title}
-                      </h3>
+                      </p>
                     </div>
                   </div>
                 </motion.div>

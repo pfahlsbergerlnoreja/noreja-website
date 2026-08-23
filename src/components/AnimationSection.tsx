@@ -50,6 +50,16 @@ export function AnimationSection({ size = "default" }: AnimationSectionProps) {
 
   return (
     <section className={`${config.sectionHeight} overflow-hidden hidden min-[500px]:block`}>
+      {/* The graph used to occupy ~800px of the home page with no heading and no
+          prose, so nothing about it was legible to anything that reads text. */}
+      <div className="mx-auto mb-6 w-full max-w-3xl px-4 text-center lg:mb-8">
+        <h2 className="text-2xl font-bold tracking-tight text-foreground md:text-3xl">
+          {t.processGraph.heading}
+        </h2>
+        <p className="mt-3 text-base leading-relaxed text-muted-foreground">
+          {t.processGraph.lede}
+        </p>
+      </div>
       <div className="mx-auto w-full px-2 sm:px-4 lg:px-6 h-full">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

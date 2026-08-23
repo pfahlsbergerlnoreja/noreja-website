@@ -198,14 +198,14 @@ const Pricing = () => {
               {/* Data Amount Slider - LEFT */}
               <div className="bg-card rounded-lg p-8 border">
                 <div className="flex items-center justify-center gap-2 mb-6">
-                  <h3 className="text-lg font-semibold text-foreground text-center md:text-left">
+                  <p className="text-lg font-semibold text-foreground text-center md:text-left">
                     {t.pages.pricing.dataAmount ?? t.pages.pricing.dataVolume}
                     {t.pages.pricing.dataAmountSuffix && (
                       <span className="text-lg text-foreground">
                         {t.pages.pricing.dataAmountSuffix}
                       </span>
                     )}
-                  </h3>
+                  </p>
                   {t.pages.pricing.dataAmountTooltip && (
                     <Popover>
                       <PopoverTrigger asChild>
@@ -259,14 +259,14 @@ const Pricing = () => {
               {/* Perspectives Slider - RIGHT */}
               <div className="bg-card rounded-lg p-8 border">
                 <div className="flex items-center justify-center gap-2 mb-6">
-                  <h3 className="text-lg font-semibold text-foreground text-center md:text-left">
+                  <p className="text-lg font-semibold text-foreground text-center md:text-left">
                     {t.pages.pricing.perspectives ?? t.pages.pricing.teamSize}
                     {t.pages.pricing.perspectivesSuffix && (
                       <span className="text-lg text-foreground">
                         {t.pages.pricing.perspectivesSuffix}
                       </span>
                     )}
-                  </h3>
+                  </p>
                   {t.pages.pricing.perspectivesTooltip && (
                     <Popover>
                       <PopoverTrigger asChild>
@@ -360,7 +360,7 @@ const Pricing = () => {
               >
                 
                 <CardHeader className="text-center pb-4 h-[200px] flex flex-col justify-center">
-                  <CardTitle className="text-2xl font-bold text-foreground">
+                  <CardTitle as="h2" className="text-2xl font-bold text-foreground">
                     {plan.name}
                   </CardTitle>
                   <div className="mt-4">
@@ -415,7 +415,7 @@ const Pricing = () => {
                   <div className="flex-grow flex flex-col">
                     {/* Feature Category - fixed height to ensure Service alignment */}
                     <div className="mb-8 h-[140px]">
-                      <h4 className="font-semibold text-foreground mb-4 text-base leading-tight">{t.pages.pricing.categories.feature}</h4>
+                      <p className="font-semibold text-foreground mb-4 text-base leading-tight">{t.pages.pricing.categories.feature}</p>
                       <ul className="space-y-2">
                         {plan.features.map((feature, index) => {
                           const normalizedFeature = feature.toLowerCase();
@@ -437,9 +437,9 @@ const Pricing = () => {
                     {plan.users && (
                       <div className="mb-8">
                         <div className="flex items-center gap-2 mb-4">
-                          <h4 className="font-semibold text-foreground text-base leading-tight">
+                          <p className="font-semibold text-foreground text-base leading-tight">
                             {t.pages.pricing.categories.users}
-                          </h4>
+                          </p>
                           {t.pages.pricing.usersTooltip && (
                             <Popover>
                               <PopoverTrigger asChild>
@@ -489,7 +489,7 @@ const Pricing = () => {
                     <div className="mb-8 h-[160px] flex flex-col">
                       {plan.name !== t.pages.pricing.plans.core.name ? (
                         <>
-                          <h4 className="font-semibold text-foreground mb-4 text-base leading-tight ml-0">{t.pages.pricing.categories.llmAi}</h4>
+                          <p className="font-semibold text-foreground mb-4 text-base leading-tight ml-0">{t.pages.pricing.categories.llmAi}</p>
                           {plan.llmAi.length > 0 && (
                             <ul className="space-y-2 mb-4">
                               {plan.llmAi.map((item, index) => {
@@ -533,7 +533,7 @@ const Pricing = () => {
 
                     {/* Service Category - min height to ensure alignment, but allow growth */}
                     <div className="mb-8 min-h-[300px]">
-                      <h4 className="font-semibold text-foreground mb-4 text-base leading-tight">{t.pages.pricing.categories.service}</h4>
+                      <p className="font-semibold text-foreground mb-4 text-base leading-tight">{t.pages.pricing.categories.service}</p>
                       <ul className="space-y-2">
                         {plan.services
                           .filter(service => {
@@ -567,7 +567,7 @@ const Pricing = () => {
                       
                       return rateService ? (
                         <div className="mb-8">
-                          <h4 className="font-semibold text-foreground mb-4 text-base leading-tight">{t.pages.pricing.categories.supportRate}</h4>
+                          <p className="font-semibold text-foreground mb-4 text-base leading-tight">{t.pages.pricing.categories.supportRate}</p>
                           <ul className="space-y-2">
                             <li className="flex text-foreground text-sm">
                               <span className="mr-2 text-primary flex-shrink-0 leading-none mt-[0.1em]">•</span>
@@ -636,7 +636,7 @@ const Pricing = () => {
                         <div className="flex-grow flex flex-col">
                           {/* Feature Category */}
                           <div className="mb-4 h-auto">
-                            <h4 className="font-semibold text-foreground mb-4 text-base leading-tight">{t.pages.pricing.categories.feature}</h4>
+                            <p className="font-semibold text-foreground mb-4 text-base leading-tight">{t.pages.pricing.categories.feature}</p>
                             <ul className="space-y-2">
                               {plan.features.map((feature, idx) => {
                                 const normalizedFeature = feature.toLowerCase();
@@ -658,9 +658,9 @@ const Pricing = () => {
                           {plan.users && (
                             <div className="mb-4">
                               <div className="flex items-center gap-2 mb-4">
-                                <h4 className="font-semibold text-foreground text-base leading-tight">
+                                <p className="font-semibold text-foreground text-base leading-tight">
                                   {t.pages.pricing.categories.users}
-                                </h4>
+                                </p>
                                 {t.pages.pricing.usersTooltip && (
                                   <Popover>
                                     <PopoverTrigger asChild>
@@ -710,7 +710,7 @@ const Pricing = () => {
                           <div className="mb-4 h-auto flex flex-col">
                             {plan.name !== t.pages.pricing.plans.core.name ? (
                               <>
-                                <h4 className="font-semibold text-foreground mb-4 text-base leading-tight ml-0">{t.pages.pricing.categories.llmAi}</h4>
+                                <p className="font-semibold text-foreground mb-4 text-base leading-tight ml-0">{t.pages.pricing.categories.llmAi}</p>
                                 {plan.llmAi.length > 0 && (
                                   <ul className="space-y-2 mb-4">
                                     {plan.llmAi.map((item, idx) => {
@@ -754,7 +754,7 @@ const Pricing = () => {
 
                           {/* Service Category */}
                           <div className="mb-4 min-h-0">
-                            <h4 className="font-semibold text-foreground mb-4 text-base leading-tight">{t.pages.pricing.categories.service}</h4>
+                            <p className="font-semibold text-foreground mb-4 text-base leading-tight">{t.pages.pricing.categories.service}</p>
                             <ul className="space-y-2">
                               {plan.services
                                 .filter(service => {
@@ -787,7 +787,7 @@ const Pricing = () => {
                             
                             return rateService ? (
                               <div className="mb-4">
-                                <h4 className="font-semibold text-foreground mb-4 text-base leading-tight">{t.pages.pricing.categories.supportRate}</h4>
+                                <p className="font-semibold text-foreground mb-4 text-base leading-tight">{t.pages.pricing.categories.supportRate}</p>
                                 <ul className="space-y-2">
                                   <li className="flex text-foreground text-sm">
                                     <span className="mr-2 text-primary flex-shrink-0 leading-none mt-[0.1em]">•</span>

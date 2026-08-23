@@ -102,9 +102,9 @@ export default function TermsOfService() {
             transition={{ duration: 0.8 }}
             className="text-center mb-16"
           >
-            <h1 className="text-4xl lg:text-6xl font-bold mb-6 text-foreground">
+            <h2 className="text-4xl lg:text-6xl font-bold mb-6 text-foreground">
               Nutzungs<span className="text-noreja-main">bedingungen</span>
-            </h1>
+            </h2>
             <p className="text-xl text-muted-foreground">
               Allgemeine Geschäftsbedingungen für die Nutzung unserer Dienste
             </p>

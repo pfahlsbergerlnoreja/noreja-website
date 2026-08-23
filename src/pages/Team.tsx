@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { teaserHeadings } from "@/lib/heroCopy";
 import { Linkedin } from "lucide-react";
 import { useMemo, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -90,7 +91,7 @@ export default function Team() {
             className="text-center mb-16"
           >
             <h1 className="text-4xl lg:text-6xl font-bold mb-6 text-foreground">
-              {t.navigation.team}
+              {t.team.title}
             </h1>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
               {t.team.subtitle}
@@ -237,7 +238,10 @@ export default function Team() {
 
       {/* Blog Teasers Section */}
       <div className="relative z-10">
-        <HubSpotBlogTeaser />
+        <HubSpotBlogTeaser
+          heading={teaserHeadings.blog.team.lead[language]}
+          headingHighlight={teaserHeadings.blog.team.highlight[language]}
+        />
       </div>
     </div>
   );

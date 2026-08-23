@@ -225,6 +225,9 @@ export interface Translations {
       contact: {
         title: string;
         subtitle: string;
+        /** Heading over the "what to reach out about" list. */
+        reasonsTitle: string;
+        reasons: { title: string; text: string }[];
         bookCallText: string;
         bookCallButton: string;
         responseNote: string;
@@ -287,6 +290,10 @@ export interface Translations {
     };
   };
   processGraph: {
+    /** Section heading above the animation. */
+    heading: string;
+    /** One-sentence explanation of what the graph shows. */
+    lede: string;
     /** Intentionally English in both locales; only STRG/CTRL differs. */
     hint: string;
     /** Header above the findings panel in the animation. */
@@ -568,6 +575,9 @@ export interface Translations {
     };
   careers: {
     subtitle: string;
+    /** Heading over the "what working here looks like" block. */
+    aboutTitle: string;
+    aboutParagraphs: string[];
     openPositions: string;
     openPosition: string;
     openPositionsLabel: string;
@@ -1022,6 +1032,13 @@ export const translations: Record<Language, Translations> = {
       contact: {
         title: "Get in Touch",
         subtitle: "We'd love to hear from you. Reach out to our team for questions, collaborations, or product demos.",
+        reasonsTitle: "What people get in touch about",
+        reasons: [
+          { title: "A demo or a proof of value", text: "We turn the loop once with your data and show what one of your processes holds — including a calculated business case. Most customers start with a fixed-price proof of value on a single sub-process." },
+          { title: "Pricing and plans", text: "Which of the three plans fits your data volume and the number of process perspectives you need is usually fastest to settle in a short call." },
+          { title: "Partnership", text: "Consulting, technology, industry and research partners deliver Noreja projects together with us — from proof of value to rollout." },
+          { title: "Technical questions", text: "Causal process mining, event knowledge graphs, or how Noreja differs from frequency-based process mining tools: ask directly, or read up in our definitions and vendor comparisons." },
+        ],
         bookCallText: "Prefer to book a call directly?",
         bookCallButton: "Book a Call",
         responseNote: "We typically respond within 24 hours.",
@@ -1161,6 +1178,8 @@ export const translations: Record<Language, Translations> = {
       }
     },
     processGraph: {
+      heading: "The causal process graph, live",
+      lede: "Instead of a flat event log, Noreja reconstructs your process as a graph of causally linked steps. Drag a node to see what depends on it — the findings panel lists what the analysis surfaces in an order-to-cash process.",
       hint: "Click, move, hold, and CTRL scroll",
       findingsHeader: "EXAMPLE FINDINGS · ORDER TO CASH",
       findings: [
@@ -1366,6 +1385,12 @@ export const translations: Record<Language, Translations> = {
     },
     careers: {
       subtitle: "Become part of our team and help shape the future of process intelligence. Explore our open positions.",
+      aboutTitle: "What working at Noreja looks like",
+      aboutParagraphs: [
+        "Noreja Intelligence builds a process intelligence platform on a causal process model rather than a flat event log. That means the problems here are genuinely open ones: how a process is reconstructed as a graph, how an agent gets from an anomaly to a root cause, how an effect is proven in euros rather than asserted.",
+        "The team combines research and practice. Our founders come out of academic process mining research, and our advisory board brings operational experience from industry — so a question about method and a question about a customer rollout land in the same room.",
+        "We work with partners across consulting, technology, industry and research, which means projects reach real production environments rather than staying in prototypes.",
+      ],
       openPositions: "Open Positions",
       openPosition: "open position",
       openPositionsLabel: "open positions",
@@ -1393,11 +1418,11 @@ export const translations: Record<Language, Translations> = {
       backToOverview: "Back to Open Positions",
     },
     team: {
-      title: "Meet Our Team",
+      title: "The Noreja Team",
       subtitle: "Our team is made up of experts who live and breathe process intelligence. We help you make your processes measurably better.",
       connectLinkedIn: "Connect on LinkedIn",
       founders: "Founder-Team",
-      team: "Team",
+      team: "The Noreja team brings together experts from research and practice",
       learnMore: "Learn More",
       advisoryBoard: "Advisory-Board",
       advisorySubtitle: "Industry experts and thought leaders who guide our strategic direction and innovation.",
@@ -1830,6 +1855,13 @@ export const translations: Record<Language, Translations> = {
       contact: {
         title: "Kontakt aufnehmen",
         subtitle: "Wir freuen uns auf deine Nachricht. Kontaktiere unser Team für Fragen, Kooperationen oder Produktdemos.",
+        reasonsTitle: "Weswegen Menschen uns schreiben",
+        reasons: [
+          { title: "Demo oder Proof of Value", text: "Wir drehen den Loop einmal mit deinen Daten und zeigen an einem deiner Prozesse, was darin steckt — inklusive gerechnetem Business Case. Die meisten Kunden starten mit einem Proof of Value zum Fixpreis auf einem Teilprozess." },
+          { title: "Preise und Pakete", text: "Welches der drei Pakete zu deiner Datenmenge und der Zahl deiner Prozessperspektiven passt, klärt sich meist am schnellsten in einem kurzen Gespräch." },
+          { title: "Partnerschaft", text: "Beratungs-, Technologie-, Industrie- und Forschungspartner setzen Noreja-Projekte gemeinsam mit uns um — vom Proof of Value bis zum Rollout." },
+          { title: "Fachfragen", text: "Kausales Process Mining, Event Knowledge Graphs oder die Abgrenzung zu frequenzbasierten Process-Mining-Tools: frag direkt nach, oder lies in unseren Definitionen und Anbietervergleichen weiter." },
+        ],
         bookCallText: "Lieber direkt einen Termin buchen?",
         bookCallButton: "Termin buchen",
         responseNote: "Wir antworten in der Regel innerhalb von 24 Stunden.",
@@ -1969,6 +2001,8 @@ export const translations: Record<Language, Translations> = {
       }
     },
     processGraph: {
+      heading: "Der kausale Prozessgraph, live",
+      lede: "Statt eines flachen Event-Logs rekonstruiert Noreja deinen Prozess als Graph kausal verknüpfter Schritte. Zieh an einem Knoten, um zu sehen, was daran hängt — das Befundpanel zeigt, was die Analyse in einem Order-to-Cash-Prozess findet.",
       /* English on purpose - only the key label differs (STRG vs CTRL) */
       hint: "Click, move, hold, and STRG scroll",
       findingsHeader: "BEISPIELBEFUNDE · ORDER TO CASH",
@@ -2175,6 +2209,12 @@ export const translations: Record<Language, Translations> = {
     },
     careers: {
       subtitle: "Werde Teil unseres Teams und gestalte die Zukunft der Process Intelligence mit. Entdecke unsere offenen Stellen.",
+      aboutTitle: "Wie Arbeiten bei Noreja aussieht",
+      aboutParagraphs: [
+        "Noreja Intelligence baut eine Process-Intelligence-Plattform auf einem kausalen Prozessmodell statt auf einem flachen Event-Log. Die Fragen hier sind entsprechend offen: Wie rekonstruiert man einen Prozess als Graph? Wie kommt ein Agent von der Auffälligkeit zur Ursache? Wie belegt man eine Wirkung in Euro, statt sie zu behaupten?",
+        "Das Team verbindet Wissenschaft und Praxis. Unsere Gründer kommen aus der akademischen Process-Mining-Forschung, das Advisory-Board bringt operative Industrieerfahrung mit — eine Methodenfrage und eine Frage zum Kunden-Rollout landen hier im selben Raum.",
+        "Wir arbeiten mit Partnern aus Beratung, Technologie, Industrie und Forschung. Projekte erreichen dadurch echte Produktivumgebungen und bleiben nicht im Prototyp stecken.",
+      ],
       openPositions: "Offene Stellen",
       openPosition: "offene Stelle",
       openPositionsLabel: "offene Stellen",
@@ -2202,11 +2242,11 @@ export const translations: Record<Language, Translations> = {
       backToOverview: "Zurück zu den offenen Stellen",
     },
     team: {
-      title: "Unser Team",
+      title: "Das Noreja Team",
       subtitle: "Unser Team besteht aus Expertinnen und Experten, die Process Intelligence leben. Wir unterstützen dich dabei, deine Prozesse messbar besser zu machen.",
       connectLinkedIn: "Auf LinkedIn verbinden",
       founders: "Gründer-Team",
-      team: "Team",
+      team: "Das Noreja Team besteht aus Experten aus Wissenschaft und Praxis",
       learnMore: "Mehr erfahren",
       advisoryBoard: "Advisory-Board",
       advisorySubtitle: "Branchenexperten und Vordenker, die unsere strategische Ausrichtung und Innovation leiten.",
