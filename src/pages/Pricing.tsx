@@ -192,6 +192,18 @@ const Pricing = () => {
         <AnimatedGridBackground key="animated-grid-pricing" />
 
         <div className="container mx-auto px-4 py-16 relative z-10">
+          {/* The three price components had no heading above them, so the page
+              jumped from the hero straight into two sliders with no explanation
+              of how they relate to the plans below. */}
+          <div className="mx-auto mb-12 max-w-3xl text-center">
+            <h2 className="mb-4 text-3xl font-bold text-foreground md:text-4xl">
+              {t.pages.pricing.composition.title}
+            </h2>
+            <p className="text-lg leading-relaxed text-muted-foreground">
+              {t.pages.pricing.composition.text}
+            </p>
+          </div>
+
           {/* Pricing Sliders */}
           <div className="max-w-6xl mx-auto mb-16">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">

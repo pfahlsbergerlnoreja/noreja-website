@@ -88,13 +88,21 @@ function extractUseCaseIds(): string[] {
   const content = readFileSync(filePath, 'utf-8');
   const useCaseIds: string[] = [];
   
-  // Extract id from export const useCases array (only top-level objects, not nested additionalUseCases)
-  // Match the array content and extract ids from objects that have title field (to ensure it's a top-level use case)
-  const arrayMatch = content.match(/export const useCases: UseCase\[\] = \[([\s\S]*?)\];/);
+  // Only top-level use cases get their own route. The nested `additionalUseCases`
+  // are rendered as cards on the parent page and have no page of their own.
+  //
+  // The previous pattern required `title: {` after the id to identify a top-level
+  // entry, but the nested entries carry a `title` too, so it matched them as well
+  // — the sitemap advertised 16 use-case URLs of which 12 rendered a "Use Case
+  // Not Found" page with HTTP 200. Anchoring on the four-space indentation of the
+  // array's own members is what actually distinguishes the two levels.
+  //
+  // (Importing the module instead would be sturdier, but useCases.ts uses
+  // `import.meta.glob`, which only resolves inside Vite.)
+  const arrayMatch = content.match(/export const useCases: UseCase\[\] = \[([\s\S]*?)\n\];/);
   if (arrayMatch) {
     const arrayContent = arrayMatch[1];
-    // Match objects that start with { and have id followed by title (to ensure it's a top-level use case object)
-    const useCaseMatches = arrayContent.matchAll(/\{\s*id:\s*"([^"]+)"[\s\S]*?title:\s*\{/g);
+    const useCaseMatches = arrayContent.matchAll(/^ {4}id: "([^"]+)",/gm);
     for (const match of useCaseMatches) {
       useCaseIds.push(match[1]);
     }

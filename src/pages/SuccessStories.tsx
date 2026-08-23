@@ -51,6 +51,17 @@ const SuccessStories = () => {
     `${useCases.length} Verticals`,
   ];
 
+  // The section intro is a template filled from the same data that renders the
+  // cards below, so the counts and the industry list can never drift from them.
+  const industryNames = [...new Set(storyCards.map((story) => story.industry))];
+  const storiesIntro = t.pages.successStories.storiesSection.text
+    .replace('{companies}', String(storyCards.length))
+    .replace('{industries}', String(industryNames.length))
+    .replace('{industryList}', new Intl.ListFormat(language, { type: 'conjunction' }).format(industryNames))
+    .replace('{published}', String(successStories.length));
+  const storiesTitle = t.pages.successStories.storiesSection.title
+    .replace('{industries}', String(industryNames.length));
+
   // Scroll to top when component mounts
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -91,12 +102,24 @@ const SuccessStories = () => {
         visual={<PrincipleStack step={heroStep} labels={heroWords} />}
       />
 
-      {/* Cost of Inaction Calculator */}
-      <CostOfInactionCalculator />
-
       {/* Success Stories Grid */}
       <section className="pb-20 px-4 lg:px-8">
         <div className="w-full max-w-7xl mx-auto">
+          {/* The grid used to start with no heading of its own, so the page went
+              from the hero straight into ten company cards. */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="mx-auto mb-12 max-w-3xl text-center"
+          >
+            <h2 className="mb-4 text-3xl font-bold text-foreground md:text-4xl">
+              {storiesTitle}
+            </h2>
+            <p className="text-lg leading-relaxed text-muted-foreground">{storiesIntro}</p>
+          </motion.div>
+
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
             {storyCards.map((story, index) => (
               <motion.div
@@ -170,6 +193,11 @@ const SuccessStories = () => {
           </div>
         </div>
       </section>
+
+      {/* Sits below the stories on purpose: the calculator is the "what would
+          this be worth to us" step, which only lands once the reader has seen
+          that other companies went through it. */}
+      <CostOfInactionCalculator />
 
       {/* Use Cases Section */}
       <section className="px-4 lg:px-8 pb-20" id="use-cases">

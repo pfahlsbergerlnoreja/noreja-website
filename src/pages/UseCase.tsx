@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, Navigate } from "react-router-dom";
 import { ArrowLeft, Handshake, BarChart3, FileCheck, CreditCard, UserPlus, Settings, TrendingUp, Package, Map, Users, Undo } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Button } from "@/components/ui/button";
@@ -32,20 +32,12 @@ const UseCase = () => {
     ? getWhitepaperForUseCase(useCaseName, language)
     : null;
 
+  // Redirect rather than render a "not found" page. Only the four top-level use
+  // cases have a route; the nested ones are cards on the parent page. An unknown
+  // id used to return HTTP 200 with an English "Use Case Not Found" H1 and the
+  // generic site title — a soft 404. Same handling as SuccessStoryDetail.
   if (!useCaseData || !useCaseName) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-background">
-        <div className="text-center space-y-4">
-          <h1 className="text-4xl font-bold mb-4">Use Case Not Found</h1>
-          <p className="text-muted-foreground">
-            {useCaseName ? `Use case "${useCaseName}" not found.` : "No use case name provided."}
-          </p>
-          <Link to={getRoutePath('successStories', language)}>
-            <Button>Back to Success Stories</Button>
-          </Link>
-        </div>
-      </div>
-    );
+    return <Navigate to={getRoutePath('successStories', language)} replace />;
   }
 
   const gradientStyle = {

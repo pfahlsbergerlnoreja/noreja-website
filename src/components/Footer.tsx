@@ -38,6 +38,7 @@ export function Footer() {
     { name: t.navigation.careers, routeKey: 'careers' as const, external: false },
     { name: t.navigation.definitions, routeKey: 'definitions' as const, external: false },
     { name: t.navigation.battleCards, routeKey: 'battleCards' as const, external: false },
+    { name: t.navigation.frontierAgents, routeKey: 'aiAgents' as const, external: false },
     { name: t.navigation.costOfInaction, routeKey: 'costOfInaction' as const, external: false },
     { name: t.footer.sections.documentation, href: documentationHref, external: true },
     { name: t.footer.sections.referralProgram, href: siteConfig.links.referralProgram, external: true }
@@ -46,6 +47,9 @@ export function Footer() {
   const legalLinks = [
     { name: t.footer.legal.imprint, routeKey: 'imprint' as const, external: false },
     { name: t.footer.legal.privacy, routeKey: 'privacy' as const, external: false },
+    // The terms page was in the sitemap but had no inbound link anywhere on the
+    // site; the label already existed here, it was just never rendered.
+    { name: t.footer.legal.terms, routeKey: 'terms' as const, external: false },
     { name: t.footer.legal.trustCenter, href: "https://trust.noreja.com/", external: true }
   ];
 
@@ -69,7 +73,7 @@ export function Footer() {
   return (
     <footer className="border-t border-border/40 bg-card/30 backdrop-blur-sm">
       <div className="container mx-auto px-4 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-6 gap-8 lg:gap-10">
           {/* Brand */}
           <div className="md:col-span-1">
             <Link to={getRoutePath('home', language)} className="flex items-center mb-4">
@@ -134,9 +138,9 @@ export function Footer() {
           </div>
 
           {/* Navigation */}
-          <div className="md:col-span-2">
+          <div className="md:col-span-3">
             <p id="footer-nav-resources" className="font-semibold mb-4">{t.footer.sections.resources}</p>
-            <nav aria-labelledby="footer-nav-resources" className="grid grid-cols-2 gap-x-4 gap-y-2">
+            <nav aria-labelledby="footer-nav-resources" className="grid grid-cols-2 xl:grid-cols-3 gap-x-6 gap-y-2.5">
               {resourcesLinks.map((item) => (
                 item.external ? (
                   <a

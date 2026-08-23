@@ -72,6 +72,7 @@ export default function Partners() {
   })();
   const partnerDescriptions = t.pages.partners.partnerDescriptions;
   const categoryLabels = t.pages.partners.partnerCategories;
+  const categoryDescriptions = t.pages.partners.partnerCategoryDescriptions;
 
   const partnersByCategory = uniquePartnerList.reduce<Record<string, Partner[]>>(
     (acc, partner) => {
@@ -184,9 +185,18 @@ export default function Partners() {
 
                 return (
                   <div key={category} className="space-y-10">
-                    <h2 className="text-2xl font-semibold text-foreground">
-                      {categoryLabel}
-                    </h2>
+                    {/* Centred like the section headings on the other pages, and
+                        with a line saying what this kind of partner actually
+                        does in a project — the label alone said nothing. */}
+                    <div className="mx-auto max-w-3xl text-center">
+                      <h2 className="mb-3 text-3xl font-bold text-foreground md:text-4xl">
+                        {categoryLabel}
+                      </h2>
+                      <p className="text-lg leading-relaxed text-muted-foreground">
+                        {categoryDescriptions[category as keyof typeof categoryDescriptions] ??
+                          categoryDescriptions.uncategorized}
+                      </p>
+                    </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                       {partnersInCategory.map((partner, index) => {

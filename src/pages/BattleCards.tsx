@@ -14,6 +14,7 @@ import {
   enterpriseAiLabel,
   enterpriseAiScale,
   getLocalized,
+  getBattleCardVsName,
 } from '@/lib/battle-cards';
 import { getRoutePath } from '@/lib/routes';
 import { BreadcrumbSchema } from '@/components/StructuredData';
@@ -62,6 +63,7 @@ const BattleCards = () => {
           considerationsLabel: 'Methodische Einordnung',
           differentiatorLabel: 'Abgrenzung zu Noreja',
           advantagesLabel: 'Weitere Noreja-Vorteile',
+          detailLinkLabel: 'Noreja vs. {vendor} im Detail vergleichen',
           criteriaTitle: 'Woran sich eine zukunftsfähige Lösung erkennen lässt',
           criteria: [
             {
@@ -119,6 +121,7 @@ const BattleCards = () => {
           considerationsLabel: 'Methodical context',
           differentiatorLabel: 'Distinction from Noreja',
           advantagesLabel: 'Additional Noreja advantages',
+          detailLinkLabel: 'Compare Noreja vs. {vendor} in detail',
           criteriaTitle: 'How to Recognize a Future-Proof Solution',
           criteria: [
             {
@@ -421,6 +424,18 @@ const BattleCards = () => {
                             </>
                           )}
                         </div>
+
+                        {/* The ten detail pages had no inbound link anywhere on
+                            the site — they sat in the sitemap only. They are the
+                            pages that answer "Noreja vs. X", so the overview
+                            listing all ten vendors is where they belong. */}
+                        <Link
+                          to={getRoutePath('battleCardDetail', language, { slug: card.id })}
+                          className="group mt-4 inline-flex items-center gap-2 text-sm font-medium text-noreja-main underline decoration-dotted underline-offset-4 hover:decoration-solid"
+                        >
+                          {t.detailLinkLabel.replace('{vendor}', getBattleCardVsName(card.id))}
+                          <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                        </Link>
                       </div>
                     </CardContent>
                   </Card>

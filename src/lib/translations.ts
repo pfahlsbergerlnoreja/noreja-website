@@ -17,6 +17,7 @@ export interface Translations {
     definitions: string;
     battleCards: string;
     costOfInaction: string;
+    frontierAgents: string;
     quickNavigation: string;
   };
   pages: {
@@ -74,6 +75,12 @@ export interface Translations {
       title: string;
       titleHighlight: string;
       subtitle: string;
+      /**
+       * Heading + intro above the story grid. `text` is a template; the page
+       * fills {companies}, {industries}, {industryList} and {published} from the
+       * data, so the numbers cannot drift from what is actually listed below.
+       */
+      storiesSection: { title: string; text: string };
       readCaseStudy: string;
       comingSoon: string;
       backButton?: string;
@@ -127,10 +134,14 @@ export interface Translations {
       };
       partnerDescriptions: Record<string, string>;
       partnerCategories: Record<PartnerCategory, string> & { uncategorized: string };
+      /** One line per category, saying what this kind of partner does in a project. */
+      partnerCategoryDescriptions: Record<PartnerCategory, string> & { uncategorized: string };
     };
     pricing: {
       title: string;
       subtitle: string;
+      /** Heading + explainer above the two sliders and the plan cards. */
+      composition: { title: string; text: string };
       teamSize: string;
       dataVolume: string;
       dataAmount?: string;
@@ -700,6 +711,7 @@ export const translations: Record<Language, Translations> = {
       careers: "Careers",
       definitions: "Definitions",
       battleCards: "Battle Cards",
+      frontierAgents: "Process Frontier Agents",
       costOfInaction: "Cost of Inaction",
       quickNavigation: "Quick Navigation",
     },
@@ -757,6 +769,10 @@ export const translations: Record<Language, Translations> = {
       successStories: {
         title: "Customer",
         titleHighlight: "Success Stories",
+        storiesSection: {
+          title: "Customer projects across {industries} industries",
+          text: "{companies} companies across {industryList}. {published} of them are published as a full case study, the others are in preparation. What they share: in every one of them the starting point was a process whose behaviour nobody could fully explain.",
+        },
         subtitle: "See how other organizations use Noreja Process Intelligence to move faster, work more efficiently, and stay data-driven—and what you can apply to your own processes.",
         readCaseStudy: "Read Case Study",
         comingSoon: "Coming soon",
@@ -828,6 +844,18 @@ export const translations: Record<Language, Translations> = {
           "20": "KBC is an internationally active management consultancy, fully owned by its participating partners. Since 2007, KBC has developed tailored solutions — from strategy to operational management — for international corporations and leading mid-sized companies, particularly in the technology and automotive industries.",
           "22": "MINAUTICS GmbH is a full-service BPM consultancy in the German-speaking region that combines cross-industry experience with specialized expertise — from training and consulting to full implementation projects — to deliver demonstrably effective process improvements for its clients."
         },
+        partnerCategoryDescriptions: {
+          technology: "Vendors whose software docks directly onto Noreja, so modelling, workflow execution and data storage work together inside a project.",
+          software: "Software vendors we integrate with so process data flows between the systems without manual export.",
+          consulting: "Consultancies that deliver Noreja projects at the customer site — from process capture through proof of value to rollout.",
+          insurance: "Insurance partners contributing domain knowledge on claims, policy and reserve processes.",
+          advisory: "Advisors supporting our strategic direction and the way we take the product to market.",
+          industry: "User companies that run Noreja in their own operations and feed their experience back into the product.",
+          academic: "Research partners whose work supplies the methodical basis of causal process mining — and with whom we keep developing it.",
+          legal: "Law firms covering contract, data-protection and compliance questions around process data.",
+          incubator: "Programmes and networks that supported Noreja in building the company and reaching enterprise customers.",
+          uncategorized: "Further partners we work with on a project basis."
+        },
         partnerCategories: {
           technology: "Technology",
           software: "Software",
@@ -844,6 +872,10 @@ export const translations: Record<Language, Translations> = {
       pricing: {
         title: "Transparent Pricing, Clear Solutions",
         subtitle: "Choose the package that suits your needs. We'll help you choose – quickly and transparently.",
+        composition: {
+          title: "How your price is put together",
+          text: "Three components decide the price. First the data volume, measured in graph nodes. Second the perspectives — how many views you take on the same process. Third you pick one of the three plans below. A plan sets the price per power user and comes with a fixed minimum: three for Core, six for Pro, ten for Excellence. Additional power users can be added on top at any time.",
+        },
         teamSize: "Team Size:",
         dataVolume: "Data Volume:",
         dataAmount: "Data amount",
@@ -1511,6 +1543,7 @@ export const translations: Record<Language, Translations> = {
       careers: "Karriere",
       definitions: "Definitionen",
       battleCards: "Battle Cards",
+      frontierAgents: "Process Frontier Agents",
       costOfInaction: "Cost of Inaction",
       quickNavigation: "Schnellnavigation",
     },
@@ -1568,6 +1601,10 @@ export const translations: Record<Language, Translations> = {
       successStories: {
         title: "Kunden",
         titleHighlight: "Success Stories",
+        storiesSection: {
+          title: "Kundenprojekte aus {industries} Branchen",
+          text: "{companies} Unternehmen aus {industryList}. {published} davon sind als ausführliche Case Study veröffentlicht, die übrigen sind in Vorbereitung. Was sie verbindet: Am Anfang stand jedes Mal ein Prozess, dessen Verhalten niemand vollständig erklären konnte.",
+        },
         subtitle: "Unsere Success Stories zeigen dir, wie andere Unternehmen mit Noreja Process Intelligence schneller, effizienter und datengetriebener arbeiten. Gewinne Einblicke, die du direkt auf deine eigenen Prozesse übertragen kannst.",
         readCaseStudy: "Success Story lesen",
         comingSoon: "Coming soon",
@@ -1639,6 +1676,18 @@ export const translations: Record<Language, Translations> = {
           "20": "KBC ist eine international tätige Unternehmensberatung, die vollständig im Eigentum der an ihr beteiligten Partner steht. Seit 2007 entwickelt die KBC maßgeschneiderte Lösungen: Von der Strategie bis zum operativen Management – für international agierende Konzerne und den führenden Mittelstand, vor allem in Technologie- und Automobilbranchen.",
           "22": "Die MINAUTICS GmbH ist eine Full-Service-BPM-Beratung im deutschsprachigen Raum, die mit branchenübergreifender Erfahrung und spezialisierter Expertise – von Schulung und Beratung bis zur Umsetzung kompletter Implementierungsprojekte – nachweisbar wirksame Prozessverbesserungen für ihre Kunden erzielt."
         },
+        partnerCategoryDescriptions: {
+          technology: "Anbieter, deren Software direkt an Noreja andockt — Modellierung, Workflow-Ausführung und Datenhaltung greifen im Projekt ineinander.",
+          software: "Softwareanbieter, mit denen wir integriert sind, damit Prozessdaten ohne manuellen Export zwischen den Systemen fließen.",
+          consulting: "Beratungshäuser, die Noreja-Projekte beim Kunden umsetzen — von der Prozessaufnahme über den Proof of Value bis zum Rollout.",
+          insurance: "Versicherungspartner, die Fachwissen zu Schaden-, Vertrags- und Rückstellungsprozessen einbringen.",
+          advisory: "Beirät:innen, die unsere strategische Ausrichtung und den Weg in den Markt begleiten.",
+          industry: "Anwenderunternehmen, die Noreja im eigenen Betrieb einsetzen und ihre Erfahrung in die Weiterentwicklung zurückspielen.",
+          academic: "Forschungspartner, aus deren Arbeit die methodischen Grundlagen des Causal Process Mining stammen — und mit denen wir sie weiterentwickeln.",
+          legal: "Kanzleien, die Vertrags-, Datenschutz- und Compliance-Fragen rund um Prozessdaten begleiten.",
+          incubator: "Programme und Netzwerke, die Noreja beim Aufbau des Unternehmens und beim Zugang zu Enterprise-Kunden unterstützt haben.",
+          uncategorized: "Weitere Partner, mit denen wir projektbezogen zusammenarbeiten."
+        },
         partnerCategories: {
           technology: "Technologie",
           software: "Software",
@@ -1655,6 +1704,10 @@ export const translations: Record<Language, Translations> = {
       pricing: {
         title: "Transparente Preise, klare Lösungen",
         subtitle: "Wähle das Paket, das zu deinen Bedürfnissen passt. Wir helfen dir bei der Auswahl – schnell und transparent.",
+        composition: {
+          title: "So setzt sich dein Preis zusammen",
+          text: "Drei Komponenten bestimmen den Preis. Erstens die Datenmenge, gemessen in Graphen-Nodes. Zweitens die Perspektiven — die Zahl der Sichten, unter denen du denselben Prozess betrachtest. Drittens wählst du unten eines der drei Pakete. Das Paket legt den Preis pro Power-User fest und bringt eine feste Mindestanzahl mit: drei bei Core, sechs bei Pro, zehn bei Excellence. Weitere Power-User lassen sich jederzeit ergänzen.",
+        },
         teamSize: "Teamgröße:",
         dataVolume: "Datenvolumen:",
         dataAmount: "Datenmenge",
