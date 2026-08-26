@@ -437,3 +437,144 @@
     }
   }
 }
+/* Newsletter popup — compact glass card with the same rotating brand border
+   as the story cards (reuses --story-border-angle / storyBorderRotate). */
+@layer components {
+  .newsletter-toast {
+    isolation: isolate;
+    border-radius: 1rem;
+    background:
+      radial-gradient(120% 90% at 100% 0%, hsl(var(--noreja-main) / 0.18) 0%, transparent 55%),
+      linear-gradient(165deg, hsl(250 20% 11% / 0.94) 0%, hsl(240 14% 7% / 0.96) 100%);
+    backdrop-filter: blur(20px) saturate(140%);
+    -webkit-backdrop-filter: blur(20px) saturate(140%);
+    box-shadow:
+      0 24px 60px -26px hsl(240 30% 2% / 0.9),
+      0 0 34px -16px hsl(var(--noreja-main) / 0.5);
+  }
+
+  .newsletter-toast::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    padding: 1px;
+    border-radius: inherit;
+    pointer-events: none;
+    background: conic-gradient(
+      from var(--story-border-angle),
+      hsl(0 0% 100% / 0.08) 0%,
+      hsl(var(--noreja-tertiary)) 10%,
+      hsl(var(--noreja-secondary)) 22%,
+      hsl(0 0% 100% / 0.08) 40%,
+      hsl(0 0% 100% / 0.08) 100%
+    );
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    animation: storyBorderRotate 6s linear infinite;
+  }
+
+  .newsletter-toast__badge {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 0.625rem;
+    color: hsl(0 0% 100%);
+    background: var(--gradient-primary);
+    box-shadow: 0 6px 18px -8px hsl(var(--noreja-main) / 0.9);
+  }
+
+  /* Slim scrollbar for the embedded form area */
+  .newsletter-toast__form {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--noreja-main) / 0.5) transparent;
+  }
+
+  .newsletter-toast__form::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .newsletter-toast__form::-webkit-scrollbar-thumb {
+    background: hsl(var(--noreja-main) / 0.5);
+    border-radius: 9999px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .newsletter-toast::before {
+      animation: none;
+    }
+  }
+}
+
+/* Gentle teal pulse on the newsletter popup's "open" hint */
+@keyframes newsletterHintPulse {
+  0%, 100% {
+    opacity: 1;
+    text-shadow: 0 0 12px hsl(var(--noreja-tertiary) / 0.55);
+  }
+  50% {
+    opacity: 0.45;
+    text-shadow: 0 0 4px hsl(var(--noreja-tertiary) / 0.15);
+  }
+}
+
+@layer components {
+  .newsletter-toast__hint {
+    animation: newsletterHintPulse 2.2s ease-in-out infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .newsletter-toast__hint {
+      animation: none;
+    }
+  }
+}
+
+@layer components {
+  /* Collapse/expand for the newsletter form. grid-template-rows 0fr -> 1fr so
+     the open state is a real content-sized track: it needs no JS animation to
+     finish, and it keeps tracking the HubSpot iframe when that resizes. */
+  .newsletter-toast__reveal {
+    display: grid;
+    grid-template-rows: 0fr;
+    visibility: hidden;
+    opacity: 0;
+    transition:
+      grid-template-rows 320ms cubic-bezier(0.4, 0, 0.2, 1),
+      opacity 220ms ease,
+      visibility 0s linear 320ms;
+  }
+
+  .newsletter-toast__reveal > * {
+    overflow: hidden;
+    min-height: 0;
+  }
+
+  .newsletter-toast__reveal[data-open="true"] {
+    grid-template-rows: 1fr;
+    visibility: visible;
+    opacity: 1;
+    transition:
+      grid-template-rows 320ms cubic-bezier(0.4, 0, 0.2, 1),
+      opacity 220ms ease,
+      visibility 0s;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .newsletter-toast__reveal {
+      transition: visibility 0s linear 0s;
+    }
+
+    .newsletter-toast__reveal[data-open="true"] {
+      transition: none;
+    }
+  }
+}
