@@ -14,19 +14,17 @@ export const SMART_DATA_FORGE_FILE = "/tools/noreja-smart-data-forge.html";
 export const SMART_DATA_FORGE_DOWNLOAD_NAME = "Noreja_Smart_Data_Forge.html";
 export const SMART_DATA_FORGE_VERSION = "6.58";
 
-// HubSpot form that gates the generator.
+// HubSpot form the gate submits to.
+//
+// SmartDataForgeGate posts the address to HubSpot's Forms Submission API
+// rather than rendering a HubSpot embed, so the form's post-submit setting
+// (inline message vs. redirect) does not matter — the visitor always stays on
+// the page. What does matter: the form must not require any field other than
+// the email address, otherwise HubSpot rejects the submission.
 //
 // TODO: swap in the GUID of the dedicated Smart Data Forge form once it exists
-// in HubSpot. That form needs exactly two properties:
-//   * one email field, and
-//   * post-submit action "display an inline thank-you message" — NOT a
-//     redirect. The gate unlocks the generator in place, so the visitor has to
-//     stay on the page.
-// Until then this falls back to the generic download form, which does redirect
-// to the thank-you page. That case still works, just less elegantly: the gate
-// persists the unlock in localStorage and leaves a pendingDownload entry, so
-// the thank-you page opens the generator in a new tab and the landing page
-// shows it unlocked on return.
+// in HubSpot. Until then the generic download form collects these leads, which
+// mixes them in with the whitepaper downloads.
 export const HUBSPOT_FORM_GUID_SMART_DATA_FORGE = HUBSPOT_FORM_GUID_DEFAULT;
 
 export const siteConfig = {

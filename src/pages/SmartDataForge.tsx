@@ -146,7 +146,7 @@ const copy = {
 
     gateHeading: "Generator öffnen",
     gateLead:
-      "Einmal E-Mail eintragen — danach bleibt der Zugang in diesem Browser bestehen.",
+      "Einmal E-Mail eintragen, dann öffnest du das Tool mit einem Klick. Der Zugang bleibt in diesem Browser bestehen.",
 
     faqHeading: "Häufige Fragen",
   },
@@ -259,7 +259,8 @@ const copy = {
     ],
 
     gateHeading: "Open the generator",
-    gateLead: "Enter your email once — access then stays available in this browser.",
+    gateLead:
+      "Enter your email once, then open the tool with one click. Access stays available in this browser.",
 
     faqHeading: "Frequently asked questions",
   },
