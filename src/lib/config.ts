@@ -6,6 +6,29 @@ export const HUBSPOT_PORTAL_ID = "144242473";
 export const HUBSPOT_FORM_GUID_DEFAULT = "cba179f6-530c-43a4-9d41-4bc0a459953b";
 export const BLOG_SUBDOMAIN_URL = "https://blog.noreja.com";
 
+// --- Smart Data Forge lead magnet -----------------------------------------
+// The generator itself is one self-contained HTML file, served straight from
+// public/tools/. The landing page (src/pages/SmartDataForge.tsx) embeds it in
+// an iframe once a visitor has left their email address.
+export const SMART_DATA_FORGE_FILE = "/tools/noreja-smart-data-forge.html";
+export const SMART_DATA_FORGE_DOWNLOAD_NAME = "Noreja_Smart_Data_Forge.html";
+export const SMART_DATA_FORGE_VERSION = "6.58";
+
+// HubSpot form that gates the generator.
+//
+// TODO: swap in the GUID of the dedicated Smart Data Forge form once it exists
+// in HubSpot. That form needs exactly two properties:
+//   * one email field, and
+//   * post-submit action "display an inline thank-you message" — NOT a
+//     redirect. The gate unlocks the generator in place, so the visitor has to
+//     stay on the page.
+// Until then this falls back to the generic download form, which does redirect
+// to the thank-you page. That case still works, just less elegantly: the gate
+// persists the unlock in localStorage and leaves a pendingDownload entry, so
+// the thank-you page opens the generator in a new tab and the landing page
+// shows it unlocked on return.
+export const HUBSPOT_FORM_GUID_SMART_DATA_FORGE = HUBSPOT_FORM_GUID_DEFAULT;
+
 export const siteConfig = {
   name: SITE_NAME,
   description: "Revolutionary technology solutions for the future",
@@ -65,6 +88,7 @@ export const config = {
     defaultFormGuid: HUBSPOT_FORM_GUID_DEFAULT,
     forms: {
       download: HUBSPOT_FORM_GUID_DEFAULT,
+      smartDataForge: HUBSPOT_FORM_GUID_SMART_DATA_FORGE,
       newsletter: "YOUR_NEWSLETTER_FORM_GUID",
       newsletterEn: "c56d0262-0916-49c0-b058-cd0d2d4e2539",
       contact: "YOUR_CONTACT_FORM_GUID"

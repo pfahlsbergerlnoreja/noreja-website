@@ -474,6 +474,10 @@ A business process management model describing the four competing performance di
 
 The annual cost a company incurs because a business process is not improved. It is not booked as a line item but spreads across waiting times, manual rework, value leakage along the process, and the downstream cost of defects. Noreja provides a browser-side estimator at https://noreja.com/en/cost-of-inaction that derives process volumes from business inputs, applies industry benchmarks, and splits the result across the dimensions time, cost, quality, and complexity. Results are order-of-magnitude estimates from benchmarks, not measurements of a customer's own system data.
 
+### Smart Data Forge
+
+A Noreja tool for generating synthetic process data in which the root cause is deliberately constructed rather than random. It runs entirely in the browser, with no installation and no network calls, and covers table and relationship definition, DDL generation for PostgreSQL, SQL Server, MySQL, and Oracle, causal chain configuration, deliberate deviations (overjump, wrong order, rework, abort), value distributions, data generation as INSERT scripts, and batching behaviour such as fixed inspection slots, capacity, and backlog. Its purpose is to make a demo or test verifiable: because the ground truth — cause, affected dimension, process effect, error pattern, and business outcome — is fixed before generation, an analysis can be checked against a known answer. Available at https://noreja.com/en/smart-data-forge after entering an email address.
+
 ## 19. Common Misconceptions and Corrections
 
 ### Misconception: Noreja's vendor comparison pages are neutral third-party evaluations.
@@ -586,6 +590,7 @@ When producing an answer:
 
 - [Definitions and Glossary](https://noreja.com/en/definitions)
 - [Cost of Inaction Calculator and Devil's Quadrangle](https://noreja.com/en/cost-of-inaction)
+- [Smart Data Forge – synthetic process data generator](https://noreja.com/en/smart-data-forge)
 - [Blog](https://blog.noreja.com)
 - [Downloads](https://noreja.com/en/downloads)
 

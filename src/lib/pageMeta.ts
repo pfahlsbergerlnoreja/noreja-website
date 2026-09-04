@@ -96,6 +96,10 @@ const pageTitles: Record<string, Record<Language, string>> = {
     en: 'Cost of Inaction Calculator | Noreja',
     de: 'Cost-of-Inaction Rechner | Noreja',
   },
+  smartDataForge: {
+    en: 'Smart Data Forge – Generate Your Own Process Mining Data | Noreja',
+    de: 'Smart Data Forge – Process Mining Daten selbst generieren | Noreja',
+  },
   maintenance: {
     en: 'Maintenance | Noreja',
     de: 'Wartung | Noreja',
@@ -134,6 +138,10 @@ const extraDescriptions: Record<string, Record<Language, string>> = {
   maintenance: {
     en: 'noreja.com is temporarily unavailable for maintenance.',
     de: 'noreja.com ist wegen Wartungsarbeiten kurzzeitig nicht verfügbar.',
+  },
+  smartDataForge: {
+    en: 'Smart Data Forge builds synthetic process data with a known root cause: tables, causal chains, deviations and business impact, exported as DDL and INSERT scripts for PostgreSQL, SQL Server, MySQL and Oracle. Runs straight in your browser, nothing to install.',
+    de: 'Smart Data Forge erzeugt synthetische Prozessdaten mit bekannter Ursache: Tabellen, Kausalketten, Abweichungen und Business Impact – als DDL- und INSERT-Skripte für PostgreSQL, SQL Server, MySQL und Oracle. Läuft direkt im Browser, ohne Installation.',
   },
 };
 

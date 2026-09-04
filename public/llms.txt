@@ -38,6 +38,7 @@ Interpretation guidance:
 - [Using LLMs with Noreja](https://docs.noreja.com/en/article/minerva-using-llms-with-noreja): Describes cloud, Noreja-managed, dedicated, and customer-operated LLM deployment options and associated data-control considerations.
 - [Source Data Preparation and Common Challenges](https://docs.noreja.com/en/article/source-data-preparation-common-challenges): Guidance on timestamps, identifiers, activity definitions, normalization, and source-data quality for process analysis.
 - [Cost of Inaction Calculator](https://noreja.com/en/cost-of-inaction): Interactive estimate of the hidden annual cost of unimproved end-to-end processes, split across the four process dimensions time, cost, quality, and complexity; includes an interactive Devil's Quadrangle showing why time trades off against cost and quality against flexibility.
+- [Smart Data Forge](https://noreja.com/en/smart-data-forge): Free browser-based generator for synthetic, causally consistent process data with a deliberately built-in root cause; defines tables, causal chains, deviations, and value distributions and exports DDL and INSERT scripts for PostgreSQL, SQL Server, MySQL, and Oracle. Access requires an email address.
 
 ## Competitive Comparisons
 

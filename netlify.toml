@@ -99,6 +99,15 @@
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
+# The Smart Data Forge generator: one self-contained HTML file that the
+# /de|/en/smart-data-forge landing page embeds in an iframe. It is a tool, not
+# a page, so it stays out of the index — the landing page is what should rank.
+[[headers]]
+  for = "/tools/*"
+  [headers.values]
+    X-Robots-Tag = "noindex"
+    Cache-Control = "public, max-age=3600"
+
 
 # ============================================
 # Redirects

@@ -164,6 +164,8 @@ function generateSitemap() {
   addEntry('/en/battle-cards', 0.7, 'weekly');
   addEntry('/de/cost-of-inaction', 0.8, 'weekly');
   addEntry('/en/cost-of-inaction', 0.8, 'weekly');
+  addEntry('/de/smart-data-forge', 0.8, 'weekly');
+  addEntry('/en/smart-data-forge', 0.8, 'weekly');
 
   // Legal pages (lower priority)
   addEntry('/de/impressum', 0.5, 'monthly');

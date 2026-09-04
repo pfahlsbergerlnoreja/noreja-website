@@ -35,6 +35,7 @@ const Definitions = lazy(() => import("./pages/Definitions"));
 const DefinitionDetail = lazy(() => import("./pages/DefinitionDetail"));
 const BattleCards = lazy(() => import("./pages/BattleCards"));
 const CostOfInaction = lazy(() => import("./pages/CostOfInaction"));
+const SmartDataForge = lazy(() => import("./pages/SmartDataForge"));
 const BattleCardDetail = lazy(() => import("./pages/BattleCardDetail"));
 const Imprint = lazy(() => import("./pages/Imprint"));
 const TermsOfService = lazy(() => import("./pages/TermsOfService"));
@@ -151,6 +152,10 @@ export const AppRoutes = () => (
               {/* Cost-of-Inaction calculator landing page */}
               <Route path="/de/cost-of-inaction" element={<CostOfInaction />} />
               <Route path="/en/cost-of-inaction" element={<CostOfInaction />} />
+
+              {/* Smart Data Forge lead magnet */}
+              <Route path="/de/smart-data-forge" element={<SmartDataForge />} />
+              <Route path="/en/smart-data-forge" element={<SmartDataForge />} />
 
               {/* Downloads */}
               <Route path="/de/downloads" element={<Downloads />} />
