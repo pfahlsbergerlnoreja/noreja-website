@@ -16,6 +16,7 @@ export interface Translations {
     careers: string;
     definitions: string;
     battleCards: string;
+    faq: string;
     costOfInaction: string;
     frontierAgents: string;
     quickNavigation: string;
@@ -177,13 +178,14 @@ export interface Translations {
           supportRate: string;
         };
       privateLLMHosting: string;
+      /**
+       * Only the section framing lives here — the questions themselves moved to
+       * src/lib/faq.ts so the /faq hub and this page share one source.
+       */
       faq: {
         title: string;
         subtitle: string;
-        items: Array<{
-          question: string;
-          answer: string;
-        }>;
+        linkLabel: string;
       };
       plans: {
         core: {
@@ -711,6 +713,7 @@ export const translations: Record<Language, Translations> = {
       careers: "Careers",
       definitions: "Definitions",
       battleCards: "Battle Cards",
+      faq: "FAQ",
       frontierAgents: "Process Frontier Agents",
       costOfInaction: "Cost of Inaction",
       quickNavigation: "Quick Navigation",
@@ -916,64 +919,7 @@ export const translations: Record<Language, Translations> = {
         faq: {
           title: "Frequently Asked Questions",
           subtitle: "Find answers to common questions about our pricing and plans",
-          items: [
-            {
-              question: "Does Noreja offer a Proof-Of-Value to get to know the technology?",
-              answer: "Yes, 85% of customers start with an initial Proof-Of-Value, which Noreja offers at a very affordable fixed price. This typically focuses on a sub-process that Noreja connects, imports, analyzes, and reveals initial optimization potential within 3 to 4 weeks. After the Proof-Of-Value, 60% of the data integration is already completed, so operationalization can take place within a few days."
-            },
-            {
-              question: "Do I need dedicated Process Mining experts to use Noreja?",
-              answer: "No. No explicit Process Mining experts are needed to use Noreja. A special feature here is that Noreja does not use event logs, so no complex data transformations are necessary, which often take up 80% of the time with conventional solutions."
-            },
-            {
-              question: "How does upgrading or downgrading to other license packages work?",
-              answer: "In principle, annual licenses are concluded in certain price package combinations. A downgrade to smaller price categories is possible after the license year. If there is a need to move up to higher price categories - e.g., because more data should be imported - this can happen at any time. However, prices are never automatically increased without consultation. This always happens in dialogue with the customer."
-            },
-            {
-              question: "What happens if I exceed the limit in a package?",
-              answer: "If the capacity of the data volume or the required dimensions is not sufficient, either Noreja can be contacted proactively, or Noreja will contact you after exceeding the limits and seek a conversation."
-            },
-            {
-              question: "How does license renewal work?",
-              answer: "The license contract is concluded on an annual basis. According to the signed contract, the license is automatically renewed if it is not canceled in time; However, a silent renewal is never carried out without first speaking with the customer about the renewal."
-            },
-            {
-              question: "How can I cancel the license contract?",
-              answer: "The license contract can be canceled at any time with a notice period of one month before the end of the contract."
-            },
-            {
-              question: "What exactly is included in the base package and how do the included workshops work?",
-              answer: "The base package includes features, service offerings, and AI components. Features refer to concrete software components that a user can use on the platform. The service offerings include several workshops (day workshop of 8h), which are conducted on-site at the customer's location with one to two Noreja experts (travel costs included). In addition, (bi-)weekly online sessions are scheduled, in which customers receive support in using the platform as well as in identifying new use cases."
-            },
-            {
-              question: "Can I also book Noreja for additional or accompanying consulting?",
-              answer: "Yes, each package contains a daily rate that can be used to book additional consulting that goes beyond the included workshops and regular sessions. The rate differs between the base packages."
-            },
-            {
-              question: "Where is my data hosted?",
-              answer: "The data is hosted at Google Cloud and Amazon AWS in Frankfurt. Due to complete tenant separation, hosting can also be done in other cloud regions or on-premises upon request. However, on-premises hosting incurs additional costs."
-            },
-            {
-              question: "How does Noreja handle data protection and IT security?",
-              answer: "Noreja is ISO27001 certified and places great emphasis on data security. Our Trust Center can be found in the footer of this website, where all information can be viewed."
-            },
-            {
-              question: "What does private LLM hosting look like?",
-              answer: "Private LLM hosting is implemented by operating your own fully isolated environment at any cloud provider (e.g., Amazon AWS). Noreja sets up any LLM (e.g., Mistral, Deepseek, Gemma, Qwen3, etc.) that only the customer can access."
-            },
-            {
-              question: "Are there partner companies that can support me in using Noreja?",
-              answer: "Yes, Noreja has numerous partners among consultancies, system integrators, or universities who can provide services with and for Noreja Process Intelligence as needed. You can find more information in the main menu under Partners."
-            },
-            {
-              question: "Is there documentation and training available alongside the license for knowledge transfer?",
-              answer: "Yes, the Noreja platform has its own AI-powered documentation that can be accessed. In addition, we offer regular 1:1 tool training sessions throughout the license period, so that over time, every detail of the solution can be understood."
-            },
-            {
-              question: "How do I know which package (e.g., regarding data volume) I should choose?",
-              answer: "We are happy to determine the exact requirements together in a conversation. Our Proof-Of-Value provides an optimal basis for decision-making, the results of which enable a good assessment of the required data volume and service needs."
-            }
-          ]
+          linkLabel: "See all questions in the FAQ",
         },
         plans: {
           core: {
@@ -1543,6 +1489,7 @@ export const translations: Record<Language, Translations> = {
       careers: "Karriere",
       definitions: "Definitionen",
       battleCards: "Battle Cards",
+      faq: "FAQ",
       frontierAgents: "Process Frontier Agents",
       costOfInaction: "Cost of Inaction",
       quickNavigation: "Schnellnavigation",
@@ -1748,76 +1695,7 @@ export const translations: Record<Language, Translations> = {
         faq: {
           title: "Häufig gestellte Fragen",
           subtitle: "Finde Antworten auf häufige Fragen zu unseren Preisen und Plänen",
-          items: [
-            {
-              question: "Bietet Noreja einen Proof-Of-Value an, um die Technologie kennenzulernen?",
-              answer: "Ja, 85% der Kunden starten mit einem initialen Proof-Of-Value, welchen Noreja zu einem sehr günstigen Fixpreis anbietet. Dabei wird sich i.d.R. auf einen Teilprozess fokussiert, den Noreja innerhalb von 3 bis 4 Wochen anbindet, importiert, analysiert und erste Optimierungspotenziale aufdeckt. Nach dem Proof-Of-Value sind 60% der Datenanbindung bereits erledigt, sodass anschließend in wenigen Tagen eine Operationalisierung stattfinden kann."
-            },
-            {
-              question: "Brauche ich dedizierte Process Mining Experten, um Noreja nutzen zu können?",
-              answer: "Nein. Es werden keine expliziten Process Mining Experten benötigt, um Noreja nutzen zu können. Eine Besonderheit hierbei ist, dass Noreja keine Event-Logs verwendet, sodass keine aufwendigen Datentransformationen nötig sind, die bei herkömmlichen Lösungen häufig 80% der Zeit in Anspruch nehmen."
-            },
-            {
-              question: "Wie funktioniert der Herauf- oder Herabstufung in andere Lizenzpakete?",
-              answer: "Prinzipiell werden Jahreslizenzen in bestimmten Preispaketkombinationen abgeschlossen. Eine Herabstufung in kleinere Preiskategorien ist im Anschluss an das Lizenzjahr möglich. Besteht der Bedarf in höhere Preiskategorien aufzusteigen – z.B., weil mehr Daten importiert werden sollen, so kann dies jederzeit geschehen. Allerdings werden niemals automatisch und ohne Rücksprache Preise erhöht. Dies geschieht immer im Dialog mit dem Kunden."
-            },
-            {
-              question: "Was passiert, wenn ich das Limit in einem Paket überschreite?",
-              answer: "Sollte die Kapazität der Datenmenge oder der benötigten Dimensionen nicht ausreichen kann entweder proaktiv mit der Noreja Kontakt aufgenommen werden, oder aber die Noreja meldet sich nach überschreiten der Grenzwerte und sucht das Gespräch."
-            },
-            {
-              question: "Wie funktioniert die Lizenzverlängerung?",
-              answer: "Der Lizenzvertrag wird auf Jahresbasis abgeschlossen. Laut abgeschlossenem Vertrag verlängert sich die Lizenz dabei automatisch, wenn nicht rechtzeitig gekündigt wird; Allerdings wird auch hier niemals eine stillschweigende Verlängerung durchgeführt, ohne vorab mit dem Kunden über die Verlängerung zu sprechen."
-            },
-            {
-              question: "Wie kann ich den Lizenzvertrag kündigen?",
-              answer: "Der Lizenzvertrag kann mit einer Frist von einem Monat zum Vertragsende jederzeit gekündigt werden."
-            },
-            {
-              question: "Was genau ist im Basispaket enthalten und wie laufen die inkludierten Workshops ab?",
-              answer: "Das Basispaket beinhaltet Features, Service-Leistungen und KI-Komponenten. Unter Features versteht man konkrete Software-Bestandteile, die ein Anwender auf der Plattform nutzen kann. Die Service-Leistungen inkludieren mehrere Workshops (Tagesworkshop à 8h), die Vor-Ort beim Kunden mit ein bis zwei Noreja-Experten durchgeführt werden (Reisekosten inkludiert). Zudem werden (Bi-)Weekly Online-Sessions eingeplant, in welchen die Kunden Unterstützung bei der Nutzung der Plattform aber auch der Identifizierung neuer Use Cases erhalten."
-            },
-            {
-              question: "Kann ich die Noreja auch für zusätzliche bzw. begleitende Beratung buchen?",
-              answer: "Ja, jedes Paket enthält eine Tagesrate, die genutzt werden kann, um zusätzliche Beratung, die über die inkludierten Workshops und regelmäßigen Sessions hinausgehen, zu buchen. Die Rate unterscheidet sich zwischen den Basispaketen."
-            },
-            {
-              question: "Wo werden meine Daten gehostet?",
-              answer: "Die Daten werden bei der Google Cloud und Amazon AWS in Frankfurt gehostet. Aufgrund vollständiger Mandanten-Trennung kann auf Wunsch aber auch in anderen Cloud-Regionen oder On-Prem gehostet werden. Bei On-Prem entstehen allerdings Zusatzaufwände."
-            },
-            {
-              question: "Wie geht Noreja mit Datenschutz und IT-Security um?",
-              answer: "Die Noreja ist ISO27001 zertifiziert und legt großen Wert auf Datensicherheit. Im Footer dieser Webseite befindet sich unser Trust Center, wo alle Informationen eingesehen werden können."
-            },
-            {
-              question: "Wie kann ich mir das private LLM-Hosting vorstellen?",
-              answer: "Das private LLM-Hosting erfolgt durch den Betrieb einer eigenen und vollständig isolierten Umgebung bei einem beliebigen Cloud-Anbieter (z.B. Amazon AWS). Die Noreja setzt dabei ein beliebiges LLM (z.B. Mistral, Deepseek, Gemma, Qwen3, etc.) auf, auf welches ausschließlich der Kunde Zugriff erhält."
-            },
-            {
-              question: "Gibt es auch Partnerunternehmen, die mich bei der Nutzung von Noreja begleiten können?",
-              answer: "Ja, Noreja hat zahlreiche Partner bei Beratungen, Systemintegratoren oder Universitäten, die bei Bedarf Services am und mit Noreja Process Intelligence begleiten können. Mehr dazu gibt es im Hauptmenü unter Partner."
-            },
-            {
-              question: "Gibt es Dokumentation und Schulungsangebote parallel zur Lizenz für den Wissenstransfer?",
-              answer: "Ja, die Noreja-Plattform hat eine eigene KI-gestützte Dokumentation, auf die zugegriffen werden kann. Zudem bieten wir im Zuge der Lizenzperiode auch regelmäßige 1:1 Tool-Schulungen an, sodass mit der Zeit jeder Detail der Lösung durchdrungen werden kann."
-            },
-            {
-              question: "Woher weiß ich, welches Paket (z.B. in Bezug auf die Datenmenge) ich wählen muss?",
-              answer: "Den genauen Bedarf ermitteln wir gerne gemeinsam in einem Gespräch. Eine optimale Entscheidungsgrundlage bietet hierfür unser Proof-Of-Value, dessen Ergebnis eine gute Einschätzung zur benötigter Datenmenge und zum Servicebedarf ermöglicht."
-            },
-            {
-              question: "Gibt es eine initiale Setup-Fee?",
-              answer: "Grundsätzlich gibt es keine generelle Setup-Fee. Die Datenanbindung kann auch eigenständig bzw. im Zuge der inkludierten Data-Onboarding Workshops stattfinden. Häufig macht es aber Sinn, sich beim initialen Setup Unterstützung zu holen, um Quellsysteme effizient und fehlerfrei anzubinden. Dies kann durch die Noreja selbst oder einen unserer Partner erfolgen."
-            },
-            {
-              question: "Können für genutzte LLM-Token zusätzliche Kosten entstehen?",
-              answer: "Grundsätzlich sind die LLM-Token für alle Power-User inkludiert. Sollte es den Bedarf nach einer erhöhten Anzahl an lesenden bzw. konsumierenden Nutzern geben, müssen wir die Kosten weiterreichen. In diesem Fall sprechen wir dich explizit an."
-            },
-            {
-              question: "Was sind Power-User und wie unterscheiden sie sich von herkömmlichen Nutzern?",
-              answer: "Als Power-User bezeichnen wir einen Anwender, der auf der Noreja-Plattform Rechte zum Builder, Manager, Analyzer sowie den weiteren Admin-Funktionen hat. Ausgenommen sind hier lesende Nutzer des Dashboards oder Minerva-AI."
-            }
-          ]
+          linkLabel: "Alle Fragen im FAQ ansehen",
         },
         plans: {
           core: {

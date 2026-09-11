@@ -1,0 +1,78 @@
+/* TEAM */
+
+	Dr. Lukas Pfahlsberger -- Co-Founder & Chief Executive Officer
+	LinkedIn: linkedin.com/in/lukas-pfahlsberger
+	Focus: Operations, sales and strategy; guest lecturer at HU Berlin, WU Vienna and FH Salzburg
+
+	Dr. techn. Philipp Waibel -- Co-Founder & Chief Technology Officer
+	LinkedIn: linkedin.com/in/philipp-w-a09018100
+	Focus: Platform architecture and technology
+
+	Prof. Dr. Jan Mendling -- Head of Partnerships & Knowledge
+	LinkedIn: linkedin.com/in/janmendling
+	Focus: Research, partnerships and process science
+
+	Florian Eichin -- Head of Frontend
+	LinkedIn: linkedin.com/in/florian-eichin-92ba57106
+
+	Daniel Bauer -- Head of Backend
+	LinkedIn: linkedin.com/in/daniel-bauer-485954199
+
+	Monika Leitner -- Head of Process Excellence
+	LinkedIn: linkedin.com/in/monikaleitner
+
+	Violeta Petkova -- Senior Software Developer
+	LinkedIn: linkedin.com/in/violeta-petkova-298287136
+
+	Temuçin Damdinjamts-Kintaert -- Senior Software Developer
+	LinkedIn: linkedin.com/in/temucin-damdinjamts-kintaert
+
+	Team page: https://noreja.com/en/team
+
+
+/* ADVISORY BOARD */
+
+	Markus Neumayr -- linkedin.com/in/markus-neumayr-110a71104
+	Christian Riffner -- linkedin.com/in/christian-riffner-0119b233
+	Gordana McNamara -- linkedin.com/in/gordana-mcnamara
+	Steven Knoblich -- linkedin.com/in/steven-knoblich-72bb53173
+
+
+/* COMPANY */
+
+	Noreja Intelligence GmbH
+	Bruck 12, 6914 Hohenweiler, Austria
+	Register: FN 552351 g (Landgericht Feldkirch)
+	Contact: info@noreja.com
+	Site: https://noreja.com
+	Careers: https://noreja.com/en/careers
+	What we build: Generative Process Intelligence — causal process analysis
+	on an Event Knowledge Graph, without event logs.
+
+	Recognition: Gartner "Coolest Vendor Innovations in Process Intelligence", 2026
+
+
+/* THANKS */
+
+	To our customers, implementation partners and the university partners who
+	keep pushing causal process mining forward — and to the maintainers of the
+	open source projects this site is built on.
+
+
+/* SITE */
+
+	Last update: 2026/09/11
+	Language: German, English
+	Doctype: HTML5
+	Standards: HTML5, CSS3, JSON-LD (schema.org), sitemaps.org, llmstxt.org
+	Components: React 18, TypeScript, Vite, React Router, Tailwind CSS,
+	            Radix UI / shadcn-ui, Framer Motion, TanStack Query
+	Build: Static prerendering of every route (server-rendered HTML for
+	       crawlers and AI answer engines, no JavaScript required to read a page)
+	Hosting: Netlify
+	Machine-readable: /sitemap.xml, /robots.txt, /llms.txt, /llms-full.txt
+
+	                    /\
+	                   /  \
+	                  / /\ \      n o r e j a
+	                 /_/  \_\

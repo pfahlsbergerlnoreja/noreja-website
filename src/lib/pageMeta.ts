@@ -92,6 +92,10 @@ const pageTitles: Record<string, Record<Language, string>> = {
     en: 'Process Intelligence Compared – Battle Cards | Noreja',
     de: 'Process Intelligence im Vergleich – Battle Cards | Noreja',
   },
+  faq: {
+    en: 'FAQ – Questions about Noreja Process Intelligence | Noreja',
+    de: 'FAQ – Fragen zu Noreja Process Intelligence | Noreja',
+  },
   costOfInaction: {
     en: 'Cost of Inaction Calculator | Noreja',
     de: 'Cost-of-Inaction Rechner | Noreja',
@@ -209,6 +213,11 @@ export function getPageMeta(pathname: string, language: Language): PageMeta {
       language === 'de'
         ? 'Berechne in 5 Minuten, was Prozessprobleme pro Jahr kosten – aufgeteilt auf Zeit, Kosten, Qualität und Komplexität. Plus interaktives Devil’s Quadrangle zum Zielkonflikt jeder Prozessinitiative.'
         : 'Calculate in 5 minutes what your process problems cost per year – split across time, cost, quality and complexity. Plus an interactive Devil’s Quadrangle on the trade-off behind every process initiative.';
+  } else if (routeKey === 'faq') {
+    description =
+      language === 'de'
+        ? 'Antworten auf häufige Fragen zu Noreja: Technologie und Methodik, Einführung und Proof-of-Value, Lizenzen und Preise, Datenhosting und Sicherheit sowie Auszeichnungen.'
+        : 'Answers to common questions about Noreja: technology and methodology, implementation and proof-of-value, licensing and pricing, data hosting and security, and analyst recognition.';
   } else if (routeKey === 'battleCards') {
     description =
       language === 'de'

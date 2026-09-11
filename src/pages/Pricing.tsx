@@ -11,7 +11,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { AnimatedGradientBox } from "@/components/AnimatedGradientBox";
 import { AnimatedGridBackground } from "@/components/AnimatedGridBackground";
-import { FAQSchema } from "@/components/StructuredData";
+import { pricingFaqItems } from "@/lib/faq";
 import { HeroShell } from "@/components/hero/HeroShell";
 import { PricingStaircase } from "@/components/hero/PricingStaircase";
 import { useHeroCycle } from "@/hooks/use-hero-cycle";
@@ -162,7 +162,8 @@ const Pricing = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <FAQSchema items={t.pages.pricing.faq.items} />
+      {/* The FAQPage schema lives on /faq only — emitting the same questions
+          here as well would put identical FAQ markup on two URLs. */}
 
       <HeroShell
         eyebrow={pricingHero.eyebrow[language]}
@@ -896,20 +897,30 @@ const Pricing = () => {
                 DOM entirely. Crawlers saw questions with no answers. Same
                 pattern as CostOfInactionFaq. */}
             <dl className="grid gap-5 md:grid-cols-2">
-              {t.pages.pricing.faq.items.map((item, index) => (
+              {pricingFaqItems.map((item) => (
                 <div
-                  key={index}
+                  key={item.id}
                   className="rounded-2xl border border-border/50 bg-card/60 p-6 backdrop-blur-sm"
                 >
                   <dt className="mb-2 text-base font-semibold text-foreground">
-                    {item.question}
+                    {item.question[language]}
                   </dt>
                   <dd className="text-sm leading-relaxed text-muted-foreground">
-                    {item.answer}
+                    {item.answer[language]}
                   </dd>
                 </div>
               ))}
             </dl>
+
+            <div className="mt-8 text-center">
+              <Link
+                to={getRoutePath('faq', language)}
+                className="group inline-flex items-center gap-2 text-sm font-medium text-primary"
+              >
+                {t.pages.pricing.faq.linkLabel}
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+              </Link>
+            </div>
           </div>
 
           {/* Contact Form Section */}

@@ -87,3 +87,6 @@ Sitemap: https://noreja.com/sitemap.xml
 # https://noreja.com/llms.txt
 # https://noreja.com/llms-full.txt
 # https://noreja.com/llms-ctx-full.txt
+
+# Humans behind the site:
+# https://noreja.com/humans.txt

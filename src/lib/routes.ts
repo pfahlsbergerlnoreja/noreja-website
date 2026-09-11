@@ -54,6 +54,10 @@ export const routes = {
     de: '/de/battle-cards',
     en: '/en/battle-cards',
   },
+  faq: {
+    de: '/de/faq',
+    en: '/en/faq',
+  },
   costOfInaction: {
     de: '/de/cost-of-inaction',
     en: '/en/cost-of-inaction',
@@ -126,6 +130,8 @@ const pathToRouteKey: Record<string, keyof typeof routes> = {
   '/en/definitions': 'definitions',
   '/de/battle-cards': 'battleCards',
   '/en/battle-cards': 'battleCards',
+  '/de/faq': 'faq',
+  '/en/faq': 'faq',
   '/de/cost-of-inaction': 'costOfInaction',
   '/en/cost-of-inaction': 'costOfInaction',
   '/de/smart-data-forge': 'smartDataForge',

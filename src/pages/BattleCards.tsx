@@ -18,6 +18,7 @@ import {
 } from '@/lib/battle-cards';
 import { getRoutePath } from '@/lib/routes';
 import { BreadcrumbSchema } from '@/components/StructuredData';
+import GartnerAwardBadge from '@/components/GartnerAwardBadge';
 import { SITE_URL } from '@/lib/config';
 
 const BattleCards = () => {
@@ -188,6 +189,7 @@ const BattleCards = () => {
               </span>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">{t.title}</h1>
               <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">{t.subtitle}</p>
+              <GartnerAwardBadge />
             </motion.div>
           </div>
         </section>
