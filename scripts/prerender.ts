@@ -126,7 +126,12 @@ function extractContent(html: string): string {
   const KEEP_ATTRS: Record<string, string[]> = {
     script: ['type'],
     a: ['href', 'title', 'hreflang'],
-    img: ['src', 'alt', 'title'],
+    // width/height stay: they are what lets a browser reserve the right box
+    // before the bytes arrive, and the static HTML is exactly the render that
+    // has no JavaScript to fix the layout afterwards. fetchpriority marks the
+    // LCP candidate, loading keeps below-the-fold images out of the critical
+    // path.
+    img: ['src', 'alt', 'title', 'width', 'height', 'loading', 'fetchpriority', 'decoding'],
     time: ['datetime'],
     q: ['cite'],
     blockquote: ['cite'],

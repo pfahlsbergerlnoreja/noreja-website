@@ -12,6 +12,7 @@ import { ArrowRight } from "lucide-react";
 import { getRoutePath } from "@/lib/routes";
 import { BreadcrumbSchema, CaseStudySchema } from "@/components/StructuredData";
 import { SITE_URL } from "@/lib/config";
+import { getImageSizeOr } from "@/lib/imageSize";
 
 // Helper function to format text with markdown and HTML support
 const formatContent = (text: string): string => {
@@ -105,6 +106,8 @@ const renderDetailItem = (
             <img
               src={item.imagePath}
               alt={sectionTitle}
+              width={getImageSizeOr(item.imagePath, { width: 1200, height: 675 }).width}
+              height={getImageSizeOr(item.imagePath, { width: 1200, height: 675 }).height}
               className="w-full h-auto object-contain"
               loading="lazy"
             />
@@ -224,6 +227,8 @@ const SuccessStoryDetail = () => {
                   <img
                     src={successStory.logoUrl}
                     alt={successStory.companyName}
+                    width={getImageSizeOr(successStory.logoUrl, { width: 240, height: 96 }).width}
+                    height={getImageSizeOr(successStory.logoUrl, { width: 240, height: 96 }).height}
                     className="h-16 lg:h-20 w-auto object-contain"
                   />
                 </motion.div>
@@ -419,6 +424,8 @@ const SuccessStoryDetail = () => {
                             <img
                               src={successStory.nextStepsSection[language].imagePath}
                               alt={successStory.nextStepsSection[language].title}
+                              width={getImageSizeOr(successStory.nextStepsSection[language].imagePath, { width: 1200, height: 675 }).width}
+                              height={getImageSizeOr(successStory.nextStepsSection[language].imagePath, { width: 1200, height: 675 }).height}
                               className="w-full h-auto object-contain"
                               loading="lazy"
                             />

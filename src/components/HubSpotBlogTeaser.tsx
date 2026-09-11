@@ -450,6 +450,8 @@ export function HubSpotBlogTeaser({ maxItems = 3, heading, headingHighlight }: H
                             <img 
                               src={post.imageUrl} 
                               alt={post.title}
+                              width={640}
+                              height={360}
                               className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                               loading="lazy"
                             />
@@ -501,6 +503,8 @@ export function HubSpotBlogTeaser({ maxItems = 3, heading, headingHighlight }: H
                       <img 
                         src={post.imageUrl} 
                         alt={post.title}
+                        width={640}
+                        height={360}
                         className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                         loading="lazy"
                       />

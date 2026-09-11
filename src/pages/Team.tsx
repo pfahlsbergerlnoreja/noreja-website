@@ -10,6 +10,7 @@ import { teamMembers, advisoryMembers, initializeTeamData, type TeamMember, type
 import { useLanguage } from "@/contexts/LanguageContext";
 import { getRoutePath } from "@/lib/routes";
 import { TeamSchema } from "@/components/StructuredData";
+import { getImageSizeOr } from "@/lib/imageSize";
 
 export default function Team() {
   const { t, language } = useLanguage();
@@ -168,7 +169,9 @@ export default function Team() {
           </motion.div>
           
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {loadedAdvisoryMembers.map((member, index) => (
+            {loadedAdvisoryMembers.map((member, index) => {
+              const photo = getImageSizeOr(member.imageUrl, { width: 300, height: 300 });
+              return (
               <motion.div
                 key={member.id}
                 initial={{ opacity: 0, y: 20 }}
@@ -184,6 +187,8 @@ export default function Team() {
                         <img
                           src={member.imageUrl}
                           alt={`${member.name} profile`}
+                          width={photo.width}
+                          height={photo.height}
                           className="w-full h-full object-cover"
                           loading="lazy"
                           onError={(e) => {
@@ -213,7 +218,8 @@ export default function Team() {
                   </button>
                 </div>
               </motion.div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>

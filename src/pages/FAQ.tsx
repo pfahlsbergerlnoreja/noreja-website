@@ -151,8 +151,8 @@ const FAQ = () => {
               <img
                 src={badge.src}
                 alt={badge.alt}
-                width={200}
-                height={125}
+                width={400}
+                height={233}
                 loading="lazy"
                 className="w-32 rounded-xl shadow-md shadow-black/20 ring-1 ring-white/10"
               />

@@ -11,7 +11,8 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "generate-sitemap": "tsx scripts/generate-sitemap.ts",
-    "prebuild": "npm run generate-sitemap",
+    "generate-image-sizes": "tsx scripts/generate-image-sizes.ts",
+    "prebuild": "npm run generate-sitemap && npm run generate-image-sizes",
     "build:ssr": "vite build --ssr src/entry-server.tsx --outDir dist-ssr --emptyOutDir --logLevel error"
   },
   "dependencies": {

@@ -15,6 +15,7 @@ import { useHeroCycle } from "@/hooks/use-hero-cycle";
 import { successHero, teaserHeadings } from "@/lib/heroCopy";
 import { siteConfig } from "@/lib/config";
 import { getRoutePath } from "@/lib/routes";
+import { getImageSizeOr } from "@/lib/imageSize";
 
 const SuccessStories = () => {
   const { t, language } = useLanguage();
@@ -137,6 +138,8 @@ const SuccessStories = () => {
                       <img
                         src={story.imageUrl}
                         alt={`${story.companyName} – ${story.industry}`}
+                        width={getImageSizeOr(story.imageUrl, { width: 1405, height: 790 }).width}
+                        height={getImageSizeOr(story.imageUrl, { width: 1405, height: 790 }).height}
                         loading="lazy"
                         className="h-48 w-full object-cover transition-transform duration-500 group-hover:scale-105 sm:h-full sm:min-h-[16rem]"
                       />
@@ -148,6 +151,8 @@ const SuccessStories = () => {
                           <img
                             src={story.logoUrl}
                             alt={`${story.companyName} logo`}
+                            width={getImageSizeOr(story.logoUrl, { width: 240, height: 96 }).width}
+                            height={getImageSizeOr(story.logoUrl, { width: 240, height: 96 }).height}
                             className="h-auto w-full object-contain drop-shadow-lg"
                             loading="lazy"
                           />

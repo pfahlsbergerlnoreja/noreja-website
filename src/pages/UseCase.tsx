@@ -132,6 +132,8 @@ const UseCase = () => {
                               <img
                                 src={section.imagePath}
                                 alt={section.title}
+                                width={1254}
+                                height={1254}
                                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                                 loading="lazy"
                               />

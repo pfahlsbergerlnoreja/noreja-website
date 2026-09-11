@@ -62,8 +62,8 @@ const GartnerAwardBadge = () => {
         <motion.img
           src={gartnerBadge}
           alt={t.alt}
-          width={200}
-          height={125}
+          width={400}
+          height={233}
           loading="lazy"
           className="w-32 shrink-0 rounded-xl shadow-md shadow-black/20 ring-1 ring-white/10 sm:w-36"
           whileHover={{ scale: 1.04, rotate: -1 }}

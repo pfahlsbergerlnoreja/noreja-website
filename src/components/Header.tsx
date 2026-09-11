@@ -92,6 +92,11 @@ export function Header() {
             <motion.img
               src={logo}
               alt="Noreja Logo"
+              width={1566}
+              height={405}
+              // React 18 does not know the camelCase prop yet and drops it with
+              // a warning, so the attribute is passed through verbatim.
+              {...{ fetchpriority: 'high' }}
               className="w-36 aspect-[1566/405]"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}

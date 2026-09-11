@@ -14,6 +14,7 @@ import { useHeroCycle } from "@/hooks/use-hero-cycle";
 import { partnersHero } from "@/lib/heroCopy";
 import { AnimatedGridBackground } from "@/components/AnimatedGridBackground";
 import { getRoutePath } from "@/lib/routes";
+import { getImageSizeOr } from "@/lib/imageSize";
 
 export default function Partners() {
   const { t, language } = useLanguage();
@@ -242,6 +243,8 @@ export default function Partners() {
                                       <img
                                         src={logoSrc}
                                         alt={`${partner.name} logo`}
+                                        width={getImageSizeOr(logoSrc, { width: 240, height: 96 }).width}
+                                        height={getImageSizeOr(logoSrc, { width: 240, height: 96 }).height}
                                         className={`${logoImageClasses[size]} w-full object-contain`}
                                         loading="lazy"
                                         onError={(e) => {

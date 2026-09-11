@@ -9,6 +9,7 @@ import realityIcon from "@/assets/icons/reality.png";
 import multidimensionalIcon from "@/assets/icons/multidimensional.png";
 import contextIcon from "@/assets/icons/context.png";
 import { getRoutePath } from "@/lib/routes";
+import { getImageSizeOr } from "@/lib/imageSize";
 import {
   Carousel,
   CarouselContent,
@@ -256,6 +257,8 @@ export function USPsShowcase() {
                     <motion.img
                       src={usps[selectedCard].icon}
                       alt={usps[selectedCard].title}
+                      width={getImageSizeOr(usps[selectedCard].icon, { width: 256, height: 256 }).width}
+                      height={getImageSizeOr(usps[selectedCard].icon, { width: 256, height: 256 }).height}
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
@@ -320,6 +323,8 @@ export function USPsShowcase() {
                           <img
                             src={usp.icon}
                             alt={usp.title}
+                            width={getImageSizeOr(usp.icon, { width: 256, height: 256 }).width}
+                            height={getImageSizeOr(usp.icon, { width: 256, height: 256 }).height}
                             className="w-24 h-24"
                           />
                         </div>

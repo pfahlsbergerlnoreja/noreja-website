@@ -81,6 +81,8 @@ export function Footer() {
               <motion.img
                 src={logo}
                 alt="Noreja Logo"
+                width={1566}
+                height={405}
                 className="w-36 aspect-[1566/405]"
                 loading="lazy"
                 whileHover={{ scale: 1.05 }}
@@ -242,6 +244,8 @@ export function Footer() {
               <img
                 src={isoBadge}
                 alt="ISO 27001 Certified"
+                width={64}
+                height={64}
                 className="w-20 h-12 object-contain mb-2"
                 loading="lazy"
               />
@@ -253,6 +257,8 @@ export function Footer() {
               <img
                 src={gdprBadge}
                 alt="GDPR Compliant"
+                width={512}
+                height={512}
                 className="w-20 h-12 object-contain mb-2"
                 loading="lazy"
               />

@@ -5,6 +5,7 @@ import { X, Linkedin, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { getPartnersForGrid, type Partner } from "@/lib/partners";
+import { getImageSizeOr } from "@/lib/imageSize";
 import {
   Carousel,
   CarouselContent,
@@ -175,6 +176,8 @@ export function PartnerPhotosGrid() {
                                 <img
                                   src={partner.personPhotoUrl}
                                   alt={partner.quoteAuthor || partner.name}
+                                  width={getImageSizeOr(partner.personPhotoUrl, { width: 300, height: 300 }).width}
+                                  height={getImageSizeOr(partner.personPhotoUrl, { width: 300, height: 300 }).height}
                                   className="w-full h-full object-cover relative z-10"
                                   loading="lazy"
                                   onError={(e) => {
@@ -225,6 +228,8 @@ export function PartnerPhotosGrid() {
                       <img
                         src={partner.personPhotoUrl}
                         alt={partner.quoteAuthor || partner.name}
+                        width={getImageSizeOr(partner.personPhotoUrl, { width: 300, height: 300 }).width}
+                        height={getImageSizeOr(partner.personPhotoUrl, { width: 300, height: 300 }).height}
                         className="w-full h-full object-cover relative z-10"
                         loading="lazy"
                         onError={(e) => {
@@ -280,6 +285,8 @@ export function PartnerPhotosGrid() {
                           <img
                             src={selectedPartner.personPhotoUrl}
                             alt={selectedPartner.quoteAuthor || selectedPartner.name}
+                            width={getImageSizeOr(selectedPartner.personPhotoUrl, { width: 300, height: 300 }).width}
+                            height={getImageSizeOr(selectedPartner.personPhotoUrl, { width: 300, height: 300 }).height}
                             className="w-full h-full object-cover rounded-lg"
                           />
                         </div>
@@ -306,7 +313,9 @@ export function PartnerPhotosGrid() {
                             <img
                               src={getPartnerLogo(selectedPartner)}
                               alt={selectedPartner.name}
-                              className="h-12 mx-auto lg:mx-0 mb-4 object-contain"
+                              width={getImageSizeOr(getPartnerLogo(selectedPartner), { width: 240, height: 96 }).width}
+                              height={getImageSizeOr(getPartnerLogo(selectedPartner), { width: 240, height: 96 }).height}
+                              className="h-12 w-auto mx-auto lg:mx-0 mb-4 object-contain"
                               onError={(e) => {
                                 const target = e.currentTarget as HTMLImageElement;
                                 target.style.display = 'none';

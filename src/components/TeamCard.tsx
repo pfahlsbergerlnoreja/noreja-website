@@ -5,6 +5,7 @@ import { X, Linkedin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { TeamMember } from "@/lib/team";
+import { getImageSizeOr } from "@/lib/imageSize";
 
 interface TeamCardProps {
   member: TeamMember;
@@ -14,6 +15,10 @@ interface TeamCardProps {
 export function TeamCard({ member, index }: TeamCardProps) {
   const { t, language } = useLanguage();
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // Portrait sizes differ per file; the box is a fixed 3/4 aspect either way,
+  // so the attributes only have to stop the browser from reserving nothing.
+  const photo = getImageSizeOr(member.imageUrl, { width: 400, height: 533 });
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -42,6 +47,8 @@ export function TeamCard({ member, index }: TeamCardProps) {
               <img
                 src={member.imageUrl}
                 alt={`${member.name} profile`}
+                width={photo.width}
+                height={photo.height}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 loading="lazy"
                 onError={(e) => {
@@ -119,6 +126,8 @@ export function TeamCard({ member, index }: TeamCardProps) {
                       <img
                         src={member.imageUrl}
                         alt={`${member.name} profile`}
+                        width={photo.width}
+                        height={photo.height}
                         className="w-full h-full object-cover"
                         onError={(e) => {
                           const target = e.target as HTMLImageElement;

@@ -36,6 +36,8 @@ const Maintenance = () => {
               <motion.img
                 src={marmot}
                 alt="Maintenance Marmot"
+                width={777}
+                height={792}
                 className="w-32 h-32 md:w-40 md:h-40 object-contain"
                 animate={{
                   y: [0, -10, 0],

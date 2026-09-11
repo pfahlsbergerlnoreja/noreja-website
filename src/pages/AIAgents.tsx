@@ -76,6 +76,8 @@ function AgentCard({ image, title, description, efficiencyTag, index }: AgentCar
         <img
           src={image}
           alt={title}
+          width={1080}
+          height={1350}
           className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
           loading="lazy"
         />

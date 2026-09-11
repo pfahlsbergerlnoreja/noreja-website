@@ -48,6 +48,15 @@
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), accelerometer=()"
     Cross-Origin-Opener-Policy = "same-origin-allow-popups"
+    # Our own assets may be embedded by noreja.com subdomains (blog., docs.),
+    # but not by unrelated origins.
+    Cross-Origin-Resource-Policy = "same-site"
+    # Declared explicitly, and deliberately NOT "require-corp"/"credentialless":
+    # cross-origin isolation would block the HubSpot form iframes
+    # (forms-eu1.hsforms.com) that every contact and download form depends on,
+    # since they send no CORP header. Revisit only with a staging deploy that
+    # exercises the forms end to end.
+    Cross-Origin-Embedder-Policy = "unsafe-none"
     Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: blob: https:; font-src 'self' data: https:; connect-src 'self' https: wss:; media-src 'self' data: blob: https:; frame-src 'self' https:; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' https:; frame-ancestors 'self'; upgrade-insecure-requests"
 
 # Default: HTML / SPA shell should not be cached aggressively
@@ -61,6 +70,21 @@
 # text/plain, otherwise Netlify guesses application/octet-stream for /.well-known
 [[headers]]
   for = "/.well-known/security.txt"
+  [headers.values]
+    Content-Type = "text/plain; charset=utf-8"
+    Cache-Control = "public, max-age=86400"
+
+# MTA-STS policy (RFC 8461). Must be served as text/plain over HTTPS from the
+# mta-sts.noreja.com host — see the redirect block further down, and the DNS
+# records documented in docs/mta-sts.md.
+[[headers]]
+  for = "/.well-known/mta-sts.txt"
+  [headers.values]
+    Content-Type = "text/plain; charset=utf-8"
+    Cache-Control = "public, max-age=86400"
+
+[[headers]]
+  for = "/humans.txt"
   [headers.values]
     Content-Type = "text/plain; charset=utf-8"
     Cache-Control = "public, max-age=86400"
@@ -133,6 +157,31 @@
   status = 301
   force = true
   query = { trk = "*" }
+
+# --- MTA-STS host -----------------------------------------------------------
+# RFC 8461 requires the policy at https://mta-sts.noreja.com/.well-known/
+# mta-sts.txt. That host is an alias of this site (add it under Domain
+# management in Netlify, plus a CNAME in DNS), so the policy is served from
+# this repo and everything else on that host is sent to the canonical site —
+# otherwise the whole marketing site would be reachable under a second
+# hostname. These two rules must stay above the catch-all at the bottom.
+[[redirects]]
+  from = "https://mta-sts.noreja.com/.well-known/mta-sts.txt"
+  to = "/.well-known/mta-sts.txt"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "https://mta-sts.noreja.com/*"
+  to = "https://noreja.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://mta-sts.noreja.com/*"
+  to = "https://mta-sts.noreja.com/:splat"
+  status = 301
+  force = true
 
 [[redirects]]
   from = "https://www.noreja.com/*"
