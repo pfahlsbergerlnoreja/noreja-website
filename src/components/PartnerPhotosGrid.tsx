@@ -4,7 +4,7 @@ import { createPortal } from "react-dom";
 import { X, Linkedin, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { getPartnersForGrid, type Partner } from "@/lib/partners";
+import { getPartnersForGrid, getPartnerQuote, type Partner } from "@/lib/partners";
 import { getImageSizeOr } from "@/lib/imageSize";
 import {
   Carousel,
@@ -18,7 +18,7 @@ import {
 export function PartnerPhotosGrid() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   // Partners resolve synchronously (image URLs are imported eagerly), so the grid
   // is fully laid out on the first paint — no pop-in, no layout shift (CLS)
   const [loadedPartners] = useState<Partner[]>(() => getPartnersForGrid());
@@ -39,8 +39,12 @@ export function PartnerPhotosGrid() {
       const j = Math.floor(Math.random() * (i + 1));
       [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
     }
-    // Show all partners, not limited to 12
-    return shuffled;
+    // The desktop grid is four columns wide and the mobile carousel pages in
+    // groups of four, so the count is rounded down to a full row. With more
+    // testimonials than fit, the shuffle above decides who is shown on a given
+    // load — everyone rotates in, the section keeps its size.
+    const fullRows = Math.floor(shuffled.length / 4) * 4;
+    return shuffled.slice(0, fullRows || shuffled.length);
   }, [loadedPartners]);
 
   // Group partners into slides of 4 for mobile carousel
@@ -325,7 +329,7 @@ export function PartnerPhotosGrid() {
                         </div>
                         
                         <blockquote className="text-xl lg:text-2xl text-white font-medium mb-8 leading-relaxed whitespace-pre-line">
-                          "{selectedPartner.quote}"
+                          "{getPartnerQuote(selectedPartner.quote, language)}"
                         </blockquote>
                         
                         <div className="text-base lg:text-lg text-gray-300 mb-6">

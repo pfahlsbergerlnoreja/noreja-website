@@ -98,6 +98,7 @@ export const imageSizes: Record<string, [number, number]> = {
   'Neo4j_logo_xlarge.webp': [3168, 864],
   'nexigo_logo.webp': [895, 259],
   'nexigo_white.webp': [895, 259],
+  'niklas_breidert_von_eicken.webp': [300, 417],
   'niyi_changeenablers.webp': [300, 353],
   'nordlb_logo_white.webp': [300, 103],
   'noreja_gartner_coolest_vendor_innovation.webp': [400, 233],

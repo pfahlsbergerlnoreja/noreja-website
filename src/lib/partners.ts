@@ -1,3 +1,5 @@
+import type { Language } from './translations';
+
 // Import all image URLs eagerly: with eager:false each image becomes a tiny
 // extra JS chunk (one network round trip per image in the critical path);
 // eager:true inlines just the URL strings into this bundle.
@@ -40,6 +42,13 @@ const getImagePath = (
 };
 
 export type PartnerLogoSize = 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge';
+
+/**
+ * A testimonial is either one string (the German original, shown in both
+ * languages — how every quote here started out) or a translated pair. Read it
+ * with getPartnerQuote() rather than rendering the field directly.
+ */
+export type PartnerQuote = string | { de: string; en: string };
 export type PartnerCategory =
   | 'technology'
   | 'software'
@@ -67,7 +76,7 @@ export interface Partner {
   personPhotoUrl?: string;
   website: string;
   category?: PartnerCategory | null;
-  quote?: string;
+  quote?: PartnerQuote;
   quoteAuthor?: string;
   linkedin?: string;
   /**
@@ -89,7 +98,7 @@ interface PartnerBase {
   personPhotoFilename?: string;
   website: string;
   category?: PartnerCategory | null;
-  quote?: string;
+  quote?: PartnerQuote;
   quoteAuthor?: string;
   linkedin?: string;
   preferOriginalLogo?: boolean;
@@ -432,6 +441,24 @@ const partnersBase: PartnerBase[] = [
     quote: "",
     quoteAuthor: "",
     linkedin: "",
+  },
+  {
+    id: "23",
+    name: "Johann Von Eicken GmbH",
+    isPartner: false,
+    partnerType: 'advisorWithQuote',
+    logoFilename: "Von_Eicken_logo_white.webp",
+    logoSource: 'customers',
+    logoSize: 'medium',
+    personPhotoFilename: "niklas_breidert_von_eicken.webp",
+    website: "",
+    category: null,
+    quote: {
+      de: "Die erfolgreiche Zusammenarbeit mit Noreja läuft seit 1,5 Jahren und ist ein klarer Mehrwert für uns. Mit der fachlichen Kompetenz des Teams und der profunden Unterstützung in Detailfragen erreichen wir wie geplant unsere Ziele im Data-Management und Process-Intelligence Wesen. Zusätzlich ist die KI-Lösung Minverva ein klarer Baustein unserer KI-Strategie. Die dadurch hergestellte Verknüpfung von Prozesswissen in Echtzeit und dazugehörigem Fachwissen ist eine herausragende Stärke und für unser Knowledge Stack Management ein klarer Vorteil. Das Team um Lukas Pfahlsberger zeigt hierbei stets hervorragenden Weitblick und pragmatischen Lösungswillen. Das Angebot an Service und Software ist für den Mittelstand hervorragend geeignet.",
+      en: "Our successful collaboration with Noreja has been ongoing for 1.5 years and provides clear added value for us. Thanks to the team’s technical expertise and in-depth support on specific details, we are achieving our goals in data management and process intelligence as planned. In addition, the AI solution Minverva is a key component of our AI strategy. The resulting integration of real-time process knowledge with relevant domain expertise is a standout strength and a clear advantage for our knowledge stack management. The team led by Lukas Pfahlsberger consistently demonstrates outstanding foresight and a pragmatic commitment to finding solutions. Their range of services and software is exceptionally well-suited for small and medium-sized businesses.",
+    },
+    quoteAuthor: "Niklas Breidert",
+    linkedin: "https://www.linkedin.com/in/niklas-breidert-a9b352144/"
   }
 ];
 
@@ -655,6 +682,19 @@ export const initializePartnersData = async (): Promise<void> => {
 // Lightweight function that only resolves face photos for partners with photos and quotes.
 // Synchronous (image URLs are imported eagerly) so callers can render the grid on the
 // first paint instead of popping it in after an effect — avoids layout shift (CLS).
+/**
+ * Resolves a testimonial for the active language. Quotes that exist only as a
+ * German original keep being shown as-is in both languages — a machine
+ * translation of a customer statement would misquote the person.
+ */
+export const getPartnerQuote = (
+  quote: PartnerQuote | undefined,
+  language: Language
+): string => {
+  if (!quote) return '';
+  return typeof quote === 'string' ? quote : quote[language];
+};
+
 export const getPartnersForGrid = (): Partner[] => {
   try {
     // Filter to only partners with photos and quotes

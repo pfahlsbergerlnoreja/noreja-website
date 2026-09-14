@@ -472,6 +472,24 @@ export const faqItems: FaqItem[] = [
     ],
   },
   {
+    id: 'g2-reviews',
+    category: 'company',
+    question: {
+      de: 'Wurde Noreja auf G2.com bewertet?',
+      en: 'Has Noreja been reviewed on G2.com?',
+    },
+    answer: {
+      de: 'Ja. Noreja Process Intelligence wurde auf der Bewertungsplattform G2 bewertet. Die Bewertungen stammen von Nutzerinnen und Nutzern der Plattform und sind dort öffentlich einsehbar.',
+      en: 'Yes. Noreja Process Intelligence has been reviewed on the software review platform G2. The reviews come from users of the platform and are publicly available there.',
+    },
+    links: [
+      {
+        label: { de: 'Noreja auf G2.com ansehen', en: 'See Noreja on G2.com' },
+        href: 'https://www.g2.com/products/noreja-process-intelligence/',
+      },
+    ],
+  },
+  {
     id: 'who-is-behind-noreja',
     category: 'company',
     question: {
