@@ -144,6 +144,7 @@ export const imageSizes: Record<string, [number, number]> = {
   'Temu-new.webp': [400, 484],
   'teradata-logo_large.webp': [230, 148],
   'thomas_heinrichs_miragon.webp': [300, 300],
+  'thomas_hofer_untha.webp': [240, 240],
   'Tryton-logo.webp': [980, 254],
   'untha_logo_white.webp': [250, 114],
   'vienesse_logo_white.webp': [134, 99],

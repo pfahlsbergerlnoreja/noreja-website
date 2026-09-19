@@ -459,6 +459,24 @@ const partnersBase: PartnerBase[] = [
     },
     quoteAuthor: "Niklas Breidert",
     linkedin: "https://www.linkedin.com/in/niklas-breidert-a9b352144/"
+  },
+  {
+    id: "24",
+    name: "UNTHA shredding technology GmbH",
+    isPartner: false,
+    partnerType: 'advisorWithQuote',
+    logoFilename: "untha_logo_white.webp",
+    logoSource: 'customers',
+    logoSize: 'medium',
+    personPhotoFilename: "thomas_hofer_untha.webp",
+    website: "https://www.untha.com/",
+    category: null,
+    quote: {
+      de: "Die Process-Intelligence-Lösung von Noreja ist ein Tool, mit dem man schnell und einfach auch komplexe Prozesse analysieren und somit Schwachstellen erkennen kann. Die Zusammenarbeit war perfekt und auch die Möglichkeit, nach kurzer Zeit selbständig mit dem Tool arbeiten zu können, hat uns absolut überzeugt.",
+      en: "Noreja’s Process Intelligence solution is a tool that allows you to quickly and easily analyze even complex processes and thereby identify weaknesses. The collaboration was excellent, and the fact that we were able to work independently with the tool after such a short time really won us over.",
+    },
+    quoteAuthor: "Thomas Hofer",
+    linkedin: "https://www.linkedin.com/in/thomas-hofer-06944a70/"
   }
 ];
 
