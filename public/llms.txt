@@ -54,6 +54,10 @@ Interpretation guidance:
 - [Noreja vs. ARIS Comparison](https://noreja.com/en/battle-cards/aris-process-mining): Comparison with ARIS Process Mining, focused on model-repository conformance versus data-driven causal analysis.
 - [Noreja vs. MPMX Comparison](https://noreja.com/en/battle-cards/mpmx-mehrwerk): Comparison with mpmX (MEHRWERK), focused on Qlik-based frequency analysis versus a dedicated causal graph model.
 
+## End-to-End Processes
+
+- [Lead-to-Activation](https://noreja.com/en/processes/lead-to-activation): The end-to-end process from a new lead to an active service, shown for a district heating connection: process phases (sales, parallel trade coordination, construction and commissioning, handover and start of supply), the business objects involved, and four findings on offer rework, seasonal construction times, handover compliance and construction-start prerequisites. Figures come from a synthetic demonstration dataset. German version: https://noreja.com/de/prozesse/lead-to-activation; full case (German): https://docs.noreja.com/de/article/lead-to-activation-fernwarmeanschluss
+
 ## Use Cases
 
 - [Supply Chain](https://noreja.com/en/use-cases/supply-chain): Process Intelligence applications for supply-chain visibility, inventory, suppliers, working capital, quality, and operational flow.

@@ -36,6 +36,7 @@ const DefinitionDetail = lazy(() => import("./pages/DefinitionDetail"));
 const BattleCards = lazy(() => import("./pages/BattleCards"));
 const CostOfInaction = lazy(() => import("./pages/CostOfInaction"));
 const SmartDataForge = lazy(() => import("./pages/SmartDataForge"));
+const EndToEndProcess = lazy(() => import("./pages/EndToEndProcess"));
 const BattleCardDetail = lazy(() => import("./pages/BattleCardDetail"));
 const FAQ = lazy(() => import("./pages/FAQ"));
 const Imprint = lazy(() => import("./pages/Imprint"));
@@ -161,6 +162,10 @@ export const AppRoutes = () => (
               {/* Smart Data Forge lead magnet */}
               <Route path="/de/smart-data-forge" element={<SmartDataForge />} />
               <Route path="/en/smart-data-forge" element={<SmartDataForge />} />
+
+              {/* End-to-end processes (Lead-to-Activation, …) */}
+              <Route path="/de/prozesse/:processSlug" element={<EndToEndProcess />} />
+              <Route path="/en/processes/:processSlug" element={<EndToEndProcess />} />
 
               {/* Downloads */}
               <Route path="/de/downloads" element={<Downloads />} />

@@ -18,6 +18,7 @@ export interface Translations {
     battleCards: string;
     faq: string;
     costOfInaction: string;
+    smartDataForge: string;
     frontierAgents: string;
     quickNavigation: string;
   };
@@ -716,6 +717,7 @@ export const translations: Record<Language, Translations> = {
       faq: "FAQ",
       frontierAgents: "Process Frontier Agents",
       costOfInaction: "Cost of Inaction",
+      smartDataForge: "Smart Data Forge",
       quickNavigation: "Quick Navigation",
     },
     pages: {
@@ -1492,6 +1494,7 @@ export const translations: Record<Language, Translations> = {
       faq: "FAQ",
       frontierAgents: "Process Frontier Agents",
       costOfInaction: "Cost of Inaction",
+      smartDataForge: "Smart Data Forge",
       quickNavigation: "Schnellnavigation",
     },
     pages: {

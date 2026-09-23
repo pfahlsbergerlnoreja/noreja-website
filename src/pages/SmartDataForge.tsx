@@ -44,7 +44,7 @@ const copy = {
       "Smart Data Forge ist das Tool, mit dem du dir deine Process-Mining-Daten selbst baust: Tabellen, Schlüssel, Zeitstempel, kausale Ketten, gezielte Abweichungen und deren Geschäftsfolgen — fertig als DDL- und INSERT-Skripte für PostgreSQL, SQL Server, MySQL oder Oracle. Du öffnest es und legst los.",
     body: [
       "Ein Demo-Datensatz aus Zufallsrauschen beweist nichts. „20 % aller Fälle haben Rework“ ist keine Erkenntnis, sondern ein Zufallsgenerator mit Prozentzeichen. Interessant wird es erst, wenn die Daten eine bekannte Ursache tragen: Lieferanten der Gruppe C liefern bei kritischem Material häufiger ab — daraus entsteht Prüfverzug, daraus ein Rechnungsblock, daraus eine Zahlung nach Skontofrist.",
-      "Genau das baust du hier: Du legst die Ground Truth vorher fest, erzeugst die Daten dazu und prüfst anschließend, ob Noreja die Ursache findet. Damit wird aus einer Demo ein Test — mit einer Antwort, die du vorher kennst.",
+      "Genau das baust du hier: Du legst die Ursache vorher fest, erzeugst die Daten dazu und prüfst anschließend, ob Noreja sie findet. Damit wird aus einer Demo ein Test — mit einer Antwort, die du vorher kennst.",
     ],
     primaryCta: "Zugang freischalten",
     secondaryCta: "So läuft es ab",
@@ -54,7 +54,7 @@ const copy = {
     why: [
       {
         icon: Target,
-        title: "Ground Truth statt Zufall",
+        title: "Ursache statt Zufall",
         text: "Ursache, betroffene Dimension, Prozesswirkung, Fehlermuster und Business Outcome stehen fest, bevor die erste Zeile erzeugt wird.",
       },
       {
@@ -125,12 +125,12 @@ const copy = {
       {
         icon: Sparkles,
         title: "Datei der KI geben",
-        text: "Lade das Tool zusätzlich in ChatGPT, Claude oder Gemini hoch. Die KI sieht damit die tatsächlich vorhandenen Felder deiner Version und führt dich vom Kundenproblem über Hypothese und Ground Truth Schritt für Schritt durch die Konfiguration.",
+        text: "Lade das Tool zusätzlich in ChatGPT, Claude oder Gemini hoch. Die KI sieht damit die tatsächlich vorhandenen Felder deiner Version und führt dich vom Kundenproblem über Hypothese und Ursache Schritt für Schritt durch die Konfiguration.",
       },
       {
         icon: Repeat,
         title: "Erzeugen, laden, prüfen",
-        text: "Daten generieren, in die Datenbank einspielen, in Noreja analysieren — und gegen die eingebaute Ursache prüfen. Die Konfiguration lässt sich als JSON speichern, wieder laden und von der KI gegen die Ground Truth reviewen.",
+        text: "Daten generieren, in die Datenbank einspielen, in Noreja analysieren — und gegen die eingebaute Ursache prüfen. Die Konfiguration lässt sich als JSON speichern, wieder laden und von der KI gegen die Ursache reviewen.",
       },
     ],
 
@@ -279,9 +279,9 @@ const faq = {
         "Für Demos, Schulungen, Proof of Concepts und Tests, bei denen echte Kundendaten nicht verwendet werden dürfen oder noch nicht verfügbar sind. Weil die Ursache bewusst eingebaut wird, lässt sich außerdem prüfen, ob eine Analyse sie wiederfindet — das geht mit echten Daten nur selten, weil dort niemand die Wahrheit sicher kennt.",
     },
     {
-      question: "Was bedeutet Ground Truth in diesem Zusammenhang?",
+      question: "Was bedeutet „Ursache“ in diesem Zusammenhang?",
       answer:
-        "Ground Truth ist die Ursache, die absichtlich in die Daten eingebaut wird, zusammen mit ihrer Wirkung: betroffene Dimension, veränderter Prozessschritt, entstehendes Fehlermuster und der daraus folgende Business Outcome. Eine gute Ground Truth lässt sich nicht an einer Spalte ROOT_CAUSE ablesen, sondern muss sich aus Beziehungen, Zeitverhalten, Properties und Vergleichsgruppen erschließen.",
+        "Gemeint ist die Ursache, die absichtlich in die Daten eingebaut wird, zusammen mit ihrer Wirkung: betroffene Dimension, veränderter Prozessschritt, entstehendes Fehlermuster und der daraus folgende Business Outcome. Eine gute Ursache lässt sich nicht an einer Spalte ROOT_CAUSE ablesen, sondern muss sich aus Beziehungen, Zeitverhalten, Properties und Vergleichsgruppen erschließen.",
     },
     {
       question: "Verlassen meine Eingaben den Rechner?",
@@ -296,7 +296,7 @@ const faq = {
     {
       question: "Wie arbeitet der AI Coach mit dem Generator zusammen?",
       answer:
-        "Du lädst das Tool in eine KI wie ChatGPT, Claude oder Gemini hoch. Die KI kann damit die tatsächlich vorhandenen Felder lesen und führt dich in der Rolle eines Coaches vom Geschäftsproblem über Hypothese und Ground Truth bis zur konkreten Einstellung jedes einzelnen Generator-Schritts. Die gespeicherte JSON-Konfiguration kannst du der KI anschließend zur Prüfung gegen die Ground Truth geben.",
+        "Du lädst das Tool in eine KI wie ChatGPT, Claude oder Gemini hoch. Die KI kann damit die tatsächlich vorhandenen Felder lesen und führt dich in der Rolle eines Coaches vom Geschäftsproblem über Hypothese und Ursache bis zur konkreten Einstellung jedes einzelnen Generator-Schritts. Die gespeicherte JSON-Konfiguration kannst du der KI anschließend zur Prüfung gegen die Ursache geben.",
     },
     {
       question: "Was kostet der Zugang?",

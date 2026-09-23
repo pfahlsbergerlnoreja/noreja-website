@@ -111,6 +111,21 @@ function extractUseCaseIds(): string[] {
   return useCaseIds;
 }
 
+function extractEndToEndProcessIds(): string[] {
+  const filePath = resolve(__dirname, '../src/lib/endToEndProcesses.ts');
+  const content = readFileSync(filePath, 'utf-8');
+  const ids: string[] = [];
+
+  // Top-level entries only: their `id` sits at four-space indentation.
+  const arrayMatch = content.match(/export const endToEndProcesses: EndToEndProcess\[\] = \[([\s\S]*?)\n\];/);
+  if (arrayMatch) {
+    for (const match of arrayMatch[1].matchAll(/^ {4}id: '([^']+)',/gm)) {
+      ids.push(match[1]);
+    }
+  }
+
+  return ids;
+}
 
 interface SitemapEntry {
   url: string;
@@ -189,6 +204,13 @@ function generateSitemap() {
   useCaseIds.forEach((useCaseId) => {
     addEntry(`/de/use-cases/${useCaseId}`, 0.7, 'monthly');
     addEntry(`/en/use-cases/${useCaseId}`, 0.7, 'monthly');
+  });
+
+  // End-to-end process pages
+  const endToEndProcessIds = extractEndToEndProcessIds();
+  endToEndProcessIds.forEach((processId) => {
+    addEntry(`/de/prozesse/${processId}`, 0.8, 'monthly');
+    addEntry(`/en/processes/${processId}`, 0.8, 'monthly');
   });
 
   // Career / job detail pages

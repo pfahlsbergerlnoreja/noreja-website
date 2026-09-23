@@ -66,6 +66,10 @@ export const routes = {
     de: '/de/smart-data-forge',
     en: '/en/smart-data-forge',
   },
+  endToEndProcess: {
+    de: '/de/prozesse/:processSlug',
+    en: '/en/processes/:processSlug',
+  },
   battleCardDetail: {
     de: '/de/battle-cards/:slug',
     en: '/en/battle-cards/:slug',
@@ -247,6 +251,12 @@ export function translateRoute(pathname: string, targetLang: Language): string {
   if (battleCardDetailMatch) {
     return getRoutePath('battleCardDetail', targetLang, { slug: battleCardDetailMatch[1] });
   }
+
+  // End-to-end process: /de/prozesse/:processSlug or /en/processes/:processSlug
+  const endToEndProcessMatch = pathname.match(/^\/(?:de|en)\/(?:prozesse|processes)\/(.+)$/);
+  if (endToEndProcessMatch) {
+    return getRoutePath('endToEndProcess', targetLang, { processSlug: endToEndProcessMatch[1] });
+  }
   
   // Try to find matching route key from the full pathname
   const routeKey = pathToRouteKey[pathname];
@@ -279,6 +289,9 @@ export function getRouteKeyFromPath(pathname: string): keyof typeof routes | nul
   }
   if (pathname.match(/^\/(?:de|en)\/use-cases\//)) {
     return 'useCases';
+  }
+  if (pathname.match(/^\/(?:de|en)\/(?:prozesse|processes)\/.+/)) {
+    return 'endToEndProcess';
   }
   if (pathname.match(/^\/(?:de|en)\/(?:karriere|careers)\/.+/)) {
     return 'careerDetail';

@@ -270,6 +270,12 @@ Potential applications include onboarding, account opening, KYC, compliance, ris
 
 Use-case pages provide examples and positioning. A concrete implementation requires suitable data, scope, and configuration.
 
+### 13.5 End-to-End Process: Lead-to-Activation (District Heating Connection)
+
+Lead-to-Activation is the end-to-end process from a newly created lead to an active service at the customer. Noreja documents it for a district heating connection at https://noreja.com/en/processes/lead-to-activation (German: https://noreja.com/de/prozesse/lead-to-activation). The process has four phases: sales (lead created, qualified, technical calculation, offer prepared and sent, contract signed, order received); trade coordination, where house connection and planning, subcontracting and civil works including the official permit, and material procurement for pipes, cables and equipment run in parallel until construction starts; construction and commissioning; and handover report, billing and start of supply.
+
+Findings shown on the page, all from a synthetic demonstration dataset rather than customer production data: about 13% of offers are reworked (154 of 1,208 cases); construction takes about 20 days longer in winter; 121 connections start supply before the handover report is finalised and 45 (4.1%) skip finalisation entirely; construction start depends on several prerequisites at once, including 119 of 1,208 cases without a timely permit and 393 units sourced from a second supplier. The largest time lever is civil-works permit to construction start (77.8 days). The page also illustrates that process errors and data errors (for example late ERP timestamps from field synchronisation) look identical in an event log, and that bundled civil-works jobs create cross-instance dependencies a single case history cannot explain. The full case description is in the German Help Center: https://docs.noreja.com/de/article/lead-to-activation-fernwarmeanschluss
+
 ## 14. Customer Evidence
 
 Success Stories describe customer or project-specific applications. They may contain reported improvements in efficiency, transparency, processing time, cost, or analytical effort.

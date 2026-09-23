@@ -41,6 +41,8 @@ export function Footer() {
     { name: t.navigation.faq, routeKey: 'faq' as const, external: false },
     { name: t.navigation.frontierAgents, routeKey: 'aiAgents' as const, external: false },
     { name: t.navigation.costOfInaction, routeKey: 'costOfInaction' as const, external: false },
+    { name: t.navigation.smartDataForge, routeKey: 'smartDataForge' as const, external: false },
+    { name: 'Lead-to-Activation', href: getRoutePath('endToEndProcess', language, { processSlug: 'lead-to-activation' }), external: false },
     { name: t.footer.sections.documentation, href: documentationHref, external: true },
     { name: t.footer.sections.referralProgram, href: siteConfig.links.referralProgram, external: true }
   ];
@@ -157,8 +159,8 @@ export function Footer() {
                   </a>
                 ) : (
                   <Link
-                    key={item.routeKey}
-                    to={getRoutePath(item.routeKey, language)}
+                    key={item.routeKey ?? item.href}
+                    to={item.routeKey ? getRoutePath(item.routeKey, language) : item.href}
                     className="text-muted-foreground hover:text-primary transition-fast text-sm"
                   >
                     {item.name}
