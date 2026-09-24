@@ -33,9 +33,7 @@ const copy = {
     badge: "Talk-Reihe mit Miragon",
     title: "Vier Experten, fünf Meinungen",
     lead:
-      "Vier Experten, fünf Fragen, jeweils vier klare Meinungen – und die fünfte ist deine. In unserer Mini-Gesprächsreihe diskutieren Thomas Heinrichs und Dominik Horn von unserem Partner Miragon mit Jan Mendling und Lukas Pfahlsberger von Noreja über Process Intelligence, Process Mining, IT-Governance und die Zukunft von KI.",
-    body:
-      "Jede Folge stellt eine provokante These auf den Prüfstand: Scheitert Process Intelligence an der Technik oder am Menschen? Warum erzeugt Process Mining so oft keinen Impact? Reicht ein schneller Event-Log für die Prozessaufnahme? Ist die IT wirklich der Blocker bei KI-Initiativen? Und muss jedes Produkt seine eigene KI bekommen?",
+      "In unserer Mini-Gesprächsreihe diskutieren Thomas Heinrichs und Dominik Horn von unserem Partner Miragon mit Jan Mendling und Lukas Pfahlsberger von Noreja über Process Intelligence, Process Mining, IT-Governance und die Zukunft von KI.",
     expertsHeading: "Die vier Experten",
     episodesNav: "Alle fünf Themen",
     episodeLabel: "Thema",
@@ -64,9 +62,7 @@ const copy = {
     badge: "Talk series with Miragon",
     title: "Four experts, five opinions",
     lead:
-      "Four experts, five questions, four clear opinions each – and the fifth one is yours. In our mini talk series, Thomas Heinrichs and Dominik Horn from our partner Miragon discuss process intelligence, process mining, IT governance and the future of AI with Jan Mendling and Lukas Pfahlsberger from Noreja.",
-    body:
-      "Every episode puts a provocative claim to the test: does process intelligence fail because of the technology or because of people? Why does process mining so often create no impact? Is a quick event log enough to capture a process? Is IT really the blocker for AI initiatives? And does every product need its own AI?",
+      "In our mini talk series, Thomas Heinrichs and Dominik Horn from our partner Miragon discuss process intelligence, process mining, IT governance and the future of AI with Jan Mendling and Lukas Pfahlsberger from Noreja.",
     expertsHeading: "The four experts",
     episodesNav: "All five topics",
     episodeLabel: "Topic",
@@ -185,9 +181,6 @@ const ExpertTalk = () => {
               <h1 className="mb-6 text-4xl font-bold md:text-5xl lg:text-6xl">{text.title}</h1>
               <p className="mx-auto max-w-3xl text-lg leading-relaxed text-muted-foreground md:text-xl">
                 {text.lead}
-              </p>
-              <p className="mx-auto mt-4 max-w-3xl text-base leading-relaxed text-muted-foreground">
-                {text.body}
               </p>
               {text.languageNote && (
                 <p className="mt-3 text-sm text-muted-foreground/80">{text.languageNote}</p>
