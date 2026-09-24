@@ -183,6 +183,8 @@ function generateSitemap() {
   addEntry('/en/cost-of-inaction', 0.8, 'weekly');
   addEntry('/de/smart-data-forge', 0.8, 'weekly');
   addEntry('/en/smart-data-forge', 0.8, 'weekly');
+  addEntry('/de/vier-experten-fuenf-meinungen', 0.7, 'monthly');
+  addEntry('/en/four-experts-five-opinions', 0.7, 'monthly');
 
   // Legal pages (lower priority)
   addEntry('/de/impressum', 0.5, 'monthly');

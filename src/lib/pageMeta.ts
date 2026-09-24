@@ -105,6 +105,10 @@ const pageTitles: Record<string, Record<Language, string>> = {
     en: 'Smart Data Forge – Generate Your Own Process Mining Data | Noreja',
     de: 'Smart Data Forge – Process Mining Daten selbst generieren | Noreja',
   },
+  expertTalk: {
+    en: 'Four Experts, Five Opinions – Talk Series with Miragon | Noreja',
+    de: 'Vier Experten, fünf Meinungen – Talk-Reihe mit Miragon | Noreja',
+  },
   maintenance: {
     en: 'Maintenance | Noreja',
     de: 'Wartung | Noreja',
@@ -143,6 +147,10 @@ const extraDescriptions: Record<string, Record<Language, string>> = {
   maintenance: {
     en: 'noreja.com is temporarily unavailable for maintenance.',
     de: 'noreja.com ist wegen Wartungsarbeiten kurzzeitig nicht verfügbar.',
+  },
+  expertTalk: {
+    en: 'Five short videos, four experts from Noreja and Miragon: organisational hurdles of process intelligence, process mining without impact, process discovery beyond the event log, IT governance for AI and the future of AI in products.',
+    de: 'Fünf Videos, vier Experten von Noreja und Miragon: organisatorische Hürden von Process Intelligence, Process Mining ohne Impact, Prozessaufnahme jenseits des Event-Logs, IT-Governance bei KI und die Zukunft von KI in Produkten.',
   },
   smartDataForge: {
     en: 'Smart Data Forge builds synthetic process data with a known root cause: tables, causal chains, deviations and business impact, exported as DDL and INSERT scripts for PostgreSQL, SQL Server, MySQL and Oracle. Runs straight in your browser, nothing to install.',

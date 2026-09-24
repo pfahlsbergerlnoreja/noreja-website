@@ -578,3 +578,87 @@
     }
   }
 }
+
+/* "Vier Experten, fünf Meinungen": always-running rotating border around the
+   comic artwork and the video players. The episode's own comic colour
+   (--frame-accent, an "h s% l%" triple) chases the brand purple around the
+   frame; reuses --story-border-angle / storyBorderRotate. */
+@layer components {
+  .expert-frame {
+    --frame-accent: var(--noreja-tertiary);
+    position: relative;
+    isolation: isolate;
+    border-radius: 1.25rem;
+    padding: 3px;
+    background: hsl(var(--card) / 0.6);
+    box-shadow: 0 24px 60px -30px hsl(var(--frame-accent) / 0.75);
+    transition: transform 300ms ease, box-shadow 300ms ease;
+  }
+
+  .expert-frame::before,
+  .expert-frame::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    padding: 3px;
+    background: conic-gradient(
+      from var(--story-border-angle),
+      transparent 0%,
+      hsl(var(--frame-accent)) 10%,
+      hsl(var(--noreja-main)) 22%,
+      transparent 34%,
+      transparent 50%,
+      hsl(var(--frame-accent)) 60%,
+      hsl(var(--noreja-secondary)) 72%,
+      transparent 84%,
+      transparent 100%
+    );
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    animation: storyBorderRotate 5s linear infinite;
+  }
+
+  .expert-frame::before {
+    z-index: 2;
+  }
+
+  /* blurred copy of the border behind the frame = soft moving glow */
+  .expert-frame::after {
+    z-index: -1;
+    inset: -6px;
+    padding: 9px;
+    filter: blur(14px);
+    opacity: 0.55;
+  }
+
+  .expert-frame > * {
+    position: relative;
+    z-index: 1;
+    border-radius: calc(1.25rem - 3px);
+    overflow: hidden;
+  }
+
+  .expert-frame:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 30px 70px -28px hsl(var(--frame-accent) / 0.9);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .expert-frame::before,
+    .expert-frame::after {
+      animation: none;
+    }
+
+    .expert-frame:hover {
+      transform: none;
+    }
+  }
+}

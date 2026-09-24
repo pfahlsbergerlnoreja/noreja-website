@@ -104,6 +104,14 @@
   [headers.values]
     Content-Type = "text/plain; charset=utf-8"
 
+# Video transcripts of the "Vier Experten, fünf Meinungen" series (German,
+# umlauts) – offered as downloads on /de/vier-experten-fuenf-meinungen
+[[headers]]
+  for = "/transcripts/*"
+  [headers.values]
+    Content-Type = "text/plain; charset=utf-8"
+    Content-Disposition = "attachment"
+
 [[headers]]
   for = "/site.webmanifest"
   [headers.values]

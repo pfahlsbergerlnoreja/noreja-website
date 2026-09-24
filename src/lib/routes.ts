@@ -66,6 +66,10 @@ export const routes = {
     de: '/de/smart-data-forge',
     en: '/en/smart-data-forge',
   },
+  expertTalk: {
+    de: '/de/vier-experten-fuenf-meinungen',
+    en: '/en/four-experts-five-opinions',
+  },
   endToEndProcess: {
     de: '/de/prozesse/:processSlug',
     en: '/en/processes/:processSlug',
@@ -140,6 +144,8 @@ const pathToRouteKey: Record<string, keyof typeof routes> = {
   '/en/cost-of-inaction': 'costOfInaction',
   '/de/smart-data-forge': 'smartDataForge',
   '/en/smart-data-forge': 'smartDataForge',
+  '/de/vier-experten-fuenf-meinungen': 'expertTalk',
+  '/en/four-experts-five-opinions': 'expertTalk',
   '/de/downloads': 'downloads',
   '/en/downloads': 'downloads',
   '/de/kontakt': 'contact',

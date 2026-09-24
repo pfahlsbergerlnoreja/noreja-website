@@ -54,6 +54,10 @@ Interpretation guidance:
 - [Noreja vs. ARIS Comparison](https://noreja.com/en/battle-cards/aris-process-mining): Comparison with ARIS Process Mining, focused on model-repository conformance versus data-driven causal analysis.
 - [Noreja vs. MPMX Comparison](https://noreja.com/en/battle-cards/mpmx-mehrwerk): Comparison with mpmX (MEHRWERK), focused on Qlik-based frequency analysis versus a dedicated causal graph model.
 
+## Videos
+
+- [Four Experts, Five Opinions](https://noreja.com/en/four-experts-five-opinions): Five-part talk series (in German) with Thomas Heinrichs and Dominik Horn from partner Miragon and Jan Mendling and Lukas Pfahlsberger from Noreja: organisational hurdles of process intelligence, why process mining often creates no impact, process discovery beyond the quick event log, IT governance as the real blocker of AI initiatives, and why products will integrate into AI rather than the other way round. German version: https://noreja.com/de/vier-experten-fuenf-meinungen
+
 ## End-to-End Processes
 
 - [Lead-to-Activation](https://noreja.com/en/processes/lead-to-activation): The end-to-end process from a new lead to an active service, shown for a district heating connection: process phases (sales, parallel trade coordination, construction and commissioning, handover and start of supply), the business objects involved, and four findings on offer rework, seasonal construction times, handover compliance and construction-start prerequisites. Figures come from a synthetic demonstration dataset. German version: https://noreja.com/de/prozesse/lead-to-activation; full case (German): https://docs.noreja.com/de/article/lead-to-activation-fernwarmeanschluss
