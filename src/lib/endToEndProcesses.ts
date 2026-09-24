@@ -10,6 +10,22 @@ import calculationRework from '@/assets/processes/premium-to-tax/calculation-rew
 import approvalRework from '@/assets/processes/premium-to-tax/approval-rework.webp';
 import stopAfterReconciliation from '@/assets/processes/premium-to-tax/stop-after-reconciliation.webp';
 import filedNotPaid from '@/assets/processes/premium-to-tax/filed-not-paid.webp';
+import capacityToPayment from '@/assets/processes/purchase-to-pay/capacity-to-payment.webp';
+import cashDiscountLoss from '@/assets/processes/purchase-to-pay/cash-discount-loss.webp';
+import cashDiscountPayments from '@/assets/processes/purchase-to-pay/cash-discount-payments.webp';
+import endToEndPerspective from '@/assets/processes/purchase-to-pay/end-to-end-perspective.webp';
+import eventKnowledgeGraph from '@/assets/processes/purchase-to-pay/event-knowledge-graph.webp';
+import fulfilmentPaths from '@/assets/processes/purchase-to-pay/fulfilment-paths.webp';
+import inspectionBatches from '@/assets/processes/purchase-to-pay/inspection-batches.webp';
+import inspectionTimePattern from '@/assets/processes/purchase-to-pay/inspection-time-pattern.webp';
+import invoiceRework from '@/assets/processes/purchase-to-pay/invoice-rework.webp';
+import invoiceTicketContext from '@/assets/processes/purchase-to-pay/invoice-ticket-context.webp';
+import maverickAttributes from '@/assets/processes/purchase-to-pay/maverick-attributes.webp';
+import maverickBuying from '@/assets/processes/purchase-to-pay/maverick-buying.webp';
+import minervaCauseModel from '@/assets/processes/purchase-to-pay/minerva-cause-model.webp';
+import minervaKeyStatements from '@/assets/processes/purchase-to-pay/minerva-key-statements.webp';
+import minervaStructuralDeviations from '@/assets/processes/purchase-to-pay/minerva-structural-deviations.webp';
+import supplierPerformance from '@/assets/processes/purchase-to-pay/supplier-performance.webp';
 
 /**
  * End-to-end process pages (/de/prozesse/:processSlug, /en/processes/:processSlug).
@@ -41,11 +57,15 @@ export interface ProcessContent {
   /** Answer-first definition of the process — the paragraph answer engines quote. */
   definition: string;
   demoNote: string;
+  /** Optional overview figure next to the definition (e.g. the event knowledge graph). */
+  definitionImage?: ProcessImage;
 
   keyFacts: Array<{ value: string; label: string; detail: string }>;
 
   phasesHeading: string;
   phasesLead: string;
+  /** Optional end-to-end perspective shown above the phase cards. */
+  phasesImage?: ProcessImage;
   phases: Array<{
     title: string;
     summary: string;
@@ -55,6 +75,7 @@ export interface ProcessContent {
     strands?: Array<{ name: string; steps: string[] }>;
     objects: string[];
     question: string;
+    image?: ProcessImage;
   }>;
   objectsNote: string;
 
@@ -68,6 +89,10 @@ export interface ProcessContent {
     text: string[];
     shift: { from: string; to: string };
     image?: ProcessImage;
+    /** Further figures shown directly after the main one. */
+    extraImages?: ProcessImage[];
+    /** A second analysis step within the same finding (drill-down, context, hypothesis test). */
+    deepDive?: { title: string; text: string[]; questions?: string[]; images?: ProcessImage[] };
     note?: { title: string; text: string };
   }>;
 
@@ -82,14 +107,29 @@ export interface ProcessContent {
     image: ProcessImage;
   };
 
-  /** Impact Board prioritisation — only for cases that include one. */
+  /** Minerva cause model: findings condensed into separate cause–effect mechanisms. */
+  causeModel?: {
+    heading: string;
+    lead: string;
+    rows: Array<{ area: string; observation: string; question: string }>;
+    images: ProcessImage[];
+    note?: string;
+  };
+
+  /**
+   * From finding to measure. Items with a `finding` render as a finding → direction → impact
+   * table; without, as a numbered priority list. Quadrants, cost categories and the Impact
+   * Board figure only appear when the case includes them.
+   */
   measures?: {
     heading: string;
     lead: string;
-    quadrants: Array<{ name: string; text: string }>;
-    costCategories: string[];
-    items: Array<{ measure: string; benefit: string }>;
-    image: ProcessImage;
+    tableHeading?: string;
+    quadrants?: Array<{ name: string; text: string }>;
+    costCategories?: string[];
+    items: Array<{ measure: string; benefit: string; finding?: string }>;
+    image?: ProcessImage;
+    note?: string;
   };
 
   /** Open analysis questions the dataset makes answerable. */
@@ -135,6 +175,22 @@ const IMG = {
   approvalRework: { src: approvalRework, width: 927, height: 430 },
   stopAfterReconciliation: { src: stopAfterReconciliation, width: 937, height: 455 },
   filedNotPaid: { src: filedNotPaid, width: 1297, height: 437 },
+  capacityToPayment: { src: capacityToPayment, width: 1517, height: 682 },
+  cashDiscountLoss: { src: cashDiscountLoss, width: 1775, height: 275 },
+  cashDiscountPayments: { src: cashDiscountPayments, width: 990, height: 614 },
+  endToEndPerspective: { src: endToEndPerspective, width: 2000, height: 792 },
+  eventKnowledgeGraph: { src: eventKnowledgeGraph, width: 1422, height: 866 },
+  fulfilmentPaths: { src: fulfilmentPaths, width: 2000, height: 1021 },
+  inspectionBatches: { src: inspectionBatches, width: 1815, height: 644 },
+  inspectionTimePattern: { src: inspectionTimePattern, width: 2000, height: 814 },
+  invoiceRework: { src: invoiceRework, width: 1732, height: 1036 },
+  invoiceTicketContext: { src: invoiceTicketContext, width: 2000, height: 744 },
+  maverickAttributes: { src: maverickAttributes, width: 1867, height: 919 },
+  maverickBuying: { src: maverickBuying, width: 1006, height: 1283 },
+  minervaCauseModel: { src: minervaCauseModel, width: 1068, height: 1050 },
+  minervaKeyStatements: { src: minervaKeyStatements, width: 1057, height: 231 },
+  minervaStructuralDeviations: { src: minervaStructuralDeviations, width: 1133, height: 1303 },
+  supplierPerformance: { src: supplierPerformance, width: 2000, height: 809 },
 };
 
 export const endToEndProcesses: EndToEndProcess[] = [
@@ -1300,6 +1356,921 @@ export const endToEndProcesses: EndToEndProcess[] = [
         caseHeading: 'The full case description',
         caseText:
           'All eleven process steps with source tables and typical waiting times, the supporting data objects and the six deviations in detail – step by step in the Noreja Help Center (in German).',
+        caseCta: 'Read the case in the Help Center',
+      },
+    },
+  },
+  {
+    id: 'purchase-to-pay',
+    name: 'Purchase-to-Pay',
+    caseUrl: 'https://docs.noreja.com/de/article/purchase-to-pay-einkauf-im-sondermaschinenbau',
+    dateModified: '2026-09-24',
+    content: {
+      de: {
+        scenario: 'End-to-End-Prozess · Einkauf im Sondermaschinenbau',
+        metaTitle: 'Purchase-to-Pay Prozess: Causal Process Mining im Einkauf | Noreja',
+        metaDescription:
+          'Purchase-to-Pay vom Bedarf bis zur Zahlung: Prozessphasen, Geschäftsobjekte und fünf Findings aus einer Causal-Process-Mining-Analyse im Sondermaschinenbau – Maverick Buying, Rechnungsnacharbeit, geteilte Prüfkapazität, Skontoverlust und Lieferantenperformance.',
+        tagline:
+          'Vom internen Bedarf bis zur Zahlung: wie Causal Process Mining Freigabeumgehungen, Nacharbeit, Kapazitätsabhängigkeiten und Lieferantenperformance im Purchase-to-Pay-Prozess sichtbar und erklärbar macht.',
+        definition:
+          'Purchase-to-Pay (P2P) beschreibt den End-to-End-Prozess vom entstehenden Beschaffungsbedarf bis zur Bezahlung einer Rechnung. Im Sondermaschinenbau umfasst er Bestellanforderung und Freigabe, Bestellung und Bestellpositionen, die physische oder digitale Bereitstellung, Wareneingang und Prüfung sowie Rechnung, Freigabe und Zahlung. Auf einer Prozessfolie wirkt das linear – in den operativen Daten ist P2P ein Netz aus verbundenen Geschäftsobjekten. Noreja übernimmt diese Daten granular in den Event Knowledge Graph und leitet erst für eine konkrete Fachfrage die passende Prozessperspektive ab.',
+        demoNote:
+          'Hinweis: Alle Kennzahlen stammen aus einem synthetischen Demonstrationsdatensatz. Sie veranschaulichen Analysewege, fachliche Zusammenhänge und Methoden von Causal Process Mining und sind keine Produktivkennzahlen eines Kunden.',
+        definitionImage: {
+          ...IMG.eventKnowledgeGraph,
+          alt: 'Event Knowledge Graph des Purchase-to-Pay-Prozesses: Bestellanforderung, Freigaben A und B, Bestellung, Bestellpositionen für Hardware und Software, Wareneingang, Prüfung, Rechnung, Rechnungslauf und Zahlung als verbundene Objekte',
+          caption: 'Event Knowledge Graph des Purchase-to-Pay-Prozesses: Geschäftsobjekte und ihre Beziehungen bleiben erhalten.',
+        },
+
+        keyFacts: [
+          {
+            value: '1.145',
+            label: 'Maverick Buying',
+            detail: '26,3 % der freigabepflichtigen Bestellanforderungen umgehen den vorgesehenen Freigabepfad',
+          },
+          {
+            value: '647',
+            label: 'Rechnungsnacharbeit',
+            detail: 'Fälle in zwei sichtbaren Wiederholungsschleifen mit 554 und 93 Fällen',
+          },
+          {
+            value: '92',
+            label: 'Prüfkapazität überschritten',
+            detail: '1,62 % von 5.670 Wareneingangsprüfungen',
+          },
+          {
+            value: '2.209',
+            label: 'Zahlungen nach Skontofrist',
+            detail: 'gegenüber 2.717 Zahlungen innerhalb der Skontofrist',
+          },
+          {
+            value: '≈ 1,02 Mio. €',
+            label: 'Modellierter Skontoverlust',
+            detail: 'perspektivweiter Demonstrationswert über alle Zahlungen außerhalb der Skontofrist',
+          },
+          {
+            value: '3',
+            label: 'Auffällige Lieferantengruppen',
+            detail: 'rund 14 bis 15,5 Tage statt überwiegend rund 5,5 bis 6,2 Tage bei den übrigen Lieferanten',
+          },
+        ],
+
+        phasesHeading: 'Der Prozess in vier Phasen',
+        phasesLead:
+          'Die End-to-End-Perspektive verbindet die für die Fachfrage relevanten Teile des gemeinsamen Prozesswissens. Sie reduziert die Komplexität für den Prozessmanager, ohne die zugrunde liegenden Objektbeziehungen zu verlieren.',
+        phasesImage: {
+          ...IMG.endToEndPerspective,
+          alt: 'End-to-End-Perspektive des Purchase-to-Pay-Prozesses von der Bestellanforderung mit und ohne Freigabe über Bestellung, Wareneingang und Prüfung bis zu Rechnung und Zahlung innerhalb bzw. außerhalb der Skontofrist',
+          caption: 'End-to-End-Perspektive des Purchase-to-Pay-Prozesses.',
+        },
+        phases: [
+          {
+            title: 'Bedarf & Freigabe',
+            summary:
+              'Eine Bestellanforderung wird angelegt. Abhängig von Wert und Beschaffungskontext läuft sie direkt weiter oder durchläuft einen mehrstufigen Freigabepfad. Erst danach wird die Bestellung erzeugt.',
+            steps: ['Bestellanforderung erstellt', 'Freigabebedarf bestimmen', 'Freigabe A', 'Freigabe B', 'Bestellung erstellt'],
+            objects: ['Bestellanforderung', 'Freigabe A', 'Freigabe B', 'Bestellung', 'Anforderer', 'Kostenstelle'],
+            question: 'Werden die für diesen konkreten Bedarf vorgesehenen Freigaben tatsächlich durchlaufen?',
+          },
+          {
+            title: 'Bestellung & Erfüllungsweg',
+            summary:
+              'Nach der Bestellung entstehen Bestellpositionen. Je nach Produktgruppe unterscheiden sich die weiteren Wege: Physische Beschaffung benötigt Lieferung und Wareneingang, Software kann über eine Bereitstellung geführt werden.',
+            strands: [
+              { name: 'Physische Ware', steps: ['Bestellposition angelegt (HW)', 'Lieferung', 'Wareneingang', 'Wareneingangsprüfung'] },
+              { name: 'Software', steps: ['Bestellposition angelegt (SW)', 'Software-Bereitstellung'] },
+            ],
+            objects: ['Bestellung', 'Bestellposition', 'Material', 'Lieferant', 'Vertrag', 'Lieferung', 'Software-Bereitstellung'],
+            question: 'Welcher Beschaffungsweg ist für die jeweilige Position fachlich vorgesehen – und wo entstehen Unterschiede in Laufzeit oder Verhalten?',
+            image: {
+              ...IMG.fulfilmentPaths,
+              alt: 'Prozessgraph mit physischem Pfad über Wareneingang, geplante und gebündelte Prüfung sowie Software-Pfad über Software-Bereitstellung, die beide in die Rechnungserfassung münden',
+              caption: 'Physischer Pfad und Software-Pfad bis zur Rechnung.',
+            },
+          },
+          {
+            title: 'Wareneingang & Prüfung',
+            summary:
+              'Physische Waren werden nach dem Eingang geprüft. Dabei arbeitet nicht jeder Vorgang für sich: Viele Wareneingänge teilen sich gemeinsame Prüfressourcen und werden in gebündelten Prüfläufen verarbeitet.',
+            steps: ['Wareneingang eingegangen', 'Wareneingangsprüfung geplant', 'Prüfung gebündelt durchgeführt'],
+            objects: ['Wareneingang', 'Wareneingangsprüfung', 'Prüfplatz', 'Prüf-Batch'],
+            question: 'Wartet ein Vorgang wegen seines eigenen Ablaufs – oder weil mehrere Vorgänge dieselbe Ressource und denselben Prüflauf teilen?',
+          },
+          {
+            title: 'Rechnung, Freigabe & Zahlung',
+            summary:
+              'Nach Erfüllung der Bestellung wird die Rechnung erfasst, freigegeben und im Rechnungslauf verarbeitet. Fachliche Abweichungen können eine manuelle Klärung oder Nachbearbeitung auslösen. Für die Zahlungssteuerung ist außerdem relevant, ob die Zahlung innerhalb der Skontofrist erfolgt.',
+            steps: ['Rechnung erfasst', 'Rechnung freigegeben', 'Rechnungslauf durchgeführt', 'Zahlung ausgeführt'],
+            objects: ['Rechnung', 'Rechnungsfreigabe', 'Rechnungslauf', 'Zahlung', 'Lieferantenklärung', 'Skontofrist'],
+            question: 'Welche Prozessbedingungen erzeugen Nacharbeit, Wartezeit oder einen messbaren finanziellen Effekt?',
+          },
+        ],
+        objectsNote:
+          'Eine Bestellanforderung kann unterschiedliche Freigabelogiken auslösen, eine Bestellung mehrere Positionen enthalten, mehrere Wareneingänge teilen sich Prüfkapazitäten, und Rechnungen stehen in Beziehung zu Bestellung, Wareneingang, Konditionen und Zahlung. Genau diese Beziehungen bleiben im Event Knowledge Graph erhalten.',
+
+        findingsHeading: 'Fünf Findings entlang des Purchase-to-Pay-Prozesses',
+        findingsLead:
+          'Die Findings beantworten unterschiedliche Fachfragen. Entscheidend ist nicht nur, was auffällig ist, sondern warum es passiert, welche Bedingungen dahinterstehen und welcher Hebel sich daraus ableiten lässt.',
+        findings: [
+          {
+            area: 'Compliance',
+            title: 'Der schnellste Pfad ist der falsche',
+            metric: '1.145',
+            metricLabel: 'freigabepflichtige Bestellanforderungen führen direkt zur Bestellung (26,3 %)',
+            text: [
+              'Nicht jedes Prozessproblem zeigt sich als Verzögerung. Im Einkauf kann ein Vorgang sogar besonders schnell sein, weil notwendige Kontrollschritte fehlen. Der Analyzer interpretiert den direkten Übergang deshalb nicht als zusätzliche Prozessvariante, sondern klassifiziert ihn fachlich als Ignorieren eines vorgesehenen Freigabepfads.',
+              'Der Direktpfad benötigt im Mittel nur rund 15 Minuten bis zur Bestellung, der reguläre Weg über die Freigaben mehrere Stunden. Genau darin liegt der Konflikt: Was aus Performance-Sicht attraktiv wirkt, ist aus Governance- und Compliance-Sicht problematisch.',
+            ],
+            shift: {
+              from: 'Welche Variante ist besonders schnell?',
+              to: 'Welche fachlich notwendige Kontrolle fehlt – und bei welchen Geschäftsobjekten konzentriert sich das Verhalten?',
+            },
+            image: {
+              ...IMG.maverickBuying,
+              alt: 'Prozessgraph Bestellanforderung: roter Direktpfad von der Bestellanforderung mit Freigabepflicht zur Bestellung (1.145 Fälle, 26 %, rund 15 Minuten) an Bestellfreigabe A und B vorbei',
+              caption: 'Maverick Buying als Fehlermuster „Ignorieren“: der Direktpfad umgeht Bestellfreigabe A und B.',
+            },
+            deepDive: {
+              title: 'Von 1.145 Fällen zu einer konkreten Ursachenhypothese',
+              text: [
+                'Im nächsten Schritt werden die betroffenen Geschäftsobjekte nach gemeinsamen Merkmalen untersucht. Von den 1.145 Fällen entfallen 597 auf den Anforderer Kaya und 515 auf Braun – zusammen rund 97 % der sichtbaren Maverick-Buying-Fälle. Die Kostenstellen sind dagegen wesentlich gleichmäßiger verteilt.',
+                'Aus einem abstrakten Compliance-Finding wird so eine konkrete organisatorische Hypothese: Warum konzentriert sich die Freigabeumgehung auf diese Anforderergruppe? Mögliche Erklärungen – Berechtigungen, Zeitdruck, lokale Arbeitsweisen oder nicht dokumentierte Sonderregeln – müssen fachlich geprüft werden. Die Analyse grenzt die relevante Population ein, ohne den organisatorischen Grund zu erfinden.',
+              ],
+              images: [
+                {
+                  ...IMG.maverickAttributes,
+                  alt: 'Attributverteilung der 1.145 Maverick-Buying-Fälle: Anforderer Kaya 52,14 % und Braun 44,98 %, Kostenstellen KS-100 bis KS-400 nahezu gleich verteilt',
+                  caption: 'Attributverteilung der Maverick-Buying-Fälle: zwei Anforderer, gleichmäßig verteilte Kostenstellen.',
+                },
+              ],
+            },
+            note: {
+              title: 'Geschwindigkeit ist nur eine Dimension',
+              text: 'Der schnellste Prozesspfad ist nicht automatisch der beste Prozesspfad. Ein schneller Ablauf kann fachlich schlechter sein als ein langsamerer, aber regelkonformer.',
+            },
+          },
+          {
+            area: 'Rechnungsbearbeitung',
+            title: 'Nacharbeit ist ein Symptom, Kontext liefert die Erklärung',
+            metric: '647',
+            metricLabel: 'Fälle in zwei sichtbaren Wiederholungsschleifen (554 und 93 Fälle)',
+            text: [
+              'Lange Rechnungsdurchlaufzeiten können durch Wartezeit, Freigabe, Klärung oder echte Nacharbeit entstehen. Deshalb wird nicht nur die Dauer gemessen, sondern das beobachtete Verhalten als Fehlermuster klassifiziert: Zwei Nachbearbeitungsschleifen umfassen 554 beziehungsweise 93 Fälle.',
+              'Die Aussage „Rechnungen werden nachbearbeitet“ reicht für eine Verbesserung aber noch nicht aus. Entscheidend ist, warum eine manuelle Klärung notwendig wird.',
+            ],
+            shift: {
+              from: 'Wo ist die Durchlaufzeit lang?',
+              to: 'Welche fachliche Inkonsistenz erzeugt die Nacharbeit – und welche Informationen außerhalb der operativen Prozessdaten erklären sie?',
+            },
+            image: {
+              ...IMG.invoiceRework,
+              alt: 'Prozessgraph Rechnungsbearbeitung mit aktivem Fehlermuster „Nachbearbeitung“: rote Schleifen von der Rechnungserfassung über die manuelle Klärung (554 Fälle) und vom Rechnungslauf zurück (93 Fälle)',
+              caption: 'Nachbearbeitung in der Rechnungsbearbeitung: zwei sichtbare Wiederholungsschleifen.',
+            },
+            deepDive: {
+              title: 'Prozessdaten plus Fachkontext',
+              text: [
+                'In der Demo wurden zusätzliche Informationen aus einem IT-/Support-Ticketsystem in Noreja Context eingebunden. Minerva verbindet die betroffenen Rechnungen über ihre Rechnungs-ID mit diesem Kontext. Sichtbar werden konkrete Klärungsgründe: Abweichung zwischen Rechnung und Bestellung, unklare Rechnungspositionen und Preisabweichung zu hinterlegten Konditionen.',
+                'Die Aussage verändert sich damit zu: „Diese fachlichen Gründe lösen die Nacharbeit aus.“ Das ist für die Maßnahmenableitung entscheidend – Mengen- oder Bestellabweichungen verlangen andere Gegenmaßnahmen als unklare Rechnungspositionen oder falsche Konditionsdaten.',
+              ],
+              images: [
+                {
+                  ...IMG.invoiceTicketContext,
+                  alt: 'Minerva-Antwort neben dem Prozessgraphen: Tabelle mit den Rechnungs-IDs 1669, 1945 und 2644 und ihren Klärungsgründen – Abweichung zur Bestellung, unklare Positionen, Preisabweichung',
+                  caption: 'Minerva verbindet Rechnungsnacharbeit mit Kontext aus dem Ticketsystem.',
+                },
+              ],
+            },
+          },
+          {
+            area: 'Shared Capacity',
+            title: 'Wenn mehrere Vorgänge dieselbe Ressource teilen',
+            metric: '92',
+            metricLabel: 'Wareneingangsprüfungen mit überschrittener Prüfkapazität (1,62 % von 5.670)',
+            text: [
+              'Wareneingangsprüfungen sind nicht nur isolierte Schritte einer einzelnen Bestellung. Mehrere Prüfungen können demselben Prüflauf zugeordnet sein und teilen sich die verfügbaren Ressourcen. Ein Vorgang kann fachlich korrekt sein und trotzdem warten, weil andere Vorgänge denselben Prüfslot beanspruchen.',
+              'Die Zeitperspektive macht diese Logik sichtbar: Während Bestellungen und Wareneingänge über die Zeit verteilt entstehen, konzentrieren sich die gebündelt durchgeführten Prüfungen auf wiederkehrende Zeitpunkte.',
+            ],
+            shift: {
+              from: 'Die Prüfung ist langsam.',
+              to: 'Welche gemeinsame Ressource hält diese konkreten Vorgänge zurück – und unter welchen Bedingungen entsteht der Rückstau?',
+            },
+            image: {
+              ...IMG.inspectionBatches,
+              alt: 'Prozessgraph von „Wareneingangsprüfung geplant“ zu „Prüfung gebündelt durchgeführt“ mit Zeitachse',
+              caption: 'Geplante Wareneingangsprüfungen und gemeinsame Prüf-Batches.',
+            },
+            extraImages: [
+              {
+                ...IMG.inspectionTimePattern,
+                alt: 'Punktdiagramm über die Zeit: Bestellungen verteilt, gebündelt durchgeführte Prüfungen konzentriert auf wiederkehrende Zeitpunkte',
+                caption: 'Zeitmuster der gebündelten Wareneingangsprüfung.',
+              },
+            ],
+            deepDive: {
+              title: 'Kapazitätsüberschreitung gezielt isolieren',
+              text: [
+                'Im synthetischen Lauf lassen sich 92 Wareneingangsprüfungen identifizieren, bei denen die verfügbare Prüfkapazität zum vorgesehenen Zeitpunkt überschritten war. Aus dem allgemeinen Zeitmuster wird so ein konkretes operatives Finding: Die Wartezeit ist mit einer dokumentierten Prozessbedingung verknüpft – die gemeinsam genutzte Kapazität reichte für diese Vorgänge nicht aus.',
+              ],
+              questions: [
+                'Sind die Prüfintervalle passend dimensioniert?',
+                'Müssen bestimmte Warengruppen priorisiert werden?',
+                'Ist zusätzliche Kapazität sinnvoll?',
+                'Können Prüfregeln differenziert werden?',
+                'Welche Objekte verursachen wiederkehrend den Backlog?',
+              ],
+            },
+            note: {
+              title: 'Ursachen außerhalb des einzelnen Falls',
+              text: 'Nicht jede Ursache eines Prozessproblems liegt innerhalb derselben Prozessinstanz. In der isolierten Fallhistorie ist kein Fehler erkennbar – erst die gemeinsam genutzte Ressource erklärt die Wartezeit.',
+            },
+          },
+          {
+            area: 'Zahlung',
+            title: 'Vom sichtbaren Zusammenhang zur geprüften Wirkung',
+            metric: '2.209',
+            metricLabel: 'Zahlungen außerhalb der Skontofrist (gegenüber 2.717 innerhalb) · modellierter Skontoverlust rund 1,02 Mio. €',
+            text: [
+              'Im End-to-End-Prozess ist sichtbar, ob Zahlungen innerhalb oder außerhalb der Skontofrist erfolgen. Der Skontoverlust wird als eigenes Zahlungsattribut bis auf Euro-Ebene quantifiziert; für die 2.209 Zahlungen außerhalb der Frist ergibt sich ein modellierter Gesamtwert von rund 1,02 Mio. €.',
+              'Damit entsteht eine wirtschaftlich relevante Frage: Welche Prozessbedingungen tragen tatsächlich dazu bei, dass die Skontofrist verfehlt wird?',
+            ],
+            shift: {
+              from: 'Wo sehen wir gleichzeitig Wartezeit und Kosten?',
+              to: 'Welche veränderbare Bedingung erklärt den wirtschaftlichen Effekt tatsächlich?',
+            },
+            image: {
+              ...IMG.cashDiscountPayments,
+              alt: 'Prozessgraph ab dem Rechnungslauf: Verzweigung in „Zahlung außerhalb Skontofrist“ (2.209) und „Zahlung innerhalb Skontofrist“ (2.717)',
+              caption: 'Zahlungen innerhalb und außerhalb der Skontofrist.',
+            },
+            extraImages: [
+              {
+                ...IMG.cashDiscountLoss,
+                alt: 'Attributauswertung skonto_verlust_eur über 2.209 Zahlungen mit Verteilung und Summe von 1.022.005,75 €',
+                caption: 'Modellierter Skontoverlust als Zahlungsattribut: Summe 1.022.005,75 € im Demodatensatz.',
+              },
+            ],
+            deepDive: {
+              title: 'Kausalität bedeutet auch, Hypothesen zu schärfen',
+              text: [
+                'Eine plausible erste Hypothese: Der Rückstau in der Wareneingangsprüfung verzögert spätere Zahlungen. Noreja verfolgt deshalb die tatsächlich kapazitätsüberschrittenen Prüfungen entlang ihrer Beziehungen bis zur Zahlung.',
+                'Die Analyse trennt dabei zwei Dinge, die in einer reinen End-to-End-Sicht leicht verwechselt werden: Ein operativer Engpass kann real sein, ohne automatisch der alleinige Treiber eines später sichtbaren finanziellen Effekts zu sein. Der Prüfstau bleibt ein relevantes operatives Finding; für den Skontoverlust müssen zusätzlich Rechnungslauf, Zahlungssteuerung, fachliche Klärungen und weitere Bedingungen betrachtet werden.',
+              ],
+              images: [
+                {
+                  ...IMG.capacityToPayment,
+                  alt: 'Prozessgraph der kapazitätsüberschrittenen Prüfungen: von „Prüfung gebündelt durchgeführt“ über Rechnungserfassung, Freigabe und Rechnungslauf bis „Zahlung außerhalb Skontofrist“',
+                  caption: 'Kapazitätsüberschrittene Prüfungen, verfolgt bis zur Zahlung.',
+                },
+              ],
+            },
+            note: {
+              title: 'Keine vorschnelle Root Cause',
+              text: 'Causal Process Mining prüft Ursachenhypothesen entlang derselben betroffenen Geschäftsobjekte – statt zeitliche Nähe mit Ursache gleichzusetzen.',
+            },
+          },
+          {
+            area: 'Lieferantenperformance',
+            title: 'Derselbe Standardprozess, andere Laufzeit',
+            metric: '≈ 2×',
+            metricLabel: 'so lange bei drei Lieferantengruppen: rund 14 bis 15,5 Tage statt überwiegend 5,5 bis 6,2 Tage',
+            text: [
+              'Nicht jede Verzögerung entsteht im eigenen Prozess. Die Lieferantenanalyse vergleicht dieselbe Beschaffungslogik entlang der verbundenen Lieferantenobjekte. Die zusätzliche Zeit konzentriert sich vor allem auf den Übergang Bestellung erstellt → Wareneingang eingegangen.',
+              'Gleichzeitig folgen die langsamen Lieferanten überwiegend dem normalen Prozesspfad, und auch eine außergewöhnlich hohe Nacharbeitsrate erklärt ihre längere Dauer nicht. Ein interner Workflow-Umbau adressiert keine externe Lieferverzögerung – stattdessen rücken Lieferzeiten, Disposition, Vereinbarungen und Lieferantensteuerung in den Fokus.',
+            ],
+            shift: {
+              from: 'Warum ist unser P2P-Prozess langsam?',
+              to: 'Warum benötigt derselbe Standardprozess bei bestimmten Lieferanten deutlich länger?',
+            },
+            image: {
+              ...IMG.supplierPerformance,
+              alt: 'Lieferantenanalyse: Prozessgraph Bestellung erstellt → Wareneingang eingegangen neben einer Minerva-Auswertung mit drei Lieferanten bei rund 14 bis 15 Tagen Durchlaufzeit',
+              caption: 'Analyse der Lieferantenperformance: die Verzögerung liegt zwischen Bestellung und Wareneingang.',
+            },
+          },
+        ],
+
+        causeModel: {
+          heading: 'Von einzelnen Findings zu einem Ursachenbild',
+          lead:
+            'Die Findings gehören zum selben End-to-End-Prozess, haben aber unterschiedliche Wirkmechanismen. Minerva führt die Ergebnisse aus den verschiedenen Perspektiven zusammen – nicht, um eine universelle „Root Cause“ zu konstruieren, sondern um die Ursache-Wirkungs-Mechanismen sauber zu trennen.',
+          rows: [
+            { area: 'Freigabe', observation: '1.145 Maverick-Buying-Fälle', question: 'Warum konzentriert sich die Umgehung auf bestimmte Anforderer?' },
+            { area: 'Rechnung', observation: '647 sichtbare Rework-Fälle', question: 'Welche fachlichen Klärungsgründe wiederholen sich?' },
+            { area: 'Wareneingangsprüfung', observation: '92 Kapazitätsüberschreitungen', question: 'Welche gemeinsame Ressource erzeugt den Backlog?' },
+            { area: 'Zahlung', observation: '2.209 Zahlungen außerhalb Skontofrist', question: 'Welche Prozessbedingungen treiben den monetären Effekt?' },
+            { area: 'Lieferanten', observation: 'drei deutlich langsamere Gruppen', question: 'Liegt der Hebel intern oder beim externen Partner?' },
+          ],
+          images: [
+            {
+              ...IMG.minervaStructuralDeviations,
+              alt: 'Minerva-Analyse der Prozessauslassungen: Tabelle struktureller Defekte im P2P-Prozess, angeführt von Maverick Buying (1.145) und Rechnungsnacharbeit (554)',
+              caption: 'Minerva fasst strukturelle Abweichungen im P2P-Prozess zusammen.',
+            },
+            {
+              ...IMG.minervaCauseModel,
+              alt: 'Minerva-Auswertung: Tortendiagramm der pausierten Objekte und Ursachendiagramm mit Maverick Buying, Rechnungsnacharbeit, gebündelter Bearbeitung und Zahlung außerhalb der Skontofrist',
+              caption: 'Minerva verdichtet die Findings zu einem Ursachenmodell.',
+            },
+            {
+              ...IMG.minervaKeyStatements,
+              alt: 'Kernursachen laut Minerva: Maverick Buying als größtes strukturelles Risiko, Rechnungserfassung als wichtigste Nacharbeitsquelle, gebündelte Prüfung und Rechnungslauf als Verzögerungsursache',
+              caption: 'Verdichtete Kernaussagen aus der Minerva-Analyse.',
+            },
+          ],
+          note: 'Die Business-Frage steht am Anfang – nicht die Bedienlogik des Analysewerkzeugs.',
+        },
+
+        measures: {
+          heading: 'Vom Finding zur priorisierten Maßnahme',
+          lead:
+            'Ein Finding verändert noch keinen Prozess. Im Business Impact Board werden Findings nach Wirkung, Umsetzungsaufwand und Unsicherheit bewertet – Process Excellence und Fachbereich entscheiden gemeinsam, welche Verbesserungsinitiative zuerst umgesetzt wird und welche bewusst später folgt.',
+          tableHeading: 'Beispielhafte Maßnahmenfelder',
+          items: [
+            {
+              finding: 'Maverick Buying',
+              measure: 'Berechtigungen und legitime Sonderregeln prüfen, Bypass-Verhalten gezielt adressieren',
+              benefit: 'Compliance, Governance, Risiko',
+            },
+            {
+              finding: 'Rechnungsnacharbeit',
+              measure: 'Validierungen zwischen Bestellung, Rechnung und Konditionen früher ausführen',
+              benefit: 'Nacharbeitsaufwand, Durchlaufzeit, Qualität',
+            },
+            {
+              finding: 'Prüfkapazität / Batching',
+              measure: 'Prüfintervalle, Priorisierung und Ressourcensteuerung optimieren',
+              benefit: 'Wartezeit, Ressourcennutzung, Stabilität',
+            },
+            {
+              finding: 'Skontoverlust',
+              measure: 'Rechnungslauf und Zahlungslogik auf vermeidbare Verzögerungen untersuchen',
+              benefit: 'Kosten, Cashflow, Skontonutzung',
+            },
+            {
+              finding: 'Lieferantenperformance',
+              measure: 'Langsame Lieferantengruppen gezielt mit Lieferzeit- und Dispositionsdaten analysieren',
+              benefit: 'Versorgungssicherheit, Durchlaufzeit',
+            },
+          ],
+          note: 'Die Priorisierung ist eine fachliche Entscheidung. Minerva bereitet Analysewege, Kontext und Handlungsoptionen vor; die Verantwortung für die Maßnahme bleibt beim Prozessverantwortlichen und Fachbereich.',
+        },
+
+        loop: {
+          heading: 'Der Kreislauf: Insight → Action → Impact → Feedback',
+          lead:
+            'Die Analyse endet nicht mit dem Finding und auch nicht mit der Umsetzung einer Maßnahme. Entscheidend ist, ob sich das Prozessverhalten danach tatsächlich verändert.',
+          steps: [
+            { step: 'Insight', text: 'Fehlermuster, Zeitmuster, fehlende Voraussetzung oder auffällige Objektgruppe erkennen' },
+            { step: 'Action', text: 'Ursache verstehen, Verbesserungshypothese formulieren, Wirkung und Aufwand bewerten und priorisieren' },
+            { step: 'Impact', text: 'Maßnahme umsetzen und den erwarteten fachlichen bzw. wirtschaftlichen Effekt definieren' },
+            { step: 'Feedback', text: 'Wirkung erneut mit denselben granularen Daten und derselben Prozesslogik messen' },
+          ],
+          questions: [
+            'Wird Maverick Buying tatsächlich seltener?',
+            'Sinkt die Rechnungsnacharbeit bei den adressierten Klärungsgründen?',
+            'Geht der Backlog an der Wareneingangsprüfung zurück?',
+            'Werden Lieferzeiten bei den betroffenen Lieferanten stabiler?',
+            'Verbessert sich die Skontonutzung tatsächlich?',
+            'Hat sich das Problem verschoben oder wurde es wirklich gelöst?',
+          ],
+        },
+
+        principlesHeading: 'Fünf Prinzipien für die Analyse',
+        principles: [
+          {
+            title: 'Granularität erhalten',
+            text: 'Bestellanforderung, Freigabe, Bestellung, Position, Wareneingang, Prüfung, Rechnung und Zahlung bleiben mitsamt ihren Beziehungen erhalten – nicht vorab auf eine lineare Prozesssicht reduziert.',
+          },
+          {
+            title: 'Komplexität fachlich reduzieren',
+            text: 'Für eine konkrete Fachfrage entsteht eine passende Perspektive auf den Event Knowledge Graph – einfacher, ohne die Beziehungen zu verlieren.',
+          },
+          {
+            title: 'Kausale Hypothesen prüfen',
+            text: 'Auffälligkeiten werden nicht automatisch als Ursache interpretiert, sondern entlang derselben Geschäftsobjekte gegen den beobachteten Effekt geprüft.',
+          },
+          {
+            title: 'Kontext einbeziehen',
+            text: 'Tickets, Kommentare, Qualitätsmeldungen oder andere Fachinformationen werden mit den betroffenen Geschäftsobjekten verbunden.',
+          },
+          {
+            title: 'Erkenntnisse operationalisieren',
+            text: 'Findings werden zu Verbesserungshypothesen, nach Wirkung, Aufwand und Unsicherheit priorisiert und nach der Umsetzung erneut gemessen.',
+          },
+        ],
+
+        faq: [
+          {
+            question: 'Was ist ein Purchase-to-Pay-Prozess?',
+            answer:
+              'Purchase-to-Pay ist der End-to-End-Prozess vom entstehenden Beschaffungsbedarf bis zur Zahlung. Im gezeigten Sondermaschinenbau-Szenario umfasst er Bestellanforderung, Freigaben, Bestellung und Bestellpositionen, physische bzw. digitale Erfüllung, Wareneingang und Prüfung sowie Rechnung, Freigabe und Zahlung.',
+          },
+          {
+            question: 'Warum ist P2P für Causal Process Mining besonders interessant?',
+            answer:
+              'Weil viele fachlich unterschiedliche Geschäftsobjekte und Abhängigkeiten zusammenspielen. Eine Bestellung kann mehrere Positionen enthalten, physische und digitale Beschaffung folgen unterschiedlichen Wegen, Prüfressourcen werden von mehreren Vorgängen gleichzeitig genutzt und Rechnungen beziehen sich auf Bestellung, Wareneingang und Konditionen. Ursachen sind deshalb nicht immer dort sichtbar, wo ihre Wirkung später auftritt.',
+          },
+          {
+            question: 'Was ist Maverick Buying?',
+            answer:
+              'Maverick Buying bezeichnet hier den Fall, dass eine eigentlich freigabepflichtige Bestellanforderung direkt zur Bestellung führt und vorgesehene Freigabeschritte umgangen werden. Im synthetischen Demo-Run betrifft das 1.145 Fälle bzw. 26,3 % der freigabepflichtigen Anforderungen.',
+          },
+          {
+            question: 'Warum ist eine kurze Durchlaufzeit nicht automatisch positiv?',
+            answer:
+              'Weil Geschwindigkeit nur eine Dimension von Prozessqualität ist. Der Maverick-Buying-Pfad ist deutlich schneller als der reguläre Freigabepfad, gerade weil Kontrollen fehlen. Ein schneller Prozess kann damit fachlich schlechter sein als ein langsamerer, aber regelkonformer.',
+          },
+          {
+            question: 'Wie hilft zusätzlicher Kontext bei Rechnungsnacharbeit?',
+            answer:
+              'Der Analyzer zeigt zunächst, dass Nacharbeit oder manuelle Klärung stattfindet. Über Noreja Context werden zusätzliche Fachinformationen – etwa aus einem Ticketsystem – mit der betroffenen Rechnungs-ID verbunden. So werden konkrete Gründe wie Bestellabweichungen, unklare Rechnungspositionen oder Konditionsprobleme sichtbar.',
+          },
+          {
+            question: 'Was bedeutet Cross-Case-Abhängigkeit bei der Wareneingangsprüfung?',
+            answer:
+              'Mehrere Wareneingänge teilen sich gemeinsame Prüfressourcen und werden in denselben Batchläufen verarbeitet. Ein einzelner Vorgang kann deshalb warten, obwohl in seiner eigenen Historie kein Fehler erkennbar ist – die Ursache liegt in einer gemeinsam genutzten Ressource außerhalb dieses einen Vorgangs.',
+          },
+          {
+            question: 'Verursacht der Prüfstau automatisch den Skontoverlust?',
+            answer:
+              'Nein. Die Wareneingangsprüfung kann ein realer operativer Engpass sein. Für die wirtschaftliche Wirkung muss aber separat geprüft werden, ob dieselben betroffenen Geschäftsobjekte später tatsächlich überproportional die Skontofrist verfehlen. Causal Process Mining trennt sichtbare Korrelationen von geprüften Ursache-Wirkungs-Hypothesen.',
+          },
+          {
+            question: 'Welche Rolle spielt Minerva?',
+            answer:
+              'Minerva unterstützt den Prozessmanager dabei, fachliche Fragen über Prozesswissen, Analyseergebnisse und zusätzlichen Kontext hinweg zu untersuchen. Sie führt Findings zusammen, bildet Vergleichsgruppen, strukturiert Ursachenhypothesen und bereitet Analysewege vor. Die Entscheidung über Maßnahmen bleibt beim Menschen.',
+          },
+          {
+            question: 'Wie werden Findings priorisiert?',
+            answer:
+              'Prozessverantwortliche bewerten Findings beispielsweise nach Wirkung, Umsetzungsaufwand und Unsicherheit. So wird aus einer analytischen Auffälligkeit eine priorisierte Verbesserungsinitiative, deren Wirkung nach der Umsetzung erneut gegen die granularen Prozessdaten gemessen wird.',
+          },
+          {
+            question: 'Stammen die Kennzahlen von einem echten Sondermaschinenbauer?',
+            answer:
+              'Nein. Alle Kennzahlen stammen aus einem synthetischen Demonstrationsdatensatz. Sie machen Analysewege, kausale Fragestellungen und die Verbindung von Prozessdaten mit fachlichem Kontext nachvollziehbar.',
+          },
+        ],
+
+        caseHeading: 'Die vollständige Case-Beschreibung',
+        caseText:
+          'Event Knowledge Graph, End-to-End-Perspektive, alle fünf Findings mit ihren Analyseschritten, das Minerva-Ursachenmodell und der Weg zur priorisierten Maßnahme – Schritt für Schritt im Noreja Help Center.',
+        caseCta: 'Case im Help Center lesen',
+      },
+
+      en: {
+        scenario: 'End-to-end process · Procurement in special machine building',
+        metaTitle: 'Purchase-to-Pay Process: Causal Process Mining in Procurement | Noreja',
+        metaDescription:
+          'Purchase-to-Pay from requirement to payment: process phases, business objects and five findings from a causal process mining analysis in special machine building – maverick buying, invoice rework, shared inspection capacity, lost cash discounts and supplier performance.',
+        tagline:
+          'From internal requirement to payment: how causal process mining makes approval bypasses, rework, capacity dependencies and supplier performance in purchase-to-pay visible and explainable.',
+        definition:
+          'Purchase-to-Pay (P2P) is the end-to-end process from an emerging procurement need to the payment of an invoice. In special machine building it covers purchase requisition and approval, purchase order and order items, physical or digital fulfilment, goods receipt and inspection, and invoice, approval and payment. On a process slide it looks linear – in the operational data P2P is a network of connected business objects. Noreja takes this data in at full granularity in the event knowledge graph and derives the fitting process perspective only for a concrete business question.',
+        demoNote:
+          'Note: all figures come from a synthetic demonstration dataset. They illustrate analysis paths, business relationships and methods of causal process mining and are not production figures of any customer.',
+        definitionImage: {
+          ...IMG.eventKnowledgeGraph,
+          alt: 'Event knowledge graph of the purchase-to-pay process: purchase requisition, approvals A and B, purchase order, order items for hardware and software, goods receipt, inspection, invoice, invoice run and payment as connected objects',
+          caption: 'Event knowledge graph of the purchase-to-pay process: business objects and their relationships are preserved.',
+        },
+
+        keyFacts: [
+          {
+            value: '1,145',
+            label: 'Maverick buying',
+            detail: '26.3% of requisitions requiring approval bypass the intended approval path',
+          },
+          {
+            value: '647',
+            label: 'Invoice rework',
+            detail: 'cases in two visible rework loops with 554 and 93 cases',
+          },
+          {
+            value: '92',
+            label: 'Inspection capacity exceeded',
+            detail: '1.62% of 5,670 goods-receipt inspections',
+          },
+          {
+            value: '2,209',
+            label: 'Payments after discount period',
+            detail: 'compared to 2,717 payments within the cash discount period',
+          },
+          {
+            value: '≈ €1.02m',
+            label: 'Modelled lost cash discount',
+            detail: 'perspective-wide demonstration value across all payments outside the discount period',
+          },
+          {
+            value: '3',
+            label: 'Conspicuous supplier groups',
+            detail: 'about 14 to 15.5 days instead of mostly about 5.5 to 6.2 days for the other suppliers',
+          },
+        ],
+
+        phasesHeading: 'The process in four phases',
+        phasesLead:
+          'The end-to-end perspective connects the parts of the shared process knowledge that matter for the business question. It reduces complexity for the process manager without losing the underlying object relationships.',
+        phasesImage: {
+          ...IMG.endToEndPerspective,
+          alt: 'End-to-end perspective of the purchase-to-pay process from purchase requisition with and without approval through purchase order, goods receipt and inspection to invoice and payment within or outside the cash discount period',
+          caption: 'End-to-end perspective of the purchase-to-pay process.',
+        },
+        phases: [
+          {
+            title: 'Requirement & approval',
+            summary:
+              'A purchase requisition is created. Depending on value and procurement context it either continues directly or passes through a multi-level approval path. Only then is the purchase order created.',
+            steps: ['Requisition created', 'Determine approval need', 'Approval A', 'Approval B', 'Purchase order created'],
+            objects: ['Purchase requisition', 'Approval A', 'Approval B', 'Purchase order', 'Requester', 'Cost centre'],
+            question: 'Are the approvals intended for this specific requirement actually carried out?',
+          },
+          {
+            title: 'Purchase order & fulfilment path',
+            summary:
+              'After the purchase order, order items are created. Depending on the product group the paths differ: physical procurement needs delivery and goods receipt, software can be handled through a provisioning step.',
+            strands: [
+              { name: 'Physical goods', steps: ['Order item created (HW)', 'Delivery', 'Goods receipt', 'Goods-receipt inspection'] },
+              { name: 'Software', steps: ['Order item created (SW)', 'Software provisioning'] },
+            ],
+            objects: ['Purchase order', 'Order item', 'Material', 'Supplier', 'Contract', 'Delivery', 'Software provisioning'],
+            question: 'Which procurement path is intended for each item – and where do lead time or behaviour differ?',
+            image: {
+              ...IMG.fulfilmentPaths,
+              alt: 'Process graph with the physical path via goods receipt, planned and batched inspection, and the software path via software provisioning, both leading into invoice capture',
+              caption: 'Physical path and software path up to the invoice.',
+            },
+          },
+          {
+            title: 'Goods receipt & inspection',
+            summary:
+              'Physical goods are inspected after receipt. Not every case works on its own: many goods receipts share inspection resources and are processed in batched inspection runs.',
+            steps: ['Goods received', 'Inspection planned', 'Batched inspection performed'],
+            objects: ['Goods receipt', 'Goods-receipt inspection', 'Inspection station', 'Inspection batch'],
+            question: 'Is a case waiting because of its own flow – or because several cases share the same resource and inspection run?',
+          },
+          {
+            title: 'Invoice, approval & payment',
+            summary:
+              'Once the order is fulfilled, the invoice is captured, approved and processed in the invoice run. Business deviations can trigger manual clarification or rework. For payment control it also matters whether payment happens within the cash discount period.',
+            steps: ['Invoice captured', 'Invoice approved', 'Invoice run performed', 'Payment executed'],
+            objects: ['Invoice', 'Invoice approval', 'Invoice run', 'Payment', 'Supplier clarification', 'Cash discount period'],
+            question: 'Which process conditions create rework, waiting time or a measurable financial effect?',
+          },
+        ],
+        objectsNote:
+          'A requisition can trigger different approval logics, a purchase order can contain several items, several goods receipts share inspection capacity, and invoices relate to purchase order, goods receipt, conditions and payment. Exactly these relationships are preserved in the event knowledge graph.',
+
+        findingsHeading: 'Five findings along the purchase-to-pay process',
+        findingsLead:
+          'The findings answer different business questions. What matters is not only what stands out, but why it happens, which conditions are behind it and which lever follows from it.',
+        findings: [
+          {
+            area: 'Compliance',
+            title: 'The fastest path is the wrong one',
+            metric: '1,145',
+            metricLabel: 'requisitions requiring approval go straight to a purchase order (26.3%)',
+            text: [
+              'Not every process problem shows up as a delay. In procurement a case can even be particularly fast because necessary control steps are missing. The Analyzer therefore does not treat the direct transition as just another process variant but classifies it as ignoring an intended approval path.',
+              'The direct path takes only about 15 minutes to the purchase order on average; the regular path through the approvals takes several hours. That is the conflict: what looks attractive from a performance view is problematic from a governance and compliance view.',
+            ],
+            shift: {
+              from: 'Which variant is particularly fast?',
+              to: 'Which necessary control is missing – and on which business objects does the behaviour concentrate?',
+            },
+            image: {
+              ...IMG.maverickBuying,
+              alt: 'Purchase requisition process graph: red direct path from the requisition requiring approval to the purchase order (1,145 cases, 26%, about 15 minutes), bypassing approvals A and B',
+              caption: 'Maverick buying as the error pattern “ignore”: the direct path bypasses approvals A and B.',
+            },
+            deepDive: {
+              title: 'From 1,145 cases to a concrete cause hypothesis',
+              text: [
+                'The next step examines the affected business objects for shared characteristics. Of the 1,145 cases, 597 belong to the requester Kaya and 515 to Braun – together about 97% of the visible maverick buying cases. The cost centres, by contrast, are distributed much more evenly.',
+                'An abstract compliance finding thus becomes a concrete organisational hypothesis: why does the approval bypass concentrate on this group of requesters? Possible explanations – permissions, time pressure, local ways of working or undocumented special rules – have to be checked by the business. The analysis narrows down the relevant population without inventing the organisational reason.',
+              ],
+              images: [
+                {
+                  ...IMG.maverickAttributes,
+                  alt: 'Attribute distribution of the 1,145 maverick buying cases: requester Kaya 52.14% and Braun 44.98%, cost centres KS-100 to KS-400 almost evenly distributed',
+                  caption: 'Attribute distribution of maverick buying cases: two requesters, evenly distributed cost centres.',
+                },
+              ],
+            },
+            note: {
+              title: 'Speed is only one dimension',
+              text: 'The fastest process path is not automatically the best one. A fast flow can be worse from a business perspective than a slower but compliant one.',
+            },
+          },
+          {
+            area: 'Invoice processing',
+            title: 'Rework is a symptom, context provides the explanation',
+            metric: '647',
+            metricLabel: 'cases in two visible rework loops (554 and 93 cases)',
+            text: [
+              'Long invoice lead times can come from waiting, approval, clarification or genuine rework. So the analysis does not just measure duration but classifies the observed behaviour as an error pattern: two rework loops cover 554 and 93 cases.',
+              'The statement “invoices are reworked” is not yet enough for an improvement, though. What matters is why manual clarification becomes necessary.',
+            ],
+            shift: {
+              from: 'Where is lead time long?',
+              to: 'Which business inconsistency creates the rework – and which information outside the operational process data explains it?',
+            },
+            image: {
+              ...IMG.invoiceRework,
+              alt: 'Invoice processing graph with the error pattern “rework” active: red loops from invoice capture via manual clarification (554 cases) and back from the invoice run (93 cases)',
+              caption: 'Rework in invoice processing: two visible rework loops.',
+            },
+            deepDive: {
+              title: 'Process data plus business context',
+              text: [
+                'In the demo, additional information from an IT/support ticket system was brought into Noreja Context. Minerva links the affected invoices to this context via their invoice ID. Concrete clarification reasons become visible: mismatch between invoice and purchase order, unclear invoice items and price deviation from the agreed conditions.',
+                'The statement thus changes to: “These business reasons trigger the rework.” That is decisive for deriving measures – quantity or order mismatches need different countermeasures than unclear invoice items or wrong condition data.',
+              ],
+              images: [
+                {
+                  ...IMG.invoiceTicketContext,
+                  alt: 'Minerva answer next to the process graph: table with invoice IDs 1669, 1945 and 2644 and their clarification reasons – mismatch to the order, unclear items, price deviation',
+                  caption: 'Minerva links invoice rework with context from the ticket system.',
+                },
+              ],
+            },
+          },
+          {
+            area: 'Shared capacity',
+            title: 'When several cases share the same resource',
+            metric: '92',
+            metricLabel: 'goods-receipt inspections with exceeded inspection capacity (1.62% of 5,670)',
+            text: [
+              'Goods-receipt inspections are not just isolated steps of a single purchase order. Several inspections can be assigned to the same inspection run and share the available resources. A case can be correct and still wait because other cases claim the same inspection slot.',
+              'The time perspective makes this logic visible: while purchase orders and goods receipts arise spread out over time, the batched inspections concentrate on recurring points in time.',
+            ],
+            shift: {
+              from: 'The inspection is slow.',
+              to: 'Which shared resource is holding back these specific cases – and under which conditions does the backlog build up?',
+            },
+            image: {
+              ...IMG.inspectionBatches,
+              alt: 'Process graph from “inspection planned” to “batched inspection performed” with a time axis',
+              caption: 'Planned goods-receipt inspections and shared inspection batches.',
+            },
+            extraImages: [
+              {
+                ...IMG.inspectionTimePattern,
+                alt: 'Dotted chart over time: purchase orders spread out, batched inspections concentrated on recurring points in time',
+                caption: 'Time pattern of batched goods-receipt inspection.',
+              },
+            ],
+            deepDive: {
+              title: 'Isolating capacity overruns',
+              text: [
+                'In the synthetic run, 92 goods-receipt inspections can be identified where the available inspection capacity was exceeded at the planned time. The general time pattern thus becomes a concrete operational finding: the waiting time is linked to a documented process condition – the shared capacity was not sufficient for these cases.',
+              ],
+              questions: [
+                'Are the inspection intervals sized appropriately?',
+                'Do certain material groups need to be prioritised?',
+                'Does additional capacity make sense?',
+                'Can inspection rules be differentiated?',
+                'Which objects repeatedly cause the backlog?',
+              ],
+            },
+            note: {
+              title: 'Causes outside the individual case',
+              text: 'Not every cause of a process problem lies within the same process instance. The isolated case history shows no error – only the shared resource explains the waiting time.',
+            },
+          },
+          {
+            area: 'Payment',
+            title: 'From a visible correlation to a tested effect',
+            metric: '2,209',
+            metricLabel: 'payments outside the cash discount period (vs. 2,717 within) · modelled lost discount about €1.02m',
+            text: [
+              'The end-to-end process shows whether payments happen within or outside the cash discount period. The lost discount is quantified down to the euro as a separate payment attribute; for the 2,209 payments outside the period the modelled total is about €1.02m.',
+              'This raises an economically relevant question: which process conditions actually contribute to the discount period being missed?',
+            ],
+            shift: {
+              from: 'Where do we see waiting time and cost at the same time?',
+              to: 'Which changeable condition actually explains the economic effect?',
+            },
+            image: {
+              ...IMG.cashDiscountPayments,
+              alt: 'Process graph from the invoice run: branching into “payment outside discount period” (2,209) and “payment within discount period” (2,717)',
+              caption: 'Payments within and outside the cash discount period.',
+            },
+            extraImages: [
+              {
+                ...IMG.cashDiscountLoss,
+                alt: 'Attribute evaluation skonto_verlust_eur across 2,209 payments with distribution and a sum of €1,022,005.75',
+                caption: 'Modelled lost cash discount as a payment attribute: €1,022,005.75 in the demo dataset.',
+              },
+            ],
+            deepDive: {
+              title: 'Causality also means sharpening hypotheses',
+              text: [
+                'A plausible first hypothesis: the backlog in goods-receipt inspection delays later payments. Noreja therefore follows the inspections that actually exceeded capacity along their relationships all the way to payment.',
+                'The analysis separates two things that are easily confused in a plain end-to-end view: an operational bottleneck can be real without automatically being the sole driver of a financial effect visible later. The inspection backlog remains a relevant operational finding; for the lost discount, invoice run, payment control, business clarifications and further conditions also have to be considered.',
+              ],
+              images: [
+                {
+                  ...IMG.capacityToPayment,
+                  alt: 'Process graph of the capacity-exceeding inspections: from “batched inspection performed” through invoice capture, approval and invoice run to “payment outside discount period”',
+                  caption: 'Capacity-exceeding inspections, followed through to payment.',
+                },
+              ],
+            },
+            note: {
+              title: 'No premature root cause',
+              text: 'Causal process mining tests cause hypotheses along the same affected business objects – instead of equating proximity in time with cause.',
+            },
+          },
+          {
+            area: 'Supplier performance',
+            title: 'Same standard process, different lead time',
+            metric: '≈ 2×',
+            metricLabel: 'as long for three supplier groups: about 14 to 15.5 days instead of mostly 5.5 to 6.2 days',
+            text: [
+              'Not every delay originates in your own process. The supplier analysis compares the same procurement logic along the connected supplier objects. The extra time concentrates mainly on the transition purchase order created → goods received.',
+              'At the same time the slow suppliers mostly follow the normal process path, and an unusually high rework rate does not explain their longer duration either. An internal workflow redesign does not address an external delivery delay – instead delivery times, material planning, agreements and supplier management move into focus.',
+            ],
+            shift: {
+              from: 'Why is our P2P process slow?',
+              to: 'Why does the same standard process take much longer with certain suppliers?',
+            },
+            image: {
+              ...IMG.supplierPerformance,
+              alt: 'Supplier analysis: process graph purchase order created → goods received next to a Minerva evaluation showing three suppliers at about 14 to 15 days lead time',
+              caption: 'Supplier performance analysis: the delay lies between purchase order and goods receipt.',
+            },
+          },
+        ],
+
+        causeModel: {
+          heading: 'From individual findings to a picture of causes',
+          lead:
+            'The findings belong to the same end-to-end process but have different mechanisms. Minerva brings together the results from the different perspectives – not to construct one universal “root cause”, but to separate the cause–effect mechanisms cleanly.',
+          rows: [
+            { area: 'Approval', observation: '1,145 maverick buying cases', question: 'Why does the bypass concentrate on certain requesters?' },
+            { area: 'Invoice', observation: '647 visible rework cases', question: 'Which business clarification reasons recur?' },
+            { area: 'Goods-receipt inspection', observation: '92 capacity overruns', question: 'Which shared resource creates the backlog?' },
+            { area: 'Payment', observation: '2,209 payments outside discount period', question: 'Which process conditions drive the monetary effect?' },
+            { area: 'Suppliers', observation: 'three much slower groups', question: 'Is the lever internal or with the external partner?' },
+          ],
+          images: [
+            {
+              ...IMG.minervaStructuralDeviations,
+              alt: 'Minerva analysis of process omissions: table of structural defects in the P2P process, led by maverick buying (1,145) and invoice rework (554)',
+              caption: 'Minerva summarises structural deviations in the P2P process.',
+            },
+            {
+              ...IMG.minervaCauseModel,
+              alt: 'Minerva evaluation: pie chart of paused objects and a cause diagram with maverick buying, invoice rework, batched processing and payment outside the discount period',
+              caption: 'Minerva condenses the findings into a cause model.',
+            },
+            {
+              ...IMG.minervaKeyStatements,
+              alt: 'Core causes according to Minerva: maverick buying as the biggest structural risk, invoice capture as the main source of rework, batched inspection and invoice run as causes of delay',
+              caption: 'Condensed key statements from the Minerva analysis.',
+            },
+          ],
+          note: 'The business question comes first – not the operating logic of the analysis tool.',
+        },
+
+        measures: {
+          heading: 'From finding to prioritised measure',
+          lead:
+            'A finding does not change a process yet. In the Business Impact Board, findings are rated by impact, implementation effort and uncertainty – process excellence and the business decide together which improvement initiative comes first and which deliberately follows later.',
+          tableHeading: 'Example fields of action',
+          items: [
+            {
+              finding: 'Maverick buying',
+              measure: 'Review permissions and legitimate special rules, address bypass behaviour specifically',
+              benefit: 'Compliance, governance, risk',
+            },
+            {
+              finding: 'Invoice rework',
+              measure: 'Run validations between purchase order, invoice and conditions earlier',
+              benefit: 'Rework effort, lead time, quality',
+            },
+            {
+              finding: 'Inspection capacity / batching',
+              measure: 'Optimise inspection intervals, prioritisation and resource control',
+              benefit: 'Waiting time, resource utilisation, stability',
+            },
+            {
+              finding: 'Lost cash discount',
+              measure: 'Examine invoice run and payment logic for avoidable delays',
+              benefit: 'Cost, cash flow, discount utilisation',
+            },
+            {
+              finding: 'Supplier performance',
+              measure: 'Analyse slow supplier groups specifically with delivery-time and material-planning data',
+              benefit: 'Security of supply, lead time',
+            },
+          ],
+          note: 'Prioritisation is a business decision. Minerva prepares analysis paths, context and options; responsibility for the measure stays with the process owner and the business.',
+        },
+
+        loop: {
+          heading: 'The loop: Insight → Action → Impact → Feedback',
+          lead:
+            'The analysis does not end with the finding, nor with implementing a measure. What matters is whether process behaviour actually changes afterwards.',
+          steps: [
+            { step: 'Insight', text: 'Spot the error pattern, time pattern, missing prerequisite or conspicuous object group' },
+            { step: 'Action', text: 'Understand the cause, formulate an improvement hypothesis, rate and prioritise impact and effort' },
+            { step: 'Impact', text: 'Implement the measure and define the expected business or economic effect' },
+            { step: 'Feedback', text: 'Measure the effect again with the same granular data and the same process logic' },
+          ],
+          questions: [
+            'Is maverick buying actually becoming less frequent?',
+            'Does invoice rework drop for the addressed clarification reasons?',
+            'Is the backlog at goods-receipt inspection going down?',
+            'Are delivery times of the affected suppliers becoming more stable?',
+            'Is cash discount utilisation actually improving?',
+            'Has the problem shifted, or has it really been solved?',
+          ],
+        },
+
+        principlesHeading: 'Five principles behind the analysis',
+        principles: [
+          {
+            title: 'Keep granularity',
+            text: 'Requisition, approval, purchase order, item, goods receipt, inspection, invoice and payment are kept with their relationships – not reduced up front to one linear process view.',
+          },
+          {
+            title: 'Reduce complexity by business question',
+            text: 'A concrete business question gets a fitting perspective on the event knowledge graph – simpler, without losing the relationships.',
+          },
+          {
+            title: 'Test causal hypotheses',
+            text: 'Anomalies are not automatically read as causes but tested against the observed effect along the same business objects.',
+          },
+          {
+            title: 'Include context',
+            text: 'Tickets, comments, quality notifications or other business information are linked to the affected business objects.',
+          },
+          {
+            title: 'Operationalise insights',
+            text: 'Findings become improvement hypotheses, are prioritised by impact, effort and uncertainty and measured again after implementation.',
+          },
+        ],
+
+        faq: [
+          {
+            question: 'What is a purchase-to-pay process?',
+            answer:
+              'Purchase-to-pay is the end-to-end process from an emerging procurement need to payment. In the special machine building scenario shown, it covers purchase requisition, approvals, purchase order and order items, physical or digital fulfilment, goods receipt and inspection, and invoice, approval and payment.',
+          },
+          {
+            question: 'Why is P2P particularly interesting for causal process mining?',
+            answer:
+              'Because many different business objects and dependencies interact. A purchase order can contain several items, physical and digital procurement follow different paths, inspection resources are used by several cases at once, and invoices relate to purchase order, goods receipt and conditions. Causes are therefore not always visible where their effect appears later.',
+          },
+          {
+            question: 'What is maverick buying?',
+            answer:
+              'Here, maverick buying means that a purchase requisition that actually requires approval leads straight to a purchase order and the intended approval steps are bypassed. In the synthetic demo run this affects 1,145 cases, or 26.3% of requisitions requiring approval.',
+          },
+          {
+            question: 'Why is a short lead time not automatically positive?',
+            answer:
+              'Because speed is only one dimension of process quality. The maverick buying path is much faster than the regular approval path precisely because controls are missing. A fast process can therefore be worse from a business perspective than a slower but compliant one.',
+          },
+          {
+            question: 'How does additional context help with invoice rework?',
+            answer:
+              'The Analyzer first shows that rework or manual clarification takes place. Through Noreja Context, additional business information – for example from a ticket system – is linked to the affected invoice ID. This reveals concrete reasons such as order mismatches, unclear invoice items or condition problems.',
+          },
+          {
+            question: 'What does cross-case dependency mean in goods-receipt inspection?',
+            answer:
+              'Several goods receipts share inspection resources and are processed in the same batch runs. A single case can therefore wait although its own history shows no error – the cause lies in a shared resource outside that one case.',
+          },
+          {
+            question: 'Does the inspection backlog automatically cause the lost cash discount?',
+            answer:
+              'No. Goods-receipt inspection can be a real operational bottleneck. For the economic effect, however, it has to be checked separately whether the same affected business objects later actually miss the discount period disproportionately. Causal process mining separates visible correlations from tested cause–effect hypotheses.',
+          },
+          {
+            question: 'What role does Minerva play?',
+            answer:
+              'Minerva helps the process manager investigate business questions across process knowledge, analysis results and additional context. It brings findings together, forms comparison groups, structures cause hypotheses and prepares analysis paths. The decision about measures stays with people.',
+          },
+          {
+            question: 'How are findings prioritised?',
+            answer:
+              'Process owners rate findings for example by impact, implementation effort and uncertainty. An analytical anomaly thus becomes a prioritised improvement initiative whose effect is measured again against the granular process data after implementation.',
+          },
+          {
+            question: 'Are the figures from a real special machine builder?',
+            answer:
+              'No. All figures come from a synthetic demonstration dataset. They make analysis paths, causal questions and the connection of process data with business context understandable.',
+          },
+        ],
+
+        caseHeading: 'The full case description',
+        caseText:
+          'Event knowledge graph, end-to-end perspective, all five findings with their analysis steps, the Minerva cause model and the path to a prioritised measure – step by step in the Noreja Help Center (in German).',
         caseCta: 'Read the case in the Help Center',
       },
     },

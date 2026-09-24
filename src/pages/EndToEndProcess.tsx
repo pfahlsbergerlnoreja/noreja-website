@@ -53,6 +53,12 @@ const labels = {
     measure: "Maßnahme",
     benefit: "Erwarteter Nutzen",
     loopQuestionsHeading: "Nach jeder Maßnahme prüfen",
+    causeArea: "Bereich",
+    causeObservation: "Beobachtung",
+    causeQuestion: "Weiterführende Fachfrage",
+    measureFinding: "Finding",
+    measureDirection: "Mögliche Verbesserungsrichtung",
+    measureImpact: "Zu bewertende Wirkung",
     faqHeading: "Häufige Fragen zu",
     contact: "Eigenen Prozess analysieren? Sprich mit uns.",
     quote: ["„", "“"],
@@ -81,6 +87,12 @@ const labels = {
     measure: "Measure",
     benefit: "Expected benefit",
     loopQuestionsHeading: "Check after every measure",
+    causeArea: "Area",
+    causeObservation: "Observation",
+    causeQuestion: "Follow-up business question",
+    measureFinding: "Finding",
+    measureDirection: "Possible improvement direction",
+    measureImpact: "Impact to assess",
     faqHeading: "Frequently asked questions about",
     contact: "Want to analyse your own process? Talk to us.",
     quote: ["“", "”"],
@@ -105,13 +117,35 @@ function ProcessFigure({ image, enlargeLabel }: { image: ProcessImage; enlargeLa
           loading="lazy"
           decoding="async"
           style={{ maxWidth: image.width }}
-          className="mx-auto h-auto w-full"
+          className="mx-auto h-auto max-h-[760px] w-full object-contain"
         />
       </a>
       <figcaption className="px-4 py-3 text-xs leading-relaxed text-muted-foreground md:px-5">
         {image.caption}
       </figcaption>
     </figure>
+  );
+}
+
+const principleCols: Record<number, string> = { 3: "lg:grid-cols-3", 5: "lg:grid-cols-5" };
+
+/** Strip-like screenshots (e.g. an attribute bar) stay unreadable at half width. */
+const isWide = (image: ProcessImage) => image.width / image.height > 3;
+
+/**
+ * Several figures side by side on wider screens when at least two of them are
+ * regular-shaped; wide strips and an odd last figure span the full row.
+ */
+function FigureGrid({ images, enlargeLabel }: { images: ProcessImage[]; enlargeLabel: string }) {
+  const sideBySide = images.filter((image) => !isWide(image)).length > 1;
+  return (
+    <div className={`grid gap-4 ${sideBySide ? "md:grid-cols-2 md:[&>*:last-child:nth-child(odd)]:col-span-2" : ""}`}>
+      {images.map((image) => (
+        <div key={image.src} className={sideBySide && isWide(image) ? "md:col-span-2" : undefined}>
+          <ProcessFigure image={image} enlargeLabel={enlargeLabel} />
+        </div>
+      ))}
+    </div>
   );
 }
 
@@ -127,6 +161,7 @@ const EndToEndProcess = () => {
   if (!process) return <NotFound />;
 
   const text = process.content[language];
+  const byFinding = Boolean(text.measures?.items.some((item) => item.finding));
   const l = labels[language];
   const pageUrl = `${SITE_URL}${getRoutePath("endToEndProcess", language, { processSlug: process.id })}`;
   const absolute = (src: string) => (src.startsWith("http") ? src : `${SITE_URL}${src}`);
@@ -142,7 +177,7 @@ const EndToEndProcess = () => {
     mainEntityOfPage: pageUrl,
     inLanguage: language,
     dateModified: process.dateModified,
-    image: [...text.findings.map((finding) => finding.image), text.measures?.image]
+    image: [text.definitionImage, ...text.findings.map((finding) => finding.image), text.measures?.image]
       .filter((image): image is ProcessImage => Boolean(image))
       .map((image) => absolute(image.src)),
     author: { "@type": "Organization", name: "Noreja Intelligence GmbH", url: SITE_URL },
@@ -235,8 +270,14 @@ const EndToEndProcess = () => {
               </p>
             </div>
 
+            {text.definitionImage && (
+              <div className="mx-auto mt-6 max-w-4xl">
+                <ProcessFigure image={text.definitionImage} enlargeLabel={l.enlarge} />
+              </div>
+            )}
+
             <h2 className="sr-only">{l.keyFactsHeading}</h2>
-            <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <div className={`mt-8 grid gap-4 sm:grid-cols-2 ${text.keyFacts.length % 3 === 0 ? "lg:grid-cols-3" : "lg:grid-cols-4"}`}>
               {text.keyFacts.map((fact, index) => (
                 <motion.div
                   key={fact.label}
@@ -260,6 +301,12 @@ const EndToEndProcess = () => {
               <h2 className="mb-3 text-2xl font-bold text-foreground md:text-3xl">{text.phasesHeading}</h2>
               <p className="text-base leading-relaxed text-muted-foreground">{text.phasesLead}</p>
             </div>
+
+            {text.phasesImage && (
+              <div className="mb-8">
+                <ProcessFigure image={text.phasesImage} enlargeLabel={l.enlarge} />
+              </div>
+            )}
 
             {/* phase stepper */}
             <ol className="mb-8 hidden items-center justify-center gap-2 md:flex">
@@ -327,7 +374,7 @@ const EndToEndProcess = () => {
                       )}
 
                       {phase.strands && (
-                        <div className="grid gap-3 sm:grid-cols-3">
+                        <div className={`grid gap-3 ${phase.strands.length === 2 ? "sm:grid-cols-2" : "sm:grid-cols-3"}`}>
                           {phase.strands.map((strand) => (
                             <div key={strand.name} className="rounded-xl border border-border/50 bg-background/40 p-4">
                               <p className="mb-3 text-sm font-semibold text-foreground">{strand.name}</p>
@@ -355,6 +402,12 @@ const EndToEndProcess = () => {
                       </div>
                     </div>
                   </div>
+
+                  {phase.image && (
+                    <div className="mt-6">
+                      <ProcessFigure image={phase.image} enlargeLabel={l.enlarge} />
+                    </div>
+                  )}
                 </motion.article>
               ))}
             </div>
@@ -434,7 +487,40 @@ const EndToEndProcess = () => {
                     </div>
                   </div>
 
-                  {finding.image && <ProcessFigure image={finding.image} enlargeLabel={l.enlarge} />}
+                  {(finding.image || finding.extraImages) && (
+                    <FigureGrid
+                      images={[...(finding.image ? [finding.image] : []), ...(finding.extraImages ?? [])]}
+                      enlargeLabel={l.enlarge}
+                    />
+                  )}
+
+                  {finding.deepDive && (
+                    <div className="mt-6 rounded-2xl border border-border/50 bg-card/60 p-6 backdrop-blur-sm md:p-8">
+                      <h4 className="mb-3 text-lg font-bold text-foreground">{finding.deepDive.title}</h4>
+                      <div className="space-y-3">
+                        {finding.deepDive.text.map((paragraph) => (
+                          <p key={paragraph} className="text-sm leading-relaxed text-muted-foreground">
+                            {paragraph}
+                          </p>
+                        ))}
+                      </div>
+                      {finding.deepDive.questions && (
+                        <ul className="mt-4 grid gap-2 sm:grid-cols-2">
+                          {finding.deepDive.questions.map((question) => (
+                            <li key={question} className="flex items-start gap-2 text-sm text-muted-foreground">
+                              <ChevronRight className="mt-0.5 h-4 w-4 flex-shrink-0 text-accent" aria-hidden="true" />
+                              {question}
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                      {finding.deepDive.images && (
+                        <div className="mt-6">
+                          <FigureGrid images={finding.deepDive.images} enlargeLabel={l.enlarge} />
+                        </div>
+                      )}
+                    </div>
+                  )}
 
                   {finding.note && (
                     <aside className="mt-4 rounded-2xl border border-accent/30 bg-accent/5 p-5">
@@ -489,6 +575,50 @@ const EndToEndProcess = () => {
           </section>
         )}
 
+        {/* ----------------------------------------------------- cause model */}
+        {text.causeModel && (
+          <section className="px-4 py-12 lg:px-8">
+            <div className="mx-auto w-full max-w-6xl">
+              <div className="mx-auto mb-8 max-w-3xl text-center">
+                <h2 className="mb-3 flex items-center justify-center gap-2 text-2xl font-bold text-foreground md:text-3xl">
+                  <Sparkles className="h-6 w-6 text-accent" />
+                  {text.causeModel.heading}
+                </h2>
+                <p className="text-base leading-relaxed text-muted-foreground">{text.causeModel.lead}</p>
+              </div>
+
+              <div className="mb-6 overflow-x-auto rounded-2xl border border-border/50 bg-card/60 backdrop-blur-sm">
+                <table className="w-full min-w-[560px] text-left text-sm">
+                  <thead className="border-b border-border/50 text-xs uppercase tracking-[0.08em] text-muted-foreground">
+                    <tr>
+                      <th scope="col" className="px-4 py-3 font-semibold">{l.causeArea}</th>
+                      <th scope="col" className="px-4 py-3 font-semibold">{l.causeObservation}</th>
+                      <th scope="col" className="px-4 py-3 font-semibold">{l.causeQuestion}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {text.causeModel.rows.map((row) => (
+                      <tr key={row.area} className="border-b border-border/30 last:border-0">
+                        <th scope="row" className="px-4 py-3 font-semibold text-foreground">{row.area}</th>
+                        <td className="px-4 py-3 font-semibold text-noreja-main">{row.observation}</td>
+                        <td className="px-4 py-3 text-muted-foreground">{row.question}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              <FigureGrid images={text.causeModel.images} enlargeLabel={l.enlarge} />
+
+              {text.causeModel.note && (
+                <p className="mx-auto mt-6 max-w-3xl text-center text-sm font-medium leading-relaxed text-foreground">
+                  {text.causeModel.note}
+                </p>
+              )}
+            </div>
+          </section>
+        )}
+
         {/* -------------------------------------------------------- measures */}
         {text.measures && (
           <section className="px-4 py-12 lg:px-8">
@@ -498,7 +628,8 @@ const EndToEndProcess = () => {
                 <p className="text-base leading-relaxed text-muted-foreground">{text.measures.lead}</p>
               </div>
 
-              <div className="mb-6 grid gap-6 lg:grid-cols-2">
+              <div className={`mb-6 grid gap-6 ${text.measures.quadrants ? "lg:grid-cols-2" : ""}`}>
+                {text.measures.quadrants && (
                 <div className="rounded-2xl border border-border/50 bg-card/60 p-6 backdrop-blur-sm">
                   <h3 className="mb-4 text-base font-semibold text-foreground">{l.quadrantsHeading}</h3>
                   <dl className="grid grid-cols-2 gap-3">
@@ -511,7 +642,7 @@ const EndToEndProcess = () => {
                   </dl>
                   <h3 className="mt-6 mb-3 text-base font-semibold text-foreground">{l.costHeading}</h3>
                   <ul className="flex flex-wrap gap-2">
-                    {text.measures.costCategories.map((category) => (
+                    {text.measures.costCategories?.map((category) => (
                       <li
                         key={category}
                         className="rounded-md border border-border/60 bg-background/50 px-2.5 py-1 text-xs text-foreground"
@@ -521,23 +652,36 @@ const EndToEndProcess = () => {
                     ))}
                   </ul>
                 </div>
+                )}
 
                 <div className="overflow-x-auto rounded-2xl border border-border/50 bg-card/60 backdrop-blur-sm">
                   <table className="w-full min-w-[440px] text-left text-sm">
                     <caption className="px-4 pt-4 text-left text-base font-semibold text-foreground">
-                      {l.measuresTableHeading}
+                      {text.measures.tableHeading ?? l.measuresTableHeading}
                     </caption>
                     <thead className="border-b border-border/50 text-xs uppercase tracking-[0.08em] text-muted-foreground">
-                      <tr>
-                        <th scope="col" className="px-4 py-3 font-semibold">{l.priority}</th>
-                        <th scope="col" className="px-4 py-3 font-semibold">{l.measure}</th>
-                        <th scope="col" className="px-4 py-3 font-semibold">{l.benefit}</th>
-                      </tr>
+                      {byFinding ? (
+                        <tr>
+                          <th scope="col" className="px-4 py-3 font-semibold">{l.measureFinding}</th>
+                          <th scope="col" className="px-4 py-3 font-semibold">{l.measureDirection}</th>
+                          <th scope="col" className="px-4 py-3 font-semibold">{l.measureImpact}</th>
+                        </tr>
+                      ) : (
+                        <tr>
+                          <th scope="col" className="px-4 py-3 font-semibold">{l.priority}</th>
+                          <th scope="col" className="px-4 py-3 font-semibold">{l.measure}</th>
+                          <th scope="col" className="px-4 py-3 font-semibold">{l.benefit}</th>
+                        </tr>
+                      )}
                     </thead>
                     <tbody>
                       {text.measures.items.map((item, index) => (
                         <tr key={item.measure} className="border-b border-border/30 last:border-0">
-                          <td className="px-4 py-3 font-bold text-noreja-main">{index + 1}</td>
+                          {byFinding ? (
+                            <th scope="row" className="px-4 py-3 font-semibold text-foreground">{item.finding}</th>
+                          ) : (
+                            <td className="px-4 py-3 font-bold text-noreja-main">{index + 1}</td>
+                          )}
                           <td className="px-4 py-3 text-foreground">{item.measure}</td>
                           <td className="px-4 py-3 text-muted-foreground">{item.benefit}</td>
                         </tr>
@@ -547,7 +691,13 @@ const EndToEndProcess = () => {
                 </div>
               </div>
 
-              <ProcessFigure image={text.measures.image} enlargeLabel={l.enlarge} />
+              {text.measures.image && <ProcessFigure image={text.measures.image} enlargeLabel={l.enlarge} />}
+
+              {text.measures.note && (
+                <p className="mx-auto mt-2 max-w-3xl text-center text-sm leading-relaxed text-muted-foreground">
+                  {text.measures.note}
+                </p>
+              )}
             </div>
           </section>
         )}
@@ -622,7 +772,7 @@ const EndToEndProcess = () => {
             <h2 className="mb-8 text-center text-2xl font-bold text-foreground md:text-3xl">
               {text.principlesHeading}
             </h2>
-            <div className={`grid gap-4 sm:grid-cols-2 ${text.principles.length === 3 ? "lg:grid-cols-3" : "lg:grid-cols-4"}`}>
+            <div className={`grid gap-4 sm:grid-cols-2 ${principleCols[text.principles.length] ?? "lg:grid-cols-4"}`}>
               {text.principles.map((principle, index) => (
                 <motion.div
                   key={principle.title}

@@ -39,13 +39,14 @@ export function Footer() {
     { name: t.navigation.definitions, routeKey: 'definitions' as const, external: false },
     { name: t.navigation.battleCards, routeKey: 'battleCards' as const, external: false },
     { name: t.navigation.faq, routeKey: 'faq' as const, external: false },
-    { name: t.navigation.frontierAgents, routeKey: 'aiAgents' as const, external: false },
     { name: t.navigation.costOfInaction, routeKey: 'costOfInaction' as const, external: false },
-    { name: t.navigation.smartDataForge, routeKey: 'smartDataForge' as const, external: false },
-    { name: 'Lead-to-Activation', href: getRoutePath('endToEndProcess', language, { processSlug: 'lead-to-activation' }), external: false },
-    { name: 'Premium-to-Tax', href: getRoutePath('endToEndProcess', language, { processSlug: 'premium-to-tax' }), external: false },
     { name: t.footer.sections.documentation, href: documentationHref, external: true },
-    { name: t.footer.sections.referralProgram, href: siteConfig.links.referralProgram, external: true }
+    { name: t.footer.sections.referralProgram, href: siteConfig.links.referralProgram, external: true },
+    { name: t.navigation.smartDataForge, routeKey: 'smartDataForge' as const, external: false },
+    { name: t.navigation.frontierAgents, routeKey: 'aiAgents' as const, external: false },
+    { name: 'Purchase-to-Pay', href: getRoutePath('endToEndProcess', language, { processSlug: 'purchase-to-pay' }), external: false },
+    { name: 'Lead-to-Activation', href: getRoutePath('endToEndProcess', language, { processSlug: 'lead-to-activation' }), external: false },
+    { name: 'Premium-to-Tax', href: getRoutePath('endToEndProcess', language, { processSlug: 'premium-to-tax' }), external: false }
   ];
 
   const legalLinks = [
@@ -146,7 +147,15 @@ export function Footer() {
           {/* Navigation */}
           <div className="md:col-span-3">
             <p id="footer-nav-resources" className="font-semibold mb-4">{t.footer.sections.resources}</p>
-            <nav aria-labelledby="footer-nav-resources" className="grid grid-cols-2 xl:grid-cols-3 gap-x-6 gap-y-2.5">
+            {/* Filled column by column, so the end of resourcesLinks forms the rightmost column. */}
+            <nav
+              aria-labelledby="footer-nav-resources"
+              className="grid grid-flow-col grid-cols-2 xl:grid-cols-3 gap-x-6 gap-y-2.5 [grid-template-rows:repeat(var(--rows-2),auto)] xl:[grid-template-rows:repeat(var(--rows-3),auto)]"
+              style={{
+                '--rows-2': Math.ceil(resourcesLinks.length / 2),
+                '--rows-3': Math.ceil(resourcesLinks.length / 3),
+              } as React.CSSProperties}
+            >
               {resourcesLinks.map((item) => (
                 item.external ? (
                   <a
