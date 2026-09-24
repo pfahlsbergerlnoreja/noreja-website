@@ -104,7 +104,8 @@ function ProcessFigure({ image, enlargeLabel }: { image: ProcessImage; enlargeLa
           height={image.height}
           loading="lazy"
           decoding="async"
-          className="h-auto w-full"
+          style={{ maxWidth: image.width }}
+          className="mx-auto h-auto w-full"
         />
       </a>
       <figcaption className="px-4 py-3 text-xs leading-relaxed text-muted-foreground md:px-5">
@@ -141,7 +142,9 @@ const EndToEndProcess = () => {
     mainEntityOfPage: pageUrl,
     inLanguage: language,
     dateModified: process.dateModified,
-    image: [text.findings[0].image.src, text.measuresImage.src].map(absolute),
+    image: [...text.findings.map((finding) => finding.image), text.measures?.image]
+      .filter((image): image is ProcessImage => Boolean(image))
+      .map((image) => absolute(image.src)),
     author: { "@type": "Organization", name: "Noreja Intelligence GmbH", url: SITE_URL },
     publisher: { "@type": "Organization", name: "Noreja Intelligence GmbH", url: SITE_URL },
     isBasedOn: process.caseUrl,
@@ -362,6 +365,33 @@ const EndToEndProcess = () => {
           </div>
         </section>
 
+        {/* -------------------------------------------------- context objects */}
+        {text.contextObjects && (
+          <section className="px-4 py-12 lg:px-8">
+            <div className="mx-auto w-full max-w-6xl">
+              <div className="mx-auto mb-8 max-w-3xl text-center">
+                <h2 className="mb-3 text-2xl font-bold text-foreground md:text-3xl">{text.contextObjects.heading}</h2>
+                <p className="text-base leading-relaxed text-muted-foreground">{text.contextObjects.lead}</p>
+              </div>
+              <dl className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {text.contextObjects.items.map((item, index) => (
+                  <motion.div
+                    key={item.name}
+                    {...fadeUp}
+                    transition={{ duration: 0.5, delay: index * 0.06 }}
+                    className="rounded-2xl border border-border/50 bg-card/60 p-5 backdrop-blur-sm"
+                  >
+                    <dt className="mb-2 inline-block rounded-md border border-noreja-main/30 bg-noreja-main/10 px-2.5 py-1 font-mono text-xs font-semibold text-foreground">
+                      {item.name}
+                    </dt>
+                    <dd className="text-sm leading-relaxed text-muted-foreground">{item.text}</dd>
+                  </motion.div>
+                ))}
+              </dl>
+            </div>
+          </section>
+        )}
+
         {/* -------------------------------------------------------- findings */}
         <section id="findings" className="scroll-mt-24 px-4 py-12 lg:px-8">
           <div className="mx-auto w-full max-w-6xl">
@@ -404,7 +434,7 @@ const EndToEndProcess = () => {
                     </div>
                   </div>
 
-                  <ProcessFigure image={finding.image} enlargeLabel={l.enlarge} />
+                  {finding.image && <ProcessFigure image={finding.image} enlargeLabel={l.enlarge} />}
 
                   {finding.note && (
                     <aside className="mt-4 rounded-2xl border border-accent/30 bg-accent/5 p-5">
@@ -419,134 +449,163 @@ const EndToEndProcess = () => {
         </section>
 
         {/* ---------------------------------------------------------- levers */}
-        <section className="px-4 py-12 lg:px-8">
-          <div className="mx-auto w-full max-w-6xl">
-            <div className="mx-auto mb-8 max-w-3xl text-center">
-              <h2 className="mb-3 flex items-center justify-center gap-2 text-2xl font-bold text-foreground md:text-3xl">
-                <Sparkles className="h-6 w-6 text-accent" />
-                {text.leversHeading}
-              </h2>
-              <p className="text-base leading-relaxed text-muted-foreground">{text.leversLead}</p>
-            </div>
-
-            <div className="grid gap-6 lg:grid-cols-[1.2fr_1fr] lg:items-start">
-              <div className="overflow-x-auto rounded-2xl border border-border/50 bg-card/60 backdrop-blur-sm">
-                <table className="w-full min-w-[520px] text-left text-sm">
-                  <thead className="border-b border-border/50 text-xs uppercase tracking-[0.08em] text-muted-foreground">
-                    <tr>
-                      <th scope="col" className="px-4 py-3 font-semibold">{l.leversArea}</th>
-                      <th scope="col" className="px-4 py-3 font-semibold">{l.leversStatement}</th>
-                      <th scope="col" className="px-4 py-3 font-semibold">{l.leversLever}</th>
-                      <th scope="col" className="px-4 py-3 text-right font-semibold">{l.leversValue}</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {text.levers.map((lever) => (
-                      <tr key={lever.area} className="border-b border-border/30 last:border-0">
-                        <th scope="row" className="px-4 py-3 font-semibold text-foreground">{lever.area}</th>
-                        <td className="px-4 py-3 text-muted-foreground">{lever.statement}</td>
-                        <td className="px-4 py-3 text-muted-foreground">{lever.lever}</td>
-                        <td className="whitespace-nowrap px-4 py-3 text-right font-bold text-noreja-main">{lever.value}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+        {text.levers && (
+          <section className="px-4 py-12 lg:px-8">
+            <div className="mx-auto w-full max-w-6xl">
+              <div className="mx-auto mb-8 max-w-3xl text-center">
+                <h2 className="mb-3 flex items-center justify-center gap-2 text-2xl font-bold text-foreground md:text-3xl">
+                  <Sparkles className="h-6 w-6 text-accent" />
+                  {text.levers.heading}
+                </h2>
+                <p className="text-base leading-relaxed text-muted-foreground">{text.levers.lead}</p>
               </div>
-              <ProcessFigure image={text.leversImage} enlargeLabel={l.enlarge} />
+
+              <div className="grid gap-6 lg:grid-cols-[1.2fr_1fr] lg:items-start">
+                <div className="overflow-x-auto rounded-2xl border border-border/50 bg-card/60 backdrop-blur-sm">
+                  <table className="w-full min-w-[520px] text-left text-sm">
+                    <thead className="border-b border-border/50 text-xs uppercase tracking-[0.08em] text-muted-foreground">
+                      <tr>
+                        <th scope="col" className="px-4 py-3 font-semibold">{l.leversArea}</th>
+                        <th scope="col" className="px-4 py-3 font-semibold">{l.leversStatement}</th>
+                        <th scope="col" className="px-4 py-3 font-semibold">{l.leversLever}</th>
+                        <th scope="col" className="px-4 py-3 text-right font-semibold">{l.leversValue}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {text.levers.rows.map((lever) => (
+                        <tr key={lever.area} className="border-b border-border/30 last:border-0">
+                          <th scope="row" className="px-4 py-3 font-semibold text-foreground">{lever.area}</th>
+                          <td className="px-4 py-3 text-muted-foreground">{lever.statement}</td>
+                          <td className="px-4 py-3 text-muted-foreground">{lever.lever}</td>
+                          <td className="whitespace-nowrap px-4 py-3 text-right font-bold text-noreja-main">{lever.value}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                <ProcessFigure image={text.levers.image} enlargeLabel={l.enlarge} />
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+        )}
 
         {/* -------------------------------------------------------- measures */}
-        <section className="px-4 py-12 lg:px-8">
-          <div className="mx-auto w-full max-w-6xl">
-            <div className="mx-auto mb-8 max-w-3xl text-center">
-              <h2 className="mb-3 text-2xl font-bold text-foreground md:text-3xl">{text.measuresHeading}</h2>
-              <p className="text-base leading-relaxed text-muted-foreground">{text.measuresLead}</p>
-            </div>
+        {text.measures && (
+          <section className="px-4 py-12 lg:px-8">
+            <div className="mx-auto w-full max-w-6xl">
+              <div className="mx-auto mb-8 max-w-3xl text-center">
+                <h2 className="mb-3 text-2xl font-bold text-foreground md:text-3xl">{text.measures.heading}</h2>
+                <p className="text-base leading-relaxed text-muted-foreground">{text.measures.lead}</p>
+              </div>
 
-            <div className="mb-6 grid gap-6 lg:grid-cols-2">
-              <div className="rounded-2xl border border-border/50 bg-card/60 p-6 backdrop-blur-sm">
-                <h3 className="mb-4 text-base font-semibold text-foreground">{l.quadrantsHeading}</h3>
-                <dl className="grid grid-cols-2 gap-3">
-                  {text.quadrants.map((quadrant) => (
-                    <div key={quadrant.name} className="rounded-xl border border-border/50 bg-background/40 p-3">
-                      <dt className="text-sm font-semibold text-foreground">{quadrant.name}</dt>
-                      <dd className="text-xs text-muted-foreground">{quadrant.text}</dd>
-                    </div>
-                  ))}
-                </dl>
-                <h3 className="mt-6 mb-3 text-base font-semibold text-foreground">{l.costHeading}</h3>
-                <ul className="flex flex-wrap gap-2">
-                  {text.costCategories.map((category) => (
-                    <li
-                      key={category}
-                      className="rounded-md border border-border/60 bg-background/50 px-2.5 py-1 text-xs text-foreground"
-                    >
-                      {category}
+              <div className="mb-6 grid gap-6 lg:grid-cols-2">
+                <div className="rounded-2xl border border-border/50 bg-card/60 p-6 backdrop-blur-sm">
+                  <h3 className="mb-4 text-base font-semibold text-foreground">{l.quadrantsHeading}</h3>
+                  <dl className="grid grid-cols-2 gap-3">
+                    {text.measures.quadrants.map((quadrant) => (
+                      <div key={quadrant.name} className="rounded-xl border border-border/50 bg-background/40 p-3">
+                        <dt className="text-sm font-semibold text-foreground">{quadrant.name}</dt>
+                        <dd className="text-xs text-muted-foreground">{quadrant.text}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                  <h3 className="mt-6 mb-3 text-base font-semibold text-foreground">{l.costHeading}</h3>
+                  <ul className="flex flex-wrap gap-2">
+                    {text.measures.costCategories.map((category) => (
+                      <li
+                        key={category}
+                        className="rounded-md border border-border/60 bg-background/50 px-2.5 py-1 text-xs text-foreground"
+                      >
+                        {category}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="overflow-x-auto rounded-2xl border border-border/50 bg-card/60 backdrop-blur-sm">
+                  <table className="w-full min-w-[440px] text-left text-sm">
+                    <caption className="px-4 pt-4 text-left text-base font-semibold text-foreground">
+                      {l.measuresTableHeading}
+                    </caption>
+                    <thead className="border-b border-border/50 text-xs uppercase tracking-[0.08em] text-muted-foreground">
+                      <tr>
+                        <th scope="col" className="px-4 py-3 font-semibold">{l.priority}</th>
+                        <th scope="col" className="px-4 py-3 font-semibold">{l.measure}</th>
+                        <th scope="col" className="px-4 py-3 font-semibold">{l.benefit}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {text.measures.items.map((item, index) => (
+                        <tr key={item.measure} className="border-b border-border/30 last:border-0">
+                          <td className="px-4 py-3 font-bold text-noreja-main">{index + 1}</td>
+                          <td className="px-4 py-3 text-foreground">{item.measure}</td>
+                          <td className="px-4 py-3 text-muted-foreground">{item.benefit}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <ProcessFigure image={text.measures.image} enlargeLabel={l.enlarge} />
+            </div>
+          </section>
+        )}
+
+        {/* ------------------------------------------------------------ loop */}
+        {text.loop && (
+          <section className="px-4 py-12 lg:px-8">
+            <div className="mx-auto w-full max-w-5xl">
+              <div className="mx-auto mb-8 max-w-3xl text-center">
+                <h2 className="mb-3 text-2xl font-bold text-foreground md:text-3xl">{text.loop.heading}</h2>
+                <p className="text-base leading-relaxed text-muted-foreground">{text.loop.lead}</p>
+              </div>
+
+              <ol className="grid gap-4 md:grid-cols-4">
+                {text.loop.steps.map((item, index) => (
+                  <motion.li
+                    key={item.step}
+                    {...fadeUp}
+                    transition={{ duration: 0.5, delay: index * 0.08 }}
+                    className="rounded-2xl border border-border/50 bg-card/60 p-5 backdrop-blur-sm"
+                  >
+                    <span className="mb-3 inline-flex h-9 w-9 items-center justify-center rounded-full bg-noreja-main/10 text-sm font-bold text-noreja-main">
+                      {index + 1}
+                    </span>
+                    <p className="mb-1 text-base font-semibold text-foreground">{item.step}</p>
+                    <p className="text-sm leading-relaxed text-muted-foreground">{item.text}</p>
+                  </motion.li>
+                ))}
+              </ol>
+
+              <div className="mt-6 rounded-2xl border border-border/50 bg-card/60 p-6 backdrop-blur-sm">
+                <h3 className="mb-3 text-base font-semibold text-foreground">{l.loopQuestionsHeading}</h3>
+                <ul className="grid gap-2 sm:grid-cols-2">
+                  {text.loop.questions.map((question) => (
+                    <li key={question} className="flex items-start gap-2 text-sm text-muted-foreground">
+                      <ChevronRight className="mt-0.5 h-4 w-4 flex-shrink-0 text-accent" aria-hidden="true" />
+                      {question}
                     </li>
                   ))}
                 </ul>
               </div>
+            </div>
+          </section>
+        )}
 
-              <div className="overflow-x-auto rounded-2xl border border-border/50 bg-card/60 backdrop-blur-sm">
-                <table className="w-full min-w-[440px] text-left text-sm">
-                  <caption className="px-4 pt-4 text-left text-base font-semibold text-foreground">
-                    {l.measuresTableHeading}
-                  </caption>
-                  <thead className="border-b border-border/50 text-xs uppercase tracking-[0.08em] text-muted-foreground">
-                    <tr>
-                      <th scope="col" className="px-4 py-3 font-semibold">{l.priority}</th>
-                      <th scope="col" className="px-4 py-3 font-semibold">{l.measure}</th>
-                      <th scope="col" className="px-4 py-3 font-semibold">{l.benefit}</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {text.measures.map((item, index) => (
-                      <tr key={item.measure} className="border-b border-border/30 last:border-0">
-                        <td className="px-4 py-3 font-bold text-noreja-main">{index + 1}</td>
-                        <td className="px-4 py-3 text-foreground">{item.measure}</td>
-                        <td className="px-4 py-3 text-muted-foreground">{item.benefit}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+        {/* ----------------------------------------------- analysis questions */}
+        {text.analysisQuestions && (
+          <section className="px-4 py-12 lg:px-8">
+            <div className="mx-auto w-full max-w-5xl">
+              <div className="mx-auto mb-8 max-w-3xl text-center">
+                <h2 className="mb-3 flex items-center justify-center gap-2 text-2xl font-bold text-foreground md:text-3xl">
+                  <Sparkles className="h-6 w-6 text-accent" />
+                  {text.analysisQuestions.heading}
+                </h2>
+                <p className="text-base leading-relaxed text-muted-foreground">{text.analysisQuestions.lead}</p>
               </div>
-            </div>
-
-            <ProcessFigure image={text.measuresImage} enlargeLabel={l.enlarge} />
-          </div>
-        </section>
-
-        {/* ------------------------------------------------------------ loop */}
-        <section className="px-4 py-12 lg:px-8">
-          <div className="mx-auto w-full max-w-5xl">
-            <div className="mx-auto mb-8 max-w-3xl text-center">
-              <h2 className="mb-3 text-2xl font-bold text-foreground md:text-3xl">{text.loopHeading}</h2>
-              <p className="text-base leading-relaxed text-muted-foreground">{text.loopLead}</p>
-            </div>
-
-            <ol className="grid gap-4 md:grid-cols-4">
-              {text.loop.map((item, index) => (
-                <motion.li
-                  key={item.step}
-                  {...fadeUp}
-                  transition={{ duration: 0.5, delay: index * 0.08 }}
-                  className="rounded-2xl border border-border/50 bg-card/60 p-5 backdrop-blur-sm"
-                >
-                  <span className="mb-3 inline-flex h-9 w-9 items-center justify-center rounded-full bg-noreja-main/10 text-sm font-bold text-noreja-main">
-                    {index + 1}
-                  </span>
-                  <p className="mb-1 text-base font-semibold text-foreground">{item.step}</p>
-                  <p className="text-sm leading-relaxed text-muted-foreground">{item.text}</p>
-                </motion.li>
-              ))}
-            </ol>
-
-            <div className="mt-6 rounded-2xl border border-border/50 bg-card/60 p-6 backdrop-blur-sm">
-              <h3 className="mb-3 text-base font-semibold text-foreground">{l.loopQuestionsHeading}</h3>
-              <ul className="grid gap-2 sm:grid-cols-2">
-                {text.loopQuestions.map((question) => (
+              <ul className="grid gap-3 rounded-2xl border border-border/50 bg-card/60 p-6 backdrop-blur-sm sm:grid-cols-2">
+                {text.analysisQuestions.items.map((question) => (
                   <li key={question} className="flex items-start gap-2 text-sm text-muted-foreground">
                     <ChevronRight className="mt-0.5 h-4 w-4 flex-shrink-0 text-accent" aria-hidden="true" />
                     {question}
@@ -554,8 +613,8 @@ const EndToEndProcess = () => {
                 ))}
               </ul>
             </div>
-          </div>
-        </section>
+          </section>
+        )}
 
         {/* ------------------------------------------------------ principles */}
         <section className="px-4 py-12 lg:px-8">
@@ -563,7 +622,7 @@ const EndToEndProcess = () => {
             <h2 className="mb-8 text-center text-2xl font-bold text-foreground md:text-3xl">
               {text.principlesHeading}
             </h2>
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <div className={`grid gap-4 sm:grid-cols-2 ${text.principles.length === 3 ? "lg:grid-cols-3" : "lg:grid-cols-4"}`}>
               {text.principles.map((principle, index) => (
                 <motion.div
                   key={principle.title}

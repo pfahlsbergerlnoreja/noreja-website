@@ -57,6 +57,7 @@ Interpretation guidance:
 ## End-to-End Processes
 
 - [Lead-to-Activation](https://noreja.com/en/processes/lead-to-activation): The end-to-end process from a new lead to an active service, shown for a district heating connection: process phases (sales, parallel trade coordination, construction and commissioning, handover and start of supply), the business objects involved, and four findings on offer rework, seasonal construction times, handover compliance and construction-start prerequisites. Figures come from a synthetic demonstration dataset. German version: https://noreja.com/de/prozesse/lead-to-activation; full case (German): https://docs.noreja.com/de/article/lead-to-activation-fernwarmeanschluss
+- [Premium-to-Tax](https://noreja.com/en/processes/premium-to-tax): The end-to-end process from a tax-relevant insurance premium transaction to the paid insurance premium tax (IPT): eleven core activities in four phases (capture and tax determination, GL posting and reconciliation, tax return and approval, filing and payment), the source and context objects involved, and six deviations – skipped risk-location determination, filing before approval, calculation rework after reconciliation, approval rework, cases ending after reconciliation and filed but unpaid returns. Figures come from a synthetic demonstration dataset. German version: https://noreja.com/de/prozesse/premium-to-tax; full case (German): https://docs.noreja.com/de/article/premium-to-tax-p2t
 
 ## Use Cases
 
