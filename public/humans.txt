@@ -21,6 +21,10 @@
 	Monika Leitner -- Head of Process Excellence
 	LinkedIn: linkedin.com/in/monikaleitner
 
+	Matthias Brengartner -- Senior Account Executive
+	LinkedIn: linkedin.com/in/matthias-brengartner
+	Focus: Sales and customer relationships; previously Team Lead Sales at Stay Informed GmbH
+
 	Violeta Petkova -- Senior Software Developer
 	LinkedIn: linkedin.com/in/violeta-petkova-298287136
 
@@ -61,7 +65,7 @@
 
 /* SITE */
 
-	Last update: 2026/09/11
+	Last update: 2026/10/22
 	Language: German, English
 	Doctype: HTML5
 	Standards: HTML5, CSS3, JSON-LD (schema.org), sitemaps.org, llmstxt.org

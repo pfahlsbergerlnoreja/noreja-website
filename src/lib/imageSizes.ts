@@ -111,6 +111,7 @@ export const imageSizes: Record<string, [number, number]> = {
   'markus_neumayr_locker_aptean.webp': [300, 450],
   'Markus-Neumayr.webp': [400, 400],
   'marmot.webp': [777, 792],
+  'Matthias-Brengartner.webp': [400, 600],
   'maverick-attributes.webp': [1867, 919],
   'maverick-buying.webp': [1006, 1283],
   'Mendling.webp': [400, 500],

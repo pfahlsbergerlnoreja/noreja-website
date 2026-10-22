@@ -344,7 +344,9 @@ Commercial variables may include:
 - power users and reading users;
 - included modules and AI functions;
 - LLM options;
+- included AI token allowance and usage-based token billing;
 - onboarding and optimization workshops;
+- training for power users;
 - support cadence;
 - additional services;
 - customer-specific requirements.

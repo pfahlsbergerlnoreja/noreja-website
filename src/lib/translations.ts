@@ -161,7 +161,10 @@ export interface Translations {
       mostPopular: string;
       month: string;
       perMonthAndUser: string;
+      perYear: string;
       annualCostTooltip: string;
+      /** `{count}` is replaced with the plan's included power users. */
+      perUserCostTooltip: string;
       year: string;
       onRequest: string;
       viewAllFeatures: string;
@@ -174,11 +177,36 @@ export interface Translations {
         categories: {
           feature: string;
           users: string;
+          aiTokens: string;
           service: string;
+          onboarding: string;
           llmAi: string;
           supportRate: string;
         };
       privateLLMHosting: string;
+      /** The Proof-of-Value timeline below the plan cards. */
+      proofOfValue: {
+        eyebrow: string;
+        title: string;
+        text: string;
+        povTitle: string;
+        povDuration: string;
+        /** Tick labels under the progress bar: start, month 1, month 2. */
+        months: string[];
+        milestones: string[];
+        decisionTitle: string;
+        decisionSub: string;
+        continueLabel: string;
+        continueTitle: string;
+        continuePrice: string;
+        continueText: string;
+        continueTag: string;
+        optOutLabel: string;
+        optOutTitle: string;
+        optOutPrice: string;
+        optOutText: string;
+        benefits: { title: string; text: string }[];
+      };
       /**
        * Only the section framing lives here — the questions themselves moved to
        * src/lib/faq.ts so the /faq hub and this page share one source.
@@ -198,7 +226,9 @@ export interface Translations {
           };
           features: string[];
           users?: string;
+          aiTokens: string[];
           services: string[];
+          onboarding: string[];
           llmAi: string[];
           cta: string;
         };
@@ -211,7 +241,9 @@ export interface Translations {
           };
           features: string[];
           users?: string;
+          aiTokens: string[];
           services: string[];
+          onboarding: string[];
           llmAi: string[];
           cta: string;
         };
@@ -224,7 +256,9 @@ export interface Translations {
           };
           features: string[];
           users?: string;
+          aiTokens: string[];
           services: string[];
+          onboarding: string[];
           llmAi: string[];
           cta: string;
         };
@@ -898,7 +932,9 @@ export const translations: Record<Language, Translations> = {
         mostPopular: "Most Popular",
         month: "/ month",
         perMonthAndUser: "per month and power user",
-        annualCostTooltip: "Calculated total costs per year",
+        perYear: "per year",
+        annualCostTooltip: "Calculated total cost per year for the plan, based on the selected data amount and perspectives.",
+        perUserCostTooltip: "Total monthly price divided by the {count} power users included in the plan.",
         year: " /year",
         onRequest: "let's talk",
         viewAllFeatures: "View all features",
@@ -913,11 +949,42 @@ export const translations: Record<Language, Translations> = {
         categories: {
           feature: "Feature",
           users: "Users",
+          aiTokens: "AI Minerva Tokens",
           service: "Service",
+          onboarding: "Onboarding",
           llmAi: "LLM + AI",
           supportRate: "Additional"
         },
         privateLLMHosting: "Private LLM Hosting by Noreja",
+        proofOfValue: {
+          eyebrow: "How we work with you",
+          title: "Start with a Proof of Value",
+          text: "Every license starts with a two-month Proof of Value. After that you decide: continue or opt out. Your risk stays low and your costs stay predictable.",
+          povTitle: "Proof of Value",
+          povDuration: "2 months",
+          months: ["Start", "Month 1", "Month 2"],
+          milestones: [
+            "Kick-off & data connection",
+            "Onboarding of your first process",
+            "First insights & proof of value"
+          ],
+          decisionTitle: "Decision",
+          decisionSub: "after 2 months",
+          continueLabel: "Option A",
+          continueTitle: "Continue with the license",
+          continuePrice: "Full license price",
+          continueText: "The Proof of Value is fully credited towards the license, so most of the onboarding for your first process is already done.",
+          continueTag: "PoV credited to the license",
+          optOutLabel: "Option B",
+          optOutTitle: "Opt out",
+          optOutPrice: "Fixed fee of 12.500 €",
+          optOutText: "You cancel at the end of the Proof of Value and pay a one-time fixed fee.",
+          benefits: [
+            { title: "Low risk", text: "After two months you can exit for a fixed fee." },
+            { title: "Predictable costs", text: "Both paths and their costs are fixed from the start." },
+            { title: "Credited, not lost", text: "The PoV counts fully towards the license and the onboarding is already done." }
+          ]
+        },
         faq: {
           title: "Frequently Asked Questions",
           subtitle: "Find answers to common questions about our pricing and plans",
@@ -934,14 +1001,20 @@ export const translations: Record<Language, Translations> = {
             features: [
               "Dashboard",
               "Analyzer", 
-              "Builder",
-              "Knowledge Base"
+              "Builder"
             ],
             users: "3 Power Users",
+            aiTokens: [
+              "No AI tokens included",
+              "Usage-based billing"
+            ],
             services: [
               "Data Onboarding Workshop (2x p.a.)",
               "Biweekly Value-Support Session (45 mins)",
               "Rate for on-top support: 1.250€ per day"
+            ],
+            onboarding: [
+              "Access to video training materials and Noreja Docs"
             ],
             llmAi: [],
             cta: "Start free trial"
@@ -955,17 +1028,27 @@ export const translations: Record<Language, Translations> = {
             },
             features: [
               "all from CORE",
-              "Contextualizer",
-              "Issue Manager",
-              "Macro Builder"
+              "AI Hub",
+              "  Agent-Builder",
+              "  Skill-Builder",
+              "  Workspace-Manager",
+              "Context Hub",
+              "Connectivity Hub"
             ],
             users: "6 Power Users",
+            aiTokens: [
+              "Tokens worth 1.250€ per year included",
+              "Beyond that, usage-based billing"
+            ],
             services: [
               "Data Onboarding Workshop (3x p.a.)",
               "Process Optimization Workshop (1x p.a.)",
               "Context Collection Workshop (1x p.a.)",
               "Biweekly Value-Support Session (90 mins)",
               "Rate for on-top support: 950€ per day"
+            ],
+            onboarding: [
+              "3-day online training by Noreja experts included"
             ],
             llmAi: [
               "Minerva-AI",
@@ -983,9 +1066,13 @@ export const translations: Record<Language, Translations> = {
             features: [
               "all from PRO",
               "Workbench",
-              "Context Manager"
+              "Macro Builder"
             ],
             users: "10 Power Users",
+            aiTokens: [
+              "Tokens worth 3.000€ per year included",
+              "Beyond that, usage-based billing"
+            ],
             services: [
               "Data Onboarding Workshop (4x p.a.)",
               "Process Optimization Workshop (2x p.a.)",
@@ -994,6 +1081,9 @@ export const translations: Record<Language, Translations> = {
               "Weekly Value-Support Session (60 mins)",
               "Customer specific KPIs/Agent development (2x p.a.)",
               "Rate for on top support: 850€ per day"
+            ],
+            onboarding: [
+              "6 training days by Noreja experts included"
             ],
             llmAi: [
               "all from PRO",
@@ -1675,7 +1765,9 @@ export const translations: Record<Language, Translations> = {
         mostPopular: "Am beliebtesten",
         month: "/ Monat",
         perMonthAndUser: "pro Monat und Power-User",
-        annualCostTooltip: "Berechnete Gesamtkosten pro Jahr",
+        perYear: "pro Jahr",
+        annualCostTooltip: "Berechnete Gesamtkosten pro Jahr für das Paket, basierend auf der gewählten Datenmenge und den Perspektiven.",
+        perUserCostTooltip: "Monatlicher Gesamtpreis geteilt durch die {count} im Paket enthaltenen Power-User.",
         year: " /Jahr",
         onRequest: "Auf Anfrage",
         viewAllFeatures: "Alle Features anzeigen",
@@ -1690,11 +1782,42 @@ export const translations: Record<Language, Translations> = {
         categories: {
           feature: "Feature",
           users: "Nutzer",
+          aiTokens: "KI-Minerva-Token",
           service: "Service",
+          onboarding: "Onboarding",
           llmAi: "LLM + AI",
           supportRate: "Zusatz"
         },
         privateLLMHosting: "Privates LLM Hosting by Noreja",
+        proofOfValue: {
+          eyebrow: "So arbeiten wir mit dir",
+          title: "Starte mit einem Proof-of-Value",
+          text: "Jede Lizenz beginnt mit einem zweimonatigen Proof-of-Value. Danach entscheidest du: weitermachen oder aussteigen. Dein Risiko bleibt gering, deine Kosten bleiben planbar.",
+          povTitle: "Proof-of-Value",
+          povDuration: "2 Monate",
+          months: ["Start", "Monat 1", "Monat 2"],
+          milestones: [
+            "Kick-off & Datenanbindung",
+            "Onboarding des ersten Prozesses",
+            "Erste Insights & Value-Nachweis"
+          ],
+          decisionTitle: "Entscheidung",
+          decisionSub: "nach 2 Monaten",
+          continueLabel: "Option A",
+          continueTitle: "Lizenz läuft weiter",
+          continuePrice: "Voller Lizenzpreis",
+          continueText: "Der Proof-of-Value wird vollständig auf die Lizenz angerechnet. Das Onboarding deines ersten Prozesses ist damit bereits zum Großteil erledigt.",
+          continueTag: "PoV wird angerechnet",
+          optOutLabel: "Option B",
+          optOutTitle: "Opt-Out",
+          optOutPrice: "Fixbetrag 12.500 €",
+          optOutText: "Du kündigst zum Ende des Proof-of-Value und zahlst einmalig den Fixbetrag.",
+          benefits: [
+            { title: "Geringes Risiko", text: "Nach zwei Monaten ist der Ausstieg zum Fixbetrag möglich." },
+            { title: "Planbare Kosten", text: "Beide Wege und ihre Kosten stehen von Anfang an fest." },
+            { title: "Angerechnet statt verloren", text: "Der PoV zählt voll auf die Lizenz und das Onboarding ist schon erledigt." }
+          ]
+        },
         faq: {
           title: "Häufig gestellte Fragen",
           subtitle: "Finde Antworten auf häufige Fragen zu unseren Preisen und Plänen",
@@ -1711,14 +1834,20 @@ export const translations: Record<Language, Translations> = {
             features: [
               "Dashboard",
               "Analyzer",
-              "Builder", 
-              "Knowledge Base"
+              "Builder"
             ],
             users: "3 Power-User",
+            aiTokens: [
+              "Keine KI-Token inkludiert",
+              "Verbrauchsbasierte Abrechnung"
+            ],
             services: [
               "Data-Onboarding Workshop (2x p.a.)",
               "14-tägige Value-Support Session (45 Min.)",
               "Tagessatz für zusätzlichen Support: 1.250€ pro Tag"
+            ],
+            onboarding: [
+              "Zugang zu Schulungsunterlagen per Video und Noreja-Docs"
             ],
             llmAi: [],
             cta: "Kostenlose Testversion starten"
@@ -1732,17 +1861,27 @@ export const translations: Record<Language, Translations> = {
             },
             features: [
               "alles aus CORE",
-              "Contextualizer",
-              "Issue Manager",
-              "Macro Builder"
+              "AI Hub",
+              "  Agent-Builder",
+              "  Skill-Builder",
+              "  Workspace-Manager",
+              "Context Hub",
+              "Connectivity Hub"
             ],
             users: "6 Power-User",
+            aiTokens: [
+              "Token im Wert von 1.250€ pro Jahr inkludiert",
+              "Darüber hinaus verbrauchsbasiert"
+            ],
             services: [
               "Data-Onboarding Workshop (3x p.a.)",
               "Prozessoptimierungs-Workshop (1x p.a.)",
               "Kontext-Erfassungs-Workshop (1x p.a.)",
               "14-tägige Value-Support Session (90 Min.)",
               "Tagessatz für zusätzlichen Support: 950€ pro Tag"
+            ],
+            onboarding: [
+              "3-tägige Online-Schulung durch Noreja-Experten inkludiert"
             ],
             llmAi: [
               "Minerva-AI",
@@ -1760,9 +1899,13 @@ export const translations: Record<Language, Translations> = {
             features: [
               "alles aus PRO",
               "Workbench",
-              "Context Manager"
+              "Macro Builder"
             ],
             users: "10 Power-User",
+            aiTokens: [
+              "Token im Wert von 3.000€ pro Jahr inkludiert",
+              "Darüber hinaus verbrauchsbasiert"
+            ],
             services: [
               "Data-Onboarding Workshop (4x p.a.)",
               "Prozessoptimierungs-Workshop (2x p.a.)",
@@ -1771,6 +1914,9 @@ export const translations: Record<Language, Translations> = {
               "Wöchentliche Value-Support Session (60 Min.)",
               "Kunden-spezifische KPIs/Agent-Entwicklung (2x p.a.)",
               "Tagessatz für zusätzlichen Support: 850€ pro Tag"
+            ],
+            onboarding: [
+              "6 Schulungstage durch Noreja-Experten inkludiert"
             ],
             llmAi: [
               "alles aus PRO",

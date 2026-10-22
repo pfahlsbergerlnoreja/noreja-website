@@ -401,12 +401,12 @@ export const faqItems: FaqItem[] = [
     category: 'pricing',
     showOnPricing: true,
     question: {
-      de: 'Können für genutzte LLM-Token zusätzliche Kosten entstehen?',
-      en: 'Can additional costs arise for the LLM tokens used?',
+      de: 'Wie werden die KI-Minerva-Token abgerechnet?',
+      en: 'How are AI Minerva tokens billed?',
     },
     answer: {
-      de: 'Grundsätzlich sind die LLM-Token für alle Power-User inkludiert. Sollte es den Bedarf nach einer erhöhten Anzahl an lesenden bzw. konsumierenden Nutzern geben, müssen wir die Kosten weiterreichen. In diesem Fall sprechen wir dich explizit an.',
-      en: 'In principle, LLM tokens are included for all power users. If there is a need for a larger number of reading or consuming users, we have to pass those costs on. In that case we will address it with you explicitly.',
+      de: 'Im Pro-Paket sind KI-Token im Wert von 1.250€ pro Jahr inkludiert, im Excellence-Paket im Wert von 3.000€ pro Jahr. Im Core-Paket sind keine Token inkludiert. Darüber hinausgehender Verbrauch wird verbrauchsbasiert abgerechnet. Die Token-Kosten fallen je nach LLM-Anbieter unterschiedlich aus, Noreja reicht sie direkt an dich weiter. Zusätzlich setzen wir LLM-Caching ein, um die Kosten zu optimieren.',
+      en: 'The Pro plan includes AI tokens worth 1.250€ per year, the Excellence plan tokens worth 3.000€ per year. The Core plan includes no tokens. Any usage beyond that is billed based on consumption. Token costs vary by LLM provider, and Noreja passes them on to you directly. We also use LLM caching to optimize costs.',
     },
   },
 

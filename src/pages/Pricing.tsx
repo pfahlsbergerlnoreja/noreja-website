@@ -14,6 +14,7 @@ import { AnimatedGridBackground } from "@/components/AnimatedGridBackground";
 import { pricingFaqItems } from "@/lib/faq";
 import { HeroShell } from "@/components/hero/HeroShell";
 import { PricingStaircase } from "@/components/hero/PricingStaircase";
+import { ProofOfValueTimeline } from "@/components/ProofOfValueTimeline";
 import { useHeroCycle } from "@/hooks/use-hero-cycle";
 import { pricingHero } from "@/lib/heroCopy";
 import { siteConfig } from "@/lib/config";
@@ -43,6 +44,41 @@ const formatPrice = (price: number | string): string => {
   }
   return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 };
+
+// A small price line under the monthly total, with its own "i" explanation.
+const PriceDetail = ({
+  label,
+  tooltip,
+  ariaLabel,
+  onTriggerClick,
+}: {
+  label: string;
+  tooltip: string;
+  ariaLabel: string;
+  onTriggerClick: () => void;
+}) => (
+  <div className="flex items-center justify-center gap-1">
+    <span className="text-muted-foreground text-sm">{label}</span>
+    <Popover>
+      <PopoverTrigger asChild>
+        <button
+          type="button"
+          className="inline-flex items-center justify-center rounded-full hover:bg-muted transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+          aria-label={ariaLabel}
+          onClick={(e) => {
+            e.stopPropagation();
+            onTriggerClick();
+          }}
+        >
+          <Info className="h-3.5 w-3.5 text-muted-foreground hover:text-foreground" />
+        </button>
+      </PopoverTrigger>
+      <PopoverContent className="w-auto max-w-xs p-3" side="bottom" align="center">
+        <p className="text-sm leading-relaxed">{tooltip}</p>
+      </PopoverContent>
+    </Popover>
+  </div>
+);
 
 // New pricing logic using base price and factors
 const calculatePricing = (perspectivesIndex: number, dataAmountIndex: number) => {
@@ -128,7 +164,9 @@ const Pricing = () => {
       statistics: t.pages.pricing.plans.core.statistics,
       features: t.pages.pricing.plans.core.features,
       users: t.pages.pricing.plans.core.users,
+      aiTokens: t.pages.pricing.plans.core.aiTokens,
       services: t.pages.pricing.plans.core.services,
+      onboarding: t.pages.pricing.plans.core.onboarding,
       llmAi: t.pages.pricing.plans.core.llmAi,
       cta: t.pages.pricing.plans.core.cta,
       ctaVariant: "outline" as const
@@ -140,7 +178,9 @@ const Pricing = () => {
       statistics: t.pages.pricing.plans.pro.statistics,
       features: t.pages.pricing.plans.pro.features,
       users: t.pages.pricing.plans.pro.users,
+      aiTokens: t.pages.pricing.plans.pro.aiTokens,
       services: t.pages.pricing.plans.pro.services,
+      onboarding: t.pages.pricing.plans.pro.onboarding,
       llmAi: t.pages.pricing.plans.pro.llmAi,
       cta: t.pages.pricing.plans.pro.cta,
       ctaVariant: "default" as const
@@ -152,7 +192,9 @@ const Pricing = () => {
       statistics: t.pages.pricing.plans.excellence.statistics,
       features: t.pages.pricing.plans.excellence.features,
       users: t.pages.pricing.plans.excellence.users,
+      aiTokens: t.pages.pricing.plans.excellence.aiTokens,
       services: t.pages.pricing.plans.excellence.services,
+      onboarding: t.pages.pricing.plans.excellence.onboarding,
       llmAi: t.pages.pricing.plans.excellence.llmAi,
       cta: t.pages.pricing.plans.excellence.cta,
       ctaVariant: "outline" as const
@@ -352,6 +394,7 @@ const Pricing = () => {
                 ? baseMonthlyPrice / baseIncludedPowerUsers
                 : null;
               const roundedPerUserMonthlyPrice = perUserMonthlyPrice !== null ? Math.round(perUserMonthlyPrice) : null;
+              const roundedMonthlyPrice = baseMonthlyPrice !== null ? Math.round(baseMonthlyPrice) : null;
               const fullAnnualPrice = baseAnnualPrice !== null ? Math.round(baseAnnualPrice) : null;
               
               return (
@@ -372,51 +415,38 @@ const Pricing = () => {
                 }}
               >
                 
-                <CardHeader className="text-center pb-4 h-[200px] flex flex-col justify-center">
+                <CardHeader className="text-center pb-4 h-[240px] flex flex-col justify-center">
                   <CardTitle as="h2" className="text-2xl font-bold text-foreground">
                     {plan.name}
                   </CardTitle>
                   <div className="mt-4">
                     <span className="text-4xl font-bold text-foreground">
-                      {isOnRequest 
-                        ? t.pages.pricing.onRequest
-                        : roundedPerUserMonthlyPrice !== null 
-                          ? `${formatPrice(roundedPerUserMonthlyPrice)} €`
-                          : t.pages.pricing.onRequest}
+                      {roundedMonthlyPrice !== null
+                        ? `${formatPrice(roundedMonthlyPrice)} €`
+                        : t.pages.pricing.onRequest}
                     </span>
-                  </div>
-                  <div className="mt-2 flex items-center justify-center gap-1">
-                    {!isOnRequest && roundedPerUserMonthlyPrice !== null && (
-                      <>
-                        <span className="text-muted-foreground text-sm">
-                          {t.pages.pricing.perMonthAndUser}
-                        </span>
-                        <Popover>
-                          <PopoverTrigger asChild>
-                            <button
-                              type="button"
-                              className="inline-flex items-center justify-center rounded-full hover:bg-muted transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
-                              aria-label="Full price information"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setSelectedPlanIndex(index);
-                              }}
-                            >
-                              <Info className="h-3.5 w-3.5 text-muted-foreground hover:text-foreground" />
-                            </button>
-                          </PopoverTrigger>
-                          <PopoverContent className="w-auto p-3" side="bottom" align="center">
-                            <div className="text-sm text-center">
-                              <p className="text-foreground mb-1">
-                                {t.pages.pricing.annualCostTooltip}<br />
-                                {formatPrice(fullAnnualPrice!)} €
-                              </p>
-                            </div>
-                          </PopoverContent>
-                        </Popover>
-                      </>
+                    {roundedMonthlyPrice !== null && (
+                      <span className="ml-1 text-muted-foreground text-sm">
+                        {t.pages.pricing.month}
+                      </span>
                     )}
                   </div>
+                  {fullAnnualPrice !== null && roundedPerUserMonthlyPrice !== null && (
+                    <div className="mt-2 space-y-0.5">
+                      <PriceDetail
+                        label={`${formatPrice(fullAnnualPrice)} € ${t.pages.pricing.perYear}`}
+                        tooltip={t.pages.pricing.annualCostTooltip}
+                        ariaLabel="Annual price information"
+                        onTriggerClick={() => setSelectedPlanIndex(index)}
+                      />
+                      <PriceDetail
+                        label={`${formatPrice(roundedPerUserMonthlyPrice)} € ${t.pages.pricing.perMonthAndUser}`}
+                        tooltip={t.pages.pricing.perUserCostTooltip.replace('{count}', baseIncludedPowerUsers.toString())}
+                        ariaLabel="Price per power user information"
+                        onTriggerClick={() => setSelectedPlanIndex(index)}
+                      />
+                    </div>
+                  )}
                   <CardDescription className="text-base mt-2">
                     {plan.description}
                   </CardDescription>
@@ -427,19 +457,21 @@ const Pricing = () => {
                   {/* Top section - Feature and Service - allows flexible growth */}
                   <div className="flex-grow flex flex-col">
                     {/* Feature Category - fixed height to ensure Service alignment */}
-                    <div className="mb-8 h-[140px]">
+                    <div className="mb-8 h-[232px]">
                       <p className="font-semibold text-foreground mb-4 text-base leading-tight">{t.pages.pricing.categories.feature}</p>
                       <ul className="space-y-2">
                         {plan.features.map((feature, index) => {
-                          const normalizedFeature = feature.toLowerCase();
+                          const isIndented = feature.startsWith('  ');
+                          const displayText = isIndented ? feature.trimStart() : feature;
+                          const normalizedFeature = displayText.toLowerCase();
                           const isItalic = normalizedFeature === 'alles aus core' ||
                                             normalizedFeature === 'alles aus pro' ||
                                             normalizedFeature === 'all from core' ||
                                             normalizedFeature === 'all from pro';
                           return (
-                            <li key={index} className="flex text-foreground text-sm">
+                            <li key={index} className={`flex text-foreground text-sm ${isIndented ? 'pl-6' : ''}`}>
                               <span className="mr-2 text-primary flex-shrink-0 leading-none mt-[0.1em]">•</span>
-                              <span className={isItalic ? 'italic' : ''}>{feature}</span>
+                              <span className={isItalic ? 'italic' : ''}>{displayText}</span>
                             </li>
                           );
                         })}
@@ -494,6 +526,21 @@ const Pricing = () => {
                               })()}
                             </span>
                           </li>
+                        </ul>
+                      </div>
+                    )}
+
+                    {/* AI Token Category - min height keeps the following sections aligned across cards */}
+                    {plan.aiTokens.length > 0 && (
+                      <div className="mb-8 min-h-[104px]">
+                        <p className="font-semibold text-foreground mb-4 text-base leading-tight">{t.pages.pricing.categories.aiTokens}</p>
+                        <ul className="space-y-2">
+                          {plan.aiTokens.map((item, index) => (
+                            <li key={index} className="flex text-foreground text-sm">
+                              <span className="mr-2 text-primary flex-shrink-0 leading-none mt-[0.1em]">•</span>
+                              <span>{item}</span>
+                            </li>
+                          ))}
                         </ul>
                       </div>
                     )}
@@ -568,6 +615,21 @@ const Pricing = () => {
                           })}
                       </ul>
                     </div>
+
+                    {/* Onboarding Category - min height keeps the support rate aligned across cards */}
+                    {plan.onboarding.length > 0 && (
+                      <div className="mb-8 min-h-[76px]">
+                        <p className="font-semibold text-foreground mb-4 text-base leading-tight">{t.pages.pricing.categories.onboarding}</p>
+                        <ul className="space-y-2">
+                          {plan.onboarding.map((item, index) => (
+                            <li key={index} className="flex text-foreground text-sm">
+                              <span className="mr-2 text-primary flex-shrink-0 leading-none mt-[0.1em]">•</span>
+                              <span>{item}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
 
                     {/* Support Rate Category - shows the on-top support rate */}
                     {(() => {
@@ -652,15 +714,17 @@ const Pricing = () => {
                             <p className="font-semibold text-foreground mb-4 text-base leading-tight">{t.pages.pricing.categories.feature}</p>
                             <ul className="space-y-2">
                               {plan.features.map((feature, idx) => {
-                                const normalizedFeature = feature.toLowerCase();
+                                const isIndented = feature.startsWith('  ');
+                                const displayText = isIndented ? feature.trimStart() : feature;
+                                const normalizedFeature = displayText.toLowerCase();
                                 const isItalic = normalizedFeature === 'alles aus core' ||
                                                   normalizedFeature === 'alles aus pro' ||
                                                   normalizedFeature === 'all from core' ||
                                                   normalizedFeature === 'all from pro';
                                 return (
-                                  <li key={idx} className="flex text-foreground text-sm">
+                                  <li key={idx} className={`flex text-foreground text-sm ${isIndented ? 'pl-6' : ''}`}>
                                     <span className="mr-2 text-primary flex-shrink-0 leading-none mt-[0.1em]">•</span>
-                                    <span className={isItalic ? 'italic' : ''}>{feature}</span>
+                                    <span className={isItalic ? 'italic' : ''}>{displayText}</span>
                                   </li>
                                 );
                               })}
@@ -715,6 +779,21 @@ const Pricing = () => {
                                     })()}
                                   </span>
                                 </li>
+                              </ul>
+                            </div>
+                          )}
+
+                          {/* AI Token Category */}
+                          {plan.aiTokens.length > 0 && (
+                            <div className="mb-4">
+                              <p className="font-semibold text-foreground mb-4 text-base leading-tight">{t.pages.pricing.categories.aiTokens}</p>
+                              <ul className="space-y-2">
+                                {plan.aiTokens.map((item, idx) => (
+                                  <li key={idx} className="flex text-foreground text-sm">
+                                    <span className="mr-2 text-primary flex-shrink-0 leading-none mt-[0.1em]">•</span>
+                                    <span>{item}</span>
+                                  </li>
+                                ))}
                               </ul>
                             </div>
                           )}
@@ -788,6 +867,21 @@ const Pricing = () => {
                                 })}
                             </ul>
                           </div>
+
+                          {/* Onboarding Category */}
+                          {plan.onboarding.length > 0 && (
+                            <div className="mb-4">
+                              <p className="font-semibold text-foreground mb-4 text-base leading-tight">{t.pages.pricing.categories.onboarding}</p>
+                              <ul className="space-y-2">
+                                {plan.onboarding.map((item, idx) => (
+                                  <li key={idx} className="flex text-foreground text-sm">
+                                    <span className="mr-2 text-primary flex-shrink-0 leading-none mt-[0.1em]">•</span>
+                                    <span>{item}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          )}
 
                           {/* Support Rate Category */}
                           {(() => {
@@ -864,6 +958,9 @@ const Pricing = () => {
               </p>
             </div>
           )}
+
+          {/* How a license starts: the two-month Proof of Value and the opt-out */}
+          <ProofOfValueTimeline />
         </div>
         
         {/* Gradient fade to FAQ section */}
