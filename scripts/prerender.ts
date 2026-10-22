@@ -300,13 +300,19 @@ function renderDocument(
 
   const html = dom.serialize();
 
-  // Swap the hand-written fallback in index.html for this route's content.
+  // Swap the hand-written fallback in index.html for this route's content. The
+  // wrapper id is what the head of index.html hides when JavaScript runs, so
+  // the unstyled markup never flashes before the app mounts.
   const start = html.indexOf(BODY_START);
   const end = html.indexOf(BODY_END);
   if (start === -1 || end === -1) {
     throw new Error('prerender: body markers not found in dist/index.html');
   }
-  return html.slice(0, start + BODY_START.length) + content + html.slice(end);
+  return (
+    html.slice(0, start + BODY_START.length) +
+    `<div id="static-fallback">${content}</div>` +
+    html.slice(end)
+  );
 }
 
 // ---------------------------------------------------------------------- main

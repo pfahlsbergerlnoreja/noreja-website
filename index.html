@@ -184,6 +184,21 @@
     }
     </script>
 
+    <!-- Hide the static no-JS fallback inside #root from the very first frame.
+         The inline script after #root removes it, but the browser may paint
+         while it is still parsing the (long) fallback markup — visitors then
+         saw it flash unstyled (full-size logo, plain text) before the app
+         mounted. A rule added from the head applies before the body is parsed;
+         crawlers and visitors without JavaScript never get it and still see
+         the content. -->
+    <script>
+      (function () {
+        var style = document.createElement('style');
+        style.textContent = '#static-fallback{display:none!important}';
+        document.head.appendChild(style);
+      })();
+    </script>
+
     <!-- Google Consent Mode v2: deny all storage until CookieYes pushes a consent update.
          This must run before gtag.js so no cookies are set pre-consent, which in turn
          allows the CookieYes script itself to load deferred (non-render-blocking). -->
