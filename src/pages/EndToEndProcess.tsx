@@ -8,6 +8,7 @@ import {
   ExternalLink,
   Info,
   Lightbulb,
+  MessageSquareText,
   RefreshCw,
   Sparkles,
 } from "lucide-react";
@@ -16,7 +17,12 @@ import { FinalCTA } from "@/components/FinalCTA";
 import { BreadcrumbSchema, FAQSchema, StructuredData } from "@/components/StructuredData";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { SITE_URL } from "@/lib/config";
-import { getEndToEndProcessById, type ProcessImage } from "@/lib/endToEndProcesses";
+import {
+  endToEndProcesses,
+  getEndToEndProcessById,
+  type ProcessImage,
+  type ProcessTable,
+} from "@/lib/endToEndProcesses";
 import { getRoutePath } from "@/lib/routes";
 import NotFound from "./NotFound";
 
@@ -61,6 +67,8 @@ const labels = {
     measureImpact: "Zu bewertende Wirkung",
     faqHeading: "Häufige Fragen zu",
     contact: "Eigenen Prozess analysieren? Sprich mit uns.",
+    minervaPrompt: "Fachfrage an Minerva",
+    moreProcesses: "Weitere End-to-End-Prozesse",
     quote: ["„", "“"],
   },
   en: {
@@ -95,6 +103,8 @@ const labels = {
     measureImpact: "Impact to assess",
     faqHeading: "Frequently asked questions about",
     contact: "Want to analyse your own process? Talk to us.",
+    minervaPrompt: "Business question to Minerva",
+    moreProcesses: "More end-to-end processes",
     quote: ["“", "”"],
   },
 } as const;
@@ -127,7 +137,60 @@ function ProcessFigure({ image, enlargeLabel }: { image: ProcessImage; enlargeLa
   );
 }
 
+/** A business question put to the AI assistant, styled as a chat prompt. */
+function MinervaPrompt({ prompt, label, quote }: { prompt: string; label: string; quote: readonly [string, string] }) {
+  return (
+    <figure className="rounded-2xl border border-accent/30 bg-accent/5 p-4">
+      <figcaption className="mb-1 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.12em] text-accent">
+        <MessageSquareText className="h-3.5 w-3.5" aria-hidden="true" />
+        {label}
+      </figcaption>
+      <blockquote className="text-sm font-medium leading-relaxed text-foreground">
+        {quote[0]}{prompt}{quote[1]}
+      </blockquote>
+    </figure>
+  );
+}
+
+/** Key figures as a real table; the first cell of each row is the row header, the rest are numbers. */
+function DataTable({ table }: { table: ProcessTable }) {
+  return (
+    <div className="overflow-x-auto rounded-2xl border border-border/50 bg-card/60 backdrop-blur-sm">
+      <table className="w-full min-w-[420px] text-left text-sm">
+        <caption className="px-4 pt-4 text-left text-sm font-semibold text-foreground">{table.caption}</caption>
+        <thead className="border-b border-border/50 text-xs uppercase tracking-[0.08em] text-muted-foreground">
+          <tr>
+            {table.head.map((cell, index) => (
+              <th key={cell} scope="col" className={`px-4 py-3 font-semibold ${index > 0 ? "text-right" : ""}`}>
+                {cell}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {table.rows.map(([rowHeader, ...cells]) => (
+            <tr key={rowHeader} className="border-b border-border/30 last:border-0">
+              <th scope="row" className="px-4 py-2.5 font-semibold text-foreground">{rowHeader}</th>
+              {cells.map((cell, index) => (
+                <td key={index} className="whitespace-nowrap px-4 py-2.5 text-right text-muted-foreground">
+                  {cell}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
 const principleCols: Record<number, string> = { 3: "lg:grid-cols-3", 5: "lg:grid-cols-5" };
+
+/** A main figure followed by its extra figures, for FigureGrid. */
+const withExtras = (image?: ProcessImage, extraImages: ProcessImage[] = []) => [
+  ...(image ? [image] : []),
+  ...extraImages,
+];
 
 /** Strip-like screenshots (e.g. an attribute bar) stay unreadable at half width. */
 const isWide = (image: ProcessImage) => image.width / image.height > 3;
@@ -165,6 +228,8 @@ const EndToEndProcess = () => {
   const l = labels[language];
   const pageUrl = `${SITE_URL}${getRoutePath("endToEndProcess", language, { processSlug: process.id })}`;
   const absolute = (src: string) => (src.startsWith("http") ? src : `${SITE_URL}${src}`);
+  const otherProcesses = endToEndProcesses.filter((other) => other.id !== process.id);
+  const measureImages = withExtras(text.measures?.image, text.measures?.extraImages);
 
   const articleSchema = {
     "@context": "https://schema.org",
@@ -177,7 +242,14 @@ const EndToEndProcess = () => {
     mainEntityOfPage: pageUrl,
     inLanguage: language,
     dateModified: process.dateModified,
-    image: [text.definitionImage, ...text.findings.map((finding) => finding.image), text.measures?.image]
+    keywords: text.keywords?.join(", "),
+    image: [
+      text.definitionImage,
+      text.phasesImage,
+      ...text.findings.map((finding) => finding.image),
+      text.aiContext?.image,
+      ...measureImages,
+    ]
       .filter((image): image is ProcessImage => Boolean(image))
       .map((image) => absolute(image.src)),
     author: { "@type": "Organization", name: "Noreja Intelligence GmbH", url: SITE_URL },
@@ -257,6 +329,25 @@ const EndToEndProcess = () => {
             </motion.div>
           </div>
         </section>
+
+        {/* ----------------------------------------------------------- intro */}
+        {text.intro && (
+          <section className="px-4 pb-12 lg:px-8">
+            <div className="mx-auto w-full max-w-3xl text-center">
+              <h2 className="mb-4 text-2xl font-bold text-foreground md:text-3xl">{text.intro.heading}</h2>
+              <div className="space-y-3">
+                {text.intro.text.map((paragraph) => (
+                  <p key={paragraph} className="text-base leading-relaxed text-muted-foreground">
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
+              <blockquote className="mt-6 rounded-2xl border border-noreja-main/30 bg-noreja-main/10 px-6 py-5 text-lg font-semibold leading-snug text-foreground md:text-xl">
+                {text.intro.quote}
+              </blockquote>
+            </div>
+          </section>
+        )}
 
         {/* ------------------------------------------ definition + key facts */}
         <section className="px-4 pb-12 lg:px-8">
@@ -457,7 +548,8 @@ const EndToEndProcess = () => {
               {text.findings.map((finding, index) => (
                 <motion.article key={finding.title} {...fadeUp} transition={{ duration: 0.5 }}>
                   <div className="mb-6 grid gap-6 lg:grid-cols-[1.5fr_1fr]">
-                    <div>
+                    {/* min-w-0: a wide table scrolls inside its box instead of widening the column. */}
+                    <div className="min-w-0">
                       <p className="mb-2 text-xs font-semibold uppercase tracking-[0.16em] text-noreja-main">
                         {l.finding} {index + 1} · {finding.area}
                       </p>
@@ -469,6 +561,16 @@ const EndToEndProcess = () => {
                           </p>
                         ))}
                       </div>
+                      {finding.prompt && (
+                        <div className="mt-4">
+                          <MinervaPrompt prompt={finding.prompt} label={l.minervaPrompt} quote={l.quote} />
+                        </div>
+                      )}
+                      {finding.table && (
+                        <div className="mt-4">
+                          <DataTable table={finding.table} />
+                        </div>
+                      )}
                     </div>
 
                     <div className="flex flex-col gap-4">
@@ -488,15 +590,17 @@ const EndToEndProcess = () => {
                   </div>
 
                   {(finding.image || finding.extraImages) && (
-                    <FigureGrid
-                      images={[...(finding.image ? [finding.image] : []), ...(finding.extraImages ?? [])]}
-                      enlargeLabel={l.enlarge}
-                    />
+                    <FigureGrid images={withExtras(finding.image, finding.extraImages)} enlargeLabel={l.enlarge} />
                   )}
 
                   {finding.deepDive && (
                     <div className="mt-6 rounded-2xl border border-border/50 bg-card/60 p-6 backdrop-blur-sm md:p-8">
                       <h4 className="mb-3 text-lg font-bold text-foreground">{finding.deepDive.title}</h4>
+                      {finding.deepDive.prompt && (
+                        <div className="mb-4">
+                          <MinervaPrompt prompt={finding.deepDive.prompt} label={l.minervaPrompt} quote={l.quote} />
+                        </div>
+                      )}
                       <div className="space-y-3">
                         {finding.deepDive.text.map((paragraph) => (
                           <p key={paragraph} className="text-sm leading-relaxed text-muted-foreground">
@@ -510,6 +614,16 @@ const EndToEndProcess = () => {
                             <li key={question} className="flex items-start gap-2 text-sm text-muted-foreground">
                               <ChevronRight className="mt-0.5 h-4 w-4 flex-shrink-0 text-accent" aria-hidden="true" />
                               {question}
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                      {finding.deepDive.points && (
+                        <ul className={`mt-4 grid gap-3 ${finding.deepDive.points.length === 2 ? "sm:grid-cols-2" : "sm:grid-cols-3"}`}>
+                          {finding.deepDive.points.map((point) => (
+                            <li key={point.title} className="rounded-xl border border-border/50 bg-background/40 p-4">
+                              <p className="mb-1 text-sm font-semibold text-foreground">{point.title}</p>
+                              <p className="text-sm leading-relaxed text-muted-foreground">{point.text}</p>
                             </li>
                           ))}
                         </ul>
@@ -619,6 +733,54 @@ const EndToEndProcess = () => {
           </section>
         )}
 
+        {/* ------------------------------------------------------ AI context */}
+        {text.aiContext && (
+          <section className="px-4 py-12 lg:px-8">
+            <div className="mx-auto w-full max-w-6xl">
+              <div className="mx-auto mb-8 max-w-3xl text-center">
+                <h2 className="mb-3 flex items-center justify-center gap-2 text-2xl font-bold text-foreground md:text-3xl">
+                  <Sparkles className="h-6 w-6 text-accent" />
+                  {text.aiContext.heading}
+                </h2>
+                <p className="text-base leading-relaxed text-muted-foreground">{text.aiContext.lead}</p>
+              </div>
+
+              <div className="mb-6 grid gap-6 md:grid-cols-2">
+                {text.aiContext.blocks.map((block, index) => (
+                  <motion.div
+                    key={block.title}
+                    {...fadeUp}
+                    transition={{ duration: 0.5, delay: index * 0.08 }}
+                    className="flex flex-col rounded-2xl border border-border/50 bg-card/60 p-6 backdrop-blur-sm md:p-8"
+                  >
+                    <h3 className="mb-3 text-lg font-bold text-foreground">{block.title}</h3>
+                    <div className="space-y-3">
+                      {block.text.map((paragraph) => (
+                        <p key={paragraph} className="text-sm leading-relaxed text-muted-foreground">
+                          {paragraph}
+                        </p>
+                      ))}
+                    </div>
+                    <blockquote className="mt-auto pt-5">
+                      <p className="rounded-xl border border-accent/30 bg-accent/5 p-4 text-sm font-semibold leading-relaxed text-foreground">
+                        {block.quote}
+                      </p>
+                    </blockquote>
+                  </motion.div>
+                ))}
+              </div>
+
+              {text.aiContext.image && <ProcessFigure image={text.aiContext.image} enlargeLabel={l.enlarge} />}
+
+              {text.aiContext.note && (
+                <p className="mx-auto mt-6 max-w-3xl text-center text-sm font-medium leading-relaxed text-foreground">
+                  {text.aiContext.note}
+                </p>
+              )}
+            </div>
+          </section>
+        )}
+
         {/* -------------------------------------------------------- measures */}
         {text.measures && (
           <section className="px-4 py-12 lg:px-8">
@@ -691,7 +853,7 @@ const EndToEndProcess = () => {
                 </div>
               </div>
 
-              {text.measures.image && <ProcessFigure image={text.measures.image} enlargeLabel={l.enlarge} />}
+              {measureImages.length > 0 && <FigureGrid images={measureImages} enlargeLabel={l.enlarge} />}
 
               {text.measures.note && (
                 <p className="mx-auto mt-2 max-w-3xl text-center text-sm leading-relaxed text-muted-foreground">
@@ -788,6 +950,23 @@ const EndToEndProcess = () => {
           </div>
         </section>
 
+        {/* ------------------------------------------------------ conclusion */}
+        {text.conclusion && (
+          <section className="px-4 py-12 lg:px-8">
+            <div className="mx-auto w-full max-w-3xl rounded-2xl border border-border/50 bg-card/60 p-6 backdrop-blur-sm md:p-8">
+              <h2 className="mb-4 text-2xl font-bold text-foreground md:text-3xl">{text.conclusion.heading}</h2>
+              <div className="space-y-3">
+                {text.conclusion.text.map((paragraph) => (
+                  <p key={paragraph} className="text-base leading-relaxed text-muted-foreground">
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
+              <p className="mt-6 text-lg font-bold text-noreja-main md:text-xl">{text.conclusion.claim}</p>
+            </div>
+          </section>
+        )}
+
         {/* ------------------------------------------------------------- FAQ */}
         <section className="px-4 py-12 lg:px-8">
           <div className="mx-auto w-full max-w-3xl">
@@ -829,6 +1008,37 @@ const EndToEndProcess = () => {
             </p>
           </div>
         </section>
+
+        {/* ------------------------------------------------- other processes */}
+        {otherProcesses.length > 0 && (
+          <section className="px-4 py-12 lg:px-8">
+            <div className="mx-auto w-full max-w-6xl">
+              <h2 className="mb-8 text-center text-2xl font-bold text-foreground md:text-3xl">{l.moreProcesses}</h2>
+              <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {otherProcesses.map((other) => (
+                  <li key={other.id}>
+                    <Link
+                      to={getRoutePath("endToEndProcess", language, { processSlug: other.id })}
+                      className="group flex h-full flex-col rounded-2xl border border-border/50 bg-card/60 p-5 backdrop-blur-sm transition-colors hover:border-noreja-main/50"
+                    >
+                      <span className="mb-1 text-xs font-semibold uppercase tracking-[0.12em] text-noreja-main">
+                        {other.content[language].scenario.split("·").pop()?.trim()}
+                      </span>
+                      <span className="mb-2 text-lg font-bold text-foreground">{other.name}</span>
+                      <span className="text-sm leading-relaxed text-muted-foreground">{other.content[language].tagline}</span>
+                      <span className="mt-auto pt-4">
+                        <ArrowRight
+                          className="h-4 w-4 text-noreja-main transition-transform group-hover:translate-x-1"
+                          aria-hidden="true"
+                        />
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </section>
+        )}
 
         <FinalCTA
           heading={

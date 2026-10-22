@@ -2,7 +2,7 @@
 
 > This is a self-contained context bundle for answering questions about Noreja. It includes the complete curated Noreja knowledge base plus expanded summaries of the primary and optional resources listed in `/llms.txt`.
 
-Generated: 2026-08-19  
+Generated: 2026-10-22  
 Canonical index: https://noreja.com/llms.txt  
 Canonical knowledge base: https://noreja.com/llms-full.txt  
 Language: English  
@@ -292,6 +292,34 @@ Potential applications include onboarding, account opening, KYC, compliance, ris
 
 Use-case pages provide examples and positioning. A concrete implementation requires suitable data, scope, and configuration.
 
+### 13.5 End-to-End Process: Lead-to-Activation (District Heating Connection)
+
+Lead-to-Activation is the end-to-end process from a newly created lead to an active service at the customer. Noreja documents it for a district heating connection at https://noreja.com/en/processes/lead-to-activation (German: https://noreja.com/de/prozesse/lead-to-activation). The process has four phases: sales (lead created, qualified, technical calculation, offer prepared and sent, contract signed, order received); trade coordination, where house connection and planning, subcontracting and civil works including the official permit, and material procurement for pipes, cables and equipment run in parallel until construction starts; construction and commissioning; and handover report, billing and start of supply.
+
+Findings shown on the page, all from a synthetic demonstration dataset rather than customer production data: about 13% of offers are reworked (154 of 1,208 cases); construction takes about 20 days longer in winter; 121 connections start supply before the handover report is finalised and 45 (4.1%) skip finalisation entirely; construction start depends on several prerequisites at once, including 119 of 1,208 cases without a timely permit and 393 units sourced from a second supplier. The largest time lever is civil-works permit to construction start (77.8 days). The page also illustrates that process errors and data errors (for example late ERP timestamps from field synchronisation) look identical in an event log, and that bundled civil-works jobs create cross-instance dependencies a single case history cannot explain. The full case description is in the German Help Center: https://docs.noreja.com/de/article/lead-to-activation-fernwarmeanschluss
+
+### 13.6 End-to-End Process: Premium-to-Tax (Insurance Premium Tax)
+
+Premium-to-Tax is the end-to-end process from a tax-relevant insurance premium transaction to the settled insurance premium tax (IPT). Noreja documents it at https://noreja.com/en/processes/premium-to-tax (German: https://noreja.com/de/prozesse/premium-to-tax). The expected flow has eleven core activities, each backed by its own source object: capture premium transaction, determine risk location, perform tax determination, calculate tax amount, post tax to general ledger, reconcile tax amounts, prepare tax return, prepare tax return item, review and approve tax return, file tax return and execute tax payment. A case is complete only when the return is both filed and paid. Context objects (policy, legal entity, tax rule, user/organisation, tax exception) let the analysis ask who was involved, which rule applied and which exception was raised.
+
+Deviations shown on the page, all from a synthetic demonstration dataset rather than customer production data: risk-location determination skipped (about 5%), tax return filed before approval (about 3%), tax calculation reworked after reconciliation (about 2%), tax return sent back for correction during approval (about 5%), reconciled transactions that never reach a tax return (about 2%) and filed returns without a tax payment (about 2%). The page frames the value of process mining in three areas: compliance, efficiency and transparency. The full case description is in the German Help Center: https://docs.noreja.com/de/article/premium-to-tax-p2t
+
+### 13.7 End-to-End Process: Purchase-to-Pay (Procurement in Special Machine Building)
+
+Purchase-to-Pay (P2P) is the end-to-end process from an emerging procurement need to the payment of an invoice. Noreja documents it for procurement in special machine building at https://noreja.com/en/processes/purchase-to-pay (German: https://noreja.com/de/prozesse/purchase-to-pay). The process has four phases: requirement and approval (purchase requisition, approval need, approvals A and B, purchase order); purchase order and fulfilment path, where physical goods go through delivery and goods receipt and software through provisioning; goods receipt and inspection, where many receipts share inspection resources in batched runs; and invoice, approval, invoice run and payment within or outside the cash discount period. Business objects and their relationships are kept in the event knowledge graph and a perspective is derived per business question.
+
+Findings shown on the page, all from a synthetic demonstration dataset rather than customer production data: 1,145 requisitions requiring approval go straight to a purchase order (maverick buying, 26.3%), in about 15 minutes instead of several hours, and about 97% of them come from two requesters; 647 invoice cases run through two rework loops (554 and 93 cases), with clarification reasons such as invoice/order mismatch, unclear items and price deviations made visible by linking ticket-system context via the invoice ID; 92 of 5,670 goods-receipt inspections (1.62%) exceeded the shared inspection capacity, a cross-case dependency; 2,209 payments fall outside the cash discount period versus 2,717 within, with a modelled lost discount of about EUR 1.02 million, and the page shows that the inspection backlog is a real bottleneck but not automatically the driver of the lost discount; three supplier groups take about 14 to 15.5 days instead of 5.5 to 6.2 days, concentrated between purchase order and goods receipt. The AI assistant Minerva condenses the findings into a cause model with separate mechanisms, and the findings are turned into prioritised measures in the Business Impact Board. The full case description is in the German Help Center: https://docs.noreja.com/de/article/purchase-to-pay-einkauf-im-sondermaschinenbau
+
+### 13.8 End-to-End Process: Order-to-Cash (Touchless Order Processing)
+
+Order-to-Cash (O2C) is the end-to-end process from order entry to payment clearing. Noreja documents it at https://noreja.com/en/processes/order-to-cash (German: https://noreja.com/de/prozesse/order-to-cash) under the thesis "touchless, but not at any price": touchless is not a goal in itself; what matters is which orders need a human and which do not. The process has three phases: order entry, configuration and release (automatic or manual order entry, customer order, items and configuration, credit check, changes before release, order review, release); delivery and invoicing, where picking and goods issue, shipping, and transport with proof of delivery run as parallel strands into the invoice; and payment, dunning and complaint (payment clearing, payment reminder, dunning, write-off, complaint and credit note). KPIs are measured at customer-order level, without multiple weighting through items or partial deliveries.
+
+Findings shown on the page, all from a synthetic demonstration dataset of 4,500 customer orders rather than customer production data: the touchless rate is 46.37% (1,978 of 4,266 consistently assessable orders) and the OTIF rate 86.92% (3,708 of 4,266), but neither KPI says which manual step is superfluous and which protects quality; 207 orders (4.60%) received complaints, at rates of 1.69% for standard products, 8.01% for technical configurations and 12.90% for service configurations, so technical and service configurations account for 76.33% of complaints at 35.42% of the order volume; of 340 technical orders changed before release, 197 (about 58%) skip the intended order review, which Noreja classifies as an error pattern rather than a new process variant; a root cause analysis with the AI assistant Minerva finds 70 of 78 technical complaint cases without a documented review, but a cross-check shows that the number of special values, not the change itself, separates the risk (complaint rate of delivered technical orders without review: 2.23% with no special value, 21.51% with one, 35.82% with two or more), with a special firmware version changed before release as a conspicuous but unproven hypothesis (11 of 25 orders, 44.00%). The resulting decision hypothesis keeps the mandatory review after changes, adds risk-based reviews for technical orders with at least one special value and lets technical orders without a special value run without an additional review more readily. The page also explains why AI needs causal process mining (process data provides the facts, company context the meaning, and causal process mining tests the cause hypotheses) and shows how findings are prioritised in the Business Impact Board and measured again in an Insight → Action → Impact → Feedback loop. The full case description is in the German Help Center: https://docs.noreja.com/de/article/order-to-cash-touchless-aber-nicht-um-jeden-preis
+
+### 13.9 Talk Series: Four Experts, Five Opinions (with Miragon)
+
+"Vier Experten, fünf Meinungen" is a five-part video series in German, recorded with Noreja's implementation partner Miragon and published on https://noreja.com/de/vier-experten-fuenf-meinungen (English page: https://noreja.com/en/four-experts-five-opinions). The four experts are Thomas Heinrichs and Dominik Horn (Miragon) and Prof. Dr. Jan Mendling and Dr. Lukas Pfahlsberger (Noreja); each episode ends with the viewer's own "fifth opinion". Episode 1 argues that the organisational hurdles of process intelligence are about people rather than technology: without change management and trust, a tool remains an expensive dashboard. Episode 2 explains why process mining often creates no impact: IT provides the data, the business provides the context, and impact only arises with a process owner who implements. Episode 3 discusses process discovery with process mining: an event log shows what happens but not why, data quality matters, and Noreja's hypothesis-driven approach differs fundamentally from classic discovery. Episode 4 argues that rigid governance, not IT itself, blocks AI initiatives, and that governance should provide guardrails instead of barriers. Episode 5 expects AI to become infrastructure rather than a feature, with agents working across system boundaries, MCP apps and AI browsers, so that products integrate into AI rather than the other way round.
+
 ## 14. Customer Evidence
 
 Success Stories describe customer or project-specific applications. They may contain reported improvements in efficiency, transparency, processing time, cost, or analytical effort.
@@ -496,6 +524,10 @@ A business process management model describing the four competing performance di
 
 The annual cost a company incurs because a business process is not improved. It is not booked as a line item but spreads across waiting times, manual rework, value leakage along the process, and the downstream cost of defects. Noreja provides a browser-side estimator at https://noreja.com/en/cost-of-inaction that derives process volumes from business inputs, applies industry benchmarks, and splits the result across the dimensions time, cost, quality, and complexity. Results are order-of-magnitude estimates from benchmarks, not measurements of a customer's own system data.
 
+### Smart Data Forge
+
+A Noreja tool for generating synthetic process data in which the root cause is deliberately constructed rather than random. It runs entirely in the browser, with no installation and no network calls, and covers table and relationship definition, DDL generation for PostgreSQL, SQL Server, MySQL, and Oracle, causal chain configuration, deliberate deviations (overjump, wrong order, rework, abort), value distributions, data generation as INSERT scripts, and batching behaviour such as fixed inspection slots, capacity, and backlog. Its purpose is to make a demo or test verifiable: because the ground truth — cause, affected dimension, process effect, error pattern, and business outcome — is fixed before generation, an analysis can be checked against a known answer. Available at https://noreja.com/en/smart-data-forge after entering an email address.
+
 ## 19. Common Misconceptions and Corrections
 
 ### Misconception: Noreja's vendor comparison pages are neutral third-party evaluations.
@@ -583,6 +615,13 @@ When producing an answer:
 - [Insurance](https://noreja.com/en/use-cases/insurance)
 - [Banking](https://noreja.com/en/use-cases/banking)
 
+### End-to-End Processes
+
+- [Order-to-Cash](https://noreja.com/en/processes/order-to-cash)
+- [Purchase-to-Pay](https://noreja.com/en/processes/purchase-to-pay)
+- [Lead-to-Activation](https://noreja.com/en/processes/lead-to-activation)
+- [Premium-to-Tax](https://noreja.com/en/processes/premium-to-tax)
+
 ### Trust and Legal
 
 - [Trust Center](https://trust.noreja.com)
@@ -608,6 +647,7 @@ When producing an answer:
 
 - [Definitions and Glossary](https://noreja.com/en/definitions)
 - [Cost of Inaction Calculator and Devil's Quadrangle](https://noreja.com/en/cost-of-inaction)
+- [Smart Data Forge – synthetic process data generator](https://noreja.com/en/smart-data-forge)
 - [Blog](https://blog.noreja.com)
 - [Downloads](https://noreja.com/en/downloads)
 
@@ -846,6 +886,38 @@ mpmX by MEHRWERK is presented as process mining running natively on existing dat
 <title>Success Stories</title>
 <content>
 The Success Stories page links to customer cases and industry examples. Use a named case as evidence only for the stated customer, process, period, and method. Do not convert a project-specific result into a universal product guarantee. Distinguish real customer cases from fictional or illustrative blog business cases.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/processes/order-to-cash</source>
+<title>End-to-End Process: Order-to-Cash</title>
+<content>
+The Order-to-Cash page follows customer orders from order entry to payment clearing under the thesis that touchless is not a goal in itself. It shows three phases (order entry, configuration and release; delivery and invoicing; payment, dunning and complaint) and five findings from a synthetic dataset of 4,500 orders: touchless rate 46.37% and OTIF rate 86.92% as KPIs that show the what but not the why, complaints concentrated on technical and service configurations (76.33% of complaints at 35.42% of orders), 197 of 340 changed technical orders skipping the intended review as an error pattern, a Minerva root cause analysis in which special values rather than order changes separate the complaint risk, and a risk-based review rule as a testable hypothesis. Treat all figures as demonstration values, not customer results. German version: https://noreja.com/de/prozesse/order-to-cash; full case (German): https://docs.noreja.com/de/article/order-to-cash-touchless-aber-nicht-um-jeden-preis
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/processes/purchase-to-pay</source>
+<title>End-to-End Process: Purchase-to-Pay</title>
+<content>
+The Purchase-to-Pay page follows procurement in special machine building from requirement to payment in four phases and presents five findings from a synthetic dataset: maverick buying (1,145 requisitions, 26.3%), invoice rework explained with ticket context, shared inspection capacity, payments outside the cash discount period with a modelled lost discount of about EUR 1.02 million, and slower supplier groups. It stresses that an operational bottleneck is not automatically the driver of a later financial effect. Treat all figures as demonstration values. Full case (German): https://docs.noreja.com/de/article/purchase-to-pay-einkauf-im-sondermaschinenbau
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/processes/lead-to-activation</source>
+<title>End-to-End Process: Lead-to-Activation</title>
+<content>
+The Lead-to-Activation page follows a district heating connection from lead to start of supply in four phases, including parallel trade coordination, and presents four findings from a synthetic dataset: offer rework, seasonally longer construction in winter, start of supply before a finalised handover report, and construction start blocked by missing prerequisites. Treat all figures as demonstration values. Full case (German): https://docs.noreja.com/de/article/lead-to-activation-fernwarmeanschluss
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/processes/premium-to-tax</source>
+<title>End-to-End Process: Premium-to-Tax</title>
+<content>
+The Premium-to-Tax page follows insurance premium tax from the premium transaction to the paid tax in eleven core activities and four phases and shows six deviations from a synthetic dataset, such as skipped risk-location determination, filing before approval and filed but unpaid returns. Treat all figures as demonstration values. Full case (German): https://docs.noreja.com/de/article/premium-to-tax-p2t
 </content>
 </document>
 

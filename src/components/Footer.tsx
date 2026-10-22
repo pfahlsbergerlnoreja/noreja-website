@@ -45,6 +45,7 @@ export function Footer() {
     { name: t.navigation.smartDataForge, routeKey: 'smartDataForge' as const, external: false },
     { name: t.navigation.frontierAgents, routeKey: 'aiAgents' as const, external: false },
     { name: 'Miragon x Noreja', routeKey: 'expertTalk' as const, external: false },
+    { name: 'Order-to-Cash', href: getRoutePath('endToEndProcess', language, { processSlug: 'order-to-cash' }), external: false },
     { name: 'Purchase-to-Pay', href: getRoutePath('endToEndProcess', language, { processSlug: 'purchase-to-pay' }), external: false },
     { name: 'Lead-to-Activation', href: getRoutePath('endToEndProcess', language, { processSlug: 'lead-to-activation' }), external: false },
     { name: 'Premium-to-Tax', href: getRoutePath('endToEndProcess', language, { processSlug: 'premium-to-tax' }), external: false }

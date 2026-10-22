@@ -26,6 +26,24 @@ import minervaCauseModel from '@/assets/processes/purchase-to-pay/minerva-cause-
 import minervaKeyStatements from '@/assets/processes/purchase-to-pay/minerva-key-statements.webp';
 import minervaStructuralDeviations from '@/assets/processes/purchase-to-pay/minerva-structural-deviations.webp';
 import supplierPerformance from '@/assets/processes/purchase-to-pay/supplier-performance.webp';
+import o2cEntityGraph from '@/assets/processes/order-to-cash/o2c-entity-graph.webp';
+import o2cCausalPerspective from '@/assets/processes/order-to-cash/o2c-causal-perspective.webp';
+import orderEntryRelease from '@/assets/processes/order-to-cash/order-entry-release.webp';
+import deliveryInvoicing from '@/assets/processes/order-to-cash/delivery-invoicing.webp';
+import paymentDunningComplaints from '@/assets/processes/order-to-cash/payment-dunning-complaints.webp';
+import o2cKpiReport from '@/assets/processes/order-to-cash/o2c-kpi-report.webp';
+import complaintsManagementView from '@/assets/processes/order-to-cash/complaints-management-view.webp';
+import skippedOrderReview from '@/assets/processes/order-to-cash/skipped-order-review.webp';
+import minervaComplaintReasons from '@/assets/processes/order-to-cash/minerva-complaint-reasons.webp';
+import minervaFirstCausePicture from '@/assets/processes/order-to-cash/minerva-first-cause-picture.webp';
+import specialValuesRefinement from '@/assets/processes/order-to-cash/special-values-refinement.webp';
+import specialFeaturesDrilldown from '@/assets/processes/order-to-cash/special-features-drilldown.webp';
+import o2cHypothesisTree from '@/assets/processes/order-to-cash/o2c-hypothesis-tree.webp';
+import minervaAgentsVsLlm from '@/assets/processes/order-to-cash/minerva-agents-vs-llm.webp';
+import impactBoardMatrix from '@/assets/processes/order-to-cash/impact-board-matrix.webp';
+import impactBoardKanban from '@/assets/processes/order-to-cash/impact-board-kanban.webp';
+import impactBoardQuadrangle from '@/assets/processes/order-to-cash/impact-board-quadrangle.webp';
+import impactBoardRoi from '@/assets/processes/order-to-cash/impact-board-roi.webp';
 
 /**
  * End-to-end process pages (/de/prozesse/:processSlug, /en/processes/:processSlug).
@@ -47,13 +65,25 @@ export interface ProcessImage {
   caption: string;
 }
 
+/** Key figures as a real HTML table, so answer engines can read them without the screenshot. */
+export interface ProcessTable {
+  caption: string;
+  head: string[];
+  /** The first cell of each row is its row header. */
+  rows: string[][];
+}
+
 export interface ProcessContent {
   /** Short industry / scenario label shown in the hero badge. */
   scenario: string;
   metaTitle: string;
   metaDescription: string;
+  /** Search keywords for the Article schema. */
+  keywords?: string[];
   /** Sub-headline under the H1. */
   tagline: string;
+  /** Optional thesis between hero and definition: the stance the page argues for. */
+  intro?: { heading: string; text: string[]; quote: string };
   /** Answer-first definition of the process — the paragraph answer engines quote. */
   definition: string;
   demoNote: string;
@@ -87,14 +117,35 @@ export interface ProcessContent {
     metric: string;
     metricLabel: string;
     text: string[];
+    /** A business question put to Minerva, shown after the text. */
+    prompt?: string;
+    table?: ProcessTable;
     shift: { from: string; to: string };
     image?: ProcessImage;
     /** Further figures shown directly after the main one. */
     extraImages?: ProcessImage[];
     /** A second analysis step within the same finding (drill-down, context, hypothesis test). */
-    deepDive?: { title: string; text: string[]; questions?: string[]; images?: ProcessImage[] };
+    deepDive?: {
+      title: string;
+      /** A business question put to Minerva, shown above the text. */
+      prompt?: string;
+      text: string[];
+      questions?: string[];
+      /** Short titled statements, e.g. the rules of a decision hypothesis. */
+      points?: Array<{ title: string; text: string }>;
+      images?: ProcessImage[];
+    };
     note?: { title: string; text: string };
   }>;
+
+  /** Why AI needs a causal analysis basis: titled blocks that each end in a quote. */
+  aiContext?: {
+    heading: string;
+    lead: string;
+    blocks: Array<{ title: string; text: string[]; quote: string }>;
+    image?: ProcessImage;
+    note?: string;
+  };
 
   /** Context objects that enrich the analysis without being happy-path steps. */
   contextObjects?: { heading: string; lead: string; items: Array<{ name: string; text: string }> };
@@ -119,7 +170,7 @@ export interface ProcessContent {
   /**
    * From finding to measure. Items with a `finding` render as a finding → direction → impact
    * table; without, as a numbered priority list. Quadrants, cost categories and the Impact
-   * Board figure only appear when the case includes them.
+   * Board figures only appear when the case includes them.
    */
   measures?: {
     heading: string;
@@ -129,6 +180,7 @@ export interface ProcessContent {
     costCategories?: string[];
     items: Array<{ measure: string; benefit: string; finding?: string }>;
     image?: ProcessImage;
+    extraImages?: ProcessImage[];
     note?: string;
   };
 
@@ -144,6 +196,9 @@ export interface ProcessContent {
 
   principlesHeading: string;
   principles: Array<{ title: string; text: string }>;
+
+  /** Closing summary with a one-line claim. */
+  conclusion?: { heading: string; text: string[]; claim: string };
 
   faq: Array<{ question: string; answer: string }>;
 
@@ -191,6 +246,24 @@ const IMG = {
   minervaKeyStatements: { src: minervaKeyStatements, width: 1057, height: 231 },
   minervaStructuralDeviations: { src: minervaStructuralDeviations, width: 1133, height: 1303 },
   supplierPerformance: { src: supplierPerformance, width: 2000, height: 809 },
+  o2cEntityGraph: { src: o2cEntityGraph, width: 1621, height: 918 },
+  o2cCausalPerspective: { src: o2cCausalPerspective, width: 1995, height: 706 },
+  orderEntryRelease: { src: orderEntryRelease, width: 1277, height: 669 },
+  deliveryInvoicing: { src: deliveryInvoicing, width: 2000, height: 593 },
+  paymentDunningComplaints: { src: paymentDunningComplaints, width: 2000, height: 1193 },
+  o2cKpiReport: { src: o2cKpiReport, width: 1176, height: 876 },
+  complaintsManagementView: { src: complaintsManagementView, width: 1492, height: 1218 },
+  skippedOrderReview: { src: skippedOrderReview, width: 1521, height: 733 },
+  minervaComplaintReasons: { src: minervaComplaintReasons, width: 861, height: 815 },
+  minervaFirstCausePicture: { src: minervaFirstCausePicture, width: 1333, height: 665 },
+  specialValuesRefinement: { src: specialValuesRefinement, width: 1111, height: 814 },
+  specialFeaturesDrilldown: { src: specialFeaturesDrilldown, width: 1052, height: 691 },
+  o2cHypothesisTree: { src: o2cHypothesisTree, width: 1889, height: 761 },
+  minervaAgentsVsLlm: { src: minervaAgentsVsLlm, width: 1600, height: 786 },
+  impactBoardMatrix: { src: impactBoardMatrix, width: 1290, height: 1000 },
+  impactBoardKanban: { src: impactBoardKanban, width: 1770, height: 917 },
+  impactBoardQuadrangle: { src: impactBoardQuadrangle, width: 972, height: 900 },
+  impactBoardRoi: { src: impactBoardRoi, width: 991, height: 1310 },
 };
 
 export const endToEndProcesses: EndToEndProcess[] = [
@@ -2271,6 +2344,1079 @@ export const endToEndProcesses: EndToEndProcess[] = [
         caseHeading: 'The full case description',
         caseText:
           'Event knowledge graph, end-to-end perspective, all five findings with their analysis steps, the Minerva cause model and the path to a prioritised measure – step by step in the Noreja Help Center (in German).',
+        caseCta: 'Read the case in the Help Center',
+      },
+    },
+  },
+  {
+    id: 'order-to-cash',
+    name: 'Order-to-Cash',
+    caseUrl: 'https://docs.noreja.com/de/article/order-to-cash-touchless-aber-nicht-um-jeden-preis',
+    dateModified: '2026-10-22',
+    content: {
+      de: {
+        scenario: 'End-to-End-Prozess · Touchless-Auftragsabwicklung',
+        metaTitle: 'Order-to-Cash Prozess: Touchless & Causal Process Mining | Noreja',
+        metaDescription:
+          'Order-to-Cash vom Auftragseingang bis zur Zahlung: Prozessphasen, Geschäftsobjekte und fünf Findings aus einer Causal-Process-Mining-Analyse – Touchless-Rate, OTIF, Reklamationen, übersprungene Auftragsprüfung und risikobasierte Prüfregeln.',
+        keywords: [
+          'Order-to-Cash',
+          'O2C',
+          'Touchless Processing',
+          'Touchless-Rate',
+          'OTIF',
+          'Auftragsmanagement',
+          'Auftragsprüfung',
+          'Reklamationsmanagement',
+          'Sonderkonfigurationen',
+          'KI-Assistent',
+          'Event Knowledge Graph',
+          'Causal Process Mining',
+          'Root-Cause-Analyse',
+        ],
+        tagline:
+          'Wie Causal Process Mining zeigt, welche Kundenaufträge touchless laufen können – und wo gezielte Prüfung Qualität schützt.',
+        intro: {
+          heading: 'Touchless, aber nicht um jeden Preis',
+          text: [
+            'Viele Order-to-Cash-Initiativen verfolgen dieselben Ziele: mehr Automatisierung, zuverlässige Lieferungen und weniger Reklamationen. Eine hohe Touchless-Rate wirkt dabei zunächst wie die logische Zielgröße.',
+            'Doch nicht jeder manuelle Schritt ist Verschwendung. Manche Prüfungen verhindern Fehler, andere kosten tatsächlich nur Zeit.',
+          ],
+          quote: 'Touchless ist kein Ziel an sich. Entscheidend ist, welche Aufträge einen Menschen brauchen – und welche nicht.',
+        },
+        definition:
+          'Order-to-Cash (O2C) beschreibt den End-to-End-Prozess vom Auftragseingang bis zum Zahlungsausgleich. Dazu gehören Auftragserfassung und Freigabe, Lieferabwicklung und Faktura, Zahlung und Mahnwesen sowie Reklamationen und Nachbearbeitung. Auf einer Prozessfolie wirkt O2C oft linear – in den operativen Daten ist der Ablauf jedoch ein Netz aus Geschäftsobjekten und fachlichen Abhängigkeiten: Kundenauftrag, Position, Konfiguration, Änderung, Prüfung, Lieferung, Rechnung, Zahlung und Reklamation hängen miteinander zusammen. Causal Process Mining erhält diese Granularität und bildet erst für die konkrete Fachfrage die passende Causal Perspective.',
+        demoNote:
+          'Hinweis: Die Kennzahlen auf dieser Seite stammen aus einem synthetischen Order-to-Cash-Datensatz. Sie zeigen die Analysemethode und sind keine Produktivkennzahlen eines Kunden.',
+        definitionImage: {
+          ...IMG.o2cEntityGraph,
+          alt: 'Event Knowledge Graph des Order-to-Cash-Prozesses: Kundenauftrag im Zentrum, verbunden mit Auftragseingang, Kreditsperre, Auftragsänderung, Auftragsprüfung, Freigabe, Auftragsposition und Konfiguration, Reklamation und Gutschrift, Lieferung mit Lieferschein, Kommissionierung, Warenausgang, Versand, Transport und Zustellnachweis sowie Rechnung mit Zahlung, Mahnwesen und Forderungsausbuchung',
+          caption:
+            'Event Knowledge Graph des O2C-Prozesses: Geschäftsobjekte und ihre Beziehungen bleiben erhalten – Komplexität wird bei der Analyse reduziert, nicht bereits beim Datenimport.',
+        },
+
+        keyFacts: [
+          {
+            value: '4.500',
+            label: 'Kundenaufträge',
+            detail: 'gesamter synthetischer O2C-Datenbestand',
+          },
+          {
+            value: '46,37 %',
+            label: 'Touchless-Rate',
+            detail: '1.978 von 4.266 einheitlich bewertbaren Aufträgen',
+          },
+          {
+            value: '86,92 %',
+            label: 'OTIF-Rate',
+            detail: '3.708 von 4.266 einheitlich bewertbaren Aufträgen',
+          },
+          {
+            value: '207',
+            label: 'Reklamierte Aufträge',
+            detail: '4,60 % bezogen auf alle 4.500 Aufträge',
+          },
+          {
+            value: '76,33 %',
+            label: 'Reklamationen aus Konfigurationen',
+            detail: 'technische und Service-Konfigurationen – bei nur 35,42 % Anteil am Auftragsbestand',
+          },
+          {
+            value: '197 / 340',
+            label: 'Änderungen ohne Prüfpfad',
+            detail: 'vor der Freigabe geänderte Aufträge gehen direkt zur Freigabe (rund 58 %)',
+          },
+        ],
+
+        phasesHeading: 'Der Prozess in drei Phasen',
+        phasesLead:
+          'Die End-to-End Causal Perspective verbindet Auftragseingang, Lieferung, Rechnung, Zahlung und Reklamation in einer fachlichen Sicht. Komplexität wird bei der Analyse reduziert – nicht bereits beim Datenimport.',
+        phasesImage: {
+          ...IMG.o2cCausalPerspective,
+          alt: 'End-to-End Causal Perspective des Order-to-Cash-Prozesses vom Auftragseingang über Kundenauftrag, Kreditsperre, Auftragsänderung, Auftragsprüfung und Freigabe, Lieferung mit Kommissionierung, Versand und Transport bis zu Rechnung, Zahlungsausgleich, Reklamation, Gutschrift und Forderungsausbuchung',
+          caption: 'End-to-End Causal Perspective des O2C-Prozesses vom Auftragseingang bis zu Zahlung und Reklamation.',
+        },
+        phases: [
+          {
+            title: 'Auftragseingang, Konfiguration & Freigabe',
+            summary:
+              'Aufträge werden automatisch oder manuell erfasst und als Kundenauftrag mit Positionen und Konfiguration angelegt. Je nach Auftrag folgen eine Kreditprüfung, Änderungen vor der Freigabe und eine Auftragsprüfung, bevor der Auftrag freigegeben wird.',
+            steps: [
+              'Auftragseingang erstellen',
+              'Kundenauftrag anlegen',
+              'Auftragsposition angelegt',
+              'Konfiguration angelegt',
+              'Auftrag ändern (vor Freigabe)',
+              'Auftrag prüfen',
+              'Auftrag freigeben',
+            ],
+            objects: ['Kundenauftrag', 'Auftragsposition', 'Konfiguration', 'Auftragsänderung', 'Auftragsprüfung', 'Kreditprüfung'],
+            question: 'Welche Aufträge können automatisiert freigegeben werden – und welche benötigen aufgrund ihres Risikos eine Prüfung?',
+            image: {
+              ...IMG.orderEntryRelease,
+              alt: 'Prozessgraph Auftragseingang: automatische und manuelle Auftragserfassung, Kundenauftrag anlegen, Auftragsposition und Konfiguration, Kreditsperren, Auftrag ändern (vor Freigabe), Auftrag prüfen und Auftrag freigeben',
+              caption: 'Auftragseingang, Konfiguration, Änderung, Prüfung und Freigabe.',
+            },
+          },
+          {
+            title: 'Lieferabwicklung & Faktura',
+            summary:
+              'Nach der Freigabe startet die Lieferung mit dem Lieferschein. Kommissionierung und Warenausgang, Versand sowie Transport und Zustellung laufen als eigene Stränge mit eigenen Objekten und münden gemeinsam in die Rechnung.',
+            strands: [
+              { name: 'Kommissionierung', steps: ['Lieferschein erstellen', 'Auftrag kommissionieren', 'Warenausgang buchen'] },
+              { name: 'Versand', steps: ['Sendung anlegen', 'Versandavis senden'] },
+              { name: 'Transport & Zustellung', steps: ['Transport vorbereiten', 'Zustellnachweis erhalten'] },
+            ],
+            objects: ['Kundenauftrag', 'Lieferung', 'Sendung', 'Transport', 'Zustellnachweis', 'Rechnung'],
+            question: 'Wo entstehen Abweichungen bei Liefertreue und Laufzeit – im eigenen Ablauf oder in verbundenen Liefer- und Transportobjekten?',
+            image: {
+              ...IMG.deliveryInvoicing,
+              alt: 'Prozessgraph der Lieferabwicklung mit Zeitachse: vom Kundenauftrag über Lieferschein, Kommissionierung und Warenausgang, Sendung und Versandavis sowie Transport und Zustellnachweis bis zur Rechnung',
+              caption: 'Lieferabwicklung vom Lieferschein über Kommissionierung und Transport bis zur Rechnung.',
+            },
+          },
+          {
+            title: 'Zahlung, Mahnung & Reklamation',
+            summary:
+              'Nach der Rechnungsstellung führt der Prozess direkt in den Zahlungsausgleich oder verläuft über Zahlungserinnerung, Mahnung, Gutschrift beziehungsweise Ausbuchung. Reklamationen bilden einen zusätzlichen fachlichen Pfad.',
+            strands: [
+              { name: 'Zahlung', steps: ['Rechnung erstellen', 'Zahlung ausgeglichen'] },
+              { name: 'Mahnwesen', steps: ['Zahlungserinnerung senden', 'Mahnung durchführen', 'Letzte Mahnung durchführen', 'Forderung ausbuchen'] },
+              { name: 'Reklamation', steps: ['Reklamation erfasst', 'Gutschrift erstellt (keine Zahlung)'] },
+            ],
+            objects: ['Rechnung', 'Zahlung', 'Forderung', 'Gutschrift', 'Reklamation'],
+            question: 'Welche vorgelagerten Prozessbedingungen erklären Reklamationen und andere nachgelagerte Effekte?',
+            image: {
+              ...IMG.paymentDunningComplaints,
+              alt: 'Prozessgraph nach der Rechnung: direkter Zahlungsausgleich (83 %), Zahlungserinnerung, Mahnung und letzte Mahnung bis zur Forderungsausbuchung sowie Reklamation mit Gutschrift; eingeblendet sind Pfadinfo, Happy-Path-Hervorhebung und Fehlermuster',
+              caption: 'Zahlungs-, Mahn- und Reklamationspfade nach der Rechnungsstellung.',
+            },
+          },
+        ],
+        objectsNote:
+          'Ein Kundenauftrag kann mehrere Positionen und Konfigurationen haben, mehrere Lieferungen auslösen und über Rechnung, Zahlung, Mahnung oder Reklamation abgeschlossen werden. Die Kennzahlen dieser Seite werden deshalb auf Kundenauftragsebene gemessen – ohne Mehrfachgewichtung durch Positionen oder Teillieferungen.',
+
+        findingsHeading: 'Fünf Findings entlang des Order-to-Cash-Prozesses',
+        findingsLead:
+          'Die Findings führen von der Management-Kennzahl bis zur überprüfbaren Prüfregel. Jedes verschiebt die Frage von „Was ist passiert?“ zu „Warum ist es passiert – und was folgt daraus?“.',
+        findings: [
+          {
+            area: 'Touchless',
+            title: 'Touchless zeigt das Was – aber noch nicht das Warum',
+            metric: '46,37 %',
+            metricLabel: 'Touchless-Rate: 1.978 von 4.266 einheitlich bewertbaren Aufträgen laufen ohne manuellen Eingriff',
+            text: [
+              'Mit 46,37 % läuft nicht einmal jeder zweite bewertete Auftrag vollständig touchless. Die naheliegende Reaktion wäre, manuelle Schritte möglichst weit zu reduzieren.',
+              'Doch die Kennzahl sagt nicht, welcher Eingriff überflüssig ist und welcher Qualität schützt. Dasselbe gilt für die übrigen Management-KPIs auf Auftragsebene: Die OTIF-Rate liegt bei 86,92 %, 207 Aufträge wurden reklamiert – sichtbar ist das Ergebnis, nicht seine Ursache.',
+            ],
+            shift: {
+              from: 'Wie entfernen wir mehr manuelle Schritte?',
+              to: 'Welche manuellen Schritte erzeugen keinen zusätzlichen Nutzen – und welche schützen einen riskanten Auftrag vor einem teuren Fehler?',
+            },
+            image: {
+              ...IMG.o2cKpiReport,
+              alt: 'KPI-Report Kundenaufträge im Order-to-Cash: Touchless-Rate 46,37 % (1.978 von 4.266 bewerteten Aufträgen), OTIF-Rate 86,92 % (3.708 von 4.266) und Reklamationsrate 4,85 % (207 von 4.266)',
+              caption:
+                'Management-KPIs auf Auftragsebene. Die Reklamationsrate bezieht sich hier auf 4.266 bewertete Aufträge (4,85 %); bezogen auf alle 4.500 Aufträge sind es 4,60 %.',
+            },
+          },
+          {
+            area: 'Reklamationen',
+            title: 'Reklamationen konzentrieren sich auf konfigurierte Aufträge',
+            metric: '76,33 %',
+            metricLabel: 'aller Reklamationen stammen aus technischen und Service-Konfigurationen – bei nur 35,42 % Anteil am Auftragsbestand',
+            text: [
+              '207 von 4.500 Aufträgen wurden reklamiert (4,60 %). Die Reklamationsquote unterscheidet sich jedoch deutlich nach Auftragsart: von 1,69 % bei Standardprodukten über 8,01 % bei technischen Konfigurationen bis zu 12,90 % bei Service-Konfigurationen.',
+              'Auch die Reklamationsgründe konzentrieren sich: „Serviceeinsatz nicht wie vereinbart“ und „Falsche Konfiguration“ stehen gemeinsam für rund 72,5 % der dokumentierten Gründe.',
+            ],
+            table: {
+              caption: 'Reklamationsquote je Auftragsart',
+              head: ['Auftragsart', 'Aufträge', 'Reklamiert', 'Quote', 'Anteil an allen Reklamationen'],
+              rows: [
+                ['Standardprodukt', '2.906', '49', '1,69 %', '23,67 %'],
+                ['Technische Konfiguration', '974', '78', '8,01 %', '37,68 %'],
+                ['Service-Konfiguration', '620', '80', '12,90 %', '38,65 %'],
+                ['Gesamt', '4.500', '207', '4,60 %', '100 %'],
+              ],
+            },
+            shift: {
+              from: 'Warum haben wir 4,6 % Reklamationen?',
+              to: 'Welche Auftragsarten und Merkmale unterscheiden riskante von unkritischen Fällen?',
+            },
+            image: {
+              ...IMG.complaintsManagementView,
+              alt: 'Management-Dashboard „Reklamationen im Managementblick“: Reklamationsquote 4,60 % (207 von 4.500 Aufträgen), Quote je Auftragsart – Standardprodukt 1,69 %, technische Konfiguration 8,01 %, Service-Konfiguration 12,90 % – und Reklamationsgründe, angeführt von „Serviceeinsatz nicht wie vereinbart“ und „Falsche Konfiguration“',
+              caption: 'Reklamationen im Managementblick: Quote je Auftragsart und Reklamationsgründe.',
+            },
+          },
+          {
+            area: 'Fehlermuster',
+            title: 'Nicht jeder Fehler ist eine neue Variante',
+            metric: '197 / 340',
+            metricLabel: 'vor der Freigabe geänderte technische Aufträge gehen ohne die vorgesehene Auftragsprüfung direkt zur Freigabe (rund 58 %)',
+            text: [
+              'Für technische Aufträge gilt eine klare fachliche Soll-Logik: Wird ein Auftrag vor seiner Freigabe geändert, ist anschließend eine Auftragsprüfung vorgesehen – Auftragsänderung → Auftragsprüfung → Freigabe. Von 340 geänderten Aufträgen durchlaufen jedoch nur 143 diesen Prüfpfad; 197 gehen direkt zur Freigabe.',
+              'Noreja behandelt solche Abweichungen nicht als zusätzliche Prozessvarianten, sondern als Fehlermuster. So bleiben die fachlich relevanten Varianten überschaubar, während Abweichungen gezielt separat analysiert werden. In klassischen, eventlog-basierten Process-Mining-Ansätzen erscheint dagegen schnell jede Abweichung als eigene Variante – die Variantenanzahl wächst stark und die Analyse wird unübersichtlich.',
+              'Die Causal Perspective beschreibt den erwarteten Ablauf. Fehlermuster zeigen, wo dieser Ablauf verletzt wird – etwa durch Überspringen, falsche Reihenfolge, Nachbearbeitung, Verzögerung, Bündelung oder offene Fälle.',
+            ],
+            shift: {
+              from: 'Welche neue Variante ist das?',
+              to: 'Wo wird die fachliche Soll-Logik verletzt – und warum?',
+            },
+            image: {
+              ...IMG.skippedOrderReview,
+              alt: 'Causal Perspective der 974 technischen Konfigurationsaufträge mit aktiviertem Fehlermuster: roter Pfad von „Auftrag ändern (vor Freigabe)“ direkt zu „Auftrag freigeben“ (197 Fälle, 58 %) am vorgesehenen Schritt „Auftrag prüfen“ (143 Fälle, 42 %) vorbei',
+              caption: 'Fehlermuster „Ignorieren“: Nach einer Auftragsänderung wird die vorgesehene Auftragsprüfung übersprungen.',
+            },
+            deepDive: {
+              title: 'Vom Fehlermuster zur Root-Cause-Analyse',
+              prompt: 'Analysiere alle Gründe, die zu einer Reklamation führen.',
+              text: [
+                'Die breite Ursachenanalyse startet bewusst offen. Minerva strukturiert dokumentierte Reklamationsgründe, vorgelagerte Faktoren und noch offene Hypothesen – und trennt dabei belegte Befunde klar von Ursachenhypothesen.',
+                'Ein erster Schwerpunkt entsteht bei den technischen Konfigurationsaufträgen: Von 78 reklamierten technischen Aufträgen weisen 70 keine dokumentierte Auftragsprüfung auf, 8 wurden trotz Prüfung reklamiert. Bei Service ist das Bild deutlich weniger eindeutig – 43 Reklamationen ohne und 37 trotz Prüfung.',
+                'Die fehlende Prüfung wird damit zu einem relevanten Analysepfad – aber noch nicht zur bewiesenen Ursache.',
+              ],
+              images: [
+                {
+                  ...IMG.minervaComplaintReasons,
+                  alt: 'Minerva-Antwort zur Root-Cause-Analyse: Tabelle der fünf dokumentierten Reklamationsgründe – Serviceeinsatz nicht wie vereinbart 38,6 %, Falsche Konfiguration 33,8 %, Mengenabweichung 13,0 %, Produkt nicht passend 12,1 %, Transportschaden 2,4 % – jeweils mit den noch offenen Ursachenfragen',
+                  caption: 'Minerva strukturiert die dokumentierten Reklamationsgründe und trennt belegte Befunde von offenen Ursachenhypothesen.',
+                },
+                {
+                  ...IMG.minervaFirstCausePicture,
+                  alt: 'Erstes Ursachenbild aus Minerva: 158 reklamierte Konfigurationsaufträge, davon technisch 78 (70 ohne dokumentierte Prüfung, 8 trotz Prüfung) und Service 80 (43 ohne, 37 trotz Prüfung), jeweils mit einer zu prüfenden Hypothese',
+                  caption: 'Erstes Ursachenbild: Bei technischen Aufträgen fehlt in 70 von 78 Reklamationsfällen die dokumentierte Prüfung.',
+                },
+              ],
+            },
+            note: {
+              title: 'Wie läuft mein Prozess? → Wo weicht er ab? → Warum?',
+              text: 'Das Fehlermuster ist nicht die Ursache selbst, sondern der Startpunkt für die Root-Cause-Analyse. Die Business-Frage steht am Anfang – nicht die Bedienlogik des Analysewerkzeugs.',
+            },
+          },
+          {
+            area: 'Ursachenanalyse',
+            title: 'Die erste plausible Erklärung hält der Gegenprüfung nicht stand',
+            metric: '2,23 % → 35,82 %',
+            metricLabel: 'Reklamationsquote zugestellter technischer Aufträge ohne Prüfung – von 0 auf mindestens 2 Sonderwerte',
+            text: [
+              'Das erste Ursachenbild legt eine naheliegende Erklärung nahe: Geänderte, ungeprüfte Technikaufträge werden häufiger reklamiert. Ob diese Erklärung trägt, klärt die nächste Frage an Minerva – bewusst einfach formuliert.',
+            ],
+            prompt:
+              'Analysiere die ungeprüften technischen Aufträge genauer. Welchen Einfluss haben Sonderwerte und Änderungen vor der Freigabe auf die Reklamationsquote?',
+            table: {
+              caption: 'Zugestellte technische Aufträge ohne Prüfung – Reklamationsquote nach Sonderwerten',
+              head: ['Sonderwerte', 'Reklamiert / Aufträge', 'Reklamationsquote'],
+              rows: [
+                ['0', '6 / 269', '2,23 %'],
+                ['1', '40 / 186', '21,51 %'],
+                ['2 oder mehr', '24 / 67', '35,82 %'],
+                ['Gesamt', '70 / 522', '13,41 %'],
+              ],
+            },
+            shift: {
+              from: 'Geänderte Aufträge sind riskant.',
+              to: 'Welche Aufträge waren bereits aufgrund ihrer Konfiguration riskant?',
+            },
+            image: {
+              ...IMG.specialValuesRefinement,
+              alt: 'Minerva-Tabelle zu 522 zugestellten Technikaufträgen ohne dokumentierte Prüfung: Reklamationsquote nach Sonderwerteanzahl (0: 2,23 %, 1: 21,51 %, 2 oder mehr: 35,82 %), jeweils mit und ohne Änderung vor Freigabe',
+              caption: 'Gegenprüfung: Sonderwerte trennen das Risiko deutlich stärker als die pauschale Änderungs-Hypothese.',
+            },
+            deepDive: {
+              title: 'WHY statt WHAT: welches Sondermerkmal auffällig wird',
+              text: [
+                'Die Zahl der Sonderwerte trennt das Risiko deutlich. Die pauschale Aussage „Änderung = Risiko“ hält der Gegenprüfung dagegen nicht allgemein stand: Bei genau einem Sonderwert liegt die Quote mit Änderung höher als ohne, bei mindestens zwei Sonderwerten kehrt sich die Richtung um.',
+                'Ein weiterer Drill-down zeigt, dass auch die Art des Sondermerkmals zählt. Besonders markant ist die Kombination aus Firmware-Sonderstand, Änderung vor Freigabe und fehlender Prüfung: 11 von 25 dieser Aufträge wurden reklamiert (44,00 %), ohne Änderung 6 von 51 (11,76 %).',
+              ],
+              images: [
+                {
+                  ...IMG.specialFeaturesDrilldown,
+                  alt: 'Drill-down auf einzelne Sondermerkmale bei genau einem Sonderwert: Schaltschrankmaß 17,11 %, Firmware 22,37 %, Schnittstelle 29,41 %; Firmware mit Änderung vor Freigabe 44,00 % gegenüber 11,76 % ohne Änderung',
+                  caption: 'WHY statt WHAT: Nicht nur die Zahl, auch die Art des Sondermerkmals ist relevant.',
+                },
+                {
+                  ...IMG.o2cHypothesisTree,
+                  alt: 'Hypothesenbaum: zugestellte Technikaufträge ohne Prüfung (13,41 %) nach 0, 1 und mindestens 2 Sonderwerten sowie mit und ohne Änderung; bei einem Sonderwert führt der Zweig zur Firmware-Konstellation (44,00 % mit Änderung) und zur Hypothese eines unzureichenden Spezifikationsabgleichs',
+                  caption: 'Verfeinertes Ursachenbild: Die Firmware-Konstellation bleibt bewusst als zu prüfende Hypothese gekennzeichnet.',
+                },
+              ],
+            },
+            note: {
+              title: 'Hypothese, kein nachgewiesener Mechanismus',
+              text: 'Der Änderungsdatensatz nennt nicht das tatsächlich geänderte Merkmal. Die Zahlen belegen deshalb eine auffällige Risikokombination – noch nicht den Mechanismus „Firmware wurde falsch geändert“.',
+            },
+          },
+          {
+            area: 'Prüfregel',
+            title: 'Von der Ursache zur risikobasierten Prüfregel',
+            metric: '≥ 1 Sonderwert',
+            metricLabel: 'als Kriterium für eine priorisierte Prüfung technischer Aufträge – ohne Sonderwert ist in den Daten kein Qualitätsvorteil durch zusätzliche Prüfung erkennbar',
+            text: [
+              'Für die Managemententscheidung zählt am Ende nicht nur die Erklärung, sondern die Frage, wann eine Prüfung tatsächlich sinnvoll erscheint.',
+              'Bei technischen Aufträgen ohne Sonderwert ist in diesen Daten kein Qualitätsvorteil durch eine zusätzliche Prüfung erkennbar. Ab einem Sonderwert unterscheiden sich geprüfte und ungeprüfte Aufträge dagegen deutlich. Auch wirtschaftlich ist die Differenz relevant: Im Demo-Datensatz liegt der hinterlegte Aufwand einer Reklamation deutlich über dem einer einzelnen Prüfung.',
+            ],
+            shift: {
+              from: 'Wie erreichen wir eine möglichst hohe Touchless-Rate?',
+              to: 'Wann schützt eine Prüfung Qualität – und wann kann ein Auftrag ohne Eingriff durchlaufen?',
+            },
+            deepDive: {
+              title: 'Eine überprüfbare Entscheidungshypothese',
+              text: [
+                'Aus der Analyse entsteht keine pauschale Regel, sondern eine Hypothese, die im Pilot gemessen werden kann:',
+              ],
+              points: [
+                {
+                  title: 'Bestehende Pflicht beibehalten',
+                  text: 'Wird ein Auftrag vor der Freigabe verändert, bleibt die vorgesehene Prüfung bestehen.',
+                },
+                {
+                  title: 'Risikobasiert ergänzen',
+                  text: 'Technische Aufträge mit mindestens einem Sonderwert werden zusätzlich priorisiert geprüft.',
+                },
+                {
+                  title: 'Automatisierungspotenzial nutzen',
+                  text: 'Technische Aufträge ohne Sonderwert können eher ohne zusätzliche Prüfung durchlaufen, sofern kein anderer Prüfgrund vorliegt.',
+                },
+              ],
+            },
+            note: {
+              title: 'So viel Touchless wie möglich. So viel wirksame Prüfung wie nötig.',
+              text: 'Die Regel wird als Pilot umgesetzt und ihre Wirkung anschließend an Touchless-Rate, Reklamationsquote, OTIF und Kosten gemessen.',
+            },
+          },
+        ],
+
+        aiContext: {
+          heading: 'Warum KI Causal Process Mining braucht',
+          lead:
+            'Generative KI kann Muster schnell zusammenfassen und Maßnahmen formulieren. Für Prozessautomatisierung reicht Geschwindigkeit allein jedoch nicht.',
+          blocks: [
+            {
+              title: 'Prozessdaten allein liefern noch keine Bedeutung',
+              text: [
+                'Systemdaten zeigen Werte und Ereignisse. Sie erklären aber nicht automatisch, was ein Merkmal fachlich bedeutet oder welche Regel im Unternehmen dahintersteht.',
+                'Unternehmenskontext ergänzt diese Bedeutung. Causal Process Mining prüft anschließend, wie Merkmale, Prozessverhalten und Ergebnisse zusammenhängen. Minerva verbindet diese Ebenen im Dialog und macht die Analyse für den Anwender zugänglich.',
+              ],
+              quote: 'Prozessdaten liefern die Fakten. Unternehmenskontext liefert die Bedeutung. Causal Process Mining prüft die Ursachenhypothesen.',
+            },
+            {
+              title: 'Automatisieren auf Basis der richtigen Analyse',
+              text: [
+                'Für KI-gestützte Prozessentscheidungen sind vier Dinge entscheidend: die richtige fachliche Granularität, Beziehungen zwischen Geschäftsobjekten, Unternehmenskontext und eine Analyse, die Korrelationen nicht vorschnell als Ursachen interpretiert.',
+              ],
+              quote: 'Einen Prozess auf Basis der falschen Analyse zu automatisieren, macht ihn nicht besser – nur schneller falsch.',
+            },
+          ],
+          image: {
+            ...IMG.minervaAgentsVsLlm,
+            alt: 'Übersicht „Was Minerva-Agenten leisten, was ein LLM allein nicht kann“: Architektur, Agenten & Skills, Konfigurierbarkeit, belegte Antworten, Governance, Kontext, Kausalität und kontinuierlicher Kreislauf 24/7',
+            caption: 'Was Minerva-Agenten leisten, was ein LLM allein nicht kann.',
+          },
+          note: 'Causal Process Mining schafft die analytische Grundlage. Minerva macht sie im Dialog nutzbar.',
+        },
+
+        measures: {
+          heading: 'Vom Finding zur priorisierten Maßnahme',
+          lead:
+            'Ein Finding verändert noch keinen Prozess. Im Business Impact Board werden Findings nach erwarteter Wirkung, Umsetzungsaufwand, Risiko und Unsicherheit bewertet – Process Excellence und Fachbereich priorisieren anschließend gemeinsam die nächste Verbesserungsinitiative.',
+          tableHeading: 'Mögliche Verbesserungsrichtungen',
+          items: [
+            {
+              finding: 'Prüfung nach Änderungen wird häufig übersprungen',
+              measure: 'Bestehende Prüfregel konsequenter umsetzen und Ursachen des Überspringens untersuchen',
+              benefit: 'Qualität, Compliance, Reklamationsrisiko',
+            },
+            {
+              finding: 'Sonderkonfigurationen zeigen deutlich höhere Risiken',
+              measure: 'Technische Aufträge ab einem Sonderwert risikobasiert zur Prüfung priorisieren',
+              benefit: 'Reklamationsquote, Qualität, Prüfaufwand',
+            },
+            {
+              finding: 'Risikoarme Aufträge ohne Sonderwert',
+              measure: 'Zusätzliche Prüfung gezielt reduzieren und als Pilot testen',
+              benefit: 'Touchless-Rate, Durchlaufzeit, Automatisierungsgrad',
+            },
+            {
+              finding: 'Firmware-Konstellation besonders auffällig',
+              measure: 'Hypothese gezielt weiter untersuchen',
+              benefit: 'Qualität, Reklamationsrisiko, Unsicherheit',
+            },
+            {
+              finding: 'Service-Reklamationen bleiben trotz Prüfung hoch',
+              measure: 'Separaten Ursachenpfad untersuchen',
+              benefit: 'Servicequalität, Kundenzufriedenheit',
+            },
+          ],
+          image: {
+            ...IMG.impactBoardMatrix,
+            alt: 'Business Impact Board mit fünf O2C-Findings in der Impact-/Aufwand-Matrix: drei Quick Wins, ein strategisches Finding und eines mit niedriger Priorität',
+            caption: 'Business Impact Board: Findings nach Wirkung und Aufwand eingeordnet.',
+          },
+          extraImages: [
+            {
+              ...IMG.impactBoardKanban,
+              alt: 'Kanban-Ansicht des Business Impact Board mit den Spalten Backlog, In Bearbeitung, Pausiert, Impact generiert und Verworfen; alle fünf Findings im Backlog',
+              caption: 'Kanban: Findings wandern vom Backlog bis „Impact generiert“.',
+            },
+            {
+              ...IMG.impactBoardQuadrangle,
+              alt: 'Devil’s Quadrangle über alle Findings mit den Dimensionen Zeit, Kosten, Qualität und Komplexität sowie Impact-Timeline mit dem Kick-off-Workshop als erstem Meilenstein',
+              caption: 'Devil’s Quadrangle und Impact-Timeline für die Findings.',
+            },
+            {
+              ...IMG.impactBoardRoi,
+              alt: 'ROI-Rechner im Business Impact Board: jährliches Einsparpotenzial, Umsetzungskosten, Netto-ROI im ersten Jahr, kumulative Einsparung über fünf Jahre und Einsparpotenzial je Finding',
+              caption: 'ROI-Rechner: Einsparpotenzial, Umsetzungskosten und Payback je Finding – Werte aus dem Demo-Datensatz.',
+            },
+          ],
+          note: 'Die Priorisierung ist eine fachliche Entscheidung. Minerva kann Analysewege, Kontext und Handlungsoptionen vorbereiten; Kontrolle und Entscheidungshoheit bleiben jederzeit nachvollziehbar beim Prozessverantwortlichen und Fachbereich.',
+        },
+
+        loop: {
+          heading: 'Der Kreislauf: Insight → Action → Impact → Feedback',
+          lead:
+            'Nach der Priorisierung wird eine Maßnahme als Pilot umgesetzt und ihre Wirkung anhand derselben Prozessdaten erneut gemessen. Minerva Frontier Agents können diesen Regelkreis kontinuierlich begleiten: neue Findings erkennen, Hypothesen weiterentwickeln und die Wirkung umgesetzter Maßnahmen beobachten.',
+          steps: [
+            { step: 'Insight', text: 'Sonderkonfigurationen zeigen unterschiedliche Risikoprofile; „Änderung = Risiko“ reicht als Erklärung nicht aus.' },
+            { step: 'Action', text: 'Pflichtprüfungen beibehalten und technische Sonderkonfigurationen risikobasiert priorisieren.' },
+            { step: 'Impact', text: 'Touchless-Rate, Reklamationsquote, OTIF und Kosten erneut messen.' },
+            { step: 'Feedback', text: 'Bestätigt sich die erwartete Wirkung nicht, wird die Hypothese angepasst.' },
+          ],
+          questions: [
+            'Steigt die Touchless-Rate bei risikoarmen Aufträgen ohne Sonderwert?',
+            'Sinkt die Reklamationsquote bei technischen Sonderkonfigurationen?',
+            'Wird die Prüfung nach Auftragsänderungen konsequenter durchlaufen?',
+            'Bleibt die OTIF-Rate stabil oder verbessert sie sich?',
+            'Stehen Prüfaufwand und vermiedene Reklamationskosten in einem sinnvollen Verhältnis?',
+            'Bestätigt sich die Hypothese – oder muss sie angepasst werden?',
+          ],
+        },
+
+        principlesHeading: 'Vier Prinzipien für die Analyse',
+        principles: [
+          {
+            title: 'Granularität erhalten',
+            text: 'Geschäftsobjekte und ihre Beziehungen bleiben erhalten, statt den Prozess vorab auf eine einzige lineare Case-Logik zu reduzieren.',
+          },
+          {
+            title: 'Mit der Business-Frage beginnen',
+            text: 'Die Causal Perspective wird für die konkrete Fachfrage gebildet – nicht die Bedienlogik des Werkzeugs bestimmt die Analyse.',
+          },
+          {
+            title: 'Fehlermuster von Ursachen trennen',
+            text: 'Eine sichtbare Abweichung ist ein Analyseausgangspunkt, noch keine Root Cause.',
+          },
+          {
+            title: 'Kontext einbeziehen',
+            text: 'Systemdaten zeigen Werte; Unternehmenskontext erklärt ihre fachliche Bedeutung.',
+          },
+        ],
+
+        conclusion: {
+          heading: 'Fazit: Touchless allein ist keine Steuerungslogik',
+          text: [
+            'Eine hohe Touchless-Rate allein ist keine ausreichende Steuerungslogik. Entscheidend ist, wo ein manueller Eingriff keinen Mehrwert liefert und wo er einen riskanten Auftrag vor einem späteren Qualitätsproblem schützt.',
+            'Causal Process Mining verbindet fachliche Soll-Logik, beobachtete Fehlermuster, Unternehmenskontext und gezielte Gegenprüfungen. Im O2C-Beispiel wird dadurch eine zunächst plausible Erklärung korrigiert: Nicht die Änderung allein trennt gute und schlechte Fälle, sondern vor allem das Risikoprofil der Sonderkonfiguration.',
+            'Aus „mehr Touchless“ wird damit eine konkretere Handlungsoption: risikoarme Aufträge stärker automatisieren, technische Sonderkonfigurationen gezielt prüfen und anschließend messen, ob die Regel tatsächlich Qualität und Effizienz verbessert.',
+          ],
+          claim: 'Verstehen. Priorisieren. Wirksam automatisieren. Qualität schützen.',
+        },
+
+        faq: [
+          {
+            question: 'Was ist ein Order-to-Cash-Prozess?',
+            answer:
+              'Order-to-Cash (O2C) ist der End-to-End-Prozess vom Auftragseingang bis zum Zahlungsausgleich. Er umfasst Auftragserfassung, Konfiguration und Freigabe, Lieferabwicklung und Faktura, Zahlung und Mahnwesen sowie Reklamationen und Nachbearbeitung. In den operativen Daten ist O2C kein linearer Ablauf, sondern ein Netz aus Geschäftsobjekten wie Kundenauftrag, Position, Konfiguration, Lieferung, Rechnung, Zahlung und Reklamation.',
+          },
+          {
+            question: 'Was bedeutet Touchless im Order-to-Cash-Prozess?',
+            answer:
+              'Ein Auftrag gilt als touchless, wenn er ohne manuellen Eingriff durch den Prozess läuft. Die Touchless-Rate misst den Anteil solcher Aufträge – im synthetischen Demo-Datensatz 46,37 %, also 1.978 von 4.266 einheitlich bewertbaren Kundenaufträgen.',
+          },
+          {
+            question: 'Sollte die Touchless-Rate möglichst hoch sein?',
+            answer:
+              'Nicht um jeden Preis. Manche manuellen Schritte kosten nur Zeit, andere verhindern teure Fehler. Im O2C-Beispiel steigt die Reklamationsquote ungeprüfter technischer Aufträge mit der Zahl der Sonderwerte deutlich an. Entscheidend ist deshalb, welche Aufträge einen Menschen brauchen und welche nicht: so viel Touchless wie möglich, so viel wirksame Prüfung wie nötig.',
+          },
+          {
+            question: 'Was misst die OTIF-Rate?',
+            answer:
+              'OTIF steht für „On Time In Full“: Ein Auftrag wurde termingerecht und vollständig geliefert. Im Demo-Datensatz erfüllen 3.708 von 4.266 einheitlich bewertbaren Aufträgen dieses Kriterium – die OTIF-Rate liegt damit bei 86,92 %.',
+          },
+          {
+            question: 'Warum behandelt Noreja Abweichungen als Fehlermuster statt als Varianten?',
+            answer:
+              'In eventlog-basierten Ansätzen erscheint jede Abweichung schnell als eigene Variante; die Variantenanzahl wächst und die Analyse wird unübersichtlich. Noreja beschreibt den erwarteten Ablauf in der Causal Perspective und klassifiziert Verletzungen – etwa Überspringen, falsche Reihenfolge oder Nachbearbeitung – als Fehlermuster. Im O2C-Beispiel gehen 197 von 340 vor der Freigabe geänderten technischen Aufträgen ohne die vorgesehene Prüfung direkt zur Freigabe.',
+          },
+          {
+            question: 'Ist ein Fehlermuster schon die Ursache eines Problems?',
+            answer:
+              'Nein. Ein Fehlermuster zeigt, wo der erwartete Ablauf verletzt wird. Es ist der Startpunkt der Root-Cause-Analyse, nicht ihr Ergebnis. Im O2C-Beispiel ist die fehlende Prüfung zunächst ein relevanter Analysepfad – erst die Gegenprüfung zeigt, dass vor allem das Risikoprofil der Sonderkonfiguration gute und schlechte Fälle trennt.',
+          },
+          {
+            question: 'Warum ist „Änderung vor Freigabe“ nicht automatisch die Ursache von Reklamationen?',
+            answer:
+              'Weil die Gegenprüfung die pauschale Hypothese nicht allgemein bestätigt. Bei zugestellten technischen Aufträgen ohne Prüfung steigt die Reklamationsquote vor allem mit der Zahl der Sonderwerte – von 2,23 % ohne Sonderwert auf 21,51 % bei einem und 35,82 % bei mindestens zwei Sonderwerten. Innerhalb gleicher Sonderwerteanzahl zeigt die Änderung kein einheitliches Bild.',
+          },
+          {
+            question: 'Welche Rolle spielt der KI-Assistent Minerva?',
+            answer:
+              'Minerva beantwortet fachliche Fragen im Dialog, strukturiert Reklamationsgründe, bildet Vergleichsgruppen und trennt belegte Befunde von Ursachenhypothesen. Sie verbindet Prozessdaten, Unternehmenskontext und Causal Process Mining. Die Entscheidung über Maßnahmen bleibt beim Prozessverantwortlichen und Fachbereich.',
+          },
+          {
+            question: 'Warum braucht KI Causal Process Mining?',
+            answer:
+              'Generative KI kann Muster schnell zusammenfassen, unterscheidet aber nicht von selbst zwischen Korrelation und Ursache. Für KI-gestützte Prozessentscheidungen braucht es die richtige fachliche Granularität, Beziehungen zwischen Geschäftsobjekten, Unternehmenskontext und eine Analyse, die Ursachenhypothesen prüft. Einen Prozess auf Basis der falschen Analyse zu automatisieren, macht ihn nur schneller falsch.',
+          },
+          {
+            question: 'Wie wird aus einem Finding eine Maßnahme?',
+            answer:
+              'Im Business Impact Board werden Findings nach erwarteter Wirkung, Umsetzungsaufwand, Risiko und Unsicherheit bewertet und priorisiert. Die gewählte Maßnahme wird als Pilot umgesetzt; danach werden Touchless-Rate, Reklamationsquote, OTIF und Kosten mit denselben Prozessdaten erneut gemessen.',
+          },
+          {
+            question: 'Stammen die Kennzahlen aus einem echten Unternehmen?',
+            answer:
+              'Nein. Alle Kennzahlen stammen aus einem synthetischen Order-to-Cash-Datensatz. Sie zeigen die Analysemethode und sind keine Produktivkennzahlen eines Kunden.',
+          },
+        ],
+
+        caseHeading: 'Die vollständige Case-Beschreibung',
+        caseText:
+          'Event Knowledge Graph, End-to-End Causal Perspective, alle fünf Findings mit ihren Analyseschritten, die Root-Cause-Analyse mit Minerva und der Weg zur risikobasierten Prüfregel – Schritt für Schritt im Noreja Help Center.',
+        caseCta: 'Case im Help Center lesen',
+      },
+
+      en: {
+        scenario: 'End-to-end process · Touchless order processing',
+        metaTitle: 'Order-to-Cash Process: Touchless & Causal Process Mining | Noreja',
+        metaDescription:
+          'Order-to-cash from order entry to payment: process phases, business objects and five findings from a causal process mining analysis – touchless rate, OTIF, complaints, skipped order reviews and risk-based review rules.',
+        keywords: [
+          'order-to-cash',
+          'O2C',
+          'touchless processing',
+          'touchless rate',
+          'OTIF',
+          'order management',
+          'order review',
+          'complaint management',
+          'special configurations',
+          'AI assistant',
+          'event knowledge graph',
+          'causal process mining',
+          'root cause analysis',
+        ],
+        tagline:
+          'How causal process mining shows which customer orders can run touchless – and where a targeted review protects quality.',
+        intro: {
+          heading: 'Touchless, but not at any price',
+          text: [
+            'Many order-to-cash initiatives pursue the same goals: more automation, reliable deliveries and fewer complaints. A high touchless rate initially looks like the logical target.',
+            'But not every manual step is waste. Some reviews prevent errors, others really only cost time.',
+          ],
+          quote: 'Touchless is not a goal in itself. What matters is which orders need a human – and which do not.',
+        },
+        definition:
+          'Order-to-cash (O2C) is the end-to-end process from order entry to payment clearing. It covers order capture and release, delivery and invoicing, payment and dunning, and complaints and rework. On a process slide O2C often looks linear – in the operational data, however, it is a network of business objects and dependencies: customer order, item, configuration, change, review, delivery, invoice, payment and complaint are all connected. Causal process mining keeps this granularity and builds the fitting causal perspective only for the concrete business question.',
+        demoNote:
+          'Note: the figures on this page come from a synthetic order-to-cash dataset. They illustrate the analysis method and are not production figures of any customer.',
+        definitionImage: {
+          ...IMG.o2cEntityGraph,
+          alt: 'Event knowledge graph of the order-to-cash process: the customer order at the centre, connected to order entry, credit block, order change, order review, release, order item and configuration, complaint and credit note, delivery with delivery note, picking, goods issue, shipping, transport and proof of delivery, and invoice with payment, dunning and write-off',
+          caption:
+            'Event knowledge graph of the O2C process: business objects and their relationships are preserved – complexity is reduced during analysis, not already at data import.',
+        },
+
+        keyFacts: [
+          {
+            value: '4,500',
+            label: 'Customer orders',
+            detail: 'entire synthetic O2C dataset',
+          },
+          {
+            value: '46.37%',
+            label: 'Touchless rate',
+            detail: '1,978 of 4,266 consistently assessable orders',
+          },
+          {
+            value: '86.92%',
+            label: 'OTIF rate',
+            detail: '3,708 of 4,266 consistently assessable orders',
+          },
+          {
+            value: '207',
+            label: 'Orders with complaints',
+            detail: '4.60% of all 4,500 orders',
+          },
+          {
+            value: '76.33%',
+            label: 'Complaints from configurations',
+            detail: 'technical and service configurations – at only 35.42% of the order volume',
+          },
+          {
+            value: '197 / 340',
+            label: 'Changes without review',
+            detail: 'orders changed before release go straight to release (about 58%)',
+          },
+        ],
+
+        phasesHeading: 'The process in three phases',
+        phasesLead:
+          'The end-to-end causal perspective brings order entry, delivery, invoice, payment and complaint together in one business view. Complexity is reduced during analysis – not already at data import.',
+        phasesImage: {
+          ...IMG.o2cCausalPerspective,
+          alt: 'End-to-end causal perspective of the order-to-cash process from order entry through customer order, credit block, order change, order review and release, delivery with picking, shipping and transport, to invoice, payment clearing, complaint, credit note and write-off',
+          caption: 'End-to-end causal perspective of the O2C process from order entry to payment and complaint.',
+        },
+        phases: [
+          {
+            title: 'Order entry, configuration & release',
+            summary:
+              'Orders are captured automatically or manually and created as a customer order with items and configuration. Depending on the order, a credit check, changes before release and an order review follow before the order is released.',
+            steps: [
+              'Create order entry',
+              'Create customer order',
+              'Order item created',
+              'Configuration created',
+              'Change order (before release)',
+              'Review order',
+              'Release order',
+            ],
+            objects: ['Customer order', 'Order item', 'Configuration', 'Order change', 'Order review', 'Credit check'],
+            question: 'Which orders can be released automatically – and which need a review because of their risk?',
+            image: {
+              ...IMG.orderEntryRelease,
+              alt: 'Order entry process graph: automatic and manual order capture, create customer order, order item and configuration, credit blocks, change order (before release), review order and release order',
+              caption: 'Order entry, configuration, change, review and release.',
+            },
+          },
+          {
+            title: 'Delivery & invoicing',
+            summary:
+              'After release, delivery starts with the delivery note. Picking and goods issue, shipping, and transport and delivery run as separate strands with their own objects and join again in the invoice.',
+            strands: [
+              { name: 'Picking', steps: ['Create delivery note', 'Pick order', 'Post goods issue'] },
+              { name: 'Shipping', steps: ['Create shipment', 'Send shipping notification'] },
+              { name: 'Transport & delivery', steps: ['Prepare transport', 'Receive proof of delivery'] },
+            ],
+            objects: ['Customer order', 'Delivery', 'Shipment', 'Transport', 'Proof of delivery', 'Invoice'],
+            question: 'Where do deviations in delivery reliability and lead time arise – in your own flow or in connected delivery and transport objects?',
+            image: {
+              ...IMG.deliveryInvoicing,
+              alt: 'Delivery process graph with a time axis: from the customer order via delivery note, picking and goods issue, shipment and shipping notification, and transport and proof of delivery to the invoice',
+              caption: 'Delivery from the delivery note through picking and transport to the invoice.',
+            },
+          },
+          {
+            title: 'Payment, dunning & complaint',
+            summary:
+              'After invoicing, the process leads straight to payment clearing or runs through payment reminder, dunning, credit note or write-off. Complaints form an additional business path.',
+            strands: [
+              { name: 'Payment', steps: ['Create invoice', 'Payment cleared'] },
+              { name: 'Dunning', steps: ['Send payment reminder', 'Dunning notice', 'Final dunning notice', 'Write off receivable'] },
+              { name: 'Complaint', steps: ['Complaint recorded', 'Credit note issued (no payment)'] },
+            ],
+            objects: ['Invoice', 'Payment', 'Receivable', 'Credit note', 'Complaint'],
+            question: 'Which upstream process conditions explain complaints and other downstream effects?',
+            image: {
+              ...IMG.paymentDunningComplaints,
+              alt: 'Process graph after the invoice: direct payment clearing (83%), payment reminder, dunning and final dunning up to the write-off, and complaint with credit note; path info, happy-path highlighting and error patterns are shown',
+              caption: 'Payment, dunning and complaint paths after invoicing.',
+            },
+          },
+        ],
+        objectsNote:
+          'A customer order can have several items and configurations, trigger several deliveries and be closed through invoice, payment, dunning or complaint. The figures on this page are therefore measured at customer-order level – without multiple weighting through items or partial deliveries.',
+
+        findingsHeading: 'Five findings along the order-to-cash process',
+        findingsLead:
+          'The findings lead from the management KPI to a testable review rule. Each one shifts the question from “What happened?” to “Why did it happen – and what follows from it?”.',
+        findings: [
+          {
+            area: 'Touchless',
+            title: 'Touchless shows the what – but not yet the why',
+            metric: '46.37%',
+            metricLabel: 'touchless rate: 1,978 of 4,266 consistently assessable orders run without manual intervention',
+            text: [
+              'At 46.37%, not even every second assessed order runs fully touchless. The obvious reaction would be to remove as many manual steps as possible.',
+              'But the KPI does not say which intervention is superfluous and which protects quality. The same is true of the other management KPIs at order level: the OTIF rate is 86.92% and 207 orders received complaints – the result is visible, its cause is not.',
+            ],
+            shift: {
+              from: 'How do we remove more manual steps?',
+              to: 'Which manual steps add no value – and which protect a risky order from a costly error?',
+            },
+            image: {
+              ...IMG.o2cKpiReport,
+              alt: 'Order-to-cash KPI report on customer orders: touchless rate 46.37% (1,978 of 4,266 assessed orders), OTIF rate 86.92% (3,708 of 4,266) and complaint rate 4.85% (207 of 4,266)',
+              caption:
+                'Management KPIs at order level. The complaint rate here refers to 4,266 assessed orders (4.85%); relative to all 4,500 orders it is 4.60%.',
+            },
+          },
+          {
+            area: 'Complaints',
+            title: 'Complaints concentrate on configured orders',
+            metric: '76.33%',
+            metricLabel: 'of all complaints come from technical and service configurations – at only 35.42% of the order volume',
+            text: [
+              '207 of 4,500 orders received a complaint (4.60%). The complaint rate differs markedly by order type, though: from 1.69% for standard products through 8.01% for technical configurations to 12.90% for service configurations.',
+              'The complaint reasons are concentrated too: “service visit not as agreed” and “wrong configuration” together account for about 72.5% of the documented reasons.',
+            ],
+            table: {
+              caption: 'Complaint rate by order type',
+              head: ['Order type', 'Orders', 'Complaints', 'Rate', 'Share of all complaints'],
+              rows: [
+                ['Standard product', '2,906', '49', '1.69%', '23.67%'],
+                ['Technical configuration', '974', '78', '8.01%', '37.68%'],
+                ['Service configuration', '620', '80', '12.90%', '38.65%'],
+                ['Total', '4,500', '207', '4.60%', '100%'],
+              ],
+            },
+            shift: {
+              from: 'Why do we have 4.6% complaints?',
+              to: 'Which order types and characteristics separate risky cases from uncritical ones?',
+            },
+            image: {
+              ...IMG.complaintsManagementView,
+              alt: 'Management dashboard “complaints at a glance”: complaint rate 4.60% (207 of 4,500 orders), rate by order type – standard product 1.69%, technical configuration 8.01%, service configuration 12.90% – and complaint reasons, led by “service visit not as agreed” and “wrong configuration”',
+              caption: 'Complaints at a glance: rate by order type and complaint reasons.',
+            },
+          },
+          {
+            area: 'Error pattern',
+            title: 'Not every error is a new variant',
+            metric: '197 / 340',
+            metricLabel: 'technical orders changed before release go straight to release without the intended order review (about 58%)',
+            text: [
+              'Technical orders follow a clear business rule: if an order is changed before its release, an order review is required afterwards – order change → order review → release. Of 340 changed orders, however, only 143 follow this review path; 197 go straight to release.',
+              'Noreja does not treat such deviations as additional process variants but as error patterns. The relevant variants stay manageable while deviations are analysed separately and specifically. In classic event-log-based process mining approaches, by contrast, every deviation quickly appears as a variant of its own – the number of variants grows sharply and the analysis becomes confusing.',
+              'The causal perspective describes the expected flow. Error patterns show where this flow is violated – for example by skipping, wrong order, rework, delay, batching or open cases.',
+            ],
+            shift: {
+              from: 'Which new variant is this?',
+              to: 'Where is the business logic violated – and why?',
+            },
+            image: {
+              ...IMG.skippedOrderReview,
+              alt: 'Causal perspective of the 974 technical configuration orders with the error pattern view active: red path from “change order (before release)” straight to “release order” (197 cases, 58%), bypassing the intended “review order” step (143 cases, 42%)',
+              caption: 'Error pattern “ignore”: after an order change, the intended order review is skipped.',
+            },
+            deepDive: {
+              title: 'From error pattern to root cause analysis',
+              prompt: 'Analyse all reasons that lead to a complaint.',
+              text: [
+                'The broad cause analysis deliberately starts open. Minerva structures documented complaint reasons, upstream factors and open hypotheses – and clearly separates documented findings from cause hypotheses.',
+                'A first focus emerges among the technical configuration orders: of 78 technical orders with complaints, 70 have no documented order review and 8 received a complaint despite a review. For service orders the picture is much less clear – 43 complaints without and 37 despite a review.',
+                'The missing review thus becomes a relevant path of analysis – but not yet a proven cause.',
+              ],
+              images: [
+                {
+                  ...IMG.minervaComplaintReasons,
+                  alt: 'Minerva answer on root cause analysis: table of the five documented complaint reasons – service visit not as agreed 38.6%, wrong configuration 33.8%, quantity deviation 13.0%, product not suitable 12.1%, transport damage 2.4% – each with the open cause questions',
+                  caption: 'Minerva structures the documented complaint reasons and separates documented findings from open cause hypotheses.',
+                },
+                {
+                  ...IMG.minervaFirstCausePicture,
+                  alt: 'First picture of causes from Minerva: 158 configuration orders with complaints, of which 78 technical (70 without documented review, 8 despite review) and 80 service (43 without, 37 despite review), each with a hypothesis to be tested',
+                  caption: 'First picture of causes: for technical orders, 70 of 78 complaint cases have no documented review.',
+                },
+              ],
+            },
+            note: {
+              title: 'How does my process run? → Where does it deviate? → Why?',
+              text: 'The error pattern is not the cause itself but the starting point for root cause analysis. The business question comes first – not the operating logic of the analysis tool.',
+            },
+          },
+          {
+            area: 'Root cause analysis',
+            title: 'The first plausible explanation does not survive the cross-check',
+            metric: '2.23% → 35.82%',
+            metricLabel: 'complaint rate of delivered technical orders without review – from 0 to at least 2 special values',
+            text: [
+              'The first picture of causes suggests an obvious explanation: changed, unreviewed technical orders receive more complaints. Whether this explanation holds is answered by the next question to Minerva – deliberately kept simple.',
+            ],
+            prompt:
+              'Analyse the unreviewed technical orders in more detail. What influence do special values and changes before release have on the complaint rate?',
+            table: {
+              caption: 'Delivered technical orders without review – complaint rate by special values',
+              head: ['Special values', 'Complaints / orders', 'Complaint rate'],
+              rows: [
+                ['0', '6 / 269', '2.23%'],
+                ['1', '40 / 186', '21.51%'],
+                ['2 or more', '24 / 67', '35.82%'],
+                ['Total', '70 / 522', '13.41%'],
+              ],
+            },
+            shift: {
+              from: 'Changed orders are risky.',
+              to: 'Which orders were already risky because of their configuration?',
+            },
+            image: {
+              ...IMG.specialValuesRefinement,
+              alt: 'Minerva table on 522 delivered technical orders without documented review: complaint rate by number of special values (0: 2.23%, 1: 21.51%, 2 or more: 35.82%), each with and without a change before release',
+              caption: 'Cross-check: special values separate the risk much more clearly than the blanket change hypothesis.',
+            },
+            deepDive: {
+              title: 'WHY instead of WHAT: which special feature stands out',
+              text: [
+                'The number of special values clearly separates the risk. The blanket statement “change = risk”, by contrast, does not generally survive the cross-check: with exactly one special value the rate is higher with a change than without, with two or more special values the direction reverses.',
+                'A further drill-down shows that the type of special feature matters too. The combination of a special firmware version, a change before release and a missing review stands out in particular: 11 of 25 of these orders received a complaint (44.00%), compared with 6 of 51 without a change (11.76%).',
+              ],
+              images: [
+                {
+                  ...IMG.specialFeaturesDrilldown,
+                  alt: 'Drill-down on individual special features with exactly one special value: control cabinet dimensions 17.11%, firmware 22.37%, interface 29.41%; firmware with a change before release 44.00% versus 11.76% without a change',
+                  caption: 'WHY instead of WHAT: not only the number but also the type of special feature matters.',
+                },
+                {
+                  ...IMG.o2cHypothesisTree,
+                  alt: 'Hypothesis tree: delivered technical orders without review (13.41%) split by 0, 1 and at least 2 special values and with or without a change; with one special value the branch leads to the firmware constellation (44.00% with a change) and to the hypothesis of an insufficient specification check',
+                  caption: 'Refined picture of causes: the firmware constellation is deliberately marked as a hypothesis still to be tested.',
+                },
+              ],
+            },
+            note: {
+              title: 'A hypothesis, not a proven mechanism',
+              text: 'The change record does not name the feature that was actually changed. The figures therefore show a conspicuous risk combination – not yet the mechanism “the firmware was changed incorrectly”.',
+            },
+          },
+          {
+            area: 'Review rule',
+            title: 'From cause to a risk-based review rule',
+            metric: '≥ 1 special value',
+            metricLabel: 'as the criterion for a prioritised review of technical orders – without a special value the data show no quality benefit from an additional review',
+            text: [
+              'For the management decision, what ultimately counts is not only the explanation but the question of when a review actually makes sense.',
+              'For technical orders without a special value, these data show no quality benefit from an additional review. From one special value onwards, however, reviewed and unreviewed orders differ clearly. The difference also matters economically: in the demo dataset, the stored effort of a complaint is well above that of a single review.',
+            ],
+            shift: {
+              from: 'How do we reach the highest possible touchless rate?',
+              to: 'When does a review protect quality – and when can an order run through without intervention?',
+            },
+            deepDive: {
+              title: 'A testable decision hypothesis',
+              text: [
+                'The analysis does not produce a blanket rule but a hypothesis that can be measured in a pilot:',
+              ],
+              points: [
+                {
+                  title: 'Keep the existing obligation',
+                  text: 'If an order is changed before release, the intended review remains in place.',
+                },
+                {
+                  title: 'Add risk-based reviews',
+                  text: 'Technical orders with at least one special value are additionally reviewed with priority.',
+                },
+                {
+                  title: 'Use the automation potential',
+                  text: 'Technical orders without a special value can more readily run through without an additional review, provided there is no other reason for one.',
+                },
+              ],
+            },
+            note: {
+              title: 'As much touchless as possible. As much effective review as necessary.',
+              text: 'The rule is implemented as a pilot and its effect is then measured against touchless rate, complaint rate, OTIF and cost.',
+            },
+          },
+        ],
+
+        aiContext: {
+          heading: 'Why AI needs causal process mining',
+          lead:
+            'Generative AI can summarise patterns and formulate measures quickly. For process automation, however, speed alone is not enough.',
+          blocks: [
+            {
+              title: 'Process data alone does not carry meaning',
+              text: [
+                'System data shows values and events. It does not automatically explain what a characteristic means in business terms or which company rule lies behind it.',
+                'Company context adds this meaning. Causal process mining then tests how characteristics, process behaviour and outcomes are related. Minerva connects these levels in dialogue and makes the analysis accessible to the user.',
+              ],
+              quote: 'Process data provides the facts. Company context provides the meaning. Causal process mining tests the cause hypotheses.',
+            },
+            {
+              title: 'Automating on the basis of the right analysis',
+              text: [
+                'Four things are decisive for AI-supported process decisions: the right business granularity, relationships between business objects, company context and an analysis that does not prematurely read correlations as causes.',
+              ],
+              quote: 'Automating a process on the basis of the wrong analysis does not make it better – only wrong faster.',
+            },
+          ],
+          image: {
+            ...IMG.minervaAgentsVsLlm,
+            alt: 'Overview “What Minerva agents do that an LLM alone cannot”: architecture, agents and skills, configurability, evidenced answers, governance, context, causality and a continuous 24/7 loop',
+            caption: 'What Minerva agents do that an LLM alone cannot (in German).',
+          },
+          note: 'Causal process mining provides the analytical foundation. Minerva makes it usable in dialogue.',
+        },
+
+        measures: {
+          heading: 'From finding to prioritised measure',
+          lead:
+            'A finding does not change a process yet. In the Business Impact Board, findings are rated by expected impact, implementation effort, risk and uncertainty – process excellence and the business then prioritise the next improvement initiative together.',
+          tableHeading: 'Possible improvement directions',
+          items: [
+            {
+              finding: 'Review after changes is often skipped',
+              measure: 'Enforce the existing review rule more consistently and investigate why it is skipped',
+              benefit: 'Quality, compliance, complaint risk',
+            },
+            {
+              finding: 'Special configurations show much higher risks',
+              measure: 'Prioritise technical orders with at least one special value for a risk-based review',
+              benefit: 'Complaint rate, quality, review effort',
+            },
+            {
+              finding: 'Low-risk orders without a special value',
+              measure: 'Reduce additional reviews specifically and test this as a pilot',
+              benefit: 'Touchless rate, lead time, degree of automation',
+            },
+            {
+              finding: 'Firmware constellation particularly conspicuous',
+              measure: 'Investigate the hypothesis further in a targeted way',
+              benefit: 'Quality, complaint risk, uncertainty',
+            },
+            {
+              finding: 'Service complaints stay high despite review',
+              measure: 'Investigate a separate cause path',
+              benefit: 'Service quality, customer satisfaction',
+            },
+          ],
+          image: {
+            ...IMG.impactBoardMatrix,
+            alt: 'Business Impact Board with five O2C findings in the impact/effort matrix: three quick wins, one strategic finding and one with low priority',
+            caption: 'Business Impact Board: findings placed by impact and effort.',
+          },
+          extraImages: [
+            {
+              ...IMG.impactBoardKanban,
+              alt: 'Kanban view of the Business Impact Board with the columns backlog, in progress, paused, impact generated and discarded; all five findings in the backlog',
+              caption: 'Kanban: findings move from the backlog to “impact generated”.',
+            },
+            {
+              ...IMG.impactBoardQuadrangle,
+              alt: 'Devil’s Quadrangle across all findings with the dimensions time, cost, quality and complexity, and an impact timeline with the kick-off workshop as the first milestone',
+              caption: 'Devil’s Quadrangle and impact timeline for the findings.',
+            },
+            {
+              ...IMG.impactBoardRoi,
+              alt: 'ROI calculator in the Business Impact Board: annual savings potential, implementation cost, net ROI in year one, cumulative savings over five years and savings potential per finding',
+              caption: 'ROI calculator: savings potential, implementation cost and payback per finding – values from the demo dataset.',
+            },
+          ],
+          note: 'Prioritisation is a business decision. Minerva can prepare analysis paths, context and options; control and decision-making authority stay traceably with the process owner and the business at all times.',
+        },
+
+        loop: {
+          heading: 'The loop: Insight → Action → Impact → Feedback',
+          lead:
+            'After prioritisation, a measure is implemented as a pilot and its effect is measured again against the same process data. Minerva Frontier Agents can accompany this loop continuously: spotting new findings, developing hypotheses further and observing the effect of implemented measures.',
+          steps: [
+            { step: 'Insight', text: 'Special configurations show different risk profiles; “change = risk” is not enough as an explanation.' },
+            { step: 'Action', text: 'Keep mandatory reviews and prioritise technical special configurations on a risk basis.' },
+            { step: 'Impact', text: 'Measure touchless rate, complaint rate, OTIF and cost again.' },
+            { step: 'Feedback', text: 'If the expected effect is not confirmed, the hypothesis is adjusted.' },
+          ],
+          questions: [
+            'Does the touchless rate rise for low-risk orders without a special value?',
+            'Does the complaint rate fall for technical special configurations?',
+            'Is the review after order changes carried out more consistently?',
+            'Does the OTIF rate stay stable or improve?',
+            'Are review effort and avoided complaint costs in a sensible proportion?',
+            'Is the hypothesis confirmed – or does it need adjusting?',
+          ],
+        },
+
+        principlesHeading: 'Four principles behind the analysis',
+        principles: [
+          {
+            title: 'Keep granularity',
+            text: 'Business objects and their relationships are preserved instead of reducing the process up front to a single linear case logic.',
+          },
+          {
+            title: 'Start with the business question',
+            text: 'The causal perspective is built for the concrete business question – the operating logic of the tool does not drive the analysis.',
+          },
+          {
+            title: 'Separate error patterns from causes',
+            text: 'A visible deviation is a starting point for analysis, not yet a root cause.',
+          },
+          {
+            title: 'Include context',
+            text: 'System data shows values; company context explains what they mean in business terms.',
+          },
+        ],
+
+        conclusion: {
+          heading: 'Conclusion: touchless alone is no control logic',
+          text: [
+            'A high touchless rate alone is not a sufficient control logic. What matters is where a manual intervention adds no value and where it protects a risky order from a later quality problem.',
+            'Causal process mining connects the business target logic, observed error patterns, company context and targeted cross-checks. In the O2C example this corrects an initially plausible explanation: it is not the change alone that separates good from bad cases, but above all the risk profile of the special configuration.',
+            '“More touchless” thus becomes a more concrete course of action: automate low-risk orders more, review technical special configurations specifically, and then measure whether the rule actually improves quality and efficiency.',
+          ],
+          claim: 'Understand. Prioritise. Automate effectively. Protect quality.',
+        },
+
+        faq: [
+          {
+            question: 'What is an order-to-cash process?',
+            answer:
+              'Order-to-cash (O2C) is the end-to-end process from order entry to payment clearing. It covers order capture, configuration and release, delivery and invoicing, payment and dunning, and complaints and rework. In the operational data O2C is not a linear flow but a network of business objects such as customer order, item, configuration, delivery, invoice, payment and complaint.',
+          },
+          {
+            question: 'What does touchless mean in order-to-cash?',
+            answer:
+              'An order counts as touchless when it runs through the process without manual intervention. The touchless rate measures the share of such orders – 46.37% in the synthetic demo dataset, i.e. 1,978 of 4,266 consistently assessable customer orders.',
+          },
+          {
+            question: 'Should the touchless rate be as high as possible?',
+            answer:
+              'Not at any price. Some manual steps only cost time, others prevent costly errors. In the O2C example, the complaint rate of unreviewed technical orders rises markedly with the number of special values. What matters is therefore which orders need a human and which do not: as much touchless as possible, as much effective review as necessary.',
+          },
+          {
+            question: 'What does the OTIF rate measure?',
+            answer:
+              'OTIF stands for “on time in full”: an order was delivered on schedule and complete. In the demo dataset, 3,708 of 4,266 consistently assessable orders meet this criterion – an OTIF rate of 86.92%.',
+          },
+          {
+            question: 'Why does Noreja treat deviations as error patterns rather than variants?',
+            answer:
+              'In event-log-based approaches every deviation quickly appears as a variant of its own; the number of variants grows and the analysis becomes confusing. Noreja describes the expected flow in the causal perspective and classifies violations – such as skipping, wrong order or rework – as error patterns. In the O2C example, 197 of 340 technical orders changed before release go straight to release without the intended review.',
+          },
+          {
+            question: 'Is an error pattern already the cause of a problem?',
+            answer:
+              'No. An error pattern shows where the expected flow is violated. It is the starting point of root cause analysis, not its result. In the O2C example the missing review is first a relevant path of analysis – only the cross-check shows that it is above all the risk profile of the special configuration that separates good from bad cases.',
+          },
+          {
+            question: 'Why is a change before release not automatically the cause of complaints?',
+            answer:
+              'Because the cross-check does not generally confirm the blanket hypothesis. For delivered technical orders without review, the complaint rate rises above all with the number of special values – from 2.23% without a special value to 21.51% with one and 35.82% with two or more. Within the same number of special values, the change shows no consistent picture.',
+          },
+          {
+            question: 'What role does the AI assistant Minerva play?',
+            answer:
+              'Minerva answers business questions in dialogue, structures complaint reasons, forms comparison groups and separates documented findings from cause hypotheses. It connects process data, company context and causal process mining. The decision about measures stays with the process owner and the business.',
+          },
+          {
+            question: 'Why does AI need causal process mining?',
+            answer:
+              'Generative AI can summarise patterns quickly but does not by itself distinguish correlation from cause. AI-supported process decisions need the right business granularity, relationships between business objects, company context and an analysis that tests cause hypotheses. Automating a process on the basis of the wrong analysis only makes it wrong faster.',
+          },
+          {
+            question: 'How does a finding become a measure?',
+            answer:
+              'In the Business Impact Board, findings are rated and prioritised by expected impact, implementation effort, risk and uncertainty. The chosen measure is implemented as a pilot; afterwards touchless rate, complaint rate, OTIF and cost are measured again with the same process data.',
+          },
+          {
+            question: 'Are the figures from a real company?',
+            answer:
+              'No. All figures come from a synthetic order-to-cash dataset. They illustrate the analysis method and are not production figures of any customer.',
+          },
+        ],
+
+        caseHeading: 'The full case description',
+        caseText:
+          'Event knowledge graph, end-to-end causal perspective, all five findings with their analysis steps, the root cause analysis with Minerva and the path to a risk-based review rule – step by step in the Noreja Help Center (in German).',
         caseCta: 'Read the case in the Help Center',
       },
     },
