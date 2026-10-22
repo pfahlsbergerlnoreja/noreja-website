@@ -14,7 +14,34 @@ export interface DownloadAsset {
   formGuid?: string; // Override default form for specific assets
 }
 
+/** Only available in German so far; the EN entry points at the same file. */
+const MINERVA_PRESENTATION_URL =
+  "https://144242473.fs1.hubspotusercontent-eu1.net/hubfs/144242473/website_files/Minerva_2_0_Vorstellung_DE.pdf";
+
 export const downloadAssets: DownloadAsset[] = [
+  // Product presentations
+  {
+    id: "minerva-2-0-presentation-de",
+    title: "Minerva 2.0 – Produktvorstellung",
+    description: "Alle Details zu Minerva 2.0, der KI-Assistentin in Noreja: Funktionen, Arbeitsweise, Datenquellen, Modellwahl und Datenschutz – mit Screenshots aus der Anwendung.",
+    fileUrl: MINERVA_PRESENTATION_URL,
+    fileSize: "1.4 MB",
+    fileType: "PDF",
+    category: "Product",
+    access: "locked",
+    languages: ["de"]
+  },
+  {
+    id: "minerva-2-0-presentation-en",
+    title: "Minerva 2.0 – Product Presentation (German)",
+    description: "Everything about Minerva 2.0, the AI assistant in Noreja: features, how it works, data sources, model choice and data protection – with screenshots from the application. Currently available in German only.",
+    fileUrl: MINERVA_PRESENTATION_URL,
+    fileSize: "1.4 MB",
+    fileType: "PDF",
+    category: "Product",
+    access: "locked",
+    languages: ["en"]
+  },
   {
     id: "referral-program-de",
     title: "Noreja Referral Program (DE)",
@@ -237,3 +264,9 @@ export const getWhitepaperForUseCase = (
   
   return downloadAssets.find(asset => asset.id === whitepaperId);
 };
+
+/**
+ * Gets the Minerva 2.0 presentation for the given language
+ */
+export const getMinervaPresentation = (language: Language): DownloadAsset | undefined =>
+  downloadAssets.find(asset => asset.id === `minerva-2-0-presentation-${language}`);

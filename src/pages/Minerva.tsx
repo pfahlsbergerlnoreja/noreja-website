@@ -9,6 +9,7 @@ import {
   Check,
   Cpu,
   Database,
+  FileDown,
   FileSpreadsheet,
   FolderOpen,
   GitFork,
@@ -23,9 +24,11 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { DownloadGateInline } from "@/components/DownloadGate";
 import { BreadcrumbSchema, FAQSchema, StructuredData } from "@/components/StructuredData";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { SITE_URL, siteConfig } from "@/lib/config";
+import { getMinervaPresentation } from "@/lib/downloads";
 import { getRoutePath } from "@/lib/routes";
 
 import minervaNextToAnalyzer from "@/assets/minerva/minerva-next-to-analyzer.webp";
@@ -390,6 +393,13 @@ const copy = {
       "Minerva antwortet, wenn du fragst. Die Minerva Frontier Agents gehen einen Schritt weiter: Sie arbeiten im Hintergrund dauerhaft an einer Fragestellung, beobachten Kennzahlen und melden sich, sobald sich etwas Relevantes ändert.",
     frontierLink: "Frontier Agents ansehen",
 
+    presentationLink: "Alle Details als Präsentation (PDF)",
+    presentationEyebrow: "Präsentation",
+    presentationHeading: "Minerva 2.0 im Detail – zum Nachlesen und Weitergeben",
+    presentationLead:
+      "Die Produktvorstellung fasst Funktionen, Arbeitsweise, Datenquellen, Modellwahl und Datenschutz auf einen Blick zusammen – ideal, um Minerva im eigenen Team vorzustellen.",
+    presentationButton: "Präsentation herunterladen",
+
     faqHeading: "Häufige Fragen",
     contact: "Frage offen? Schreib uns.",
 
@@ -721,6 +731,13 @@ const copy = {
       "Minerva answers when you ask. The Minerva Frontier Agents go one step further: they work on a question continuously in the background, watch KPIs and get in touch as soon as something relevant changes.",
     frontierLink: "See the Frontier Agents",
 
+    presentationLink: "All the details as a presentation (PDF)",
+    presentationEyebrow: "Presentation",
+    presentationHeading: "Minerva 2.0 in detail – to read and pass on",
+    presentationLead:
+      "The product presentation sums up features, how Minerva works, data sources, model choice and data protection – ideal for introducing Minerva to your own team. Currently available in German only.",
+    presentationButton: "Download the presentation",
+
     faqHeading: "Frequently asked questions",
     contact: "Still have a question? Get in touch.",
 
@@ -978,6 +995,8 @@ const Minerva = () => {
   };
 
   const howId = language === "de" ? "so-arbeitet-minerva" : "how-minerva-works";
+  const presentationId = language === "de" ? "praesentation" : "presentation";
+  const presentation = getMinervaPresentation(language);
 
   return (
     <div className="min-h-screen bg-background">
@@ -1042,6 +1061,15 @@ const Minerva = () => {
                 </a>
               </Button>
             </div>
+            {presentation && (
+              <a
+                href={`#${presentationId}`}
+                className="mt-5 inline-flex items-center gap-2 text-sm text-muted-foreground underline decoration-dotted underline-offset-4 hover:text-foreground hover:decoration-solid"
+              >
+                <FileDown className="h-4 w-4" style={{ color: MINT }} />
+                {text.presentationLink}
+              </a>
+            )}
           </motion.div>
 
           <motion.div
@@ -1453,6 +1481,48 @@ const Minerva = () => {
           </div>
         </div>
       </section>
+
+      {/* ---------------- Presentation download ---------------- */}
+      {presentation && (
+        <section id={presentationId} className="scroll-mt-24 px-4 pb-16 lg:px-8 lg:pb-24">
+          <div
+            className="mx-auto flex w-full max-w-5xl flex-col gap-6 rounded-3xl border p-6 md:flex-row md:items-center md:gap-10 md:p-10"
+            style={{
+              borderColor: "hsl(var(--border))",
+              background: "linear-gradient(160deg, hsl(var(--secondary)), hsl(var(--card)))",
+            }}
+          >
+            <div
+              aria-hidden="true"
+              className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl"
+              style={{ background: "hsl(var(--noreja-tertiary) / 0.1)" }}
+            >
+              <FileDown className="h-8 w-8" style={{ color: MINT }} />
+            </div>
+            <div className="flex-1">
+              <Eyebrow>{text.presentationEyebrow}</Eyebrow>
+              <h2 className="mt-2 text-2xl font-bold leading-tight text-foreground md:text-[1.7rem]">
+                {text.presentationHeading}
+              </h2>
+              <p className="mt-3 text-[0.97rem] leading-relaxed text-muted-foreground">{text.presentationLead}</p>
+              <p className="mt-2 font-mono text-[0.72rem] tracking-[0.06em] text-muted-foreground">
+                {presentation.fileType} · {presentation.fileSize}
+              </p>
+            </div>
+            <DownloadGateInline
+              title={presentation.title}
+              description={presentation.description}
+              fileUrl={presentation.fileUrl}
+              fileSize={presentation.fileSize}
+              fileType={presentation.fileType}
+              requiresForm={presentation.access === "locked"}
+              buttonText={text.presentationButton}
+              buttonVariant="default"
+              className="shrink-0"
+            />
+          </div>
+        </section>
+      )}
 
       {/* ---------------- FAQ ---------------- */}
       <section className="px-4 pb-16 lg:px-8 lg:pb-24">
