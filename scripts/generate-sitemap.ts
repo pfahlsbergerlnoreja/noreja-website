@@ -171,6 +171,8 @@ function generateSitemap() {
   addEntry('/en/contact', 0.8, 'weekly');
   addEntry('/de/frontier-agents', 0.8, 'weekly');
   addEntry('/en/frontier-agents', 0.8, 'weekly');
+  addEntry('/de/minerva', 0.8, 'weekly');
+  addEntry('/en/minerva', 0.8, 'weekly');
   addEntry('/de/karriere', 0.7, 'weekly');
   addEntry('/en/careers', 0.7, 'weekly');
   addEntry('/de/definitionen', 0.7, 'weekly');

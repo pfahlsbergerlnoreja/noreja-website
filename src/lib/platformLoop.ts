@@ -622,6 +622,19 @@ export const platformCopy = {
     de: "Minerva Frontier Agents im Detail ansehen",
     en: "See the Minerva Frontier Agents in detail",
   },
+  /** Inbound links to the Minerva 2.0 product page. */
+  minervaHeroLink: {
+    de: "Neu: Minerva 2.0 im Detail",
+    en: "New: Minerva 2.0 in detail",
+  },
+  minervaAgentsLink: {
+    de: "Minerva 2.0 – die KI-Assistentin im Detail ansehen",
+    en: "See Minerva 2.0 – the AI assistant – in detail",
+  },
+  minervaVideoLink: {
+    de: "Mehr zu Minerva 2.0",
+    en: "More about Minerva 2.0",
+  },
   agentsLede: {
     de: "Vier generische Agententypen, einer je Phase. Sie übergeben aneinander, dokumentieren jeden Schritt und holen sich eine Freigabe, bevor etwas passiert. Kein starres Produkt: Jeden Typ richtest du auf deine Prozesse, Systeme und Richtlinien aus.",
     en: "Four generic agent types, one per phase. They hand over to each other, document every step and ask for approval before anything happens. Not a fixed product: you shape each type around your processes, systems and policies.",

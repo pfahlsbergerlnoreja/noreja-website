@@ -20,6 +20,7 @@ export interface Translations {
     costOfInaction: string;
     smartDataForge: string;
     frontierAgents: string;
+    minerva: string;
     quickNavigation: string;
   };
   pages: {
@@ -750,6 +751,7 @@ export const translations: Record<Language, Translations> = {
       battleCards: "Battle Cards",
       faq: "FAQ",
       frontierAgents: "Process Frontier Agents",
+      minerva: "Minerva AI",
       costOfInaction: "Cost of Inaction",
       smartDataForge: "Smart Data Forge",
       quickNavigation: "Quick Navigation",
@@ -1583,6 +1585,7 @@ export const translations: Record<Language, Translations> = {
       battleCards: "Battle Cards",
       faq: "FAQ",
       frontierAgents: "Process Frontier Agents",
+      minerva: "Minerva AI",
       costOfInaction: "Cost of Inaction",
       smartDataForge: "Smart Data Forge",
       quickNavigation: "Schnellnavigation",

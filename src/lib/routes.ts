@@ -110,6 +110,10 @@ export const routes = {
     de: '/de/frontier-agents',
     en: '/en/frontier-agents',
   },
+  minerva: {
+    de: '/de/minerva',
+    en: '/en/minerva',
+  },
   maintenance: {
     de: '/de/wartung',
     en: '/en/maintenance',
@@ -160,6 +164,8 @@ const pathToRouteKey: Record<string, keyof typeof routes> = {
   '/en/download-thank-you': 'downloadThankYou',
   '/de/frontier-agents': 'aiAgents',
   '/en/frontier-agents': 'aiAgents',
+  '/de/minerva': 'minerva',
+  '/en/minerva': 'minerva',
   '/en/maintenance': 'maintenance',
   '/de/wartung': 'maintenance',
 };

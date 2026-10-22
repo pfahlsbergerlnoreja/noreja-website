@@ -16,6 +16,7 @@ import {
   RefreshCw,
   Search,
   Shield,
+  Sparkles,
   TrendingUp,
   Workflow,
 } from "lucide-react";
@@ -338,6 +339,19 @@ const Functionalities = () => {
                 <span key={item}>{item}</span>
               ))}
             </p>
+
+            <Link
+              to={getRoutePath("minerva", language)}
+              className="group inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-[0.85rem] text-muted-foreground transition-colors hover:text-foreground"
+              style={{
+                borderColor: "hsl(var(--noreja-tertiary) / 0.35)",
+                background: "hsl(var(--noreja-tertiary) / 0.06)",
+              }}
+            >
+              <Sparkles className="h-3.5 w-3.5" style={{ color: MINT }} />
+              {platformCopy.minervaHeroLink[language]}
+              <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
+            </Link>
           </motion.div>
 
           <motion.div
@@ -517,12 +531,19 @@ const Functionalities = () => {
 
           {/* The Frontier Agents page had no inbound link anywhere on the site
               after FunctionalitiesTeaser was retired. This is its natural home. */}
-          <p className="mt-6 text-[0.95rem] text-muted-foreground">
+          <p className="mt-6 flex flex-wrap gap-x-8 gap-y-3 text-[0.95rem] text-muted-foreground">
             <Link
               to={getRoutePath('aiAgents', language)}
               className="group inline-flex items-center gap-2 font-medium text-foreground underline decoration-dotted underline-offset-4 hover:decoration-solid"
             >
               {platformCopy.agentsLink[language]}
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </Link>
+            <Link
+              to={getRoutePath('minerva', language)}
+              className="group inline-flex items-center gap-2 font-medium text-foreground underline decoration-dotted underline-offset-4 hover:decoration-solid"
+            >
+              {platformCopy.minervaAgentsLink[language]}
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Link>
           </p>
@@ -709,6 +730,14 @@ const Functionalities = () => {
                       allowFullScreen
                       loading="lazy"
                     />
+                  </div>
+                  <div className="mt-6 flex justify-center">
+                    <Button variant="outline" className="group bg-background/60" asChild>
+                      <Link to={getRoutePath("minerva", language)}>
+                        {platformCopy.minervaVideoLink[language]}
+                        <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                      </Link>
+                    </Button>
                   </div>
                 </div>
               </div>

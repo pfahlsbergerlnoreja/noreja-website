@@ -44,6 +44,7 @@ export function Footer() {
     { name: t.footer.sections.referralProgram, href: siteConfig.links.referralProgram, external: true },
     { name: t.navigation.smartDataForge, routeKey: 'smartDataForge' as const, external: false },
     { name: t.navigation.frontierAgents, routeKey: 'aiAgents' as const, external: false },
+    { name: t.navigation.minerva, routeKey: 'minerva' as const, external: false },
     { name: 'Miragon x Noreja', routeKey: 'expertTalk' as const, external: false },
     { name: 'Order-to-Cash', href: getRoutePath('endToEndProcess', language, { processSlug: 'order-to-cash' }), external: false },
     { name: 'Purchase-to-Pay', href: getRoutePath('endToEndProcess', language, { processSlug: 'purchase-to-pay' }), external: false },

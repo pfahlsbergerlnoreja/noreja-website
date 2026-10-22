@@ -46,6 +46,7 @@ const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const Maintenance = lazy(() => import("./pages/Maintenance"));
 const AIAgents = lazy(() => import("./pages/AIAgents"));
+const Minerva = lazy(() => import("./pages/Minerva"));
 
 const queryClient = new QueryClient();
 
@@ -203,6 +204,10 @@ export const AppRoutes = () => (
               {/* AI Agents */}
               <Route path="/de/frontier-agents" element={<AIAgents />} />
               <Route path="/en/frontier-agents" element={<AIAgents />} />
+
+              {/* Minerva 2.0 product landing page */}
+              <Route path="/de/minerva" element={<Minerva />} />
+              <Route path="/en/minerva" element={<Minerva />} />
               
               {/* Maintenance */}
               <Route path="/maintenance" element={<Maintenance />} />

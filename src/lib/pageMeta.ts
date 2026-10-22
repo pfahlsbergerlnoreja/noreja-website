@@ -105,6 +105,10 @@ const pageTitles: Record<string, Record<Language, string>> = {
     en: 'Smart Data Forge – Generate Your Own Process Mining Data | Noreja',
     de: 'Smart Data Forge – Process Mining Daten selbst generieren | Noreja',
   },
+  minerva: {
+    en: 'Minerva 2.0 – AI Assistant for Process Intelligence | Noreja',
+    de: 'Minerva 2.0 – KI-Assistentin für Process Intelligence | Noreja',
+  },
   expertTalk: {
     en: 'Four Experts, Five Opinions – Talk Series with Miragon | Noreja',
     de: 'Vier Experten, fünf Meinungen – Talk-Reihe mit Miragon | Noreja',
@@ -151,6 +155,10 @@ const extraDescriptions: Record<string, Record<Language, string>> = {
   expertTalk: {
     en: 'Five short videos, four experts from Noreja and Miragon: organisational hurdles of process intelligence, process mining without impact, process discovery beyond the event log, IT governance for AI and the future of AI in products.',
     de: 'Fünf Videos, vier Experten von Noreja und Miragon: organisatorische Hürden von Process Intelligence, Process Mining ohne Impact, Prozessaufnahme jenseits des Event-Logs, IT-Governance bei KI und die Zukunft von KI in Produkten.',
+  },
+  minerva: {
+    en: 'Ask questions about your processes in plain language. Minerva reads the causal process graph, draws on your company knowledge and delivers answers, causes and finished files – with local or cloud models.',
+    de: 'Stell Fragen zu deinen Prozessen in Klartext. Minerva liest den kausalen Prozessgraphen, bezieht euer Unternehmenswissen ein und liefert Antworten, Ursachen und fertige Dateien – mit lokalen oder Cloud-Modellen.',
   },
   smartDataForge: {
     en: 'Smart Data Forge builds synthetic process data with a known root cause: tables, causal chains, deviations and business impact, exported as DDL and INSERT scripts for PostgreSQL, SQL Server, MySQL and Oracle. Runs straight in your browser, nothing to install.',
