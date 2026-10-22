@@ -248,6 +248,10 @@ function renderDocument(
   const head = document.head;
 
   document.documentElement.setAttribute('lang', result.lang);
+  // Tells the runtime head components (src/lib/pageMetaLoader.ts) that this
+  // head is already correct for the route, so they skip loading getPageMeta.
+  // The 404 document is served under arbitrary URLs and is left unmarked.
+  if (!options.is404) document.documentElement.setAttribute('data-prerendered-route', route);
 
   const content = extractContent(result.html);
 

@@ -4,10 +4,10 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import fastIcon from "@/assets/icons/fast.png";
-import realityIcon from "@/assets/icons/reality.png";
-import multidimensionalIcon from "@/assets/icons/multidimensional.png";
-import contextIcon from "@/assets/icons/context.png";
+import fastIcon from "@/assets/icons/fast.webp";
+import realityIcon from "@/assets/icons/reality.webp";
+import multidimensionalIcon from "@/assets/icons/multidimensional.webp";
+import contextIcon from "@/assets/icons/context.webp";
 import { getRoutePath } from "@/lib/routes";
 import { getImageSizeOr } from "@/lib/imageSize";
 import {
@@ -326,6 +326,8 @@ export function USPsShowcase() {
                             width={getImageSizeOr(usp.icon, { width: 256, height: 256 }).width}
                             height={getImageSizeOr(usp.icon, { width: 256, height: 256 }).height}
                             className="w-24 h-24"
+                            loading="lazy"
+                            decoding="async"
                           />
                         </div>
                         

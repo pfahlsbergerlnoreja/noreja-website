@@ -1,7 +1,7 @@
 import { useEffect, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 import { LanguageContext } from '@/contexts/LanguageContext';
-import { getPageMeta } from '@/lib/pageMeta';
+import { isPrerenderedRoute, loadPageMeta } from '@/lib/pageMetaLoader';
 
 /**
  * Keeps document.title in sync with the route during client-side navigation.
@@ -18,9 +18,15 @@ export function PageTitle() {
     // `return null` above this hook, which changed the hook order whenever the
     // provider was missing — React throws "rendered more hooks than during the
     // previous render" on the next render that has it.
-    if (!language) return;
+    if (!language || isPrerenderedRoute(location.pathname)) return;
 
-    document.title = getPageMeta(location.pathname, language).title;
+    let cancelled = false;
+    loadPageMeta().then((getPageMeta) => {
+      if (!cancelled) document.title = getPageMeta(location.pathname, language).title;
+    });
+    return () => {
+      cancelled = true;
+    };
   }, [location.pathname, language]);
 
   return null;

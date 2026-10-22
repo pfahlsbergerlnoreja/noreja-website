@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { getLanguageFromPath } from '@/lib/routes';
-import { getPageMeta } from '@/lib/pageMeta';
+import { isPrerenderedRoute, loadPageMeta } from '@/lib/pageMetaLoader';
 
 /**
  * Keeps <link rel="canonical"> in sync with the route during client-side
@@ -13,22 +13,32 @@ export function CanonicalUrl() {
   const location = useLocation();
 
   useEffect(() => {
-    const { canonical, known } = getPageMeta(
-      location.pathname,
-      getLanguageFromPath(location.pathname)
-    );
+    if (isPrerenderedRoute(location.pathname)) return;
 
-    const existing = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
+    let cancelled = false;
+    loadPageMeta().then((getPageMeta) => {
+      if (cancelled) return;
 
-    if (!known) {
-      existing?.remove();
-      return;
-    }
+      const { canonical, known } = getPageMeta(
+        location.pathname,
+        getLanguageFromPath(location.pathname)
+      );
 
-    const link = existing ?? document.createElement('link');
-    link.rel = 'canonical';
-    link.href = canonical;
-    if (!existing) document.head.appendChild(link);
+      const existing = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
+
+      if (!known) {
+        existing?.remove();
+        return;
+      }
+
+      const link = existing ?? document.createElement('link');
+      link.rel = 'canonical';
+      link.href = canonical;
+      if (!existing) document.head.appendChild(link);
+    });
+    return () => {
+      cancelled = true;
+    };
   }, [location.pathname]);
 
   return null;

@@ -1,7 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
 import { ExternalLink } from 'lucide-react';
 import {
@@ -13,15 +12,7 @@ import {
   type CarouselApi,
 } from '@/components/ui/carousel';
 import { useIsMobile } from '@/hooks/use-mobile';
-
-interface BlogPost {
-  title: string;
-  link: string;
-  pubDate: string;
-  description: string;
-  author?: string;
-  imageUrl?: string;
-}
+import { blogPosts } from '@/lib/blogPosts';
 
 interface HubSpotBlogTeaserProps {
   maxItems?: number;
@@ -37,242 +28,12 @@ interface HubSpotBlogTeaserProps {
 export function HubSpotBlogTeaser({ maxItems = 3, heading, headingHighlight }: HubSpotBlogTeaserProps) {
   const { t, language } = useLanguage();
   const isMobile = useIsMobile();
-  const [posts, setPosts] = useState<BlogPost[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  // Resolved at build time from the blog's RSS feed (scripts/generate-blog-posts.ts),
+  // so the cards are in the first render and in the prerendered HTML.
+  const posts = blogPosts[language].slice(0, maxItems);
   const [api, setApi] = useState<CarouselApi>();
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const isAutoAdvancingRef = useRef(false);
-
-  // HubSpot RSS Feed URLs - adjust based on language
-  const RSS_FEED_URL = language === 'de' 
-    ? 'https://blog.noreja.com/de-de/rss.xml'
-    : 'https://blog.noreja.com/en/rss.xml';
-
-  // Helper function for resilient fetching with retry logic
-  const fetchWithRetry = async (
-    url: string,
-    options: RequestInit = {},
-    maxRetries = 3,
-    retryDelay = 1000,
-    timeout = 10000,
-    abortSignal?: AbortSignal
-  ): Promise<Response> => {
-    let lastError: Error | null = null;
-    
-    for (let attempt = 0; attempt < maxRetries; attempt++) {
-      try {
-        // Create AbortController for timeout
-        const timeoutController = new AbortController();
-        const timeoutId = setTimeout(() => timeoutController.abort(), timeout);
-        
-        // Combine timeout signal with component abort signal if provided
-        let combinedSignal: AbortSignal | undefined;
-        if (abortSignal) {
-          const combinedController = new AbortController();
-          const abortHandler = () => combinedController.abort();
-          const timeoutHandler = () => combinedController.abort();
-          
-          abortSignal.addEventListener('abort', abortHandler);
-          timeoutController.signal.addEventListener('abort', timeoutHandler);
-          
-          // Cleanup listeners after fetch completes or fails
-          const cleanup = () => {
-            abortSignal?.removeEventListener('abort', abortHandler);
-            timeoutController.signal.removeEventListener('abort', timeoutHandler);
-          };
-          
-          combinedSignal = combinedController.signal;
-          // Store cleanup function for later use
-          (combinedSignal as any)._cleanup = cleanup;
-        } else {
-          combinedSignal = timeoutController.signal;
-        }
-        
-        try {
-          const response = await fetch(url, {
-            ...options,
-            signal: combinedSignal,
-            mode: 'cors',
-            credentials: 'omit',
-          });
-          
-          clearTimeout(timeoutId);
-          // Cleanup signal listeners
-          if ((combinedSignal as any)?._cleanup) {
-            (combinedSignal as any)._cleanup();
-          }
-          
-          // Only retry on network errors or 5xx errors
-          if (!response.ok && response.status >= 500 && attempt < maxRetries - 1) {
-            await new Promise(resolve => setTimeout(resolve, retryDelay * (attempt + 1)));
-            continue;
-          }
-          
-          return response;
-        } catch (fetchError) {
-          clearTimeout(timeoutId);
-          // Cleanup signal listeners
-          if ((combinedSignal as any)?._cleanup) {
-            (combinedSignal as any)._cleanup();
-          }
-          throw fetchError;
-        }
-      } catch (error) {
-        lastError = error instanceof Error ? error : new Error('Unknown fetch error');
-        
-        // Don't retry on abort (timeout or component unmount) or client errors (4xx)
-        if (error instanceof Error && error.name === 'AbortError') {
-          if (abortSignal?.aborted) {
-            throw new Error('Request cancelled');
-          }
-          throw new Error('Request timeout');
-        }
-        
-        // Retry on network errors
-        if (attempt < maxRetries - 1) {
-          await new Promise(resolve => setTimeout(resolve, retryDelay * (attempt + 1)));
-          continue;
-        }
-      }
-    }
-    
-    throw lastError || new Error('Failed to fetch after retries');
-  };
-
-  // Helper function to extract author name without email
-  const extractAuthorName = (authorString: string | null | undefined): string | undefined => {
-    if (!authorString) return undefined;
-    
-    // Format: "email@domain.com (Name)" -> extract Name
-    const nameInParens = authorString.match(/\(([^)]+)\)/);
-    if (nameInParens) {
-      return nameInParens[1].trim();
-    }
-    
-    // Format: "Name <email@domain.com>" -> extract Name
-    const nameBeforeEmail = authorString.match(/^([^<]+)</);
-    if (nameBeforeEmail) {
-      return nameBeforeEmail[1].trim();
-    }
-    
-    // If it's just an email, don't show it
-    const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(authorString.trim());
-    if (isEmail) {
-      return undefined;
-    }
-    
-    // Otherwise return as-is (but trim whitespace)
-    return authorString.trim();
-  };
-
-  useEffect(() => {
-    const abortController = new AbortController();
-    
-    const fetchBlogPosts = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-        
-        // Fetch RSS feed with retry logic
-        const response = await fetchWithRetry(
-          RSS_FEED_URL,
-          {
-            headers: {
-              'Accept': 'application/rss+xml, application/xml, text/xml',
-            },
-          },
-          3, // maxRetries
-          1000, // retryDelay
-          10000, // timeout
-          abortController.signal // abortSignal
-        );
-        
-        if (!response.ok) {
-          throw new Error(`Failed to fetch blog posts: ${response.status}`);
-        }
-        
-        const xmlText = await response.text();
-        const parser = new DOMParser();
-        const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
-        
-        // Check for parsing errors
-        const parserError = xmlDoc.querySelector('parsererror');
-        if (parserError) {
-          throw new Error('Failed to parse RSS feed');
-        }
-        
-        // Extract blog posts from RSS feed
-        const items = xmlDoc.querySelectorAll('item');
-        const blogPosts: BlogPost[] = Array.from(items).slice(0, maxItems).map(item => {
-          const title = item.querySelector('title')?.textContent || 'Untitled';
-          const link = item.querySelector('link')?.textContent || '#';
-          const pubDate = item.querySelector('pubDate')?.textContent || '';
-          const description = item.querySelector('description')?.textContent || '';
-          const authorRaw = item.querySelector('author, dc\\:creator')?.textContent;
-          const author = extractAuthorName(authorRaw);
-          
-          // Extract image from various possible RSS elements
-          let imageUrl: string | undefined;
-          
-          // Try media:content (common in RSS feeds)
-          const mediaContent = item.querySelector('media\\:content, content');
-          if (mediaContent) {
-            imageUrl = mediaContent.getAttribute('url') || undefined;
-          }
-          
-          // Try enclosure tag
-          if (!imageUrl) {
-            const enclosure = item.querySelector('enclosure[type^="image"]');
-            if (enclosure) {
-              imageUrl = enclosure.getAttribute('url') || undefined;
-            }
-          }
-          
-          // Try to extract image from description HTML
-          if (!imageUrl && description) {
-            const imgMatch = description.match(/<img[^>]+src="([^">]+)"/);
-            if (imgMatch) {
-              imageUrl = imgMatch[1];
-            }
-          }
-          
-          // Clean up description (remove HTML tags if present)
-          const cleanDescription = description.replace(/<[^>]*>/g, '').substring(0, 200) + '...';
-          
-          return {
-            title,
-            link,
-            pubDate,
-            description: cleanDescription,
-            author,
-            imageUrl,
-          };
-        });
-        
-        if (!abortController.signal.aborted) {
-          setPosts(blogPosts);
-        }
-      } catch (err) {
-        if (!abortController.signal.aborted) {
-          console.error('Error fetching blog posts:', err);
-          const errorMessage = err instanceof Error ? err.message : 'Failed to load blog posts';
-          setError(errorMessage);
-        }
-      } finally {
-        if (!abortController.signal.aborted) {
-          setLoading(false);
-        }
-      }
-    };
-
-    fetchBlogPosts();
-    
-    // Cleanup: abort fetch if component unmounts
-    return () => {
-      abortController.abort();
-    };
-  }, [maxItems, language, RSS_FEED_URL]);
 
   const formatDate = (dateString: string) => {
     try {
@@ -359,65 +120,7 @@ export function HubSpotBlogTeaser({ maxItems = 3, heading, headingHighlight }: H
           </p>
         </div>
         
-        {/* Blog Posts Loading State */}
-        {loading && (
-          <>
-            {/* Mobile: Carousel skeleton */}
-            <div className="lg:hidden">
-              <div className="grid grid-cols-1 gap-4 sm:gap-6">
-                {Array.from({ length: 1 }).map((_, i) => (
-                  <Card key={i} className="overflow-hidden">
-                    <Skeleton className="w-full aspect-video" />
-                    <CardHeader>
-                      <Skeleton className="h-6 w-3/4 mb-2" />
-                      <Skeleton className="h-4 w-1/2" />
-                    </CardHeader>
-                    <CardContent>
-                      <Skeleton className="h-4 w-full mb-2" />
-                      <Skeleton className="h-4 w-full mb-2" />
-                      <Skeleton className="h-4 w-2/3 mb-4" />
-                      <Skeleton className="h-10 w-full" />
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </div>
-            {/* Desktop: Grid skeleton */}
-            <div className="hidden lg:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-              {Array.from({ length: maxItems }).map((_, i) => (
-                <Card key={i} className="overflow-hidden">
-                  <Skeleton className="w-full aspect-video" />
-                  <CardHeader>
-                    <Skeleton className="h-6 w-3/4 mb-2" />
-                    <Skeleton className="h-4 w-1/2" />
-                  </CardHeader>
-                  <CardContent>
-                    <Skeleton className="h-4 w-full mb-2" />
-                    <Skeleton className="h-4 w-full mb-2" />
-                    <Skeleton className="h-4 w-2/3 mb-4" />
-                    <Skeleton className="h-10 w-full" />
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </>
-        )}
-
-        {error && (
-          <div className="text-center py-8 md:py-12 px-4">
-            <p className="text-muted-foreground mb-4 text-sm sm:text-base">{error}</p>
-            <Button 
-              variant="outline"
-              size="lg"
-              onClick={() => window.location.reload()}
-              className="min-h-[44px]"
-            >
-              {language === 'de' ? 'Erneut versuchen' : 'Try Again'}
-            </Button>
-          </div>
-        )}
-
-        {!loading && !error && posts.length === 0 && (
+        {posts.length === 0 && (
           <div className="text-center py-8 md:py-12 px-4">
             <p className="text-muted-foreground text-sm sm:text-base">
               {language === 'de' ? 'Keine Blog-Beiträge verfügbar' : 'No blog posts available'}
@@ -425,7 +128,7 @@ export function HubSpotBlogTeaser({ maxItems = 3, heading, headingHighlight }: H
           </div>
         )}
 
-        {!loading && !error && posts.length > 0 && (
+        {posts.length > 0 && (
           <>
             {/* Mobile: Carousel */}
             <div 

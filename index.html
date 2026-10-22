@@ -36,11 +36,13 @@
     <link rel="alternate" type="text/plain" href="/llms.txt" title="LLMs.txt" />
     <link rel="alternate" type="text/plain" href="/llms-full.txt" title="LLMs-full.txt" />
 
-    <!-- Warm up the connection to the blog origin early. It is otherwise only
-         discovered late, via the runtime RSS fetch in the blog teaser, so
-         preconnecting here saves the DNS/TLS handshake (~320 ms per Lighthouse). -->
-    <link rel="preconnect" href="https://blog.noreja.com" crossorigin />
-    <link rel="dns-prefetch" href="https://blog.noreja.com" />
+    <!-- Warm up the connection to CookieYes early. For a first-time visitor the
+         consent banner is the largest element on a phone screen (Lighthouse's
+         LCP element on mobile), and its script, config and styles all come from
+         this origin. The blog origin needs no hint any more: the teaser's posts
+         are resolved at build time (scripts/generate-blog-posts.ts). -->
+    <link rel="preconnect" href="https://cdn-cookieyes.com" />
+    <link rel="dns-prefetch" href="https://cdn-cookieyes.com" />
 
     <title>Noreja | Generative Process Intelligence</title>
     <meta name="description" content="Noreja's Generative Process Intelligence allows to contextualize operational data and human knowledge for the application of GenAI." />

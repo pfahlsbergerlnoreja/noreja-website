@@ -57,7 +57,10 @@ npm run test         # Vitest
 
 `npm run build` does more than bundle the app:
 
-1. `prebuild` regenerates `public/sitemap.xml` (`scripts/generate-sitemap.ts`).
+1. `prebuild` regenerates `public/sitemap.xml` (`scripts/generate-sitemap.ts`),
+   `src/lib/imageSizes.ts` and `src/lib/blogPosts.ts` (latest posts from the
+   blog's RSS feeds, `scripts/generate-blog-posts.ts`; on a fetch error the
+   committed file is kept).
 2. `vite build` produces the client bundle.
 3. `build:ssr` bundles `src/entry-server.tsx` (the same `AppRoutes` tree, but in a
    `StaticRouter`) into `dist-ssr/`.
@@ -85,7 +88,12 @@ Consequences to keep in mind:
 - Titles and descriptions come from `src/lib/pageMeta.ts` (`getPageMeta`), which is
   shared by the prerenderer and the runtime `PageTitle` / `MetaDescription` /
   `CanonicalUrl` / `HreflangTags` components. Change copy there, not in the
-  components.
+  components. The runtime components load it lazily (`src/lib/pageMetaLoader.ts`)
+  and skip it on the route the document was prerendered for: `pageMeta.ts` pulls
+  in the data of every detail page, so **never import it statically from code
+  in the main bundle**.
+- Raster images are never inlined as base64 (`assetsInlineLimit` in
+  `vite.config.ts`), so small logos stay out of the main bundle.
 - `StructuredData` renders its JSON-LD inline in the React tree (not via an
   effect), so schema ends up in the static HTML.
 - Icons and the web manifest (`public/favicon.svg`, `apple-touch-icon.png`,
@@ -101,5 +109,6 @@ baseline security headers and the 404 catch-all.
 
 - No backend — all data is static or fetched from HubSpot APIs
 - Download-gated assets require a HubSpot form submission before access
-- Blog content is pulled from HubSpot via `HubSpotBlogTeaser`
+- Blog teaser posts (`HubSpotBlogTeaser`) are resolved at build time from the
+  HubSpot RSS feeds into `src/lib/blogPosts.ts`; new posts appear with the next deploy
 - Avoid adding server-side logic; keep everything frontend-only

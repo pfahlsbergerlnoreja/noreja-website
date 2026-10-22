@@ -92,9 +92,12 @@ export function HeroShell({
       <div className="pointer-events-none absolute inset-0" style={{ background }} />
 
       <div className="relative z-10 mx-auto grid w-full max-w-7xl grid-cols-1 items-center gap-12 px-4 lg:grid-cols-[1.08fr_0.92fr] lg:gap-20 lg:px-8">
+        {/* Transform only, no opacity: this column holds the H1, and a faded-in
+            parent keeps it invisible (and the LCP unpainted) until the bundle
+            has run and the animation has finished. */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ y: 20 }}
+          animate={{ y: 0 }}
           transition={{ duration: 0.8 }}
           className="order-2 flex flex-col items-start gap-6 lg:order-1"
         >
