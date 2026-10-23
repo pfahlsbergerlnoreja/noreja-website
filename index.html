@@ -360,9 +360,47 @@
       })();
     </script>
     <script type="module" src="/src/main.tsx"></script>
-    <!-- Start of HubSpot Embed Code (defer only, no async: guarantees CookieYes
-         executes first so its auto-blocking can intercept HubSpot cookies) -->
-    <script type="text/javascript" id="hs-script-loader" defer src="//js-eu1.hs-scripts.com/144242473.js"></script>
+    <!-- Start of HubSpot Embed Code, loaded late on purpose.
+         The tracking code (analytics, collected forms, its banner script) cost
+         ~1.5 s of main-thread time on a mid-range phone while the page was
+         still starting up, which delayed everything else that needs the main
+         thread — on mobile that included painting the consent banner, the
+         largest element for a first-time visitor. It now loads on the first
+         interaction, or once the page has loaded and the browser is idle,
+         whichever comes first. CookieYes is long loaded by then, so its
+         auto-blocking still sees the script being inserted.
+         The visitor may already have navigated client-side by then (the first
+         click is what triggers the load), so the landing path is queued with
+         setPath: the automatic initial page view of the tracking code then
+         records the page the visitor arrived on. Later navigations are tracked
+         by HubSpotPageViewTracker (App.tsx). HubSpot forms load their own
+         script and do not depend on this one. -->
+    <script>
+      (function () {
+        var loaded = false;
+        var entryPath = location.pathname + location.search;
+        var events = ['pointerdown', 'keydown', 'scroll', 'touchstart'];
+        function load() {
+          if (loaded) return;
+          loaded = true;
+          events.forEach(function (name) { window.removeEventListener(name, load); });
+          window._hsq = window._hsq || [];
+          window._hsq.push(['setPath', entryPath]);
+          var script = document.createElement('script');
+          script.id = 'hs-script-loader';
+          script.async = true;
+          script.src = 'https://js-eu1.hs-scripts.com/144242473.js';
+          document.body.appendChild(script);
+        }
+        events.forEach(function (name) {
+          window.addEventListener(name, load, { once: true, passive: true });
+        });
+        window.addEventListener('load', function () {
+          if ('requestIdleCallback' in window) window.requestIdleCallback(load, { timeout: 3000 });
+          else setTimeout(load, 2000);
+        });
+      })();
+    </script>
     <!-- End of HubSpot Embed Code -->
   </body>
 </html>

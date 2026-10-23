@@ -3,7 +3,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
-import { lazy, Suspense, useEffect } from "react";
+import { lazy, Suspense, useEffect, useRef } from "react";
 import { useScrollTracking } from "@/hooks/use-scroll-tracking";
 import { ConditionalLayout } from "@/components/ConditionalLayout";
 import { CanonicalUrl } from "@/components/CanonicalUrl";
@@ -50,17 +50,42 @@ const Minerva = lazy(() => import("./pages/Minerva"));
 
 const queryClient = new QueryClient();
 
+// The tracking code replaces the plain queue's push with its own once it has
+// loaded. Until then, pushes would land in the queue that is replayed before
+// its automatic initial page view — and change that view's path.
+const isHubSpotReady = () =>
+  typeof window !== 'undefined' &&
+  !!window._hsq &&
+  Object.prototype.hasOwnProperty.call(window._hsq, 'push');
+
 // Component to track HubSpot page views on route changes for SPA
 function HubSpotPageViewTracker() {
   const location = useLocation();
+  const isEntryPage = useRef(true);
 
   useEffect(() => {
-    // Wait for HubSpot script to load and track page view for SPA navigation
-    if (typeof window !== 'undefined' && window._hsq) {
-      // Set the path and track page view
-      window._hsq.push(['setPath', location.pathname + location.search]);
-      window._hsq.push(['trackPageView']);
+    // The entry page is recorded by the tracking code's own initial page view
+    // (index.html queues its path), so only client-side navigations count here.
+    if (isEntryPage.current) {
+      isEntryPage.current = false;
+      return;
     }
+
+    // The tracking code loads late (first interaction or idle, see index.html),
+    // and the click that triggers it is often a navigation. Wait for it.
+    const path = location.pathname + location.search;
+    let attempts = 0;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    const track = () => {
+      if (isHubSpotReady()) {
+        window._hsq!.push(['setPath', path]);
+        window._hsq!.push(['trackPageView']);
+      } else if (++attempts < 60) {
+        timer = setTimeout(track, 500);
+      }
+    };
+    track();
+    return () => clearTimeout(timer);
   }, [location]);
 
   return null;

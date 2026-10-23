@@ -4,7 +4,7 @@ import path from "path";
 import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
-export default defineConfig(({ mode }) => ({
+export default defineConfig(({ mode, isSsrBuild }) => ({
   server: {
     host: "::",
     port: 8080,
@@ -31,5 +31,9 @@ export default defineConfig(({ mode }) => ({
     // Returning undefined keeps the default for everything else (e.g. SVG).
     assetsInlineLimit: (filePath) =>
       /\.(png|jpe?g|webp|gif|avif)$/i.test(filePath) ? false : undefined,
+    // dist/.vite/manifest.json: lets scripts/prerender.ts add modulepreload
+    // hints for each route's lazy page chunk (it deletes the file afterwards).
+    // Only for the client build — the SSR build has no use for it.
+    manifest: !isSsrBuild,
   },
 }));

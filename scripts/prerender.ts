@@ -20,10 +20,11 @@
  * so React discards the fallback markup on mount, and an inline script in
  * index.html removes it before first paint so visitors never see it unstyled.
  */
-import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'fs';
+import { readFileSync, writeFileSync, mkdirSync, existsSync, rmSync } from 'fs';
 import { resolve, dirname, join } from 'path';
 import { fileURLToPath, pathToFileURL } from 'url';
 import { JSDOM } from 'jsdom';
+import { matchPath } from 'react-router';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const rootDir = resolve(__dirname, '..');
@@ -89,6 +90,63 @@ function readRouterRoutes(): string[] {
     paths.add(path);
   }
   return [...paths];
+}
+
+interface ManifestChunk {
+  file: string;
+  imports?: string[];
+}
+type Manifest = Record<string, ManifestChunk>;
+
+/**
+ * Page routes declared in App.tsx, in declaration order, with the lazy module
+ * behind each: `const Pricing = lazy(() => import("./pages/Pricing"))` plus
+ * `<Route path="/de/preise" element={<Pricing />} />` → src/pages/Pricing.tsx.
+ * Eagerly imported pages (the home page) have no module: they are in the main
+ * bundle already, but still have to be listed so they do not fall through to
+ * the catch-all route.
+ */
+function readPageRoutes(): { path: string; module?: string }[] {
+  const appSource = readFileSync(join(rootDir, 'src', 'App.tsx'), 'utf-8');
+  const modules = new Map<string, string>();
+  for (const match of appSource.matchAll(/const (\w+) = lazy\(\(\) => import\("\.\/([^"]+)"\)\)/g)) {
+    modules.set(match[1], `src/${match[2]}.tsx`);
+  }
+  return [...appSource.matchAll(/<Route\s+path="([^"]+)"\s+element=\{<(\w+)\s*\/>\}/g)].map(
+    (match) => ({ path: match[1], module: modules.get(match[2]) })
+  );
+}
+
+/**
+ * Chunk to modulepreload for a route: its lazy page chunk. Without the hint the
+ * browser only learns about it once the main bundle has run, so every page
+ * except the home page loaded in two waves. Only the page chunk itself: also
+ * preloading its ~20 shared dependency chunks (measured on /de/plattform) made
+ * them compete with the CSS and the main bundle on a slow connection and
+ * pushed mobile FCP/LCP back, while the page chunk alone took LCP from 6.4 to
+ * 4.5 s in Lighthouse.
+ */
+function createPreloadResolver(manifest: Manifest) {
+  const pageRoutes = readPageRoutes();
+  if (!pageRoutes.some(({ module }) => module)) {
+    console.warn('⚠️  prerender: no lazy routes found in App.tsx, no modulepreload hints');
+  }
+
+  const collect = (key: string, into: Set<string>, skip: Set<string> = new Set()) => {
+    const chunk = manifest[key];
+    if (!chunk || skip.has(chunk.file) || into.has(chunk.file)) return;
+    into.add(chunk.file);
+    chunk.imports?.forEach((imported) => collect(imported, into, skip));
+  };
+  const entryFiles = new Set<string>();
+  collect('index.html', entryFiles);
+
+  return (route: string): string[] => {
+    const match = pageRoutes.find(({ path }) => matchPath({ path, end: true }, route));
+    if (!match?.module) return [];
+    const chunk = manifest[match.module];
+    return chunk && !entryFiles.has(chunk.file) ? [chunk.file] : [];
+  };
 }
 
 /**
@@ -241,11 +299,21 @@ function renderDocument(
   template: string,
   route: string,
   result: RenderResult,
-  options: { is404?: boolean } = {}
+  options: { is404?: boolean; preloads?: string[] } = {}
 ): string {
   const dom = new JSDOM(template);
   const { document } = dom.window;
   const head = document.head;
+
+  // Let the browser fetch the route's page chunk alongside the main bundle
+  // instead of discovering it only once the main bundle has run.
+  for (const file of options.preloads ?? []) {
+    const link = document.createElement('link');
+    link.setAttribute('rel', 'modulepreload');
+    link.setAttribute('crossorigin', '');
+    link.setAttribute('href', `/${file}`);
+    head.appendChild(link);
+  }
 
   document.documentElement.setAttribute('lang', result.lang);
   // Tells the runtime head components (src/lib/pageMetaLoader.ts) that this
@@ -334,6 +402,14 @@ async function main() {
     render: (url: string) => Promise<RenderResult>;
   };
 
+  // Vite's build manifest (build.manifest in vite.config.ts). It is only needed
+  // here and would otherwise be published with the site, so it is removed below.
+  const manifestDir = join(distDir, '.vite');
+  const manifestPath = join(manifestDir, 'manifest.json');
+  const preloadsFor = existsSync(manifestPath)
+    ? createPreloadResolver(JSON.parse(readFileSync(manifestPath, 'utf-8')) as Manifest)
+    : (console.warn('⚠️  prerender: no dist/.vite/manifest.json, no modulepreload hints'), () => []);
+
   const routes = [...new Set([...readSitemapRoutes(), ...EXTRA_ROUTES])].sort();
   const started = Date.now();
   const incomplete: string[] = [];
@@ -347,7 +423,10 @@ async function main() {
 
       const outDir = join(distDir, ...route.split('/').filter(Boolean));
       mkdirSync(outDir, { recursive: true });
-      writeFileSync(join(outDir, 'index.html'), renderDocument(template, route, result));
+      writeFileSync(
+        join(outDir, 'index.html'),
+        renderDocument(template, route, result, { preloads: preloadsFor(route) })
+      );
       written++;
     } catch (error) {
       failed.push(`${route} (${(error as Error).message})`);
@@ -361,11 +440,18 @@ async function main() {
     const result = await render('/404');
     writeFileSync(
       join(distDir, '404.html'),
-      renderDocument(template, '/404', { ...result, noindex: true }, { is404: true })
+      renderDocument(
+        template,
+        '/404',
+        { ...result, noindex: true },
+        { is404: true, preloads: preloadsFor('/404') }
+      )
     );
   } catch (error) {
     failed.push(`/404.html (${(error as Error).message})`);
   }
+
+  rmSync(manifestDir, { recursive: true, force: true });
 
   // Safety net: every static route in the router must have a file, otherwise
   // it would now answer 404.
