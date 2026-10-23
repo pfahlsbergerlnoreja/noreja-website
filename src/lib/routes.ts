@@ -1,4 +1,5 @@
 import { Language } from './translations';
+import { agentSlugs, getAgentIdBySlug } from './agentSlugs';
 
 // Route mappings for both languages
 export const routes = {
@@ -70,6 +71,10 @@ export const routes = {
     de: '/de/vier-experten-fuenf-meinungen',
     en: '/en/four-experts-five-opinions',
   },
+  processes: {
+    de: '/de/prozesse',
+    en: '/en/processes',
+  },
   endToEndProcess: {
     de: '/de/prozesse/:processSlug',
     en: '/en/processes/:processSlug',
@@ -113,6 +118,14 @@ export const routes = {
   minerva: {
     de: '/de/minerva',
     en: '/en/minerva',
+  },
+  agentLibrary: {
+    de: '/de/minerva/agenten',
+    en: '/en/minerva/agents',
+  },
+  agentDetail: {
+    de: '/de/minerva/agenten/:agentSlug',
+    en: '/en/minerva/agents/:agentSlug',
   },
   maintenance: {
     de: '/de/wartung',
@@ -166,6 +179,10 @@ const pathToRouteKey: Record<string, keyof typeof routes> = {
   '/en/frontier-agents': 'aiAgents',
   '/de/minerva': 'minerva',
   '/en/minerva': 'minerva',
+  '/de/prozesse': 'processes',
+  '/en/processes': 'processes',
+  '/de/minerva/agenten': 'agentLibrary',
+  '/en/minerva/agents': 'agentLibrary',
   '/en/maintenance': 'maintenance',
   '/de/wartung': 'maintenance',
 };
@@ -270,6 +287,17 @@ export function translateRoute(pathname: string, targetLang: Language): string {
     return getRoutePath('endToEndProcess', targetLang, { processSlug: endToEndProcessMatch[1] });
   }
   
+  // Agent detail: /de/minerva/agenten/:agentSlug or /en/minerva/agents/:agentSlug.
+  // Unlike the other detail pages the slug differs per language (it carries
+  // the agent name), so it is translated rather than kept.
+  const agentDetailMatch = pathname.match(/^\/(?:de|en)\/minerva\/(?:agenten|agents)\/(.+)$/);
+  if (agentDetailMatch) {
+    const agentId = getAgentIdBySlug(agentDetailMatch[1]);
+    return agentId
+      ? getRoutePath('agentDetail', targetLang, { agentSlug: agentSlugs[agentId][targetLang] })
+      : routes.agentLibrary[targetLang];
+  }
+
   // Try to find matching route key from the full pathname
   const routeKey = pathToRouteKey[pathname];
   
@@ -313,6 +341,9 @@ export function getRouteKeyFromPath(pathname: string): keyof typeof routes | nul
   }
   if (pathname.match(/^\/(?:de|en)\/battle-cards\/.+/)) {
     return 'battleCardDetail';
+  }
+  if (pathname.match(/^\/(?:de|en)\/minerva\/(?:agenten|agents)\/.+/)) {
+    return 'agentDetail';
   }
 
   // pathToRouteKey is keyed by the real path in BOTH languages, so the path

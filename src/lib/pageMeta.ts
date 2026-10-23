@@ -6,6 +6,7 @@ import { getDefinitionById } from './definitions';
 import { getBattleCardById, getBattleCardVsName, getBattleCardVsTitle } from './battle-cards';
 import { getJobById } from './careers';
 import { getEndToEndProcessById } from './endToEndProcesses';
+import { getAgentBySlug } from './agents';
 import { SITE_NAME, SITE_URL } from './config';
 
 /**
@@ -109,6 +110,14 @@ const pageTitles: Record<string, Record<Language, string>> = {
     en: 'Minerva 2.0 – AI Assistant for Process Intelligence | Noreja',
     de: 'Minerva 2.0 – KI-Assistentin für Process Intelligence | Noreja',
   },
+  processes: {
+    en: 'End-to-End Processes – Order-to-Cash, Purchase-to-Pay & More | Noreja',
+    de: 'End-to-End-Prozesse – Order-to-Cash, Purchase-to-Pay & mehr | Noreja',
+  },
+  agentLibrary: {
+    en: 'Minerva Agent Library – AI Agents for Business Process Analysis | Noreja',
+    de: 'Minerva Agent Library – KI-Agenten für die Geschäftsprozessanalyse | Noreja',
+  },
   expertTalk: {
     en: 'Four Experts, Five Opinions – Talk Series with Miragon | Noreja',
     de: 'Vier Experten, fünf Meinungen – Talk-Reihe mit Miragon | Noreja',
@@ -159,6 +168,14 @@ const extraDescriptions: Record<string, Record<Language, string>> = {
   minerva: {
     en: 'Ask questions about your processes in plain language. Minerva reads the causal process graph, draws on your company knowledge and delivers answers, causes and finished files – with local or cloud models.',
     de: 'Stell Fragen zu deinen Prozessen in Klartext. Minerva liest den kausalen Prozessgraphen, bezieht euer Unternehmenswissen ein und liefert Antworten, Ursachen und fertige Dateien – mit lokalen oder Cloud-Modellen.',
+  },
+  processes: {
+    en: 'Order-to-cash, purchase-to-pay, lead-to-activation and premium-to-tax, analyzed end to end with causal process mining: phases, findings, causes and measures.',
+    de: 'Order-to-Cash, Purchase-to-Pay, Lead-to-Activation und Premium-to-Tax, durchgängig analysiert mit Causal Process Mining: Phasen, Findings, Ursachen und Maßnahmen.',
+  },
+  agentLibrary: {
+    en: 'Specialized AI agents for process analysis in Noreja Minerva: structural deviations, cycle times, waiting times, working capital, work in progress, compliance, rework, root causes and more.',
+    de: 'Spezialisierte KI-Agenten für die Prozessanalyse in Noreja Minerva: Strukturfehler, Laufzeiten, Wartezeiten, Working Capital, Work in Progress, Compliance, Nacharbeit, Ursachen und mehr.',
   },
   smartDataForge: {
     en: 'Smart Data Forge builds synthetic process data with a known root cause: tables, causal chains, deviations and business impact, exported as DDL and INSERT scripts for PostgreSQL, SQL Server, MySQL and Oracle. Runs straight in your browser, nothing to install.',
@@ -257,6 +274,13 @@ export function getPageMeta(pathname: string, language: Language): PageMeta {
     if (process) {
       title = process.content[language].metaTitle;
       description = process.content[language].metaDescription;
+    }
+  } else if (routeKey === 'agentDetail') {
+    const match = path.match(/^\/(?:de|en)\/minerva\/(?:agenten|agents)\/(.+)$/);
+    const agent = match ? getAgentBySlug(match[1]) : undefined;
+    if (agent) {
+      title = agent.content[language].metaTitle;
+      description = agent.content[language].metaDescription;
     }
   } else if (routeKey === 'careerDetail') {
     const match = path.match(/^\/(?:de|en)\/(?:karriere|careers)\/(.+)$/);

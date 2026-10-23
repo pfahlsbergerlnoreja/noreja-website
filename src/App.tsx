@@ -47,6 +47,9 @@ const NotFound = lazy(() => import("./pages/NotFound"));
 const Maintenance = lazy(() => import("./pages/Maintenance"));
 const AIAgents = lazy(() => import("./pages/AIAgents"));
 const Minerva = lazy(() => import("./pages/Minerva"));
+const AgentLibrary = lazy(() => import("./pages/AgentLibrary"));
+const Processes = lazy(() => import("./pages/Processes"));
+const AgentDetail = lazy(() => import("./pages/AgentDetail"));
 
 const queryClient = new QueryClient();
 
@@ -194,7 +197,9 @@ export const AppRoutes = () => (
               <Route path="/de/vier-experten-fuenf-meinungen" element={<ExpertTalk />} />
               <Route path="/en/four-experts-five-opinions" element={<ExpertTalk />} />
 
-              {/* End-to-end processes (Lead-to-Activation, …) */}
+              {/* End-to-end processes: overview and one page per process (Lead-to-Activation, …) */}
+              <Route path="/de/prozesse" element={<Processes />} />
+              <Route path="/en/processes" element={<Processes />} />
               <Route path="/de/prozesse/:processSlug" element={<EndToEndProcess />} />
               <Route path="/en/processes/:processSlug" element={<EndToEndProcess />} />
 
@@ -233,6 +238,12 @@ export const AppRoutes = () => (
               {/* Minerva 2.0 product landing page */}
               <Route path="/de/minerva" element={<Minerva />} />
               <Route path="/en/minerva" element={<Minerva />} />
+
+              {/* Minerva Agent Library: overview and one page per agent */}
+              <Route path="/de/minerva/agenten" element={<AgentLibrary />} />
+              <Route path="/en/minerva/agents" element={<AgentLibrary />} />
+              <Route path="/de/minerva/agenten/:agentSlug" element={<AgentDetail />} />
+              <Route path="/en/minerva/agents/:agentSlug" element={<AgentDetail />} />
               
               {/* Maintenance */}
               <Route path="/maintenance" element={<Maintenance />} />

@@ -9,6 +9,7 @@ const __dirname = dirname(__filename);
 
 // Import config (simple import, no dynamic globs)
 import { SITE_URL } from '../src/lib/config';
+import { agentSlugs } from '../src/lib/agentSlugs';
 
 // Read and parse TypeScript files to extract IDs
 function extractSuccessStoryIds(): string[] {
@@ -173,6 +174,10 @@ function generateSitemap() {
   addEntry('/en/frontier-agents', 0.8, 'weekly');
   addEntry('/de/minerva', 0.8, 'weekly');
   addEntry('/en/minerva', 0.8, 'weekly');
+  addEntry('/de/prozesse', 0.8, 'weekly');
+  addEntry('/en/processes', 0.8, 'weekly');
+  addEntry('/de/minerva/agenten', 0.8, 'weekly');
+  addEntry('/en/minerva/agents', 0.8, 'weekly');
   addEntry('/de/karriere', 0.7, 'weekly');
   addEntry('/en/careers', 0.7, 'weekly');
   addEntry('/de/definitionen', 0.7, 'weekly');
@@ -236,6 +241,12 @@ function generateSitemap() {
   battleCardIds.forEach((cardId) => {
     addEntry(`/de/battle-cards/${cardId}`, 0.6, 'monthly');
     addEntry(`/en/battle-cards/${cardId}`, 0.6, 'monthly');
+  });
+
+  // Minerva Agent Library detail pages (slugs differ per language)
+  Object.values(agentSlugs).forEach((slugs) => {
+    addEntry(`/de/minerva/agenten/${slugs.de}`, 0.7, 'monthly');
+    addEntry(`/en/minerva/agents/${slugs.en}`, 0.7, 'monthly');
   });
 
   // Write entries to sitemap stream

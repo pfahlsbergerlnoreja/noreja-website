@@ -25,11 +25,13 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DownloadGateInline } from "@/components/DownloadGate";
+import { Eyebrow, MINT, Prompt } from "@/components/minerva/MinervaUi";
 import { BreadcrumbSchema, FAQSchema, StructuredData } from "@/components/StructuredData";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { SITE_URL, siteConfig } from "@/lib/config";
 import { getMinervaPresentation } from "@/lib/downloads";
 import { getRoutePath } from "@/lib/routes";
+import { agents, getAgentSlug } from "@/lib/agents";
 
 import minervaNextToAnalyzer from "@/assets/minerva/minerva-next-to-analyzer.webp";
 import answerWithTable from "@/assets/minerva/answer-with-table.webp";
@@ -48,9 +50,6 @@ import invoiceTicketContext from "@/assets/processes/purchase-to-pay/invoice-tic
  * crawlers and answer engines. The screenshots show the German UI on both
  * language versions until English captures are available.
  */
-
-/** Brand colours must be written as `hsl(var(--noreja-*) / a)`, see Functionalities.tsx. */
-const MINT = "hsl(var(--noreja-tertiary))";
 
 const IMG = {
   minervaNextToAnalyzer: { src: minervaNextToAnalyzer, width: 2000, height: 1038 },
@@ -332,6 +331,12 @@ const copy = {
         ],
       },
     ],
+
+    libraryEyebrow: "Agent Library",
+    libraryHeading: "Spezialisierte Agents für jede Prozessfrage",
+    libraryLead:
+      "Für typische Aufgaben der Geschäftsprozessanalyse gibt es fertige Agents: Jeder kennt seine Fragestellung, die passenden Kennzahlen und die Folgefragen, die eine gute Analyse beantwortet.",
+    libraryLink: "Zur Agent Library",
 
     trustEyebrow: "Deine Daten, deine Kontrolle",
     trustHeading: "Minerva sieht nicht mehr als du.",
@@ -671,6 +676,12 @@ const copy = {
       },
     ],
 
+    libraryEyebrow: "Agent Library",
+    libraryHeading: "Specialized agents for every process question",
+    libraryLead:
+      "For typical tasks in business process analysis there are ready-made agents: each one knows its question, the right KPIs and the follow-up questions a good analysis answers.",
+    libraryLink: "Open the Agent Library",
+
     trustEyebrow: "Your data, your control",
     trustHeading: "Minerva sees no more than you do.",
     trustLead:
@@ -844,12 +855,6 @@ const faq = {
   ],
 } as const;
 
-const Eyebrow = ({ children }: { children: React.ReactNode }) => (
-  <p className="font-mono text-[0.72rem] uppercase tracking-[0.22em]" style={{ color: MINT }}>
-    {children}
-  </p>
-);
-
 /** A screenshot in a light browser frame; click opens the full-size image. */
 function Screenshot({ shot, enlargeLabel, eager = false }: { shot: Shot; enlargeLabel: string; eager?: boolean }) {
   return (
@@ -895,24 +900,6 @@ function Screenshot({ shot, enlargeLabel, eager = false }: { shot: Shot; enlarge
   );
 }
 
-/** A question to Minerva, styled as a chat bubble. */
-const Prompt = ({ children, quote }: { children: React.ReactNode; quote: readonly [string, string] }) => (
-  <p
-    className="flex items-start gap-2.5 rounded-xl border px-4 py-3 text-[0.92rem] leading-relaxed text-foreground"
-    style={{
-      borderColor: "hsl(var(--noreja-main) / 0.35)",
-      background: "hsl(var(--noreja-main) / 0.08)",
-    }}
-  >
-    <MessageCircleQuestion className="mt-0.5 h-4 w-4 flex-shrink-0" style={{ color: MINT }} />
-    <span>
-      {quote[0]}
-      {children}
-      {quote[1]}
-    </span>
-  </p>
-);
-
 /** One node in the "How Minerva works" diagram. */
 const Node = ({
   tone,
@@ -953,7 +940,6 @@ const Minerva = () => {
   const { language } = useLanguage();
   const text = copy[language];
   const questions = faq[language];
-  const quote = language === "de" ? (["„", "“"] as const) : (["“", "”"] as const);
   const pageUrl = `${SITE_URL}${getRoutePath("minerva", language)}`;
   const d = text.diagram;
 
@@ -996,6 +982,7 @@ const Minerva = () => {
 
   const howId = language === "de" ? "so-arbeitet-minerva" : "how-minerva-works";
   const presentationId = language === "de" ? "praesentation" : "presentation";
+  const libraryId = "agent-library";
   const presentation = getMinervaPresentation(language);
 
   return (
@@ -1161,7 +1148,7 @@ const Minerva = () => {
                   <span className="mb-1.5 block font-mono text-[0.68rem] uppercase tracking-[0.14em]" style={{ color: MINT }}>
                     {text.youAsk}
                   </span>
-                  <Prompt quote={quote}>{row.ask}</Prompt>
+                  <Prompt language={language}>{row.ask}</Prompt>
                 </div>
               </div>
             ))}
@@ -1316,7 +1303,7 @@ const Minerva = () => {
                     {"prompts" in feature && (
                       <div className="grid gap-2">
                         {feature.prompts.map((prompt) => (
-                          <Prompt key={prompt} quote={quote}>
+                          <Prompt key={prompt} language={language}>
                             {prompt}
                           </Prompt>
                         ))}
@@ -1366,13 +1353,61 @@ const Minerva = () => {
               <div key={group.title} className="flex flex-col gap-3">
                 <h3 className="font-mono text-[0.78rem] uppercase tracking-[0.12em] text-foreground">{group.title}</h3>
                 {group.prompts.map((prompt) => (
-                  <Prompt key={prompt} quote={quote}>
+                  <Prompt key={prompt} language={language}>
                     {prompt}
                   </Prompt>
                 ))}
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ---------------- Agent Library ---------------- */}
+      <section id={libraryId} className="scroll-mt-24 px-4 pb-16 lg:px-8 lg:pb-24">
+        <div
+          className="mx-auto w-full max-w-6xl rounded-3xl border p-6 md:p-10"
+          style={{
+            borderColor: "hsl(var(--noreja-main) / 0.35)",
+            background: "linear-gradient(160deg, hsl(var(--noreja-main) / 0.1), hsl(var(--card)))",
+          }}
+        >
+          <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between md:gap-10">
+            <div className="flex max-w-[62ch] flex-col gap-3">
+              <Eyebrow>{text.libraryEyebrow}</Eyebrow>
+              <h2 className="text-3xl font-extrabold leading-tight tracking-tight text-foreground lg:text-[2.6rem]">
+                {text.libraryHeading}
+              </h2>
+              <p className="text-lg leading-relaxed text-muted-foreground">{text.libraryLead}</p>
+            </div>
+            <Button asChild variant="outline" className="group shrink-0 bg-background/60">
+              <Link to={getRoutePath("agentLibrary", language)}>
+                {text.libraryLink}
+                <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </Link>
+            </Button>
+          </div>
+          <ul className="grid gap-3 md:grid-cols-2">
+            {agents.map((agent) => (
+              <li key={agent.id}>
+                <Link
+                  to={getRoutePath("agentDetail", language, { agentSlug: getAgentSlug(agent, language) })}
+                  className="group flex h-full items-start gap-3 rounded-xl border bg-background/80 px-4 py-3.5 transition-colors hover:border-noreja-main/50"
+                  style={{ borderColor: "hsl(var(--border))" }}
+                >
+                  <agent.icon className="mt-0.5 h-5 w-5 flex-shrink-0" style={{ color: MINT }} />
+                  <span>
+                    <span className="block text-[0.97rem] font-semibold tracking-tight text-foreground group-hover:text-noreja-main">
+                      {agent.content[language].name}
+                    </span>
+                    <span className="text-[0.88rem] leading-snug text-muted-foreground">
+                      {agent.content[language].teaser}
+                    </span>
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 

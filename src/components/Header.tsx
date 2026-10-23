@@ -77,6 +77,8 @@ export function Header() {
     external?: boolean;
   }> = [
     { name: t.navigation.functionalities, routeKey: 'functionalities' as const },
+    { name: t.navigation.processes, routeKey: 'processes' as const },
+    { name: t.navigation.agents, routeKey: 'agentLibrary' as const },
     { name: t.navigation.pricing, routeKey: 'pricing' as const },
     { name: t.navigation.successStories, routeKey: 'successStories' as const },
     { name: t.navigation.partners, routeKey: 'partners' as const },
@@ -104,7 +106,8 @@ export function Header() {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav aria-label="Main navigation" className="hidden md:flex items-center space-x-8">
+          {/* Seven items need the lg breakpoint; below it they wrap and collide with the CTA. */}
+          <nav aria-label="Main navigation" className="hidden lg:flex items-center space-x-6 xl:space-x-8">
             {navigationItems.map((item) => {
               if (item.external && item.routeKey === 'blog') {
                 return (
@@ -113,7 +116,7 @@ export function Header() {
                     href={blogUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-sm font-medium transition-fast text-muted-foreground hover:text-[hsl(256,77%,72%)]"
+                    className="whitespace-nowrap text-sm font-medium transition-fast text-muted-foreground hover:text-[hsl(256,77%,72%)]"
                   >
                     {item.name}
                   </a>
@@ -124,7 +127,7 @@ export function Header() {
                 <Link
                   key={item.routeKey}
                   to={href}
-                  className={`text-sm font-medium transition-fast ${
+                  className={`whitespace-nowrap text-sm font-medium transition-fast ${
                     isActive(item.routeKey)
                       ? "text-[hsl(256,77%,72%)]"
                       : "text-muted-foreground hover:text-[hsl(256,77%,72%)]"
@@ -137,7 +140,7 @@ export function Header() {
           </nav>
 
           {/* Language Switcher and CTA */}
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="hidden lg:flex items-center space-x-4">
             <LanguageSwitcher />
             <Link to={getRoutePath('contact', language)}>
               <Button size="sm" className="gradient-primary glow-primary">
@@ -150,7 +153,7 @@ export function Header() {
           <Button
             variant="ghost"
             size="sm"
-            className="md:hidden"
+            className="lg:hidden"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label={isMenuOpen ? "Close menu" : "Open menu"}
             aria-expanded={isMenuOpen}
@@ -165,7 +168,7 @@ export function Header() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="md:hidden py-4 border-t border-border/40"
+            className="lg:hidden py-4 border-t border-border/40"
           >
             <nav aria-label="Mobile navigation" className="flex flex-col space-y-4">
               {navigationItems.map((item) => {
@@ -176,7 +179,7 @@ export function Header() {
                       href={blogUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-sm font-medium transition-fast text-muted-foreground hover:text-[hsl(256,77%,72%)]"
+                      className="whitespace-nowrap text-sm font-medium transition-fast text-muted-foreground hover:text-[hsl(256,77%,72%)]"
                       onClick={() => setIsMenuOpen(false)}
                     >
                       {item.name}
@@ -188,7 +191,7 @@ export function Header() {
                   <Link
                     key={item.routeKey}
                     to={href}
-                    className={`text-sm font-medium transition-fast ${
+                    className={`whitespace-nowrap text-sm font-medium transition-fast ${
                       isActive(item.routeKey)
                         ? "text-[hsl(256,77%,72%)]"
                         : "text-muted-foreground hover:text-[hsl(256,77%,72%)]"
