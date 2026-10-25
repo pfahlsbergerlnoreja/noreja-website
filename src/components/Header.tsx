@@ -1,12 +1,19 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { motion } from "framer-motion";
+import { AnimatePresence, MotionConfig, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
-import { getRoutePath } from "@/lib/routes";
+import { getRoutePath, type routes } from "@/lib/routes";
 import logo from "@/assets/noreja_logo_white.webp";
+
+type NavItem = {
+  name: string;
+  // 'blog' is external and has no entry in routes
+  routeKey: keyof typeof routes | 'blog';
+  external?: boolean;
+};
 
 // Compact mobile language switcher
 function MobileLanguageSwitcher() {
@@ -58,10 +65,11 @@ function MobileLanguageSwitcher() {
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [hovered, setHovered] = useState<NavItem['routeKey'] | null>(null);
   const location = useLocation();
   const { t, language } = useLanguage();
 
-  const isActive = (routeKey: keyof typeof import('@/lib/routes').routes) => {
+  const isActive = (routeKey: NavItem['routeKey']) => {
     // Blog is now external, so it's never active
     if (routeKey === 'blog') return false;
     const routePath = getRoutePath(routeKey, language);
@@ -71,19 +79,113 @@ export function Header() {
   // External blog URLs
   const blogUrl = language === 'de' ? 'https://blog.noreja.com/de-de' : 'https://blog.noreja.com/en';
   
-  const navigationItems: Array<{
-    name: string;
-    routeKey: keyof typeof import('@/lib/routes').routes;
-    external?: boolean;
-  }> = [
+  const navigationItems: NavItem[] = [
     { name: t.navigation.functionalities, routeKey: 'functionalities' as const },
-    { name: t.navigation.processes, routeKey: 'processes' as const },
-    { name: t.navigation.agents, routeKey: 'agentLibrary' as const },
     { name: t.navigation.pricing, routeKey: 'pricing' as const },
     { name: t.navigation.successStories, routeKey: 'successStories' as const },
     { name: t.navigation.partners, routeKey: 'partners' as const },
     { name: t.navigation.blog, routeKey: 'blog' as const, external: true }
   ];
+
+  // Shown on the right, set apart by a divider and highlighted text
+  const featuredItems: NavItem[] = [
+    { name: t.navigation.processes, routeKey: 'processes' as const },
+    { name: t.navigation.agents, routeKey: 'agentLibrary' as const }
+  ];
+
+  // Desktop item: a pill follows the pointer from item to item, and a gradient
+  // line glides under the active route (shared layoutIds).
+  const renderDesktopItem = (item: NavItem, featured = false) => {
+    const active = isActive(item.routeKey);
+    const content = (
+      <>
+        <AnimatePresence>
+          {hovered === item.routeKey && (
+            <motion.span
+              layoutId="nav-hover-pill"
+              className={`absolute inset-0 rounded-full border ${
+                featured
+                  ? "border-[hsl(var(--noreja-tertiary)/0.25)] bg-[hsl(var(--noreja-main)/0.12)]"
+                  : "border-white/10 bg-white/[0.05]"
+              }`}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ type: "spring", stiffness: 400, damping: 32 }}
+            />
+          )}
+        </AnimatePresence>
+        {active && (
+          <motion.span
+            layoutId="nav-active-line"
+            className="absolute left-3 right-3 -bottom-0.5 h-0.5 rounded-full gradient-accent"
+            transition={{ type: "spring", stiffness: 380, damping: 30 }}
+          />
+        )}
+        <span className={`relative ${featured ? "nav-featured-text" : ""}`}>{item.name}</span>
+      </>
+    );
+    const className = `relative whitespace-nowrap rounded-full px-3 py-1.5 text-sm font-medium transition-fast ${
+      featured
+        ? "font-semibold"
+        : active
+          ? "text-[hsl(256,77%,72%)]"
+          : "text-muted-foreground hover:text-foreground"
+    }`;
+    const hoverHandlers = {
+      onMouseEnter: () => setHovered(item.routeKey),
+      onFocus: () => setHovered(item.routeKey),
+    };
+
+    if (item.routeKey === 'blog') {
+      return (
+        <a key={item.routeKey} href={blogUrl} target="_blank" rel="noopener noreferrer" className={className} {...hoverHandlers}>
+          {content}
+        </a>
+      );
+    }
+    return (
+      <Link key={item.routeKey} to={getRoutePath(item.routeKey, language)} className={className} {...hoverHandlers}>
+        {content}
+      </Link>
+    );
+  };
+
+  const renderMobileItem = (item: NavItem, featured = false) => {
+    const className = `whitespace-nowrap text-sm transition-fast ${
+      featured
+        ? "font-semibold"
+        : isActive(item.routeKey)
+          ? "font-medium text-[hsl(256,77%,72%)]"
+          : "font-medium text-muted-foreground hover:text-[hsl(256,77%,72%)]"
+    }`;
+    const label = <span className={featured ? "nav-featured-text" : undefined}>{item.name}</span>;
+
+    if (item.routeKey === 'blog') {
+      return (
+        <a
+          key={item.routeKey}
+          href={blogUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={className}
+          onClick={() => setIsMenuOpen(false)}
+        >
+          {label}
+        </a>
+      );
+    }
+    return (
+      <Link
+        key={item.routeKey}
+        to={getRoutePath(item.routeKey, language)}
+        className={className}
+        onClick={() => setIsMenuOpen(false)}
+      >
+        {label}
+      </Link>
+    );
+  };
 
   return (
     <header className="sticky top-0 z-50 border-b border-border/40 bg-background/80 backdrop-blur-xl">
@@ -107,37 +209,18 @@ export function Header() {
 
           {/* Desktop Navigation */}
           {/* Seven items need the lg breakpoint; below it they wrap and collide with the CTA. */}
-          <nav aria-label="Main navigation" className="hidden lg:flex items-center space-x-6 xl:space-x-8">
-            {navigationItems.map((item) => {
-              if (item.external && item.routeKey === 'blog') {
-                return (
-                  <a
-                    key={item.routeKey}
-                    href={blogUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="whitespace-nowrap text-sm font-medium transition-fast text-muted-foreground hover:text-[hsl(256,77%,72%)]"
-                  >
-                    {item.name}
-                  </a>
-                );
-              }
-              const href = getRoutePath(item.routeKey, language);
-              return (
-                <Link
-                  key={item.routeKey}
-                  to={href}
-                  className={`whitespace-nowrap text-sm font-medium transition-fast ${
-                    isActive(item.routeKey)
-                      ? "text-[hsl(256,77%,72%)]"
-                      : "text-muted-foreground hover:text-[hsl(256,77%,72%)]"
-                  }`}
-                >
-                  {item.name}
-                </Link>
-              );
-            })}
-          </nav>
+          <MotionConfig reducedMotion="user">
+            <nav
+              aria-label="Main navigation"
+              className="hidden lg:flex items-center gap-0.5 xl:gap-2"
+              onMouseLeave={() => setHovered(null)}
+              onBlur={() => setHovered(null)}
+            >
+              {navigationItems.map((item) => renderDesktopItem(item))}
+              <span aria-hidden="true" className="nav-divider mx-2 xl:mx-3" />
+              {featuredItems.map((item) => renderDesktopItem(item, true))}
+            </nav>
+          </MotionConfig>
 
           {/* Language Switcher and CTA */}
           <div className="hidden lg:flex items-center space-x-4">
@@ -171,37 +254,9 @@ export function Header() {
             className="lg:hidden py-4 border-t border-border/40"
           >
             <nav aria-label="Mobile navigation" className="flex flex-col space-y-4">
-              {navigationItems.map((item) => {
-                if (item.external && item.routeKey === 'blog') {
-                  return (
-                    <a
-                      key={item.routeKey}
-                      href={blogUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="whitespace-nowrap text-sm font-medium transition-fast text-muted-foreground hover:text-[hsl(256,77%,72%)]"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      {item.name}
-                    </a>
-                  );
-                }
-                const href = getRoutePath(item.routeKey, language);
-                return (
-                  <Link
-                    key={item.routeKey}
-                    to={href}
-                    className={`whitespace-nowrap text-sm font-medium transition-fast ${
-                      isActive(item.routeKey)
-                        ? "text-[hsl(256,77%,72%)]"
-                        : "text-muted-foreground hover:text-[hsl(256,77%,72%)]"
-                    }`}
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    {item.name}
-                  </Link>
-                );
-              })}
+              {navigationItems.map((item) => renderMobileItem(item))}
+              <span aria-hidden="true" className="nav-divider-horizontal" />
+              {featuredItems.map((item) => renderMobileItem(item, true))}
               <div className="flex items-center justify-between pt-4">
                 <Link to={getRoutePath('contact', language)}>
                   <Button size="sm" className="gradient-primary">

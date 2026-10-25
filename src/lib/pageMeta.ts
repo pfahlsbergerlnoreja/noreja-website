@@ -170,8 +170,8 @@ const extraDescriptions: Record<string, Record<Language, string>> = {
     de: 'Stell Fragen zu deinen Prozessen in Klartext. Minerva liest den kausalen Prozessgraphen, bezieht euer Unternehmenswissen ein und liefert Antworten, Ursachen und fertige Dateien – mit lokalen oder Cloud-Modellen.',
   },
   processes: {
-    en: 'Order-to-cash, purchase-to-pay, lead-to-activation and premium-to-tax, analyzed end to end with causal process mining: phases, findings, causes and measures.',
-    de: 'Order-to-Cash, Purchase-to-Pay, Lead-to-Activation und Premium-to-Tax, durchgängig analysiert mit Causal Process Mining: Phasen, Findings, Ursachen und Maßnahmen.',
+    en: 'End-to-end processes analyzed with causal process mining – using order-to-cash, purchase-to-pay, lead-to-activation and premium-to-tax as examples: phases, findings, causes and measures.',
+    de: 'End-to-End-Prozesse analysiert mit Causal Process Mining – am Beispiel von Order-to-Cash, Purchase-to-Pay, Lead-to-Activation und Premium-to-Tax: Phasen, Findings, Ursachen und Maßnahmen.',
   },
   agentLibrary: {
     en: 'Specialized AI agents for process analysis in Noreja Minerva: structural deviations, cycle times, waiting times, working capital, work in progress, compliance, rework, root causes and more.',

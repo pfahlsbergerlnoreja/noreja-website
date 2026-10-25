@@ -31,7 +31,7 @@ const copy = {
     title: "End-to-End-Prozesse",
     titleSub: "vom ersten Schritt bis zum letzten Euro",
     lead:
-      "Vier Geschäftsprozesse, durchgängig analysiert: Wie sie wirklich ablaufen, wo sie Zeit und Geld verlieren und welche Ursachen dahinterstehen – von der Auftragsabwicklung über den Einkauf bis zur Versicherungsteuer.",
+      "Vier Beispiele, durchgängig analysiert: Wie Geschäftsprozesse wirklich ablaufen, wo sie Zeit und Geld verlieren und welche Ursachen dahinterstehen – von der Auftragsabwicklung über den Einkauf bis zur Versicherungsteuer. Dieselbe Analyse funktioniert für jeden weiteren Prozess, der in deinen Systemen Spuren hinterlässt.",
     whatHeading: "Was ist ein End-to-End-Prozess?",
     what:
       "Ein End-to-End-Prozess umfasst alle Schritte vom auslösenden Ereignis bis zum Ergebnis, das für Kunden oder Unternehmen zählt – über Abteilungs- und Systemgrenzen hinweg. Order-to-Cash beginnt mit dem Kundenauftrag und endet mit dem Zahlungseingang, Purchase-to-Pay reicht vom Bedarf bis zur bezahlten Rechnung. Erst die durchgängige Sicht zeigt, wo eine Verzögerung entsteht und wo sie sich auswirkt.",
@@ -43,10 +43,11 @@ const copy = {
     agentsEyebrow: "Minerva Agent Library",
     agentsHeading: "Deine Prozesse, analysiert von spezialisierten Agents",
     agentsText:
-      "Laufzeiten, Wartezeiten, Strukturfehler, Working Capital oder Compliance: Für jede Frage an einen dieser Prozesse gibt es einen Agent, der die passenden Kennzahlen kennt.",
+      "Laufzeiten, Wartezeiten, Strukturfehler, Working Capital oder Compliance: Für jede Frage an deine Prozesse gibt es einen Agent, der die passenden Kennzahlen kennt.",
     agentsLink: "Zur Agent Library",
     closeHeading: "Welcher Prozess kostet dich am meisten?",
-    closeLead: "In einer Demo zeigen wir dir die Analyse auf deinen eigenen Prozessdaten.",
+    closeLead:
+      "In einer Demo zeigen wir dir die Analyse auf deinen eigenen Prozessdaten – für einen dieser Prozesse oder einen ganz anderen.",
     ctaDemo: "Demo buchen",
   },
   en: {
@@ -56,7 +57,7 @@ const copy = {
     title: "End-to-End Processes",
     titleSub: "from the first step to the last euro",
     lead:
-      "Four business processes, analyzed end to end: how they really run, where they lose time and money and what causes are behind it – from order processing and procurement to insurance premium tax.",
+      "Four examples, analyzed end to end: how business processes really run, where they lose time and money and what causes are behind it – from order processing and procurement to insurance premium tax. The same analysis works for any other process that leaves traces in your systems.",
     whatHeading: "What is an end-to-end process?",
     what:
       "An end-to-end process covers every step from the triggering event to the result that matters to customers or the company – across departments and systems. Order-to-cash starts with the customer order and ends with the incoming payment; purchase-to-pay runs from the requirement to the paid invoice. Only the continuous view shows where a delay arises and where it takes effect.",
@@ -68,10 +69,10 @@ const copy = {
     agentsEyebrow: "Minerva Agent Library",
     agentsHeading: "Your processes, analyzed by specialized agents",
     agentsText:
-      "Cycle times, waiting times, structural deviations, working capital or compliance: for every question about these processes there is an agent that knows the right KPIs.",
+      "Cycle times, waiting times, structural deviations, working capital or compliance: for every question about your processes there is an agent that knows the right KPIs.",
     agentsLink: "Open the Agent Library",
     closeHeading: "Which process costs you the most?",
-    closeLead: "In a demo we show you the analysis on your own process data.",
+    closeLead: "In a demo we show you the analysis on your own process data – for one of these processes or a completely different one.",
     ctaDemo: "Book a demo",
   },
 } as const;
@@ -153,7 +154,7 @@ const Processes = () => {
           </h1>
           <p className="mx-auto max-w-3xl text-lg leading-relaxed text-muted-foreground md:text-xl">{text.lead}</p>
 
-          {/* The four processes as a connected chain; each chip jumps to its card. */}
+          {/* The example processes as a connected chain; each chip jumps to its card. */}
           <div className="relative mx-auto mt-12 max-w-4xl">
             <div
               aria-hidden="true"

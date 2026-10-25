@@ -662,3 +662,103 @@
     }
   }
 }
+
+/* Header: the featured items (Prozesse, Agents) sit behind a divider with a
+   spark running down it; their text is a brand gradient that a light sheen
+   sweeps across every few seconds. */
+@layer components {
+  .nav-featured-text {
+    background-image:
+      linear-gradient(
+        100deg,
+        transparent 35%,
+        hsl(0 0% 100% / 0.95) 50%,
+        transparent 65%
+      ),
+      linear-gradient(90deg, hsl(256 77% 76%), hsl(var(--noreja-tertiary)));
+    background-size: 250% 100%, 100% 100%;
+    background-position: 130% 0, 0 0;
+    background-repeat: no-repeat;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: navFeaturedSheen 6s ease-in-out infinite;
+    transition: filter 200ms ease;
+  }
+
+  /* the second featured item follows the first */
+  a:last-child > .nav-featured-text {
+    animation-delay: 0.25s;
+  }
+
+  a:hover > .nav-featured-text,
+  a:focus-visible > .nav-featured-text {
+    filter: drop-shadow(0 0 8px hsl(var(--noreja-tertiary) / 0.45));
+  }
+
+  .nav-divider {
+    position: relative;
+    flex-shrink: 0;
+    width: 1px;
+    height: 1.5rem;
+    overflow: hidden;
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      hsl(var(--noreja-main) / 0.7) 30%,
+      hsl(var(--noreja-tertiary) / 0.7) 70%,
+      transparent
+    );
+  }
+
+  .nav-divider::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: -40%;
+    width: 1px;
+    height: 40%;
+    background: linear-gradient(to bottom, transparent, hsl(0 0% 100%), transparent);
+    animation: navDividerSpark 3.2s ease-in-out infinite;
+  }
+
+  .nav-divider-horizontal {
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      hsl(var(--noreja-main) / 0.7),
+      hsl(var(--noreja-tertiary) / 0.5),
+      transparent
+    );
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nav-featured-text,
+    .nav-divider::after {
+      animation: none;
+    }
+  }
+}
+
+@keyframes navFeaturedSheen {
+  0%, 55% {
+    background-position: 130% 0, 0 0;
+  }
+  100% {
+    background-position: -30% 0, 0 0;
+  }
+}
+
+@keyframes navDividerSpark {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  70%, 100% {
+    transform: translateY(350%);
+    opacity: 0;
+  }
+}
