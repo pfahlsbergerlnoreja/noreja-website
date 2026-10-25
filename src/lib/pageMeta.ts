@@ -240,8 +240,8 @@ export function getPageMeta(pathname: string, language: Language): PageMeta {
   } else if (routeKey === 'definitions') {
     description =
       language === 'de'
-        ? 'Wissensdatenbank von Noreja: klare Definitionen zu Process Mining, Process Intelligence, Geschäftsprozessmanagement und mehr.'
-        : 'Noreja knowledge base: clear definitions of Process Mining, Process Intelligence, Business Process Management, and more.';
+        ? 'Wissensdatenbank von Noreja: klare Definitionen zu Process Mining, Process Intelligence, agentischer KI, KI-Agenten, Geschäftsprozessmanagement und mehr.'
+        : 'Noreja knowledge base: clear definitions of Process Mining, Process Intelligence, agentic AI, AI agents, Business Process Management, and more.';
   } else if (routeKey === 'costOfInaction') {
     description =
       language === 'de'

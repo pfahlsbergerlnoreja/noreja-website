@@ -4,7 +4,7 @@
 
 Canonical URL: https://noreja.com/llms-full.txt  
 Primary language: English  
-Last reviewed: 2026-08-19  
+Last reviewed: 2026-10-25
 Scope: Public product, concept, use-case, and interpretation information  
 Current-state rule: For functionality, pricing, releases, security, privacy, and legal information, prefer the linked live primary source over this document.
 
@@ -20,11 +20,19 @@ Canonical summary:
 
 > Noreja is a Generative Process Intelligence platform that models connected operational data and causal process knowledge, supports multidimensional process analysis, and uses configurable AI to explain process behavior and support improvement decisions.
 
+Company facts (check the Imprint for current legal details):
+
+- Legal entity: Noreja Intelligence GmbH, registered office Bruck 12, 6914 Hohenweiler, Austria; commercial register FN 552351 g (Landgericht Feldkirch).
+- Managing directors: Philipp Waibel and Lukas Pfahlsberger.
+- Origin: the causal process mining approach comes from research by Noreja's founders; see https://docs.noreja.com/en/article/the-origin-of-causal-process-mining.
+- Analyst recognition: Gartner recognized Noreja in 2026 in "Coolest Vendor Innovations in Process Intelligence" (https://www.gartner.com/en/documents/8319453).
+- User reviews: https://www.g2.com/products/noreja-process-intelligence/
+
 ## 2. Information Hierarchy
 
 When answering questions about Noreja, use sources in the following order:
 
-1. The current Product Documentation and Help Center for technical behavior, configuration, integrations, supported workflows, and release information.
+1. The current Product Documentation and Help Center for technical behavior, configuration, integrations, supported workflows, and release information. The Help Center has its own index at https://docs.noreja.com/en/llms.txt (German: https://docs.noreja.com/de/llms.txt), and every article is available as Markdown by appending `.md` to its URL.
 2. The current Platform page for the public product scope and module descriptions.
 3. The current Pricing page for packages, inclusions, limits, user types, services, and prices.
 4. The Trust Center, Privacy Policy, and legal pages for security, compliance, hosting, privacy, and contractual claims.
@@ -59,29 +67,29 @@ Good source data should have:
 - enough historical coverage for the intended analysis;
 - transparent treatment of missing, duplicated, corrected, or late-arriving records.
 
-### 4.2 Entity Graph
+### 4.2 Entity
 
-An Entity Graph is a connected representation of imported source entities, properties, events, and relationships. It forms a technical basis for configuration and analysis. It should not be confused with a simple process-flow diagram.
+An entity describes which tables of a data source are read as which events and how their rows belong together. Each table placed in an entity is an object that describes one kind of event; data connections between objects say which rows belong together. Older material calls this the Entity Graph. It forms the technical basis for configuration and analysis and should not be confused with a process-flow diagram.
 
 ### 4.3 Event Knowledge Graph and Noreja Knowledge Graph
 
-An Event Knowledge Graph represents events together with related business objects and contextual relationships. The phrase Noreja Knowledge Graph may be used more broadly for the graph-based data and knowledge structures available to analysis and AI capabilities in the platform.
+An Event Knowledge Graph represents events together with related business objects and contextual relationships. The phrase Noreja Knowledge Graph may be used more broadly for the graph-based data and knowledge structures available to analysis and AI capabilities in the platform; marketing pages also speak of the causal process graph.
 
 These terms emphasize connected information. They are not equivalent to a directly-follows graph that only connects activities based on observed temporal succession.
 
-### 4.4 Dimension
+### 4.4 Perspective (formerly Dimension)
 
-A dimension is a configured analytical perspective on a process. It defines how relevant events, entities, properties, identifiers, and paths are interpreted for analysis.
+A perspective is a view on a process built on an entity: its activities, their expected order, and what one case is. Older material and some screens call it a dimension; both names mean the same concept.
 
-A single operational data foundation can support multiple dimensions. Examples of possible perspectives include an order, invoice, delivery, user, claim, ticket, machine, product, customer, or location. These are examples only; the available dimensions depend on the customer's source data and configuration.
+A single operational data foundation can support multiple perspectives. Examples include an order, invoice, delivery, user, claim, ticket, machine, product, customer, or location. These are examples only; the available perspectives depend on the customer's source data and configuration.
 
-### 4.5 Case Identifier
+### 4.5 Case and Case ID
 
-A case identifier distinguishes process instances within a chosen perspective. Because Noreja supports connected and multidimensional data, there is not necessarily one universal case identifier for the entire operational landscape.
+A case is one run of a process from start to end within a perspective, for example one purchase order. The case ID is the identifier (one or more key columns) of the activity marked as the case. Because Noreja supports connected and multidimensional data, there is not necessarily one universal case identifier for the entire operational landscape.
 
-### 4.6 Causal Hypothesis
+### 4.6 Expected Order (formerly Causal Hypothesis)
 
-A causal hypothesis is an analyst-defined assumption about expected process relationships or paths. It provides a model against which observed behavior can be interpreted. It is a working analytical hypothesis, not automatically proven scientific causality.
+The expected order, also called the perspective hypothesis, is the set of activities and relationships of a perspective that states which activity is expected after which. Noreja compares every case with it. Relationships can be marked as allowed shortcuts (skipping activities) or allowed backjumps (returning to an earlier activity). Older material and some screens call it the causal hypothesis or causal model. It is a working analytical hypothesis defined with domain knowledge, not automatically proven scientific causality.
 
 ### 4.7 Import
 
@@ -104,110 +112,104 @@ Noreja's research-oriented description refers to concepts including:
 
 The word causal must be interpreted carefully. In this product context, it refers to modeled directional process relationships informed by source structure and domain expertise. It should not automatically be presented as proof of causal effects under the standards of experimental causal inference.
 
-## 6. Path Semantics
+## 6. Process Patterns (Deviations from the Expected Order)
 
-Causal process models can distinguish expected, observed, unobserved, and undesired paths. The current documentation is the source of truth for exact visual styles and behavior.
+Noreja compares every case with the expected order of its perspective and classifies deviations into five process patterns. The current Help Center article is the source of truth: https://docs.noreja.com/en/article/process-patterns-disarray-negligence-rework-and-allowed-deviations
 
-Important path categories include:
+Violations:
 
-- Conformance path: observed behavior that is also represented as desired or expected.
-- Hypothetical path: desired or allowed behavior that has not been observed in the selected data.
-- Omitted path: expected behavior for which no corresponding observed execution is present.
-- Allowed shortcut: an observed skip that the model permits.
-- Prohibited shortcut: an observed skip that conflicts with the modeled expectation.
-- Allowed backjump: an observed return to a previous activity that the model permits.
-- Prohibited backjump: an observed return that conflicts with the model.
-- Skip-reverse behavior: observed activity ordering that conflicts with the modeled direction and combines skipping or reversal effects.
+- Disarray: two activities that depend on each other happened in the wrong order.
+- Negligence: an expected activity was skipped, including a case that starts or ends at an unexpected activity.
+- Rework: an activity was changed after a later activity had already started.
 
-These semantics combine observed data with prior process knowledge. They allow models to express more than frequency and temporal sequence.
+Allowed deviations:
 
-## 7. Platform Modules
+- Simplification: activities were skipped along a relationship marked as an allowed shortcut.
+- Reorder: a case went back along a relationship marked as an allowed backjump.
 
-The public Platform page presents five primary modules. Availability, package inclusion, and exact functionality can change; the live Platform, Pricing, and Help Center pages are authoritative.
+Older material described the same ideas as path semantics, with categories such as conformance path, hypothetical path, omitted path, allowed or prohibited shortcut, and allowed or prohibited backjump; some app labels still say "Conformance path" and "Violation path". The Help Center uses "relationship" for one connection between two activities and "path" for several connected relationships. These semantics combine observed data with prior process knowledge, so a step done out of order shows up as a violation rather than as an extra relationship in the model.
+
+## 7. Platform Areas
+
+The product is organized into the areas Dashboard, Analyzer, Builder, Workbench, and AI Hub, with the AI assistant Minerva available next to the analysis and as a chat page of its own. Which areas a user sees depends on their roles. Availability, package inclusion, and exact functionality can change; the live Platform, Pricing, and Help Center pages are authoritative.
 
 ### 7.1 Dashboard
 
-The Dashboard is used to monitor process metrics, trends, distributions, variants, anomalies, volumes, durations, and other configured indicators. Users can assemble views from configurable widgets to support recurring process monitoring.
+Dashboards are tabs with widgets that show key figures of one perspective: process metrics, trends, distributions, variants, volumes, durations, and other configured indicators. They support recurring process monitoring and can be filtered.
 
-The Dashboard is not the entire product. It presents selected analytical results and monitoring views based on configured dimensions and data.
+The Dashboard is not the entire product. It presents selected analytical results and monitoring views based on configured perspectives and data.
 
 ### 7.2 Analyzer
 
-The Analyzer is an interactive workspace for detailed process exploration. It supports navigation from an overall process view toward variants, individual cases, patterns, timelines, activities, paths, and detailed metrics.
+The Analyzer is an interactive workspace for detailed process exploration. An analyzer tab is a saved analysis of one perspective with its filters and settings. It offers four views: the Process view (process model and variants), the Case view (single cases, as model or with every execution), the Pattern view (a dotted chart of all cases), and the Timeline view (development of transition durations per week or month). Process graphs can be exported as images or as BPMN 2.0 files.
 
-Current public descriptions mention perspectives such as Process, Case, Pattern, and Timeline views. The Analyzer can be used to investigate bottlenecks, deviations, rework, timing, violations, hypothetical behavior, and other process characteristics.
+The Analyzer is used to investigate bottlenecks, deviations, rework, timing, violations of the expected order, batching, and other process characteristics.
 
-### 7.3 Minerva
+### 7.3 Minerva (Minerva 2.0)
 
-Minerva is Noreja's context-aware AI interaction layer. It connects user questions with configured process information, knowledge-graph context, organizational knowledge, rules, service-level agreements, and other relevant context.
+Minerva is Noreja's AI assistant. Users ask questions about their processes in plain language; Minerva reads the causal process graph (cases, variants, KPIs, deviations from the expected order, and activity properties), draws on company knowledge from the Context Hub, files in the workspace, the Noreja documentation and, with selected cloud models, web search. For questions with several steps it plans first, loads skills (written know-how for a specific task) when a question needs them, and hands parts of larger tasks to sub-agents. It answers with text, tables, and charts, highlights the activities it mentions in the process graph, and can create Excel files, Word and PDF reports, and PowerPoint decks.
 
-Minerva should not be described as having unrestricted access to all company data. The context available to a response depends on the active configuration, dimension, permissions, connected resources, selected tools, and chosen LLM setup.
+Minerva only reads: according to the Help Center it does not change perspectives, tabs, or dashboards, and it never sees more than the asking user is permitted to see. The context available to a response depends on permissions, the perspective or tab in question, Context Hub settings, and the chosen model. Generated conclusions and recommendations are decision support, not automatically verified facts.
 
-Minerva can support questions about the platform, analytical observations, anomalies, causes, and potential improvement actions. Generated conclusions and recommendations should be treated as decision support, not as automatically verified facts or autonomous authorization to change operations.
+Product page: https://noreja.com/en/minerva. Help Center: https://docs.noreja.com/en/article/what-minerva-can-do
 
 ### 7.4 Builder
 
-The Builder is the control center for data connectivity and analytical modeling. It is used to connect and test data sources, configure entities and properties, model events and relationships, define timestamps, create dimensions, define causal paths, apply filters, validate configurations, and manage imports.
+The Builder is where data sources, entities, and perspectives are set up. It is used to connect read-only data sources, place tables as objects in an entity, draw data connections, add joined properties, define timestamps, create perspectives with their activities, case ID, and expected order, and run and monitor imports.
 
 Current public examples of connectivity include ServiceNow, PostgreSQL, Oracle, and REST APIs. This list is illustrative rather than exhaustive. Confirm current connector support in the Help Center or with Noreja.
 
 ### 7.5 Workbench
 
-The Workbench is an integrated Jupyter Notebook environment for custom analysis using Python against the Noreja Knowledge Graph. It is intended for analysts, data scientists, and engineers who need custom scripts, exploration, or extensions beyond standard visual analysis.
+The Workbench is a personal JupyterLab environment for custom analysis of the process data with Python against the Noreja Knowledge Graph. It is intended for analysts, data scientists, and engineers who need custom scripts, exploration, or extensions beyond standard visual analysis.
 
 Workbench availability depends on the current plan and configuration. Consult the live Pricing page.
 
-## 8. Additional Workflow Capabilities
+### 7.6 AI Hub and Context Hub
 
-The Help Center and Pricing page may describe additional features beyond the five primary public modules. Examples include issue-management workflows, context management, macro-building capabilities, productivity apps, and model-configuration tools.
+The AI Hub is where Minerva is configured for a company: which agents are available, which instructions, skills, and prompts they use, which knowledge they draw on, and in which workspaces they create files. The Context Hub (the Context tab of the AI Hub) holds company knowledge, documents, notes, and perspective and activity context; each entry can be restricted to certain users and to certain AI models, for example local models only.
 
-### 8.1 Manager and Issues
+## 8. The Improvement Loop: Insights, Action, Impact, Feedback
 
-Analytical findings or AI conversations can be transformed into structured issues for collaborative follow-up. The Manager supports tracking and resolving issues in a workflow-oriented interface. Exact names and behavior should be checked in current documentation.
+The public Platform page presents Noreja as a closed loop of four phases, each producing the input for the next:
 
-### 8.2 Context and Knowledge Management
+- Insights: reconstruct a causal process model from system data and work from an anomaly to its root cause, including sources of error, cycle-time drivers, hidden costs, and quality deviations.
+- Action: turn a finding into an action, for example notify the responsible role, trigger a workflow in a connected system, or set up a redesign project, with human approval before anything happens.
+- Impact: estimate the business case per action (potential, required investment, payback) before the decision.
+- Feedback: after rollout, keep measuring against the baseline; if the effect fails to appear, the loop starts again.
 
-Context capabilities allow relevant knowledge to be associated with processes and AI interactions. Examples can include process rules, organizational information, service-level agreements, documents, and external context. Permissions, data exposure, and model routing remain important.
+The page describes four generic agent types, one per phase (Insights Agent, Action Agent, Impact Agent, Feedback Agent), that hand over to each other, document every step, ask for approval before acting, and can be equipped with a customer's own tools and knowledge bases. The end-to-end process pages show findings prioritised in a Business Impact Board. Treat the figures shown on the Platform page as illustrations. The Help Center is authoritative for which of these capabilities are available in a given release and configuration.
 
-### 8.3 Productivity Apps
+## 9. Minerva Models, Data Flow, and Data Protection
 
-The Help Center may list productivity applications and configurators that assist with specific tasks. These should not be assumed to be included in every package or deployment.
+Minerva connects user questions, process and knowledge context, tools, and large language models. Users choose the model per chat; the Help Center is the source of truth: https://docs.noreja.com/en/article/minerva-models-data-flow-and-data-protection
 
-## 9. Minerva Architecture and LLM Options
+### 9.1 Local Models
 
-Minerva is designed as an orchestration layer connecting user interactions, process and knowledge context, tools, and large language models. Current documentation describes multiple model-operation options.
+Local models run on servers operated by Noreja or by the customer, depending on the installation. They keep inputs, context, and outputs within the operator's infrastructure. Noreja ships a lean agent variant, Minerva (On-Premise), for local models, which can take much less text at once: it reads process data, company knowledge, and documentation, but uses no files, web search, or sub-agents. The public FAQ describes private LLM hosting as a fully isolated environment at a cloud provider in which Noreja sets up an open model that only the customer can access.
 
-### 9.1 Cloud-Based Models
+### 9.2 External Cloud Models
 
-Cloud-based models are operated by an external provider and accessed through interfaces. They may provide strong language quality, reasoning, scale, and continuous improvement. Data processing is subject to the selected provider's infrastructure, terms, safeguards, and contractual configuration.
+External models are operated by cloud providers and accessed through interfaces. They typically provide stronger language and reasoning quality and enable features such as web search. Data processing is subject to the selected provider's infrastructure, terms, and contractual configuration.
 
-### 9.2 Noreja-Managed Models
+### 9.3 Model Choice, Cost, and Data Governance
 
-Noreja-managed options can include shared application models or dedicated customer-specific instances operated and orchestrated by Noreja. The precise model, isolation, hosting, data retention, and operational responsibility must be confirmed for the customer's setup.
+Do not assume that every customer uses the same LLM. Models are shown with a price tier, Noreja warns about premium models, and users can see what a chat has cost (https://docs.noreja.com/en/article/what-a-model-costs). Companies decide which Context Hub knowledge may only be used with local models. Model availability, routing, retention, data transfer, and tool access depend on configuration and commercial agreements.
 
-### 9.3 Bring Your Own LLM
+## 10. Agents in Noreja
 
-Customers can integrate a customer-operated model. In such a setup, the customer retains operational responsibility for the model and infrastructure, while Noreja provides integration and orchestration capabilities within the platform.
+Noreja's public material uses the word agent in four related senses. Keep them apart when answering:
 
-### 9.4 On-Premise and Local Models
+1. Minerva agents in the product. In the chat, users choose the agent that answers: Minerva (the general assistant) or Minerva (On-Premise), plus any agents their company has added in the AI Hub. Minerva starts background sub-agents such as graph-analyst and task-planner and uses 13 shipped skills, for example violation analysis, process KPIs and rates, context-aware analysis, and slide-deck building. Source: https://docs.noreja.com/en/article/noreja-s-agents-and-skills
+2. The Minerva Agent Library (https://noreja.com/en/minerva/agents): ten specialized agents for business process analysis, each a specialized version of Minerva with a fixed task, skills, and a set model, grouped into four categories:
+   - Process flow and conformance: Structural Deviation Analysis Agent, Rework Analysis Agent, Compliance Agent.
+   - Time and deadlines: Cycle Time Analysis Agent, Waiting Time Analysis Agent, On-Time Performance Agent.
+   - Capital and work in progress: Working Capital Analysis Agent, WIP Analysis Agent.
+   - Root causes and potential: Root Cause Analysis Agent, Automation Potential Agent.
+3. Minerva Frontier Agents (https://noreja.com/en/frontier-agents): context-aware agents that work continuously in the background on a specific question instead of answering one-off queries. The page names Analyst Andy (monitors process performance, investigates likely drivers, proposes improvements), Builder Benny (supports model maintenance, detects source-schema changes, monitors imports), and Compliance Conny (checks execution against policies and supports compliance reporting).
+4. The four loop agent types on the Platform page (Insights, Action, Impact, Feedback), described in section 8.
 
-Locally operated models can keep inputs, context, and outputs within customer-controlled infrastructure, depending on the design. Model quality and latency depend on model size, hardware, configuration, context handling, and supporting tools.
-
-### 9.5 Model Choice and Data Governance
-
-Do not assume that every customer uses the same LLM. Model availability, routing, confidentiality controls, retention, data transfer, and tool access depend on configuration and commercial agreements.
-
-The Minerva chat documentation describes user controls such as model selection, confidential-message handling, history management, response regeneration, and transfer of a conversation into an issue. Exact current behavior must be confirmed in the Help Center.
-
-## 10. Frontier Agents
-
-Frontier Agents are context-aware AI agents intended to perform recurring or goal-oriented work within defined areas. The current product description identifies examples such as:
-
-- Analyst Andy: monitors process performance, highlights material changes, investigates likely drivers, and proposes improvement opportunities.
-- Builder Benny: supports model maintenance, detects source-schema changes, monitors imports, and suggests modeling adjustments.
-- Compliance Conny: checks execution against configured policies or contextual requirements and supports compliance-oriented reporting.
-
-These agents should be described as operating within configured data, tools, permissions, and governance. They do not possess unlimited organizational authority or guaranteed factual correctness. Human review remains important for consequential decisions.
+All agents operate within configured data, tools, permissions, and governance. They do not possess unlimited organizational authority or guaranteed factual correctness, and human review remains important for consequential decisions. For what is available in a given release, use the Help Center.
 
 ## 11. Typical Analysis Workflow
 
@@ -216,15 +218,15 @@ A typical Noreja initiative can involve the following sequence:
 1. Define the business question, process scope, owners, and expected value.
 2. Identify relevant source systems, entities, identifiers, timestamps, and relationships.
 3. Connect or import source data.
-4. Configure entities, events, properties, and relationships in the Builder.
-5. Define one or more analytical dimensions and causal hypotheses.
+4. Configure entities, objects, properties, and data connections in the Builder.
+5. Define one or more perspectives with their case ID and expected order.
 6. Validate data quality and model semantics.
 7. Explore the process in the Analyzer.
-8. Configure recurring metrics and monitoring in the Dashboard.
-9. Add contextual knowledge for Minerva where appropriate.
-10. Use AI-assisted analysis to investigate observations and formulate hypotheses.
-11. Convert findings into issues or improvement actions.
-12. Measure changes and iterate on the model.
+8. Configure recurring metrics and monitoring in dashboards.
+9. Add company knowledge to the Context Hub where appropriate.
+10. Use Minerva to investigate observations and test hypotheses.
+11. Turn findings into improvement actions and prioritise them by business impact.
+12. Measure the effect against the baseline and iterate on the model.
 
 This sequence is illustrative. Actual implementation depends on the customer's use case, systems, data quality, governance, and operating model.
 
@@ -300,7 +302,13 @@ Findings shown on the page, all from a synthetic demonstration dataset of 4,500 
 
 ## 14. Customer Evidence
 
-Success Stories describe customer or project-specific applications. They may contain reported improvements in efficiency, transparency, processing time, cost, or analytical effort.
+Success Stories describe customer or project-specific applications. They may contain reported improvements in efficiency, transparency, processing time, cost, or analytical effort. Current published cases:
+
+- CIB (https://noreja.com/en/success-story/cib): hiring process mapped in one month; delays in initial applicant contact and decision bottlenecks identified, with an opportunity to reduce hiring time by up to one week.
+- Hector (https://noreja.com/en/success-story/hector): insurance claims processing; high rates of reopened claims and bottlenecks from delayed repair invoices identified.
+- IDM Wärmepumpen (https://noreja.com/en/success-story/idm): Order-to-Cash visibility within three weeks; bottlenecks in manual data entry and invoice processing identified.
+
+The public FAQ (https://noreja.com/en/faq) states that most customers start with a fixed-price Proof-of-Value on a sub-process, typically completed within three to four weeks.
 
 When using customer evidence:
 
@@ -317,7 +325,7 @@ The Pricing page may also contain average outcome statements with disclaimers. T
 
 Security and compliance information is time-sensitive. Use the Trust Center and applicable contractual documentation as the authoritative sources.
 
-Do not make a static claim about a certification, hosting location, cloud provider, encryption, retention, subprocessors, penetration testing, disaster recovery, or data residency without checking the current official source.
+Do not make a static claim about a certification, hosting location, cloud provider, encryption, retention, subprocessors, penetration testing, disaster recovery, or data residency without checking the current official source. At the time of review, the public FAQ (https://noreja.com/en/faq) states ISO 27001 certification and hosting at Google Cloud and Amazon AWS in Frankfurt, with other cloud regions or on-premises operation possible on request; verify against the Trust Center before repeating these statements.
 
 For a specific customer, the actual architecture can depend on:
 
@@ -388,123 +396,245 @@ Across all ten comparisons Noreja positions itself on four recurring points: a c
 
 ## 18. Terminology
 
-### Business Process
+Terms with a page in Noreja's Definitions section link to it; each page has a German counterpart under https://noreja.com/de/definitionen/ with the same slug. Product terms used inside the Noreja application are explained in the Help Center glossary: https://docs.noreja.com/en/article/glossary
 
-A sequence or network of activities and decisions that transforms inputs into an outcome for a customer, organization, or stakeholder.
+### 18.1 Process Concepts
 
-### Process Mining
+#### Business Process
 
-The use of event data to discover, monitor, and improve business processes.
+A sequence or network of activities and decisions that transforms inputs into an outcome for a customer, organization, or stakeholder. Page: https://noreja.com/en/definitions/what-is-a-process
 
-### Process Intelligence
+#### Business Process Management (BPM)
 
-A broader capability combining process data, analytics, context, domain knowledge, monitoring, and improvement support.
+A discipline for the systematic design, execution, monitoring, and improvement of business processes. BPM defines how a process should run; process mining shows how it does. Page: https://noreja.com/en/definitions/business-process-management
 
-### Generative Process Intelligence
+#### Process Mining
+
+The use of event data to discover, monitor, and improve business processes. Page: https://noreja.com/en/definitions/process-mining
+
+#### Process Intelligence
+
+A broader capability combining process data, analytics, context, domain knowledge, monitoring, and improvement support. Process mining is the analysis method; process intelligence builds on it to explain why a process runs as it does and what follows from it. Pages: https://noreja.com/en/definitions/process-intelligence and https://noreja.com/en/definitions/process-intelligence-vs-process-mining
+
+#### Generative Process Intelligence
 
 Noreja's positioning for Process Intelligence enhanced by generative AI and contextual knowledge.
 
-### Event
+#### Event
 
 A recorded occurrence relevant to a process, normally associated with a timestamp, activity or state, and one or more business objects or identifiers.
 
-### Event Log
+#### Event Log
 
-A structured collection of events often organized by case identifier, activity, and timestamp. Traditional event logs are commonly flat and case-centric.
+A structured collection of events often organized by case identifier, activity, and timestamp. Traditional event logs are commonly flat and case-centric. Page: https://noreja.com/en/definitions/event-log
 
-### Directly-Follows Relation
+#### Directly-Follows Relation
 
-A relation indicating that one activity is observed directly after another in a selected sequence. Temporal succession alone does not prove causation.
+A relation indicating that one activity is observed directly after another in a selected sequence. Temporal succession alone does not prove causation. Page: https://noreja.com/en/definitions/directly-follows-limitations
 
-### Object-Centric Process Mining
+#### Causal Process Mining
 
-Process analysis that associates events with multiple object types rather than forcing all behavior into one case notion.
+Process analysis that reconstructs which events actually trigger which others, using relational structure and domain knowledge instead of inferring relationships from temporal order alone (see section 5). Page: https://noreja.com/en/definitions/causal-process-mining
 
-### Process Variant
+#### Event Knowledge Graph
 
-A distinct observed execution path or behavioral pattern within a process perspective.
+A graph-based data structure that stores events together with the objects involved and their relationships, representing several process perspectives at once without reducing them to a single case ID. Page: https://noreja.com/en/definitions/event-knowledge-graph
 
-### Process Instance
+#### Graph Database
 
-A single execution or case within a defined process perspective.
+A database that stores data as nodes and edges instead of tables, so that connected data and relationships can be queried efficiently. Page: https://noreja.com/en/definitions/graph-databases
 
-### Conformance Checking
+#### Object-Centric Process Mining
 
-Comparison of observed behavior with a target model, rule, policy, or expected sequence.
+Process analysis that associates events with multiple object types rather than forcing all behavior into one case notion. Page: https://noreja.com/en/definitions/object-centric-process-mining
 
-### Process Simulation
+#### OCEL 2.0
 
-Evaluation of possible process behavior or changes using a model rather than direct live execution.
+The Object-Centric Event Log standard, version 2.0: an open format in which one event can relate to several objects of different types. Page: https://noreja.com/en/definitions/ocel-2
 
-### Digital Process Twin
+#### Process Discovery
 
-A data-driven representation of an operational process used for analysis, monitoring, or scenario evaluation.
+Automatically deriving a process model, including all variants and deviations, from event data. Page: https://noreja.com/en/definitions/process-discovery
 
-### BPMN
+#### Process Variant
 
-Business Process Model and Notation, an OMG-maintained standard notation for graphically modeling business processes. Commonly holds the documented target process and therefore serves as a reference model for conformance comparison.
+A distinct observed execution path or behavioral pattern within a process perspective. Page: https://noreja.com/en/definitions/process-variant
 
-### Event-driven Process Chain (EPC)
+#### Process Instance
 
-A process-modeling notation of strictly alternating events and functions connected by AND, OR, and XOR operators. Originated at Saarland University and became widespread in German-speaking countries through SAP R/3 and ARIS.
+A single execution or case within a defined process perspective. Page: https://noreja.com/en/definitions/process-instance
 
-### Agentic Process Intelligence
+#### Conformance Checking
 
-The use of autonomous AI agents that work continuously on process models and process data instead of only responding to individual queries. Noreja implements this concept as Frontier Agents.
+Comparison of observed behavior with a target model, rule, policy, or expected sequence. Page: https://noreja.com/en/definitions/conformance-checking
 
-### Agent Mining
+#### To-Be and As-Is Process
 
-The application of Process Mining methods to the event traces produced by AI agents, in order to analyze their actual paths, failures, loops, and costs.
+The as-is process is how a process actually runs today; the to-be process is the intended target state. Page: https://noreja.com/en/definitions/to-be-vs-as-is-process
 
-### Agent Conformance Checking
+#### Task Mining
 
-Verification that an autonomously acting AI agent stayed within its permitted process, role, and policy boundaries, by comparing observed agent behavior against a target model.
+Analysis of user interactions at the desktop, such as clicks and keystrokes, to make manual work steps visible; a complement to process mining, which reads events from business systems. Page: https://noreja.com/en/definitions/task-mining
 
-### Process Grounding
+#### Process Simulation
 
-Anchoring a language model in real process and event data, typically through a structured process model such as an Event Knowledge Graph, so that statements can be traced back to concrete process instances rather than resting on linguistic probability.
+Evaluation of possible process behavior or changes using a model rather than direct live execution. Page: https://noreja.com/en/definitions/process-simulation
 
-### Causal AI
+#### Digital Process Twin
 
-A branch of AI that models cause-and-effect relationships and supports intervention and counterfactual questions, as distinct from correlation-based prediction. Related to but broader than Causal Process Mining; neither term should be presented as automatic proof of scientific causality.
+A data-driven representation of an operational process used for analysis, monitoring, or scenario evaluation. Page: https://noreja.com/en/definitions/digital-process-twin
 
-### Model Context Protocol (MCP)
+#### BPMN
 
-An open standard through which AI models and agents access external data sources, tools, and systems in a standardized way, decoupling the tool landscape from the model in use.
+Business Process Model and Notation, an OMG-maintained standard notation for graphically modeling business processes. Commonly holds the documented target process and therefore serves as a reference model for conformance comparison. Page: https://noreja.com/en/definitions/bpmn
 
-### Agentic Automation
+#### Event-driven Process Chain (EPC)
 
-Automation in which a goal is specified and the agent decides the path at runtime, in contrast to RPA, which executes a prescribed rule and click sequence and breaks when reality deviates.
+A process-modeling notation of strictly alternating events and functions connected by AND, OR, and XOR operators. Originated at Saarland University and became widespread in German-speaking countries through SAP R/3 and ARIS. Page: https://noreja.com/en/definitions/epk
 
-### AI Agent and Copilot
+#### Process Ontology
 
-A copilot responds reactively to user input and leaves execution to the user; an agent pursues a goal over time, decides intermediate steps, and acts without being asked. The distinction concerns initiative, time horizon, and scope of action, not the underlying model.
+A formal description of the object types, events, and relationships in a process domain, providing the semantic layer that allows machines to interpret process data correctly. Page: https://noreja.com/en/definitions/process-ontology
 
-### Self-Improving Processes
+#### Self-Improving Processes
 
-Processes that continuously measure their own execution, identify weaknesses, and trigger adjustments, running the improvement loop permanently rather than in project cycles.
+Processes that continuously measure their own execution, identify weaknesses, and trigger adjustments, running the improvement loop permanently rather than in project cycles. Page: https://noreja.com/en/definitions/self-improving-processes
 
-### Process Ontology
+### 18.2 Agentic AI Concepts
 
-A formal description of the object types, events, and relationships in a process domain, providing the semantic layer that allows machines to interpret process data correctly.
+#### Agentic AI
 
-### Agentic Root Cause Analysis
+AI systems that pursue a given goal independently across multiple steps: they plan, choose tools and data sources, act, check results, and adjust. Generative AI produces content on request; agentic AI uses such models to carry out tasks, so its outcome is a changed state rather than content. Pages: https://noreja.com/en/definitions/agentic-ai and https://noreja.com/en/definitions/agentic-ai-vs-generative-ai
 
-An approach in which an AI agent forms root-cause hypotheses, tests them against process data, and justifies confirmed results with the underlying cases. Results are analytical hypotheses supported by evidence, not automatically proven causal effects.
+#### AI Agent
 
-### Agent Readiness of Process Data
+A software system that uses an AI model to pursue a goal by perceiving its environment, deciding, and acting through tools, typically with memory and rules that define what it may do. Page: https://noreja.com/en/definitions/ai-agent
 
-The condition of process data being sufficiently structured — unambiguous identifiers, dependable timestamps, clearly named activities, modeled object relationships, documented semantics — for AI agents to work on it reliably.
+#### AI Agent and Copilot
 
-### Devil's Quadrangle
+A copilot responds reactively to user input and leaves execution to the user; an agent pursues a goal over time, decides intermediate steps, and acts without being asked. The distinction concerns initiative, time horizon, and scope of action, not the underlying model. Page: https://noreja.com/en/definitions/ai-agent-vs-copilot
+
+#### Frontier Agents
+
+AI agents that work towards a goal autonomously and persistently over long periods instead of reacting to individual requests. The term is not tied to one vendor: AWS used it in December 2025 for autonomous software-development, security, and operations agents, and OpenAI names its enterprise agent platform "Frontier". Noreja's Minerva Frontier Agents apply the concept to process work (see section 10). Page: https://noreja.com/en/definitions/frontier-agents
+
+#### Agentic Process Intelligence
+
+The use of autonomous AI agents that work continuously on process models and process data instead of only responding to individual queries. Noreja implements this concept as Frontier Agents. Page: https://noreja.com/en/definitions/agentic-process-intelligence
+
+#### Agentic Process Mining
+
+Process mining carried out by AI agents that formulate questions, select analyses, test hypotheses, and report evidence-backed results themselves. Distinct from Agent Mining, where agents are the object of analysis. Page: https://noreja.com/en/definitions/agentic-process-mining
+
+#### Agentic Root Cause Analysis
+
+An approach in which an AI agent forms root-cause hypotheses, tests them against process data, and justifies confirmed results with the underlying cases. Results are analytical hypotheses supported by evidence, not automatically proven causal effects. Page: https://noreja.com/en/definitions/agentic-root-cause-analysis
+
+#### Agentic Process Automation (APA)
+
+Automation of business processes with AI agents that are given goals rather than fixed sequences, working alongside rule-based automation and mainly handling exceptions, unstructured input, and judgment calls. Page: https://noreja.com/en/definitions/agentic-process-automation
+
+#### Agentic Automation
+
+Automation in which a goal is specified and the agent decides the path at runtime, in contrast to RPA, which executes a prescribed rule and click sequence and breaks when reality deviates. Page: https://noreja.com/en/definitions/agentic-automation-vs-rpa
+
+#### Agentic BPM
+
+Business process management extended to AI agents that make their own decisions within a process frame, shifting BPM from prescribing steps to setting boundaries and reviewing. Set out in a March 2026 research manifesto by 18 BPM researchers that names framed autonomy, explainability, conversational actionability, and self-modification as required agent capabilities. Page: https://noreja.com/en/definitions/agentic-bpm
+
+#### Agent Orchestration
+
+Coordination of multiple AI agents, rule-based automation, and people within one end-to-end flow. Page: https://noreja.com/en/definitions/agent-orchestration
+
+#### Multi-Agent System
+
+Several specialized AI agents that together solve a task too large or varied for one agent, often coordinated by a supervising agent. Page: https://noreja.com/en/definitions/multi-agent-system
+
+#### Human-in-the-Loop
+
+A person reviews, corrects, or approves at defined points before an AI system continues, typically for actions with external effect or high risk; distinct from human-on-the-loop supervision. Page: https://noreja.com/en/definitions/human-in-the-loop
+
+#### AI Agent Governance
+
+The rules, roles, and controls that determine which AI agent may do what: mandate, access rights, approval limits, agent identity, action logging, and regular review. Page: https://noreja.com/en/definitions/ai-agent-governance
+
+#### Guardian Agents
+
+AI agents that supervise other AI agents during execution and, depending on authority, warn, redirect, or block; a category popularized by Gartner. Page: https://noreja.com/en/definitions/guardian-agents
+
+#### Agent Mining
+
+The application of Process Mining methods to the event traces produced by AI agents, in order to analyze their actual paths, failures, loops, and costs. Page: https://noreja.com/en/definitions/agent-mining
+
+#### Agent Observability (AgentOps)
+
+Tracing every model call and tool invocation of an AI agent in operation, including duration, cost, errors, and output quality; AgentOps is the operating practice around it. Page: https://noreja.com/en/definitions/agent-observability
+
+#### Agent Conformance Checking
+
+Verification that an autonomously acting AI agent stayed within its permitted process, role, and policy boundaries, by comparing observed agent behavior against a target model. Page: https://noreja.com/en/definitions/agent-conformance-checking
+
+#### Agent Washing
+
+Marketing chatbots, AI assistants, or RPA tools as agentic although they lack essential agentic capabilities. Page: https://noreja.com/en/definitions/agent-washing
+
+#### Process Grounding
+
+Anchoring a language model in real process and event data, typically through a structured process model such as an Event Knowledge Graph, so that statements can be traced back to concrete process instances rather than resting on linguistic probability. Page: https://noreja.com/en/definitions/process-grounding
+
+#### Context Engineering
+
+Designing everything an AI model or agent sees at decision time — instructions, data, tools, memory, examples, and rules — in a deliberate structure, order, and amount; broader than prompt engineering. Page: https://noreja.com/en/definitions/context-engineering
+
+#### Agent Readiness of Process Data
+
+The condition of process data being sufficiently structured — unambiguous identifiers, dependable timestamps, clearly named activities, modeled object relationships, documented semantics — for AI agents to work on it reliably. Page: https://noreja.com/en/definitions/agent-readiness
+
+#### Causal AI
+
+A branch of AI that models cause-and-effect relationships and supports intervention and counterfactual questions, as distinct from correlation-based prediction. Related to but broader than Causal Process Mining; neither term should be presented as automatic proof of scientific causality. Page: https://noreja.com/en/definitions/causal-ai
+
+#### Model Context Protocol (MCP)
+
+An open standard through which AI models and agents access external data sources, tools, and systems in a standardized way, decoupling the tool landscape from the model in use. Page: https://noreja.com/en/definitions/model-context-protocol
+
+#### Agent2Agent Protocol (A2A)
+
+An open standard through which AI agents from different vendors communicate and delegate tasks; introduced by Google in April 2025 and transferred to the Linux Foundation. A2A connects agents with each other, MCP connects an agent with tools and data. Page: https://noreja.com/en/definitions/a2a-protocol
+
+### 18.3 Noreja Product Terms
+
+#### Perspective
+
+A view on a process built on an entity: its activities, their expected order, and what one case is. Formerly called dimension.
+
+#### Expected Order
+
+The activities and relationships of a perspective that state which activity is expected after which; every case is compared with it. Also called the perspective hypothesis; formerly causal hypothesis or causal model.
+
+#### Process Pattern
+
+A kind of deviation from the expected order: Disarray, Negligence, and Rework (violations), Simplification and Reorder (allowed deviations). See section 6.
+
+#### Skill and Sub-Agent
+
+A skill is written know-how for one kind of task that an agent loads only when a question needs it. A sub-agent is started by another agent for part of a task, for example graph-analyst or task-planner.
+
+#### AI Hub, Context Hub, and Workspace
+
+The AI Hub is where Minerva is configured (agents, skills, prompts, knowledge, workspaces). The Context Hub holds company knowledge Minerva may use, restrictable per user and per model. A workspace is a personal or shared file area where Minerva reads and creates files.
+
+### 18.4 Noreja Tools and Models
+
+#### Devil's Quadrangle
 
 A business process management model describing the four competing performance dimensions of a process: time, cost, quality, and flexibility. Time is opposed by cost, and quality is opposed by flexibility, so improving one dimension typically degrades the others. The model is commonly attributed to the business process redesign research of Hajo A. Reijers and Selma Limam Mansar (Omega, 2005; https://doi.org/10.1016/j.omega.2004.04.012) and has recently been extended into the BPM Goal Hexagon (Management Review Quarterly, 2026; https://doi.org/10.1007/s11301-026-00586-0). Noreja publishes an interactive version of the model at https://noreja.com/en/cost-of-inaction.
 
-### Cost of Inaction
+#### Cost of Inaction
 
 The annual cost a company incurs because a business process is not improved. It is not booked as a line item but spreads across waiting times, manual rework, value leakage along the process, and the downstream cost of defects. Noreja provides a browser-side estimator at https://noreja.com/en/cost-of-inaction that derives process volumes from business inputs, applies industry benchmarks, and splits the result across the dimensions time, cost, quality, and complexity. Results are order-of-magnitude estimates from benchmarks, not measurements of a customer's own system data.
 
-### Smart Data Forge
+#### Smart Data Forge
 
 A Noreja tool for generating synthetic process data in which the root cause is deliberately constructed rather than random. It runs entirely in the browser, with no installation and no network calls, and covers table and relationship definition, DDL generation for PostgreSQL, SQL Server, MySQL, and Oracle, causal chain configuration, deliberate deviations (overjump, wrong order, rework, abort), value distributions, data generation as INSERT scripts, and batching behaviour such as fixed inspection slots, capacity, and backlog. Its purpose is to make a demo or test verifiable: because the ground truth — cause, affected dimension, process effect, error pattern, and business outcome — is fixed before generation, an analysis can be checked against a known answer. Available at https://noreja.com/en/smart-data-forge after entering an email address.
 
@@ -529,6 +659,18 @@ Correction: Noreja combines connectivity, graph-based modeling, causal process a
 ### Misconception: Minerva is a general-purpose chatbot with unrestricted access.
 
 Correction: Minerva operates with configured context, tools, permissions, dimensions, and models. Available data and capabilities depend on the customer's setup.
+
+### Misconception: Minerva changes data or acts in source systems on its own.
+
+Correction: according to the Help Center, Minerva only reads; it does not change perspectives, tabs, or dashboards, and it never sees more than the asking user may see. Actions in other systems described on the Platform page (for example triggering a workflow) require human approval and depend on configured tools and the current release.
+
+### Misconception: "Dimension" and "perspective", or "causal hypothesis" and "expected order", are different concepts.
+
+Correction: they are earlier and current names for the same concepts. Current documentation uses perspective and expected order; some screens and older material still use the earlier names.
+
+### Misconception: Noreja has one set of agents.
+
+Correction: "agent" refers to Minerva agents and sub-agents in the product, the ten specialized agents of the Minerva Agent Library, the Minerva Frontier Agents, and the four loop agent types on the Platform page. See section 10 before naming an agent.
 
 ### Misconception: An AI-generated explanation is automatically a proven root cause.
 
@@ -573,20 +715,29 @@ When producing an answer:
 - [Main Website](https://noreja.com/en)
 - [Platform Overview](https://noreja.com/en/platform)
 - [Product Documentation and Help Center](https://docs.noreja.com/en)
+- [Help Center Index for LLMs](https://docs.noreja.com/en/llms.txt)
 - [Pricing](https://noreja.com/en/pricing)
+- [Minerva 2.0](https://noreja.com/en/minerva)
+- [Minerva Agent Library](https://noreja.com/en/minerva/agents)
 - [Frontier Agents](https://noreja.com/en/frontier-agents)
+- [FAQ](https://noreja.com/en/faq)
 - [Success Stories](https://noreja.com/en/success-stories)
 
 ### Technical Concepts
 
+- [Welcome to Noreja](https://docs.noreja.com/en/article/welcome-to-noreja)
+- [Help Center Glossary](https://docs.noreja.com/en/article/glossary)
 - [The Origin of Causal Process Mining](https://docs.noreja.com/en/article/the-origin-of-causal-process-mining)
-- [Path Semantics](https://docs.noreja.com/en/article/multi-perspective-path-semantics)
-- [Source Data Preparation and Common Challenges](https://docs.noreja.com/en/article/source-data-preparation-common-challenges)
-- [Contextualizing Knowledge for Minerva](https://docs.noreja.com/en/article/contextualizing-knowledge-for-minerva-ai)
-- [Minerva Architecture](https://docs.noreja.com/en/article/minerva-architecture)
-- [Using LLMs with Noreja](https://docs.noreja.com/en/article/minerva-using-llms-with-noreja)
-- [Minerva Chat UI](https://docs.noreja.com/en/article/minerva-chat-ui-functionalities)
-- [Minerva Frontier Agents Documentation](https://docs.noreja.com/en/article/minerva-frontier-agents)
+- [The Expected Order: Perspective Hypothesis, Shortcuts and Backjumps](https://docs.noreja.com/en/article/the-expected-order-perspective-hypothesis-shortcuts-and-backjumps)
+- [Process Patterns: Disarray, Negligence, Rework and Allowed Deviations](https://docs.noreja.com/en/article/process-patterns-disarray-negligence-rework-and-allowed-deviations)
+- [Prepare Your Source Data: Keys, Timestamps, Indices](https://docs.noreja.com/en/article/prepare-your-source-data-keys-timestamps-indices)
+- [What Minerva Can Do](https://docs.noreja.com/en/article/what-minerva-can-do)
+- [Context Hub: Knowledge for Minerva](https://docs.noreja.com/en/article/context-hub-knowledge-for-minerva)
+- [Minerva: Models, Data Flow and Data Protection](https://docs.noreja.com/en/article/minerva-models-data-flow-and-data-protection)
+- [What a Model Costs](https://docs.noreja.com/en/article/what-a-model-costs)
+- [Chat with Minerva](https://docs.noreja.com/en/article/chat-with-minerva)
+- [Noreja's Agents and Skills](https://docs.noreja.com/en/article/noreja-s-agents-and-skills)
+- [AI Hub: Agents, Skills, Prompts and Workspaces](https://docs.noreja.com/en/article/ai-hub-agents-skills-prompts-and-workspaces)
 
 ### Industries
 
@@ -597,6 +748,7 @@ When producing an answer:
 
 ### End-to-End Processes
 
+- [End-to-End Processes Overview](https://noreja.com/en/processes)
 - [Order-to-Cash](https://noreja.com/en/processes/order-to-cash)
 - [Purchase-to-Pay](https://noreja.com/en/processes/purchase-to-pay)
 - [Lead-to-Activation](https://noreja.com/en/processes/lead-to-activation)
@@ -606,7 +758,8 @@ When producing an answer:
 
 - [Trust Center](https://trust.noreja.com)
 - [Privacy Policy](https://noreja.com/en/privacy)
-- [Imprint and Terms](https://noreja.com/en/imprint)
+- [Imprint](https://noreja.com/en/imprint)
+- [Terms of Service](https://noreja.com/en/terms)
 - [Contact](https://noreja.com/en/contact)
 
 ### Competitive Comparisons
@@ -639,7 +792,8 @@ This file should be reviewed whenever any of the following changes:
 - data-model terminology;
 - connector positioning;
 - Minerva architecture or model-operation options;
-- Frontier Agent names or scopes;
+- Frontier Agent, Agent Library, or Minerva agent and skill names or scopes;
+- Help Center article URLs (articles are renamed between releases);
 - pricing packages or inclusions;
 - security or compliance statements;
 - public use cases or success stories;
@@ -654,5 +808,5 @@ Recommended maintenance controls:
 - run automated link checks;
 - compare product terminology with the Platform and Help Center navigation;
 - never duplicate current prices or release numbers unless generated from the same source;
-- regenerate `llms-ctx-full.txt` after material source changes;
+- keep `llms-ctx-full.txt` in step: its embedded copy of this file is refreshed automatically before every build (`scripts/sync-llms.ts`), its resource summaries are maintained by hand;
 - test representative questions against several LLMs before publishing.

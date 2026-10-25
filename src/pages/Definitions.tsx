@@ -26,8 +26,8 @@ const Definitions = () => {
   const title = language === 'de' ? 'Definitionen' : 'Definitions';
   const subtitle =
     language === 'de'
-      ? 'Unsere Wissensdatenbank erklärt die wichtigsten Begriffe rund um Process Mining, Process Intelligence und Geschäftsprozessmanagement – klar, kompakt und fundiert.'
-      : 'Our knowledge base explains the key terms around Process Mining, Process Intelligence, and Business Process Management – clear, concise, and well-founded.';
+      ? 'Unsere Wissensdatenbank erklärt die wichtigsten Begriffe rund um Process Mining, Process Intelligence, Geschäftsprozessmanagement und KI-Agenten – klar, kompakt und fundiert.'
+      : 'Our knowledge base explains the key terms around Process Mining, Process Intelligence, Business Process Management, and AI agents – clear, concise, and well-founded.';
 
   const hubUrl = `${SITE_URL}${getRoutePath('definitions', language)}`;
 

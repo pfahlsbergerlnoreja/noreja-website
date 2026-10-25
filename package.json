@@ -13,7 +13,8 @@
     "generate-sitemap": "tsx scripts/generate-sitemap.ts",
     "generate-image-sizes": "tsx scripts/generate-image-sizes.ts",
     "generate-blog-posts": "tsx scripts/generate-blog-posts.ts",
-    "prebuild": "npm run generate-sitemap && npm run generate-image-sizes && npm run generate-blog-posts",
+    "sync-llms": "tsx scripts/sync-llms.ts",
+    "prebuild": "npm run generate-sitemap && npm run generate-image-sizes && npm run generate-blog-posts && npm run sync-llms",
     "build:ssr": "vite build --ssr src/entry-server.tsx --outDir dist-ssr --emptyOutDir --logLevel error"
   },
   "dependencies": {
