@@ -17,6 +17,7 @@ import {
   getBattleCardVsName,
 } from '@/lib/battle-cards';
 import { getRoutePath } from '@/lib/routes';
+import { topTenIndex, TOP_TEN_YEAR } from '@/lib/topTenIndex';
 import { BreadcrumbSchema } from '@/components/StructuredData';
 import GartnerAwardBadge from '@/components/GartnerAwardBadge';
 import { SITE_URL } from '@/lib/config';
@@ -94,6 +95,7 @@ const BattleCards = () => {
           pricingNote:
             'Noreja ist die einzige Lösung in diesem Vergleich mit öffentlich einsehbarem Pricing – und damit voraussichtlich günstiger als alle hier aufgeführten Alternativen mit reinem „Preis auf Anfrage".',
           pricingLink: 'Preise ansehen',
+          rankingsTitle: `Marktübersichten ${TOP_TEN_YEAR}`,
         }
       : {
           back: 'Back to Home',
@@ -152,6 +154,7 @@ const BattleCards = () => {
           pricingNote:
             'Noreja is the only solution in this comparison with publicly available pricing – and therefore likely more cost-effective than all the listed alternatives that only quote “price on request”.',
           pricingLink: 'View pricing',
+          rankingsTitle: `Market overviews ${TOP_TEN_YEAR}`,
         };
 
   const hubUrl = `${SITE_URL}${getRoutePath('battleCards', language)}`;
@@ -489,6 +492,27 @@ const BattleCards = () => {
                 </div>
               </div>
             </motion.div>
+          </div>
+        </section>
+
+        {/* Top-10 rankings: deliberately low-key, below the CTA. They are
+            search entry points, so a plain link list is enough here. */}
+        <section className="pb-16 px-4">
+          <div className="container mx-auto max-w-4xl border-t border-border/40 pt-8">
+            <h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">{t.rankingsTitle}</h2>
+            <ul className="mt-4 grid gap-x-8 gap-y-2 sm:grid-cols-2">
+              {topTenIndex.map((list) => (
+                <li key={list.id}>
+                  <Link
+                    to={getRoutePath('topTenList', language, { slug: list.id })}
+                    className="group inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    {list.title[language]}
+                    <ArrowRight className="h-3.5 w-3.5 opacity-60 transition-transform group-hover:translate-x-0.5" />
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
       </div>

@@ -4,6 +4,7 @@ import { successStories } from './successStories';
 import { useCases } from './useCases';
 import { getDefinitionById } from './definitions';
 import { getBattleCardById, getBattleCardVsName, getBattleCardVsTitle } from './battle-cards';
+import { getTopTenList } from './topTenLists';
 import { getJobById } from './careers';
 import { getEndToEndProcessById } from './endToEndProcesses';
 import { getAgentBySlug } from './agents';
@@ -267,6 +268,13 @@ export function getPageMeta(pathname: string, language: Language): PageMeta {
         language === 'de'
           ? `Noreja vs. ${vsName}: sachlicher Vergleich von Analyse-Paradigma, Datenmodell und Ökosystem-Bindung – kausale Process Intelligence gegenüber frequenzbasiertem Process Mining.`
           : `Noreja vs. ${vsName}: a factual comparison of analysis paradigm, data model, and ecosystem lock-in – causal process intelligence versus frequency-based process mining.`;
+    }
+  } else if (routeKey === 'topTenList') {
+    const match = path.match(/^\/(?:de|en)\/battle-cards\/top-10\/(.+)$/);
+    const list = match ? getTopTenList(match[1].toLowerCase()) : undefined;
+    if (list) {
+      title = `${list.metaTitle[language]} | ${SITE_NAME}`;
+      description = list.metaDescription[language];
     }
   } else if (routeKey === 'endToEndProcess') {
     const match = path.match(/^\/(?:de|en)\/(?:prozesse|processes)\/(.+)$/);

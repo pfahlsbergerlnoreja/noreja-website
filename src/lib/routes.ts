@@ -83,6 +83,10 @@ export const routes = {
     de: '/de/battle-cards/:slug',
     en: '/en/battle-cards/:slug',
   },
+  topTenList: {
+    de: '/de/battle-cards/top-10/:slug',
+    en: '/en/battle-cards/top-10/:slug',
+  },
   downloads: {
     de: '/de/downloads',
     en: '/en/downloads',
@@ -275,6 +279,13 @@ export function translateRoute(pathname: string, targetLang: Language): string {
     return getRoutePath('definitionDetail', targetLang, { slug: definitionDetailMatch[1] });
   }
 
+  // Top-10 list: /de/battle-cards/top-10/:slug — checked before the battle
+  // card detail, whose pattern would otherwise swallow it.
+  const topTenListMatch = pathname.match(/^\/(?:de|en)\/battle-cards\/top-10\/(.+)$/);
+  if (topTenListMatch) {
+    return getRoutePath('topTenList', targetLang, { slug: topTenListMatch[1] });
+  }
+
   // Battle card detail: /de/battle-cards/:slug or /en/battle-cards/:slug
   const battleCardDetailMatch = pathname.match(/^\/(?:de|en)\/battle-cards\/(.+)$/);
   if (battleCardDetailMatch) {
@@ -338,6 +349,9 @@ export function getRouteKeyFromPath(pathname: string): keyof typeof routes | nul
   }
   if (pathname.match(/^\/(?:de|en)\/(?:definitionen|definitions)\/.+/)) {
     return 'definitionDetail';
+  }
+  if (pathname.match(/^\/(?:de|en)\/battle-cards\/top-10\/.+/)) {
+    return 'topTenList';
   }
   if (pathname.match(/^\/(?:de|en)\/battle-cards\/.+/)) {
     return 'battleCardDetail';

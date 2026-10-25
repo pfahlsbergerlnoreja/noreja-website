@@ -133,6 +133,11 @@ Interpretation guidance:
 - [Noreja vs. Appian Comparison](https://noreja.com/en/battle-cards/appian): Comparison with Appian, focused on low-code orchestration with add-on mining versus specialized causal diagnosis.
 - [Noreja vs. ARIS Comparison](https://noreja.com/en/battle-cards/aris-process-mining): Comparison with ARIS Process Mining, focused on model-repository conformance versus data-driven causal analysis.
 - [Noreja vs. MPMX Comparison](https://noreja.com/en/battle-cards/mpmx-mehrwerk): Comparison with mpmX (MEHRWERK), focused on Qlik-based frequency analysis versus a dedicated causal graph model.
+- [Top 10 Process Mining Tools 2027](https://noreja.com/en/battle-cards/top-10/process-mining-tools): Ranked overview of ten process mining tools (Noreja, Celonis, SAP Signavio, ARIS, UiPath, Microsoft, IBM, QPR, Apromore, Disco) by data model, analysis depth, time to insight, openness and pricing transparency. Published by Noreja, which ranks itself first by disclosed criteria.
+- [Top 10 Process Intelligence Platforms 2027](https://noreja.com/en/battle-cards/top-10/process-intelligence-platforms): Ranked overview of ten process intelligence platforms after Gartner renamed its process mining Magic Quadrant to "Process Intelligence Platforms" in May 2026; criteria are context model, AI and agent readiness, path to action and openness. Published by Noreja.
+- [Top 10 Celonis Alternatives 2027](https://noreja.com/en/battle-cards/top-10/celonis-alternatives): Ten alternatives to Celonis, each with what it does differently and when Celonis remains the better fit. Published by Noreja.
+- [Top 10 Process Intelligence Agents 2027](https://noreja.com/en/battle-cards/top-10/process-intelligence-agents): Ten types of AI agents for process analysis (root cause, structural deviation, compliance, automation potential, cycle time, waiting time, rework, working capital, on-time performance, work in progress), each mapped to an agent of the Minerva Agent Library.
+- [Top 10 AI Process Mining Tools 2027](https://noreja.com/en/battle-cards/top-10/ai-process-mining-tools): Ten process mining tools ranked by what their AI does – copilots, agents, MCP interfaces, AI root-cause analysis – and how well the data model grounds it. Published by Noreja.
 
 ## End-to-End Processes
 
@@ -174,6 +179,7 @@ Interpretation guidance:
 - [Minerva Agentenbibliothek](https://noreja.com/de/minerva/agenten): German Agent Library with the ten specialized analysis agents.
 - [Definitionen](https://noreja.com/de/definitionen): German glossary; each definition page has the same slug as its English counterpart, for example https://noreja.com/de/definitionen/agentic-ai.
 - [End-to-End-Prozesse](https://noreja.com/de/prozesse): German end-to-end process pages under the same slugs, for example https://noreja.com/de/prozesse/order-to-cash.
+- [Battle Cards (Deutsch)](https://noreja.com/de/battle-cards): German vendor comparisons and the five Top-10 rankings under the same slugs, for example https://noreja.com/de/battle-cards/celonis and https://noreja.com/de/battle-cards/top-10/celonis-alternatives.
 - [Vier Experten, fünf Meinungen](https://noreja.com/de/vier-experten-fuenf-meinungen): German page of the talk series.
 - [FAQ (Deutsch)](https://noreja.com/de/faq): German FAQ.
 - [German Help Center](https://docs.noreja.com/de): German-language product documentation and release information.

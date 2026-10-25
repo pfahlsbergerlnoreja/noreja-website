@@ -10,6 +10,7 @@ const __dirname = dirname(__filename);
 // Import config (simple import, no dynamic globs)
 import { SITE_URL } from '../src/lib/config';
 import { agentSlugs } from '../src/lib/agentSlugs';
+import { topTenIndex } from '../src/lib/topTenIndex';
 
 // Read and parse TypeScript files to extract IDs
 function extractSuccessStoryIds(): string[] {
@@ -241,6 +242,12 @@ function generateSitemap() {
   battleCardIds.forEach((cardId) => {
     addEntry(`/de/battle-cards/${cardId}`, 0.6, 'monthly');
     addEntry(`/en/battle-cards/${cardId}`, 0.6, 'monthly');
+  });
+
+  // "Top 10 … <year>" rankings below the battle cards
+  topTenIndex.forEach(({ id }) => {
+    addEntry(`/de/battle-cards/top-10/${id}`, 0.7, 'monthly');
+    addEntry(`/en/battle-cards/top-10/${id}`, 0.7, 'monthly');
   });
 
   // Minerva Agent Library detail pages (slugs differ per language)

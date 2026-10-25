@@ -39,6 +39,7 @@ const SmartDataForge = lazy(() => import("./pages/SmartDataForge"));
 const EndToEndProcess = lazy(() => import("./pages/EndToEndProcess"));
 const ExpertTalk = lazy(() => import("./pages/ExpertTalk"));
 const BattleCardDetail = lazy(() => import("./pages/BattleCardDetail"));
+const TopTenList = lazy(() => import("./pages/TopTenList"));
 const FAQ = lazy(() => import("./pages/FAQ"));
 const Imprint = lazy(() => import("./pages/Imprint"));
 const TermsOfService = lazy(() => import("./pages/TermsOfService"));
@@ -180,6 +181,8 @@ export const AppRoutes = () => (
               <Route path="/en/battle-cards" element={<BattleCards />} />
               <Route path="/de/battle-cards/:slug" element={<BattleCardDetail />} />
               <Route path="/en/battle-cards/:slug" element={<BattleCardDetail />} />
+              <Route path="/de/battle-cards/top-10/:slug" element={<TopTenList />} />
+              <Route path="/en/battle-cards/top-10/:slug" element={<TopTenList />} />
 
               {/* FAQ hub */}
               <Route path="/de/faq" element={<FAQ />} />

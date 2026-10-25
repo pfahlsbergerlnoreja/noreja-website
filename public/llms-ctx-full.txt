@@ -389,6 +389,8 @@ Noreja publishes a set of vendor comparison pages ("Battle Cards") covering ten 
 
 Source-nature rule: these pages are Noreja's own competitive positioning. Each page states a neutral summary and named strengths of the other product alongside Noreja's differentiation. Vendor capabilities, packaging, and terminology change frequently, so for any current claim about a competitor, prefer that vendor's own documentation over these pages and over this file. Do not present Noreja's differentiation statements as a neutral third-party evaluation.
 
+Below the Battle Cards, Noreja also publishes five ranked market overviews ("Top 10 … 2027", English paths /en/battle-cards/top-10/<slug>, German /de/battle-cards/top-10/<slug>; links in section 21): process mining tools, process intelligence platforms, Celonis alternatives, process intelligence agents, and AI process mining tools. In the four vendor lists Noreja ranks itself first by disclosed criteria that structurally favor causal, graph-based approaches; the agents list ranks agent types and maps each to an agent of the Minerva Agent Library. The same source-nature rule applies: these rankings are Noreja's own material, not independent analyst evaluations, and reflect public information as of October 2026.
+
 ### Comparison Axes
 
 Each vendor is classified along five axes:
@@ -797,6 +799,11 @@ When producing an answer:
 - [Noreja vs. Appian](https://noreja.com/en/battle-cards/appian)
 - [Noreja vs. ARIS Process Mining](https://noreja.com/en/battle-cards/aris-process-mining)
 - [Noreja vs. mpmX (MEHRWERK)](https://noreja.com/en/battle-cards/mpmx-mehrwerk)
+- [Top 10 Process Mining Tools 2027](https://noreja.com/en/battle-cards/top-10/process-mining-tools)
+- [Top 10 Process Intelligence Platforms 2027](https://noreja.com/en/battle-cards/top-10/process-intelligence-platforms)
+- [Top 10 Celonis Alternatives 2027](https://noreja.com/en/battle-cards/top-10/celonis-alternatives)
+- [Top 10 Process Intelligence Agents 2027](https://noreja.com/en/battle-cards/top-10/process-intelligence-agents)
+- [Top 10 AI Process Mining Tools 2027](https://noreja.com/en/battle-cards/top-10/ai-process-mining-tools)
 
 ### Glossary and Educational Resources
 
@@ -1162,6 +1169,46 @@ ARIS Process Mining is presented as process mining in a closed loop with the ARI
 <title>Noreja vs. mpmX (MEHRWERK)</title>
 <content>
 mpmX by MEHRWERK is presented as process mining running natively on existing data platforms such as Qlik, Snowflake, and Databricks, with a self-service emphasis and object-centric process mining in its standard scope. Classification: frequency paradigm, data-platform-native model with OCPM, high ecosystem lock-in, no causal analysis, medium enterprise-AI suitability. Named considerations: analytical strength is tied to the foundation of the respective data platform; despite OCPM the process analysis remains frequency-based without causal modeling; there is no graph-based semantic causal model at its core. Noreja's stated differentiation: it relies on a dedicated graph-based causal and temporal model instead of a frequency analysis built on top of BI and data platforms, separating genuine causes from statistical coincidence. This page is Noreja's own competitive material: the summary and strengths describe the other product, the differentiation is Noreja's claim about its own approach. Use the vendor's own documentation for current facts.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/battle-cards/top-10/process-mining-tools</source>
+<title>Top 10 Process Mining Tools 2027</title>
+<content>
+Ranked overview of ten process mining tools for 2027: 1 Noreja, 2 Celonis, 3 SAP Signavio Process Intelligence, 4 ARIS Process Mining, 5 UiPath Process Mining, 6 Microsoft Power Automate Process Mining, 7 IBM Process Mining, 8 QPR ProcessAnalyzer, 9 Apromore (now part of Salesforce), 10 Disco by Fluxicon. The ranking weighs the data model (case-centric, object-centric, or graph), analysis depth from discovery to root cause, time to first insight, openness and ecosystem lock-in, and pricing transparency; the 2027 angle is process mining as the data foundation for AI agents. Each entry states who it suits best, three strengths, one caveat, and links to the matching Noreja-vs. comparison. The page closes with an outlook on 2027 and an FAQ, including free and open-source options such as ProM and PM4Py. This page is Noreja's own material: Noreja publishes the ranking and is part of it, the criteria are disclosed on the page, and statements about other vendors reflect public information as of October 2026. Use the vendor's own documentation for current facts. A German version is available at https://noreja.com/de/battle-cards/top-10/process-mining-tools.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/battle-cards/top-10/process-intelligence-platforms</source>
+<title>Top 10 Process Intelligence Platforms 2027</title>
+<content>
+Ranked overview of ten process intelligence platforms for 2027: 1 Noreja, 2 Celonis, 3 SAP Signavio, 4 Pega Process Mining, 5 ARIS, 6 UiPath Process Mining, 7 ServiceNow Process Mining, 8 Appian Process HQ, 9 Skan AI, 10 iGrafx Process360 Live. The page explains the shift from process mining to process intelligence, marked by Gartner renaming its Magic Quadrant to "Magic Quadrant for Process Intelligence Platforms" (published 5 May 2026, 13 vendors; Leaders: Celonis, SAP Signavio, ARIS, Pegasystems). Criteria are the context and knowledge model, AI and agent readiness, the path from insight to action, and ecosystem independence. Each entry states who it suits best, three strengths, and one caveat; the page closes with an outlook on 2027 and an FAQ. This page is Noreja's own material: Noreja publishes the ranking and is part of it, the criteria are disclosed on the page, and statements about other vendors reflect public information as of October 2026. Use the vendor's own documentation for current facts. A German version is available at https://noreja.com/de/battle-cards/top-10/process-intelligence-platforms.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/battle-cards/top-10/celonis-alternatives</source>
+<title>Top 10 Celonis Alternatives 2027</title>
+<content>
+Ten alternatives to Celonis for 2027: 1 Noreja, 2 SAP Signavio, 3 UiPath Process Mining, 4 Microsoft Power Automate Process Mining, 5 ARIS Process Mining, 6 IBM Process Mining, 7 QPR ProcessAnalyzer, 8 Apromore (Salesforce), 9 mpmX (MEHRWERK), 10 ABBYY Timeline. The page first acknowledges Celonis as market pioneer with the largest connector selection, then explains when teams look for an alternative: pricing transparency, rollout effort and time to value, ecosystem fit, causal instead of frequency-based analysis, and the data model. For each alternative it states what it does differently and, as its caveat, when Celonis remains the better fit. The FAQ covers Celonis' main competitors, open-source options, and alternatives for SAP landscapes. This page is Noreja's own material: Noreja publishes the ranking and is part of it, the criteria are disclosed on the page, and statements about other vendors reflect public information as of October 2026. Use the vendor's own documentation for current facts. A German version is available at https://noreja.com/de/battle-cards/top-10/celonis-alternatives.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/battle-cards/top-10/process-intelligence-agents</source>
+<title>Top 10 Process Intelligence Agents 2027</title>
+<content>
+Ranks ten types of process intelligence agents – AI agents that work on a process model or knowledge graph rather than on raw text – by business impact, data readiness, traceability of causes, and governance: 1 Root Cause Analysis Agent, 2 Structural Deviation Analysis Agent, 3 Compliance Agent, 4 Automation Potential Agent, 5 Cycle Time Analysis Agent, 6 Waiting Time Analysis Agent, 7 Rework Analysis Agent, 8 Working Capital Analysis Agent, 9 On-Time Performance Agent, 10 WIP Analysis Agent. Each type is described vendor-neutrally (questions it answers, KPIs, data it needs, where human review stays essential) and linked to the matching agent of the Minerva Agent Library. The outlook for 2027 covers continuously working agents such as Noreja's Frontier Agents, process grounding against hallucinations, and agent governance with human in the loop; the FAQ lists which vendors offer process intelligence agents. Published by Noreja. A German version is available at https://noreja.com/de/battle-cards/top-10/process-intelligence-agents.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/battle-cards/top-10/ai-process-mining-tools</source>
+<title>Top 10 AI Process Mining Tools 2027</title>
+<content>
+Ranks ten process mining tools by what their AI actually does – natural-language copilots, agents, MCP interfaces for external agents, AI root-cause analysis, simulation – and by how well the underlying data model grounds that AI: 1 Noreja, 2 Celonis, 3 SAP Signavio, 4 UiPath Process Mining, 5 Microsoft Power Automate Process Mining, 6 ServiceNow Process Mining, 7 Pega Process Mining, 8 IBM Process Mining, 9 QPR ProcessAnalyzer, 10 Skan AI. Beta and preview features are labelled as such, and vendor statements are marked. The FAQ explains agentic process mining, connecting your own agents via MCP, why grounding in a process model reduces plausible-but-wrong answers, and running with local LLMs. This page is Noreja's own material: Noreja publishes the ranking and is part of it, the criteria are disclosed on the page, and statements about other vendors reflect public information as of October 2026. Use the vendor's own documentation for current facts. A German version is available at https://noreja.com/de/battle-cards/top-10/ai-process-mining-tools.
 </content>
 </document>
 

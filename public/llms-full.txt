@@ -367,6 +367,8 @@ Noreja publishes a set of vendor comparison pages ("Battle Cards") covering ten 
 
 Source-nature rule: these pages are Noreja's own competitive positioning. Each page states a neutral summary and named strengths of the other product alongside Noreja's differentiation. Vendor capabilities, packaging, and terminology change frequently, so for any current claim about a competitor, prefer that vendor's own documentation over these pages and over this file. Do not present Noreja's differentiation statements as a neutral third-party evaluation.
 
+Below the Battle Cards, Noreja also publishes five ranked market overviews ("Top 10 … 2027", English paths /en/battle-cards/top-10/<slug>, German /de/battle-cards/top-10/<slug>; links in section 21): process mining tools, process intelligence platforms, Celonis alternatives, process intelligence agents, and AI process mining tools. In the four vendor lists Noreja ranks itself first by disclosed criteria that structurally favor causal, graph-based approaches; the agents list ranks agent types and maps each to an agent of the Minerva Agent Library. The same source-nature rule applies: these rankings are Noreja's own material, not independent analyst evaluations, and reflect public information as of October 2026.
+
 ### Comparison Axes
 
 Each vendor is classified along five axes:
@@ -775,6 +777,11 @@ When producing an answer:
 - [Noreja vs. Appian](https://noreja.com/en/battle-cards/appian)
 - [Noreja vs. ARIS Process Mining](https://noreja.com/en/battle-cards/aris-process-mining)
 - [Noreja vs. mpmX (MEHRWERK)](https://noreja.com/en/battle-cards/mpmx-mehrwerk)
+- [Top 10 Process Mining Tools 2027](https://noreja.com/en/battle-cards/top-10/process-mining-tools)
+- [Top 10 Process Intelligence Platforms 2027](https://noreja.com/en/battle-cards/top-10/process-intelligence-platforms)
+- [Top 10 Celonis Alternatives 2027](https://noreja.com/en/battle-cards/top-10/celonis-alternatives)
+- [Top 10 Process Intelligence Agents 2027](https://noreja.com/en/battle-cards/top-10/process-intelligence-agents)
+- [Top 10 AI Process Mining Tools 2027](https://noreja.com/en/battle-cards/top-10/ai-process-mining-tools)
 
 ### Glossary and Educational Resources
 
