@@ -8,6 +8,8 @@ import { getTopTenList } from './topTenLists';
 import { getJobById } from './careers';
 import { getEndToEndProcessById } from './endToEndProcesses';
 import { getAgentBySlug } from './agents';
+import { findCompetenceCityBySlugs, findCompetenceStateBySlug } from './competenceCenterIndex';
+import { competenceCityContent, competenceHub, competenceStateContent } from './competenceCenters';
 import { SITE_NAME, SITE_URL } from './config';
 
 /**
@@ -289,6 +291,24 @@ export function getPageMeta(pathname: string, language: Language): PageMeta {
     if (agent) {
       title = agent.content[language].metaTitle;
       description = agent.content[language].metaDescription;
+    }
+  } else if (
+    routeKey === 'competenceCenter' ||
+    routeKey === 'competenceCenterState' ||
+    routeKey === 'competenceCenterCity'
+  ) {
+    const match = path.match(/^\/(?:de|en)\/(?:kompetenzcenter|competence-center)(?:\/([^/]+))?(?:\/([^/]+))?$/);
+    const state = match?.[1] ? findCompetenceStateBySlug(match[1]) : undefined;
+    const city = match?.[1] && match[2] ? findCompetenceCityBySlugs(match[1], match[2]) : undefined;
+    const content =
+      routeKey === 'competenceCenter'
+        ? competenceHub
+        : routeKey === 'competenceCenterState'
+          ? state && competenceStateContent[state.id]
+          : city && competenceCityContent[city.id];
+    if (content) {
+      title = `${content.metaTitle[language]} | ${SITE_NAME}`;
+      description = content.metaDescription[language];
     }
   } else if (routeKey === 'careerDetail') {
     const match = path.match(/^\/(?:de|en)\/(?:karriere|careers)\/(.+)$/);

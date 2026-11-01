@@ -39,6 +39,15 @@ export const siteConfig = {
     medium: "https://medium.com/@lukas.pfahlsberger",
     referralProgram: "https://144242473.fs1.hubspotusercontent-eu1.net/hubfs/144242473/Noreja%20Referral%20Program%20DE.pdf"
   },
+  // Personal sales contact on the contact page; also the telephone of the
+  // Organization's ContactPoint in StructuredData.
+  salesContact: {
+    name: "Matthias Brengartner",
+    role: "Senior Account Executive",
+    phone: "+4915630177696",
+    phoneDisplay: "+49 1563 0177696",
+    linkedin: "https://www.linkedin.com/in/matthias-brengartner/"
+  },
   hubspot: {
     contactForm: "https://share.hsforms.com/YOUR_CONTACT_FORM_ID",
     appointmentBooking: "https://outlook.office365.com/book/Kennenlernen@noreja.com/?ismsaljsauthenabled=true"

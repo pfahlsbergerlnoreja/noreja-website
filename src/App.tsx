@@ -51,6 +51,7 @@ const Minerva = lazy(() => import("./pages/Minerva"));
 const AgentLibrary = lazy(() => import("./pages/AgentLibrary"));
 const Processes = lazy(() => import("./pages/Processes"));
 const AgentDetail = lazy(() => import("./pages/AgentDetail"));
+const CompetenceCenter = lazy(() => import("./pages/CompetenceCenter"));
 
 const queryClient = new QueryClient();
 
@@ -247,7 +248,15 @@ export const AppRoutes = () => (
               <Route path="/en/minerva/agents" element={<AgentLibrary />} />
               <Route path="/de/minerva/agenten/:agentSlug" element={<AgentDetail />} />
               <Route path="/en/minerva/agents/:agentSlug" element={<AgentDetail />} />
-              
+
+              {/* Kompetenzcenter Süddeutschland: hub, one page per state and per city */}
+              <Route path="/de/kompetenzcenter" element={<CompetenceCenter />} />
+              <Route path="/en/competence-center" element={<CompetenceCenter />} />
+              <Route path="/de/kompetenzcenter/:regionSlug" element={<CompetenceCenter />} />
+              <Route path="/en/competence-center/:regionSlug" element={<CompetenceCenter />} />
+              <Route path="/de/kompetenzcenter/:regionSlug/:citySlug" element={<CompetenceCenter />} />
+              <Route path="/en/competence-center/:regionSlug/:citySlug" element={<CompetenceCenter />} />
+
               {/* Maintenance */}
               <Route path="/maintenance" element={<Maintenance />} />
               <Route path="/de/wartung" element={<Maintenance />} />

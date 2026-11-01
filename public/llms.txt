@@ -168,8 +168,20 @@ Interpretation guidance:
 - [G2 Reviews](https://www.g2.com/products/noreja-process-intelligence/): Public user reviews of Noreja Process Intelligence.
 - [Partners](https://noreja.com/en/partners): Consulting, implementation, technology, and academic partners supporting Noreja projects.
 - [Trust Center](https://trust.noreja.com): Current security, compliance, certification, data-protection, and vendor-assurance information.
-- [Contact](https://noreja.com/en/contact): Official contact form for product, partnership, support, and company inquiries.
+- [Contact](https://noreja.com/en/contact): Official contact form for product, partnership, support, and company inquiries; sales contact Matthias Brengartner (Senior Account Executive), +49 1563 0177696.
 - [Book a Meeting](https://outlook.office365.com/book/Kennenlernen@noreja.com/): Schedule an introductory meeting with Noreja.
+
+## Regional Consulting: Southern Germany
+
+- [Competence Center Southern Germany](https://noreja.com/en/competence-center): Noreja's on-site process mining and process intelligence consulting for mid-sized companies in Baden-Württemberg and Bavaria: workshops at the customer's site, a fixed-price proof of value on one sub-process in three to four weeks, and the cities covered.
+- [Baden-Württemberg](https://noreja.com/en/competence-center/baden-wuerttemberg): Process mining consulting in Baden-Württemberg, from Noreja's location in Freiburg and on site in Stuttgart, Karlsruhe and Mannheim.
+- [Bavaria](https://noreja.com/en/competence-center/bavaria): Process mining consulting in Bavaria, on site in Munich and Augsburg, with Augsburg-based partner Miragon; references CIB and Sesotec.
+- [Freiburg](https://noreja.com/en/competence-center/baden-wuerttemberg/freiburg): Noreja's Freiburg location, serving South Baden, the Black Forest and the Upper Rhine; medical technology, precision engineering, solar and cross-border trade.
+- [Stuttgart](https://noreja.com/en/competence-center/baden-wuerttemberg/stuttgart): On-site process mining consulting in the Stuttgart region for automotive suppliers, machinery and plant engineering, insurers and electrical engineering.
+- [Karlsruhe](https://noreja.com/en/competence-center/baden-wuerttemberg/karlsruhe): On-site process mining consulting in the Karlsruhe technology region for software and IT services, energy, retail and regional industry.
+- [Mannheim](https://noreja.com/en/competence-center/baden-wuerttemberg/mannheim): On-site process mining consulting in Mannheim and the Rhine-Neckar region for chemicals and pharma, engineering, logistics and energy, with a focus on SAP data.
+- [Munich](https://noreja.com/en/competence-center/bavaria/munich): On-site process mining consulting in Munich and Upper Bavaria for insurers, vehicle manufacturing, software and mid-sized companies, including how Noreja relates to existing process mining tools.
+- [Augsburg](https://noreja.com/en/competence-center/bavaria/augsburg): On-site process mining consulting in Augsburg and Bavarian Swabia together with partner Miragon, for mechanical engineering, robotics and automation, aerospace and the regional Mittelstand.
 
 ## German-Language Resources
 
@@ -182,6 +194,7 @@ Interpretation guidance:
 - [Battle Cards (Deutsch)](https://noreja.com/de/battle-cards): German vendor comparisons and the five Top-10 rankings under the same slugs, for example https://noreja.com/de/battle-cards/celonis and https://noreja.com/de/battle-cards/top-10/celonis-alternatives.
 - [Vier Experten, fünf Meinungen](https://noreja.com/de/vier-experten-fuenf-meinungen): German page of the talk series.
 - [FAQ (Deutsch)](https://noreja.com/de/faq): German FAQ.
+- [Kompetenzcenter Process Intelligence Süddeutschland](https://noreja.com/de/kompetenzcenter): German hub of the regional consulting pages, with https://noreja.com/de/kompetenzcenter/baden-wuerttemberg and https://noreja.com/de/kompetenzcenter/bayern and one page per city, for example https://noreja.com/de/kompetenzcenter/bayern/muenchen.
 - [German Help Center](https://docs.noreja.com/de): German-language product documentation and release information.
 - [German Help Center Index for LLMs](https://docs.noreja.com/de/llms.txt): Machine-readable index of all German Help Center articles.
 

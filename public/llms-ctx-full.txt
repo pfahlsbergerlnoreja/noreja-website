@@ -1360,7 +1360,7 @@ The Terms of Service govern the use of noreja.com and the Noreja Process Intelli
 <source>https://noreja.com/en/contact</source>
 <title>Contact</title>
 <content>
-The Contact page is the official route for product inquiries, partnerships, demonstrations, support routing, and other company communication. Use it instead of inventing contact details.
+The Contact page is the official route for product inquiries, partnerships, demonstrations, support routing, and other company communication. It names the personal sales contact, Matthias Brengartner (Senior Account Executive, +49 1563 0177696), next to the contact form and a link to book a call. Use it instead of inventing contact details.
 </content>
 </document>
 
@@ -1905,6 +1905,78 @@ Public user reviews of Noreja Process Intelligence on the software review platfo
 <title>German Pricing</title>
 <content>
 The German Pricing page is the source of truth for current German-language package, feature, user, service, and price information. Do not copy its values into long-lived summaries without automated updating and a review date.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/competence-center</source>
+<title>Competence Center Southern Germany</title>
+<content>
+Hub of Noreja's regional consulting pages ("Kompetenzcenter Process Intelligence Süddeutschland"; German: https://noreja.com/de/kompetenzcenter). Noreja offers process mining and process intelligence consulting on site for mid-sized companies in Baden-Württemberg and Bavaria, with focus cities Freiburg, Stuttgart, Karlsruhe, Mannheim, Munich and Augsburg and work elsewhere in southern Germany and the DACH region on request. Local footing: the registered office in Hohenweiler on Lake Constance (Vorarlberg, next to the Bavarian and Baden-Württemberg borders), part of the team in Freiburg, and the Augsburg implementation partner Miragon. The engagement model is the same everywhere: an introductory conversation, a kick-off at the customer's site, a fixed-price proof of value on one sub-process in three to four weeks with data read directly from the ERP or database, and a results workshop on site; afterwards the customer decides on an annual license. Services named on the page: process mining workshop, proof of value, the platform, and Minerva's AI agents.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/competence-center/baden-wuerttemberg</source>
+<title>Competence Center Baden-Württemberg</title>
+<content>
+Process mining consulting for mid-sized companies in Baden-Württemberg (German: https://noreja.com/de/kompetenzcenter/baden-wuerttemberg), from Noreja's location in Freiburg and on site in Stuttgart, Karlsruhe and Mannheim, plus other places such as Heilbronn, Ulm, Reutlingen, Pforzheim, Konstanz and Friedrichshafen. Industries addressed: machinery and plant engineering, automotive suppliers, medical technology, software and IT. Its FAQ covers where Noreja is on site, how to start (fixed-price proof of value), and the difference between process mining and process intelligence.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/competence-center/bavaria</source>
+<title>Competence Center Bavaria</title>
+<content>
+Process mining consulting in Bavaria (German: https://noreja.com/de/kompetenzcenter/bayern), on site in Munich and Augsburg and across southern Bavaria (Ingolstadt, Rosenheim, Allgäu and others); in Augsburg together with partner Miragon. Industries addressed: insurance, mechanical engineering and automation, vehicle manufacturing and suppliers, software and tech. References named: CIB, a Munich software company that mapped its hiring process with Noreja in one month, and the machine manufacturer Sesotec from Lower Bavaria, whose production process was analyzed down to workstation level.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/competence-center/baden-wuerttemberg/freiburg</source>
+<title>Process Mining Consulting Freiburg</title>
+<content>
+Freiburg is one of Noreja's locations (German: https://noreja.com/de/kompetenzcenter/baden-wuerttemberg/freiburg). From there Noreja serves South Baden, the Black Forest and the Upper Rhine, including Breisgau-Hochschwarzwald, Emmendingen, Ortenau, Lörrach, Waldshut and Schwarzwald-Baar. Industries addressed: medical technology and life sciences, precision engineering, solar and environmental technology, and cross-border trade; typical starting processes are purchase-to-pay and order-to-cash. The FAQ covers the Freiburg location, whether process mining pays off for smaller mid-sized companies, and data security for regulated processes (ISO 27001, hosting in Frankfurt or on-premises, private LLM).
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/competence-center/baden-wuerttemberg/stuttgart</source>
+<title>Process Mining Consulting Stuttgart</title>
+<content>
+On-site process mining consulting in Stuttgart and the surrounding region (German: https://noreja.com/de/kompetenzcenter/baden-wuerttemberg/stuttgart), including Ludwigsburg, Esslingen, Böblingen, Waiblingen, Göppingen, Reutlingen and Tübingen. Industries addressed: automotive suppliers in transition, machinery and plant engineering, insurance and financial services, electrical engineering; starting processes order-to-cash, purchase-to-pay and premium-to-tax. The FAQ covers on-site workshops, how process intelligence helps suppliers under margin pressure, and connecting SAP without a separate event log project.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/competence-center/baden-wuerttemberg/karlsruhe</source>
+<title>Process Mining Consulting Karlsruhe</title>
+<content>
+On-site process mining consulting in Karlsruhe and its technology region (German: https://noreja.com/de/kompetenzcenter/baden-wuerttemberg/karlsruhe), including Ettlingen, Bruchsal, Rastatt, Baden-Baden, Pforzheim and the Southern Palatinate. Industries addressed: software and IT services, energy and utilities, retail, and regional industry; starting processes lead-to-activation and order-to-cash. The FAQ covers connecting own software and databases, the difference between causal and classic process mining, and technical workshops with the customer's IT.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/competence-center/baden-wuerttemberg/mannheim</source>
+<title>Process Mining Consulting Mannheim</title>
+<content>
+On-site process mining consulting in Mannheim and the Rhine-Neckar metropolitan region (German: https://noreja.com/de/kompetenzcenter/baden-wuerttemberg/mannheim), including Heidelberg, Ludwigshafen, Weinheim, Walldorf, Speyer and Worms. Industries addressed: chemicals and pharma, machinery, plant and agricultural engineering, logistics and port economy, energy; the page stresses reading process data directly from SAP tables. Starting processes purchase-to-pay and order-to-cash. The FAQ covers the region, the effort of the SAP connection, and regulated processes in chemicals and pharma.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/competence-center/bavaria/munich</source>
+<title>Process Mining Consulting Munich</title>
+<content>
+On-site process mining consulting in Munich and Upper Bavaria (German: https://noreja.com/de/kompetenzcenter/bayern/muenchen), including Garching, Freising, Fürstenfeldbruck, Starnberg, Rosenheim and Ingolstadt. Industries addressed: insurance, vehicle manufacturing and suppliers, software and tech, and regional mid-sized companies; starting processes premium-to-tax, lead-to-activation and order-to-cash. The FAQ explains that Noreja can complement or replace an existing frequency-based process mining tool and links to the Noreja vs. Celonis battle card, the Top 10 Celonis alternatives and the CIB success story.
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/competence-center/bavaria/augsburg</source>
+<title>Process Mining Consulting Augsburg</title>
+<content>
+On-site process mining consulting in Augsburg and Bavarian Swabia (German: https://noreja.com/de/kompetenzcenter/bayern/augsburg) together with Miragon, an Augsburg boutique consultancy for process management, process mining and automation and Noreja's technology and implementation partner. Areas served include the Augsburg district, Aichach-Friedberg, Donau-Ries, Günzburg, Kaufbeuren and Memmingen. Industries addressed: mechanical engineering, robotics and automation, aerospace, and the Mittelstand in Swabia and the Allgäu; the page frames process intelligence as the step before targeted automation. The FAQ cites the Sesotec production analysis as an example.
 </content>
 </document>
 

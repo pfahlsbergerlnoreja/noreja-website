@@ -279,6 +279,22 @@ export interface Translations {
         /** Heading over the "what to reach out about" list. */
         reasonsTitle: string;
         reasons: { title: string; text: string }[];
+        /** Personal sales contact shown next to the form. */
+        salesContact: {
+          greeting: string;
+          intro: string;
+          callLabel: string;
+          /** Floating chip next to the photo. */
+          hello: string;
+          /** Header of the animated question stream. */
+          questionsLabel: string;
+          /** Questions popping up one after another in the hero. */
+          questions: string[];
+          /** Matthias' answer under the question stream. */
+          reply: string;
+        };
+        /** Heading over the form, which now sits below the hero. */
+        formTitle: string;
         bookCallText: string;
         bookCallButton: string;
         responseNote: string;
@@ -689,7 +705,13 @@ export interface Translations {
     copyright: string;
     builtWith: string;
     sections: {
+      platform: string;
+      processes: string;
+      allProcesses: string;
       resources: string;
+      company: string;
+      /** Footer column with the Kompetenzcenter states and cities. */
+      competenceCenter: string;
       legal: string;
       contact: string;
       referralProgram: string;
@@ -1115,6 +1137,25 @@ export const translations: Record<Language, Translations> = {
           { title: "Partnership", text: "Consulting, technology, industry and research partners deliver Noreja projects together with us — from proof of value to rollout." },
           { title: "Technical questions", text: "Causal process mining, event knowledge graphs, or how Noreja differs from frequency-based process mining tools: ask directly, or read up in our definitions and vendor comparisons." },
         ],
+        salesContact: {
+          greeting: "I'm happy to talk to you",
+          intro: "Whether it's a demo, a proof of value or a first look at one of your processes: give me a call or use the form — I'll get back to you personally.",
+          callLabel: "Call me",
+          hello: "Hi there!",
+          questionsLabel: "Questions I hear every day",
+          questions: [
+            "What does process mining actually mean?",
+            "How quickly can we get started?",
+            "Which problems do you solve?",
+            "Does it work with our SAP?",
+            "What does a proof of value cost?",
+            "What is causal process mining?",
+            "How much effort is it for our IT?",
+            "What do the Minerva agents do?"
+          ],
+          reply: "All good questions — I'd rather answer them in person. Give me a call!"
+        },
+        formTitle: "Prefer to write?",
         bookCallText: "Prefer to book a call directly?",
         bookCallButton: "Book a Call",
         responseNote: "We typically respond within 24 hours.",
@@ -1527,7 +1568,12 @@ export const translations: Record<Language, Translations> = {
       copyright: "All rights reserved.",
       builtWith: "Built with AI 🤖 and Coffee ☕️",
       sections: {
+        platform: "Platform & AI",
+        processes: "Processes",
+        allProcesses: "All processes",
         resources: "Resources",
+        company: "Company",
+        competenceCenter: "Competence Center",
         legal: "Legal",
         contact: "Contact",
         referralProgram: "Referral Program",
@@ -1951,6 +1997,25 @@ export const translations: Record<Language, Translations> = {
           { title: "Partnerschaft", text: "Beratungs-, Technologie-, Industrie- und Forschungspartner setzen Noreja-Projekte gemeinsam mit uns um — vom Proof of Value bis zum Rollout." },
           { title: "Fachfragen", text: "Kausales Process Mining, Event Knowledge Graphs oder die Abgrenzung zu frequenzbasierten Process-Mining-Tools: frag direkt nach, oder lies in unseren Definitionen und Anbietervergleichen weiter." },
         ],
+        salesContact: {
+          greeting: "Ich spreche gerne mit dir",
+          intro: "Ob Demo, Proof of Value oder ein erster Blick auf einen deiner Prozesse: Ruf mich an oder nutze das Formular — ich melde mich persönlich bei dir.",
+          callLabel: "Ruf mich an",
+          hello: "Servus!",
+          questionsLabel: "Fragen, die ich jeden Tag höre",
+          questions: [
+            "Was bedeutet Process Mining eigentlich?",
+            "Wie schnell können wir starten?",
+            "Welche Probleme löst ihr?",
+            "Funktioniert das mit unserem SAP?",
+            "Was kostet ein Proof of Value?",
+            "Was ist kausales Process Mining?",
+            "Wie viel Aufwand ist das für unsere IT?",
+            "Was machen die Minerva Agents?"
+          ],
+          reply: "Alles gute Fragen — die beantworte ich dir am liebsten persönlich. Ruf einfach an!"
+        },
+        formTitle: "Lieber schriftlich?",
         bookCallText: "Lieber direkt einen Termin buchen?",
         bookCallButton: "Termin buchen",
         responseNote: "Wir antworten in der Regel innerhalb von 24 Stunden.",
@@ -2364,7 +2429,12 @@ export const translations: Record<Language, Translations> = {
       copyright: "Alle Rechte vorbehalten.",
       builtWith: "Erstellt mit KI 🤖 und Kaffee ☕️",
       sections: {
+        platform: "Plattform & KI",
+        processes: "Prozesse",
+        allProcesses: "Alle Prozesse",
         resources: "Ressourcen",
+        company: "Unternehmen",
+        competenceCenter: "Kompetenzcenter",
         legal: "Rechtliches",
         contact: "Kontakt",
         referralProgram: "Referral-Programm",

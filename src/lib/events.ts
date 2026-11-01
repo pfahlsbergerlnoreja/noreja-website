@@ -471,6 +471,30 @@ export const eventData: EventData[] = [
       url: 'https://www.messe-stuttgart.de/all-about-process-management/',
       type: 'learn-more'
     }
+  },
+  {
+    id: '22',
+    title: 'Neue Technologien für das Prozessmanagement',
+    description: {
+      de: 'Ein Nachmittag am Weizenbaum-Institut rund um intelligente Automatisierung: Welche Technologien und Methoden machen Prozessautomatisierung effizient und nachhaltig? Noreja richtet die Veranstaltung gemeinsam mit unserem Partner [envite consulting](https://envite.de/) und Vialutions consult aus. Auf dem Programm stehen Vorträge zu KI-Agenten in der Softwareentwicklung, Quantencomputing in der Prozessoptimierung, Vektordatenbanken für Retrieval-Augmented Generation, Knowledge Graphs (Neo4j) und nachhaltigen Systemen in der Industrie 4.0. Prof. Dr. Jan Mendling spricht über „Next Level Process Intelligence mit Process Mining“. 13:00–18:30 Uhr, ab 17:15 Uhr Networking mit Snacks. Die Teilnahme ist kostenfrei. Mehr zum Programm [hier](https://www.weizenbaum-institut.de/veranstaltungen/detailseite/neue-technologien-fuer-das-prozessmanagement/).',
+      en: 'An afternoon at the Weizenbaum Institute on intelligent automation: which technologies and methods make process automation efficient and sustainable? Noreja hosts the event together with our partner [envite consulting](https://envite.de/) and Vialutions consult. The program covers AI agents in software development, quantum computing for process optimization, vector databases for retrieval-augmented generation, knowledge graphs (Neo4j), and sustainable systems in Industry 4.0. Prof. Dr. Jan Mendling speaks on "Next Level Process Intelligence with Process Mining". 1:00–6:30 pm, networking with snacks from 5:15 pm. Attendance is free; the talks are in German. See the full program [here](https://www.weizenbaum-institut.de/veranstaltungen/detailseite/neue-technologien-fuer-das-prozessmanagement/).'
+    },
+    date: new Date('2026-11-12'),
+    location: {
+      type: 'onsite',
+      address: 'Weizenbaum-Institut, Hardenbergstr. 32, 10623 Berlin, Germany',
+    },
+    registration: {
+      required: true,
+      url: 'https://www.eventbrite.de/e/neue-technologien-fur-das-prozessmanagement-tickets-2000009607575'
+    },
+    type: 'conference',
+    featured: true,
+    cta: {
+      text: 'Register',
+      url: 'https://www.eventbrite.de/e/neue-technologien-fur-das-prozessmanagement-tickets-2000009607575',
+      type: 'register'
+    }
   }
 ];
 

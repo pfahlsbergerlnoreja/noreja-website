@@ -16,6 +16,14 @@ export interface BlogPost {
 export const blogPosts: Record<'de' | 'en', BlogPost[]> = {
   "de": [
     {
+      "title": "Two for One: Wenn Workarounds zum echten Prozess werden",
+      "link": "https://blog.noreja.com/de-de/wenn-workarounds-zum-prozess-werden",
+      "pubDate": "Tue, 27 Oct 2026 08:00:00 GMT",
+      "description": "Über die Rasenfläche fast jedes Bürogeländes läuft ein Trampelpfad, diagonal durchs Gras, dort wo der gepflasterte Weg den großen Bogen macht. Niemand hat ihn geplant, alle benutzen ihn, und der Hausm...",
+      "author": "Lukas Pfahlsberger",
+      "imageUrl": "https://blog.noreja.com/hs-fs/hubfs/blog/featured-images/2026-10-27-two-for-one-workarounds.png?width=640&name=2026-10-27-two-for-one-workarounds.png"
+    },
+    {
       "title": "Quick Tips: Warum Vereinfachen schwerer ist als Hinzufügen",
       "link": "https://blog.noreja.com/de-de/warum-vereinfachen-schwerer-ist",
       "pubDate": "Tue, 20 Oct 2026 07:00:00 GMT",
@@ -54,17 +62,17 @@ export const blogPosts: Record<'de' | 'en', BlogPost[]> = {
       "description": "Warum Kunden-Onboarding jetzt zählt Willkommen zur neuen Ausgabe von Business Case — dem Format, in dem wir ein realistisches Unternehmen nehmen, ein Prozessproblem mit Zahlen versehen und ausrechnen,...",
       "author": "Lukas Pfahlsberger",
       "imageUrl": "https://blog.noreja.com/hs-fs/hubfs/blog/featured-images/.png-3.png?width=640&name=.png-3.png"
-    },
-    {
-      "title": "Two for One: Jedes neue Tool erbt den alten Engpass",
-      "link": "https://blog.noreja.com/de-de/neues-tool-alter-engpass",
-      "pubDate": "Tue, 15 Sep 2026 07:00:00 GMT",
-      "description": "Jedes Jahr bringt ein neues System. Ein Workflow-Tool ersetzt das Sammelpostfach, eine Ticketing-Plattform ersetzt das Workflow-Tool, eine Plattform konsolidiert die Plattformen. Budgets werden freige...",
-      "author": "Lukas Pfahlsberger",
-      "imageUrl": "https://blog.noreja.com/hs-fs/hubfs/blog/featured-images/.png-2.png?width=640&name=.png-2.png"
     }
   ],
   "en": [
+    {
+      "title": "Two for One: Why Workarounds Become the Real Process",
+      "link": "https://blog.noreja.com/en/why-workarounds-become-the-real-process",
+      "pubDate": "Tue, 27 Oct 2026 08:00:00 GMT",
+      "description": "There is a shortcut worn into the lawn of almost every office park, running diagonally across the grass where the paved path curves the long way around. Nobody planned it, everybody uses it, and the g...",
+      "author": "Lukas Pfahlsberger",
+      "imageUrl": "https://blog.noreja.com/hs-fs/hubfs/blog/featured-images/2026-10-27-two-for-one-workarounds.png?width=640&name=2026-10-27-two-for-one-workarounds.png"
+    },
     {
       "title": "Quick Tips: Why Simplifying Is Harder Than Adding",
       "link": "https://blog.noreja.com/en/why-simplifying-is-harder-than-adding",
@@ -104,14 +112,6 @@ export const blogPosts: Record<'de' | 'en', BlogPost[]> = {
       "description": "Why Customer Onboarding Deserves the Attention Now Welcome to this edition of Business Case, the format in which we take a realistic company, put numbers on a process problem, and calculate what doing...",
       "author": "Lukas Pfahlsberger",
       "imageUrl": "https://blog.noreja.com/hs-fs/hubfs/blog/featured-images/.png-3.png?width=640&name=.png-3.png"
-    },
-    {
-      "title": "Two for One: Every New Tool Inherits the Old Bottleneck",
-      "link": "https://blog.noreja.com/en/new-tool-inherits-old-bottleneck",
-      "pubDate": "Tue, 15 Sep 2026 07:00:00 GMT",
-      "description": "Every year brings a new system. A workflow tool to replace the shared mailbox, a ticketing platform to replace the workflow tool, a platform to consolidate the platforms. Budgets are approved, migrati...",
-      "author": "Lukas Pfahlsberger",
-      "imageUrl": "https://blog.noreja.com/hs-fs/hubfs/blog/featured-images/.png-2.png?width=640&name=.png-2.png"
     }
   ]
 };

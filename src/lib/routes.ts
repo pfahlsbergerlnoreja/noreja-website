@@ -1,5 +1,11 @@
 import { Language } from './translations';
 import { agentSlugs, getAgentIdBySlug } from './agentSlugs';
+import {
+  competenceCityPath,
+  competenceStatePath,
+  findCompetenceCityBySlugs,
+  findCompetenceStateBySlug,
+} from './competenceCenterIndex';
 
 // Route mappings for both languages
 export const routes = {
@@ -131,6 +137,18 @@ export const routes = {
     de: '/de/minerva/agenten/:agentSlug',
     en: '/en/minerva/agents/:agentSlug',
   },
+  competenceCenter: {
+    de: '/de/kompetenzcenter',
+    en: '/en/competence-center',
+  },
+  competenceCenterState: {
+    de: '/de/kompetenzcenter/:regionSlug',
+    en: '/en/competence-center/:regionSlug',
+  },
+  competenceCenterCity: {
+    de: '/de/kompetenzcenter/:regionSlug/:citySlug',
+    en: '/en/competence-center/:regionSlug/:citySlug',
+  },
   maintenance: {
     de: '/de/wartung',
     en: '/en/maintenance',
@@ -187,6 +205,8 @@ const pathToRouteKey: Record<string, keyof typeof routes> = {
   '/en/processes': 'processes',
   '/de/minerva/agenten': 'agentLibrary',
   '/en/minerva/agents': 'agentLibrary',
+  '/de/kompetenzcenter': 'competenceCenter',
+  '/en/competence-center': 'competenceCenter',
   '/en/maintenance': 'maintenance',
   '/de/wartung': 'maintenance',
 };
@@ -309,6 +329,22 @@ export function translateRoute(pathname: string, targetLang: Language): string {
       : routes.agentLibrary[targetLang];
   }
 
+  // Kompetenzcenter state and city pages: /de/kompetenzcenter/bayern/muenchen.
+  // Like the agents, the slugs differ per language (bayern / bavaria), so they
+  // are looked up and translated; an unknown slug falls back to the hub.
+  const competenceMatch = pathname.match(/^\/(?:de|en)\/(?:kompetenzcenter|competence-center)\/([^/]+)(?:\/([^/]+))?$/);
+  if (competenceMatch) {
+    const [, stateSlug, citySlug] = competenceMatch;
+    if (citySlug) {
+      const city = findCompetenceCityBySlugs(stateSlug, citySlug);
+      if (city) return competenceCityPath(city.id, targetLang);
+    } else {
+      const state = findCompetenceStateBySlug(stateSlug);
+      if (state) return competenceStatePath(state.id, targetLang);
+    }
+    return routes.competenceCenter[targetLang];
+  }
+
   // Try to find matching route key from the full pathname
   const routeKey = pathToRouteKey[pathname];
   
@@ -358,6 +394,12 @@ export function getRouteKeyFromPath(pathname: string): keyof typeof routes | nul
   }
   if (pathname.match(/^\/(?:de|en)\/minerva\/(?:agenten|agents)\/.+/)) {
     return 'agentDetail';
+  }
+  if (pathname.match(/^\/(?:de|en)\/(?:kompetenzcenter|competence-center)\/[^/]+\/[^/]+$/)) {
+    return 'competenceCenterCity';
+  }
+  if (pathname.match(/^\/(?:de|en)\/(?:kompetenzcenter|competence-center)\/[^/]+$/)) {
+    return 'competenceCenterState';
   }
 
   // pathToRouteKey is keyed by the real path in BOTH languages, so the path

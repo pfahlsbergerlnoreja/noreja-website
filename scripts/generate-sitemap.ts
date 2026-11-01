@@ -11,6 +11,7 @@ const __dirname = dirname(__filename);
 import { SITE_URL } from '../src/lib/config';
 import { agentSlugs } from '../src/lib/agentSlugs';
 import { topTenIndex } from '../src/lib/topTenIndex';
+import { competencePagePaths } from '../src/lib/competenceCenterIndex';
 
 // Read and parse TypeScript files to extract IDs
 function extractSuccessStoryIds(): string[] {
@@ -255,6 +256,10 @@ function generateSitemap() {
     addEntry(`/de/minerva/agenten/${slugs.de}`, 0.7, 'monthly');
     addEntry(`/en/minerva/agents/${slugs.en}`, 0.7, 'monthly');
   });
+
+  // Kompetenzcenter Süddeutschland: hub, states and cities (slugs differ per language)
+  competencePagePaths('de').forEach((path) => addEntry(path, 0.7, 'monthly'));
+  competencePagePaths('en').forEach((path) => addEntry(path, 0.6, 'monthly'));
 
   // Write entries to sitemap stream
   entries.forEach((entry) => {

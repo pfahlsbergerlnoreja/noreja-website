@@ -44,6 +44,7 @@ export function OrganizationSchema() {
     contactPoint: {
       '@type': 'ContactPoint',
       url: `${SITE_URL}/en/contact`,
+      telephone: siteConfig.salesContact.phone,
       contactType: 'sales',
       availableLanguage: ['English', 'German'],
     },
