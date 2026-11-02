@@ -7,8 +7,8 @@ export const muenchen: CompetenceCityContent = {
     en: 'Process Mining Consulting Munich',
   },
   metaDescription: {
-    de: 'Process Mining Beratung in München: Process Intelligence mit kausaler Analyse und KI-Agenten für Versicherer, Industrie und Mittelstand. Workshops vor Ort.',
-    en: 'Process mining consulting in Munich: process intelligence with causal analysis and AI agents for insurers, industry and mid-sized companies. On-site workshops.',
+    de: 'Process Mining Beratung in München: Process Intelligence mit kausaler Analyse und KI-Agenten für Versicherer, Industrie und Mittelstand – gemeinsam mit Partner KBC Consultants.',
+    en: 'Process mining consulting in Munich: process intelligence with causal analysis and AI agents for insurers, industry and mid-sized companies – together with partner KBC Consultants.',
   },
   h1: {
     de: 'Process Mining Beratung in München und Oberbayern',
@@ -19,17 +19,17 @@ export const muenchen: CompetenceCityContent = {
     en: 'In Munich, process mining is no foreign word – many companies have tried it, and some have hit its limits. We bring the next step: process intelligence that models processes causally in an event knowledge graph and analyzes them with AI agents. For insurers, industry, software houses and mid-sized companies in Upper Bavaria – with on-site workshops and a proof of value in three to four weeks.',
   },
   teaser: {
-    de: 'Für Versicherer, Industrie, Software und Mittelstand im Großraum München.',
-    en: 'For insurers, industry, software and mid-sized companies in Greater Munich.',
+    de: 'Gemeinsam mit unserem Partner KBC Consultants – für Versicherer, Industrie und Mittelstand im Großraum München.',
+    en: 'Together with our partner KBC Consultants – for insurers, industry and mid-sized companies in Greater Munich.',
   },
   presence: {
     de: {
-      title: 'Vor Ort in München',
-      text: 'Unser Firmensitz in Hohenweiler am Bodensee liegt direkt an der bayerischen Grenze, von dort ist München gut erreichbar. Kick-off und Ergebnisworkshop machen wir bei dir im Haus, auf Wunsch auch einen Termin mit Fachbereich und IT gemeinsam. Datenanbindung und Analyse dazwischen laufen remote.',
+      title: 'Vor Ort in München – mit KBC Consultants',
+      text: 'In München arbeiten wir mit unserem Partner KBC Consultants zusammen: Gemeinsam gehen wir auf Unternehmen in der Region zu und betreuen unsere Kunden hier zusammen. Unser Firmensitz in Hohenweiler am Bodensee liegt zudem direkt an der bayerischen Grenze. Kick-off und Ergebnisworkshop machen wir bei dir im Haus, auf Wunsch auch einen Termin mit Fachbereich und IT gemeinsam. Datenanbindung und Analyse dazwischen laufen remote.',
     },
     en: {
-      title: 'On site in Munich',
-      text: 'Our registered office in Hohenweiler on Lake Constance sits right on the Bavarian border, and Munich is easy to reach from there. We hold the kick-off and results workshop at your site and, if you like, a joint session with business and IT. Data connection and analysis in between run remotely.',
+      title: 'On site in Munich – with KBC Consultants',
+      text: 'In Munich we work with our partner KBC Consultants: together we approach companies in the region and serve our customers here jointly. Our registered office in Hohenweiler on Lake Constance also sits right on the Bavarian border. We hold the kick-off and results workshop at your site and, if you like, a joint session with business and IT. Data connection and analysis in between run remotely.',
     },
   },
   surroundings: {
@@ -89,7 +89,24 @@ export const muenchen: CompetenceCityContent = {
       },
     },
   ],
+  localPartner: {
+    id: 'kbc',
+    text: {
+      de: 'KBC Consultants ist eine international tätige Unternehmensberatung, die seit 2007 Konzerne und den führenden Mittelstand berät – vor allem in Technologie- und Automobilbranchen. In München gehen wir gemeinsam mit KBC auf Unternehmen zu und betreuen unsere Kunden zusammen: KBC bringt Strategie- und Umsetzungserfahrung, Noreja die Process-Intelligence-Plattform und die kausale Analyse. KBC setzt Noreja auch in eigenen Beratungsprojekten ein, etwa um sich schnell einen Überblick über Order-to-Cash oder Purchase-to-Pay zu verschaffen.',
+      en: 'KBC Consultants is an internationally active management consultancy that has advised corporations and leading mid-sized companies since 2007 – above all in the technology and automotive industries. In Munich we approach companies together with KBC and serve our customers jointly: KBC brings strategy and implementation experience, Noreja the process intelligence platform and the causal analysis. KBC also uses Noreja in its own consulting projects, for example to get a quick overview of order-to-cash or purchase-to-pay.',
+    },
+  },
   faq: [
+    {
+      question: {
+        de: 'Mit wem arbeitet Noreja in München zusammen?',
+        en: 'Who does Noreja work with in Munich?',
+      },
+      answer: {
+        de: 'Mit KBC Consultants, einer international tätigen Unternehmensberatung mit Schwerpunkt auf Technologie- und Automobilbranchen. Gemeinsam gehen wir auf Unternehmen in München und Oberbayern zu und betreuen unsere Kunden in der Region zusammen.',
+        en: 'With KBC Consultants, an internationally active management consultancy focused on the technology and automotive industries. Together we approach companies in Munich and Upper Bavaria and serve our customers in the region jointly.',
+      },
+    },
     {
       question: {
         de: 'Seid ihr für Workshops in München vor Ort?',
@@ -122,6 +139,10 @@ export const muenchen: CompetenceCityContent = {
     },
   ],
   related: [
+    {
+      label: { de: 'Unsere Partner', en: 'Our partners' },
+      path: { de: '/de/partner', en: '/en/partners' },
+    },
     {
       label: { de: 'Noreja vs. Celonis im Vergleich', en: 'Noreja vs. Celonis compared' },
       path: { de: '/de/battle-cards/celonis', en: '/en/battle-cards/celonis' },

@@ -1,7 +1,7 @@
 import { useEffect, type ReactNode } from 'react';
 import { useParams, useLocation, Link, Navigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, Check, MapPin, Phone } from 'lucide-react';
+import { ArrowRight, Check, ExternalLink, MapPin, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { CitySilhouette } from '@/components/CitySilhouette';
 import { BreadcrumbSchema, FAQSchema, StructuredData } from '@/components/StructuredData';
@@ -28,9 +28,12 @@ import {
   competenceStateContent,
   type CompetenceCard,
   type CompetencePageContent,
+  type CompetencePartnerId,
   type CompetenceProcessId,
 } from '@/lib/competenceCenters';
 import salesPhoto from '@/assets/team/Matthias-Brengartner.webp';
+import miragonLogo from '@/assets/partners/partners_white/miragon_white.webp';
+import kbcLogo from '@/assets/partners/partners_white/kbc_white.webp';
 
 /**
  * "Kompetenzcenter Process Intelligence Süddeutschland": the hub
@@ -57,6 +60,16 @@ const skylineLabels: Record<CompetenceCityId, Record<Language, string>> = {
   mannheim: { de: 'Silhouette von Mannheim mit Hafenkränen, Wasserturm, Schloss und Fernmeldeturm', en: 'Mannheim skyline with harbour cranes, water tower, palace and telecom tower' },
   muenchen: { de: 'Silhouette von München mit Frauenkirche, Neuem Rathaus und Olympiaturm vor den Alpen', en: 'Munich skyline with the Frauenkirche, New Town Hall and Olympic Tower in front of the Alps' },
   augsburg: { de: 'Silhouette von Augsburg mit St. Ulrich und Afra, Rathaus, Perlachturm und Fuggerei', en: 'Augsburg skyline with St. Ulrich and Afra, town hall, Perlach tower and the Fuggerei' },
+};
+
+/** Partners from the partner page who serve customers with us in a city. */
+const localPartners: Record<
+  CompetencePartnerId,
+  // logoClassName evens out the padding baked into the logo files
+  { name: string; logo: string; width: number; height: number; website: string; logoClassName: string }
+> = {
+  miragon: { name: 'Miragon', logo: miragonLogo, width: 300, height: 47, website: 'https://www.miragon.io/', logoClassName: 'max-h-10' },
+  kbc: { name: 'KBC Consultants', logo: kbcLogo, width: 300, height: 167, website: 'https://kbc-consultants.com/de/', logoClassName: 'max-h-24' },
 };
 
 const copy = {
@@ -93,6 +106,9 @@ const copy = {
     toCity: 'Mehr erfahren',
     referencesTitle: (state: string) => `Referenzen aus ${state}`,
     referenceLink: 'Zur Success Story',
+    partnerTitle: 'Unser Partner vor Ort',
+    partnerPageLink: 'Alle Partner ansehen',
+    partnerWebsite: (name: string) => `Website von ${name}`,
     contactTitle: 'Dein Ansprechpartner',
     contactText: 'Ob Workshop, Proof of Value oder eine erste Einschätzung zu deinem Prozess: Ruf an oder buch dir direkt einen Termin.',
     faqTitle: 'Häufige Fragen',
@@ -136,6 +152,9 @@ const copy = {
     toCity: 'Learn more',
     referencesTitle: (state: string) => `References from ${state}`,
     referenceLink: 'Read the success story',
+    partnerTitle: 'Our local partner',
+    partnerPageLink: 'See all partners',
+    partnerWebsite: (name: string) => `${name} website`,
     contactTitle: 'Your Contact',
     contactText: 'Whether a workshop, a proof of value or a first assessment of your process: give us a call or book a meeting directly.',
     faqTitle: 'Frequently Asked Questions',
@@ -318,6 +337,64 @@ function ContactCard({ t }: { t: Copy }) {
         </div>
       </div>
     </div>
+  );
+}
+
+function PartnerCard({
+  partnerId,
+  text,
+  language,
+  t,
+}: {
+  partnerId: CompetencePartnerId;
+  text: string;
+  language: Language;
+  t: Copy;
+}) {
+  const partner = localPartners[partnerId];
+  return (
+    <section className="mt-6 rounded-2xl border border-noreja-main/30 bg-background/90 p-6 md:p-8">
+      <p className="text-sm font-semibold uppercase tracking-wide text-noreja-main">{t.partnerTitle}</p>
+      <div className="mt-4 flex flex-col gap-6 md:flex-row md:items-center">
+        <a
+          href={partner.website}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex h-28 w-full shrink-0 items-center justify-center rounded-xl border border-border/50 bg-background/60 px-6 md:w-56"
+        >
+          <img
+            src={partner.logo}
+            alt={`${partner.name} Logo`}
+            width={partner.width}
+            height={partner.height}
+            loading="lazy"
+            className={`${partner.logoClassName} w-auto max-w-full object-contain`}
+          />
+        </a>
+        <div className="min-w-0">
+          <h2 className="text-xl md:text-2xl font-bold">{partner.name}</h2>
+          <p className="mt-2 text-sm md:text-base text-muted-foreground leading-relaxed">{text}</p>
+          <div className="mt-4 flex flex-wrap gap-x-6 gap-y-2">
+            <Link
+              to={getRoutePath('partners', language)}
+              className="group inline-flex items-center gap-1.5 text-sm font-medium text-noreja-main"
+            >
+              {t.partnerPageLink}
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+            </Link>
+            <a
+              href={partner.website}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-primary"
+            >
+              {t.partnerWebsite(partner.name)}
+              <ExternalLink className="h-4 w-4" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -696,6 +773,10 @@ function CityPage({ city, language, t }: { city: CompetenceCity; language: Langu
           </ul>
         </div>
       </section>
+
+      {content.localPartner && (
+        <PartnerCard partnerId={content.localPartner.id} text={content.localPartner.text[language]} language={language} t={t} />
+      )}
 
       <RegionSection content={content} language={language} />
 

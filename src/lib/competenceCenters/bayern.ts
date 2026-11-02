@@ -7,20 +7,20 @@ export const bayern: CompetenceStateContent = {
     en: 'Process Mining Consulting Bavaria',
   },
   metaDescription: {
-    de: 'Process Mining Beratung für den Mittelstand in Bayern – vor Ort in München und Augsburg, mit Partner Miragon. Prozessoptimierung mit KI-Agenten.',
-    en: 'Process mining consulting for mid-sized companies in Bavaria – on site in Munich and Augsburg, with partner Miragon. Process optimization with AI agents.',
+    de: 'Process Mining Beratung für den Mittelstand in Bayern – vor Ort in München und Augsburg, mit den Partnern KBC Consultants und Miragon.',
+    en: 'Process mining consulting for mid-sized companies in Bavaria – on site in Munich and Augsburg, with partners KBC Consultants and Miragon.',
   },
   h1: {
     de: 'Process Mining & Prozessoptimierung in Bayern',
     en: 'Process Mining & Process Optimization in Bavaria',
   },
   intro: {
-    de: 'Unser Kompetenzcenter Bayern begleitet Unternehmen in München, Augsburg und ganz Südbayern mit Process Mining und Process Intelligence. In Augsburg arbeiten wir mit unserem Partner Miragon zusammen, unser Firmensitz am Bodensee liegt direkt an der bayerischen Grenze. Wir analysieren deine Prozesse kausal, direkt aus ERP und Datenbank, und stellen die Ergebnisse persönlich bei dir vor.',
-    en: 'Our Bavaria competence center supports companies in Munich, Augsburg and all of southern Bavaria with process mining and process intelligence. In Augsburg we work with our partner Miragon, and our registered office on Lake Constance sits right on the Bavarian border. We analyze your processes causally, directly from your ERP and database, and present the results in person at your site.',
+    de: 'Unser Kompetenzcenter Bayern begleitet Unternehmen in München, Augsburg und ganz Südbayern mit Process Mining und Process Intelligence. In München arbeiten wir mit unserem Partner KBC Consultants zusammen, in Augsburg mit Miragon, und unser Firmensitz am Bodensee liegt direkt an der bayerischen Grenze. Wir analysieren deine Prozesse kausal, direkt aus ERP und Datenbank, und stellen die Ergebnisse persönlich bei dir vor.',
+    en: 'Our Bavaria competence center supports companies in Munich, Augsburg and all of southern Bavaria with process mining and process intelligence. In Munich we work with our partner KBC Consultants, in Augsburg with Miragon, and our registered office on Lake Constance sits right on the Bavarian border. We analyze your processes causally, directly from your ERP and database, and present the results in person at your site.',
   },
   teaser: {
-    de: 'München und Augsburg – gemeinsam mit unserem Partner Miragon.',
-    en: 'Munich and Augsburg – together with our partner Miragon.',
+    de: 'München und Augsburg – gemeinsam mit unseren Partnern KBC Consultants und Miragon.',
+    en: 'Munich and Augsburg – together with our partners KBC Consultants and Miragon.',
   },
   region: {
     de: {
@@ -80,8 +80,8 @@ export const bayern: CompetenceStateContent = {
         en: 'Where in Bavaria is Noreja on site?',
       },
       answer: {
-        de: 'In München und Augsburg – dort gemeinsam mit unserem Partner Miragon – und im übrigen Südbayern, etwa in Ingolstadt, Rosenheim oder im Allgäu. Unser Firmensitz in Hohenweiler liegt direkt an der Grenze bei Lindau.',
-        en: 'In Munich and Augsburg – there together with our partner Miragon – and across the rest of southern Bavaria, for example in Ingolstadt, Rosenheim or the Allgäu. Our registered office in Hohenweiler is right on the border near Lindau.',
+        de: 'In München gemeinsam mit unserem Partner KBC Consultants, in Augsburg gemeinsam mit Miragon – und im übrigen Südbayern, etwa in Ingolstadt, Rosenheim oder im Allgäu. Unser Firmensitz in Hohenweiler liegt direkt an der Grenze bei Lindau.',
+        en: 'In Munich together with our partner KBC Consultants, in Augsburg together with Miragon – and across the rest of southern Bavaria, for example in Ingolstadt, Rosenheim or the Allgäu. Our registered office in Hohenweiler is right on the border near Lindau.',
       },
     },
     {

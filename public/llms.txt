@@ -175,13 +175,13 @@ Interpretation guidance:
 
 - [Competence Center Southern Germany](https://noreja.com/en/competence-center): Noreja's on-site process mining and process intelligence consulting for mid-sized companies in Baden-Württemberg and Bavaria: workshops at the customer's site, a fixed-price proof of value on one sub-process in three to four weeks, and the cities covered.
 - [Baden-Württemberg](https://noreja.com/en/competence-center/baden-wuerttemberg): Process mining consulting in Baden-Württemberg, from Noreja's location in Freiburg and on site in Stuttgart, Karlsruhe and Mannheim.
-- [Bavaria](https://noreja.com/en/competence-center/bavaria): Process mining consulting in Bavaria, on site in Munich and Augsburg, with Augsburg-based partner Miragon; references CIB and Sesotec.
+- [Bavaria](https://noreja.com/en/competence-center/bavaria): Process mining consulting in Bavaria, on site in Munich together with partner KBC Consultants and in Augsburg together with Augsburg-based partner Miragon; references CIB and Sesotec.
 - [Freiburg](https://noreja.com/en/competence-center/baden-wuerttemberg/freiburg): Noreja's Freiburg location, serving South Baden, the Black Forest and the Upper Rhine; medical technology, precision engineering, solar and cross-border trade.
 - [Stuttgart](https://noreja.com/en/competence-center/baden-wuerttemberg/stuttgart): On-site process mining consulting in the Stuttgart region for automotive suppliers, machinery and plant engineering, insurers and electrical engineering.
 - [Karlsruhe](https://noreja.com/en/competence-center/baden-wuerttemberg/karlsruhe): On-site process mining consulting in the Karlsruhe technology region for software and IT services, energy, retail and regional industry.
 - [Mannheim](https://noreja.com/en/competence-center/baden-wuerttemberg/mannheim): On-site process mining consulting in Mannheim and the Rhine-Neckar region for chemicals and pharma, engineering, logistics and energy, with a focus on SAP data.
-- [Munich](https://noreja.com/en/competence-center/bavaria/munich): On-site process mining consulting in Munich and Upper Bavaria for insurers, vehicle manufacturing, software and mid-sized companies, including how Noreja relates to existing process mining tools.
-- [Augsburg](https://noreja.com/en/competence-center/bavaria/augsburg): On-site process mining consulting in Augsburg and Bavarian Swabia together with partner Miragon, for mechanical engineering, robotics and automation, aerospace and the regional Mittelstand.
+- [Munich](https://noreja.com/en/competence-center/bavaria/munich): On-site process mining consulting in Munich and Upper Bavaria together with partner KBC Consultants, for insurers, vehicle manufacturing, software and mid-sized companies, including how Noreja relates to existing process mining tools.
+- [Augsburg](https://noreja.com/en/competence-center/bavaria/augsburg): On-site process mining consulting in Augsburg and Bavarian Swabia together with Augsburg-based partner Miragon, with whom Noreja approaches and serves customers in the region, for mechanical engineering, robotics and automation, aerospace and the regional Mittelstand.
 
 ## German-Language Resources
 

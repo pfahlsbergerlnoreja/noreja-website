@@ -26,14 +26,14 @@ export const hub: CompetenceHubContent = {
       title: 'Warum Süddeutschland?',
       paragraphs: [
         'Baden-Württemberg und Bayern sind das industrielle Herz des deutschen Mittelstands: Maschinen- und Anlagenbau, Fahrzeugbau und Zulieferer, Elektrotechnik, Medizintechnik, Versicherungen und Software – oft familiengeführt, oft Weltmarktführer in ihrer Nische. Genau diese Unternehmen haben Prozesse, die über Jahrzehnte gewachsen sind und über viele Systeme laufen.',
-        'Wir sind hier zu Hause: Unser Firmensitz in Hohenweiler am Bodensee liegt direkt an der Grenze zu Bayern und Baden-Württemberg, ein Teil unseres Teams arbeitet in Freiburg, und in Augsburg setzen wir Projekte mit unserem Partner Miragon um. So können wir Workshops persönlich bei dir machen – und die Analyse dazwischen remote, damit der Aufwand für deine Teams klein bleibt.',
+        'Wir sind hier zu Hause: Unser Firmensitz in Hohenweiler am Bodensee liegt direkt an der Grenze zu Bayern und Baden-Württemberg, ein Teil unseres Teams arbeitet in Freiburg, und in München und Augsburg betreuen wir Kunden gemeinsam mit unseren Partnern KBC Consultants und Miragon. So können wir Workshops persönlich bei dir machen – und die Analyse dazwischen remote, damit der Aufwand für deine Teams klein bleibt.',
       ],
     },
     en: {
       title: 'Why southern Germany?',
       paragraphs: [
         'Baden-Württemberg and Bavaria are the industrial heart of Germany’s mid-sized companies: machinery and plant engineering, vehicle manufacturing and suppliers, electrical engineering, medical technology, insurance and software – often family-run, often world market leaders in their niche. These are exactly the companies whose processes have grown over decades and run across many systems.',
-        'This is home ground for us: our registered office in Hohenweiler on Lake Constance sits right on the borders of Bavaria and Baden-Württemberg, part of our team works in Freiburg, and in Augsburg we deliver projects with our partner Miragon. That lets us hold workshops in person at your site – and run the analysis in between remotely, so the effort for your teams stays small.',
+        'This is home ground for us: our registered office in Hohenweiler on Lake Constance sits right on the borders of Bavaria and Baden-Württemberg, part of our team works in Freiburg, and in Munich and Augsburg we serve customers together with our partners KBC Consultants and Miragon. That lets us hold workshops in person at your site – and run the analysis in between remotely, so the effort for your teams stays small.',
       ],
     },
   },
@@ -62,8 +62,8 @@ export const hub: CompetenceHubContent = {
         en: 'What is the Process Intelligence Competence Center Southern Germany?',
       },
       answer: {
-        de: 'Unter diesem Namen bündelt Noreja Beratung, Workshops und Proof-of-Value-Projekte für Unternehmen in Baden-Württemberg und Bayern. Ansprechpartner sind vor Ort in Freiburg, Stuttgart, Karlsruhe, Mannheim, München und Augsburg im Einsatz – in Augsburg gemeinsam mit unserem Partner Miragon.',
-        en: 'Under this name, Noreja bundles consulting, workshops and proof-of-value projects for companies in Baden-Württemberg and Bavaria. Our people work on site in Freiburg, Stuttgart, Karlsruhe, Mannheim, Munich and Augsburg – in Augsburg together with our partner Miragon.',
+        de: 'Unter diesem Namen bündelt Noreja Beratung, Workshops und Proof-of-Value-Projekte für Unternehmen in Baden-Württemberg und Bayern. Ansprechpartner sind vor Ort in Freiburg, Stuttgart, Karlsruhe, Mannheim, München und Augsburg im Einsatz – in München gemeinsam mit unserem Partner KBC Consultants, in Augsburg mit Miragon.',
+        en: 'Under this name, Noreja bundles consulting, workshops and proof-of-value projects for companies in Baden-Württemberg and Bavaria. Our people work on site in Freiburg, Stuttgart, Karlsruhe, Mannheim, Munich and Augsburg – in Munich together with our partner KBC Consultants, in Augsburg with Miragon.',
       },
     },
     {

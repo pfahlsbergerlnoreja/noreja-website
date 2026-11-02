@@ -82,6 +82,13 @@ export const augsburg: CompetenceCityContent = {
       },
     },
   ],
+  localPartner: {
+    id: 'miragon',
+    text: {
+      de: 'Miragon sitzt in Augsburg und ist unser Technologie- und Implementierungspartner für die Region. Gemeinsam gehen wir auf Unternehmen in Augsburg und Bayerisch-Schwaben zu und betreuen unsere Kunden hier zusammen: Noreja bringt die Process-Intelligence-Plattform und die kausale Analyse, Miragon die Erfahrung in Prozessmanagement und Automatisierung – und ist für dich direkt vor Ort.',
+      en: 'Miragon is based in Augsburg and is our technology and implementation partner for the region. Together we approach companies in Augsburg and Bavarian Swabia and serve our customers here jointly: Noreja brings the process intelligence platform and the causal analysis, Miragon the experience in process management and automation – and is right there on site for you.',
+    },
+  },
   faq: [
     {
       question: {
@@ -89,8 +96,8 @@ export const augsburg: CompetenceCityContent = {
         en: 'Who does Noreja work with in Augsburg?',
       },
       answer: {
-        de: 'Mit Miragon, einer Boutique-Beratung für Prozessmanagement, Process Mining und Automatisierung aus Augsburg. Miragon ist Technologie- und Implementierungspartner von Noreja und begleitet Projekte in der Region vor Ort.',
-        en: 'With Miragon, a boutique consultancy for process management, process mining and automation from Augsburg. Miragon is Noreja’s technology and implementation partner and supports projects in the region on site.',
+        de: 'Mit Miragon, einer Boutique-Beratung für Prozessmanagement, Process Mining und Automatisierung aus Augsburg. Miragon ist Technologie- und Implementierungspartner von Noreja; gemeinsam gehen wir auf Unternehmen in der Region zu und betreuen unsere Kunden hier zusammen vor Ort.',
+        en: 'With Miragon, a boutique consultancy for process management, process mining and automation from Augsburg. Miragon is Noreja’s technology and implementation partner; together we approach companies in the region and serve our customers here jointly on site.',
       },
     },
     {

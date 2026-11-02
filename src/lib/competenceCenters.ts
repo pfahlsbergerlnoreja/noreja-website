@@ -55,7 +55,12 @@ export interface CompetenceCityContent extends CompetencePageContent {
   surroundings: Record<Language, string[]>;
   /** End-to-end processes that matter most there, and why. */
   processes: Array<{ id: CompetenceProcessId; text: Localized }>;
+  /** Partner from the partner page with whom we approach and serve customers there. */
+  localPartner?: { id: CompetencePartnerId; text: Localized };
 }
+
+/** Partners with a logo block on a city page; logos and links live in the page component. */
+export type CompetencePartnerId = 'miragon' | 'kbc';
 
 export interface CompetenceStateContent extends CompetencePageContent {
   id: CompetenceStateId;
