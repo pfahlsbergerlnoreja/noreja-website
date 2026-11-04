@@ -7,6 +7,7 @@ import { getBattleCardById, getBattleCardVsName, getBattleCardVsTitle } from './
 import { getTopTenList } from './topTenLists';
 import { getJobById } from './careers';
 import { getEndToEndProcessById } from './endToEndProcesses';
+import { getProcessProfileById } from './processProfiles';
 import { getAgentBySlug } from './agents';
 import { findCompetenceCityBySlugs, findCompetenceStateBySlug } from './competenceCenterIndex';
 import { competenceCityContent, competenceHub, competenceStateContent } from './competenceCenters';
@@ -173,8 +174,8 @@ const extraDescriptions: Record<string, Record<Language, string>> = {
     de: 'Stell Fragen zu deinen Prozessen in Klartext. Minerva liest den kausalen Prozessgraphen, bezieht euer Unternehmenswissen ein und liefert Antworten, Ursachen und fertige Dateien – mit lokalen oder Cloud-Modellen.',
   },
   processes: {
-    en: 'End-to-end processes analyzed with causal process mining – using order-to-cash, purchase-to-pay, plan-to-produce, lead-to-activation and premium-to-tax as examples: phases, findings, causes and measures.',
-    de: 'End-to-End-Prozesse analysiert mit Causal Process Mining – am Beispiel von Order-to-Cash, Purchase-to-Pay, Plan-to-Produce, Lead-to-Activation und Premium-to-Tax: Phasen, Findings, Ursachen und Maßnahmen.',
+    en: 'End-to-end processes analyzed with causal process mining – five demo cases from order-to-cash to premium-to-tax, plus profiles of record-to-report, hire-to-retire and eight more processes.',
+    de: 'End-to-End-Prozesse analysiert mit Causal Process Mining – fünf Demo-Cases von Order-to-Cash bis Premium-to-Tax, dazu Profile für Record-to-Report, Hire-to-Retire und acht weitere Prozesse.',
   },
   agentLibrary: {
     en: 'Specialized AI agents for process analysis in Noreja Minerva: structural deviations, cycle times, waiting times, working capital, work in progress, compliance, rework, root causes and more.',
@@ -280,7 +281,7 @@ export function getPageMeta(pathname: string, language: Language): PageMeta {
     }
   } else if (routeKey === 'endToEndProcess') {
     const match = path.match(/^\/(?:de|en)\/(?:prozesse|processes)\/(.+)$/);
-    const process = match ? getEndToEndProcessById(match[1]) : undefined;
+    const process = match ? getEndToEndProcessById(match[1]) ?? getProcessProfileById(match[1]) : undefined;
     if (process) {
       title = process.content[language].metaTitle;
       description = process.content[language].metaDescription;

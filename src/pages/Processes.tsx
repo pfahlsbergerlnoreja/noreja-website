@@ -8,6 +8,7 @@ import { BreadcrumbSchema, StructuredData } from "@/components/StructuredData";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { SITE_URL, siteConfig } from "@/lib/config";
 import { endToEndProcesses, type EndToEndProcess } from "@/lib/endToEndProcesses";
+import { processProfiles } from "@/lib/processProfiles";
 import { getRoutePath } from "@/lib/routes";
 
 /**
@@ -45,6 +46,10 @@ const copy = {
     facts: "Aus der Analyse",
     open: "Prozess ansehen",
     workInProgress: "In Arbeit",
+    profilesEyebrow: "Prozessprofile",
+    profilesHeading: "Weitere End-to-End-Prozesse",
+    profilesLead:
+      "Ohne eigenen Demo-Case, aber genauso analysierbar: Für diese verbreiteten End-to-End-Prozesse beschreiben wir Ablauf, Geschäftsobjekte, Kennzahlen und typische Probleme – und welche Fragen Noreja darauf beantwortet.",
     demoNote:
       "Die Kennzahlen stammen aus synthetischen Demonstrationsdatensätzen. Sie veranschaulichen Analysewege und sind keine Produktivkennzahlen eines Kunden.",
     agentsEyebrow: "Minerva Agent Library",
@@ -72,6 +77,10 @@ const copy = {
     facts: "From the analysis",
     open: "View process",
     workInProgress: "Work in progress",
+    profilesEyebrow: "Process profiles",
+    profilesHeading: "More end-to-end processes",
+    profilesLead:
+      "No demo case of their own, but just as analysable: for these widely used end-to-end processes we describe the flow, business objects, KPIs and typical problems – and which questions Noreja answers on them.",
     demoNote:
       "The figures come from synthetic demonstration datasets. They illustrate analysis paths and are not production figures of any customer.",
     agentsEyebrow: "Minerva Agent Library",
@@ -122,9 +131,26 @@ const Processes = () => {
     })),
   };
 
+  const profileListSchema = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "@id": `${pageUrl}#process-profiles`,
+    name: text.profilesHeading,
+    inLanguage: language,
+    numberOfItems: processProfiles.length,
+    itemListElement: processProfiles.map((profile, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: profile.name,
+      description: profile.content[language].definition,
+      url: `${SITE_URL}${getRoutePath("endToEndProcess", language, { processSlug: profile.id })}`,
+    })),
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <StructuredData schema={itemListSchema} id="processes" />
+      <StructuredData schema={profileListSchema} id="process-profiles" />
       <BreadcrumbSchema
         items={[
           { name: text.home, url: `${SITE_URL}${getRoutePath("home", language)}` },
@@ -324,6 +350,46 @@ const Processes = () => {
             );
           })}
           <p className="text-center text-xs leading-relaxed text-muted-foreground">{text.demoNote}</p>
+        </div>
+      </section>
+
+      {/* ---------------- Process profiles (no demo case) ---------------- */}
+      <section id="weitere-prozesse" className="scroll-mt-24 px-4 pb-16 lg:px-8 lg:pb-24">
+        <div className="mx-auto w-full max-w-6xl">
+          <div className="mx-auto mb-10 max-w-3xl text-center">
+            <Eyebrow>{text.profilesEyebrow}</Eyebrow>
+            <h2 className="mt-2 text-3xl font-extrabold leading-tight tracking-tight text-foreground md:text-4xl">
+              {text.profilesHeading}
+            </h2>
+            <p className="mt-4 text-base leading-relaxed text-muted-foreground md:text-lg">{text.profilesLead}</p>
+          </div>
+          <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+            {processProfiles.map((profile) => {
+              const content = profile.content[language];
+              return (
+                <li key={profile.id}>
+                  <Link
+                    to={getRoutePath("endToEndProcess", language, { processSlug: profile.id })}
+                    className="group flex h-full flex-col rounded-2xl border bg-card/60 p-5 transition-colors hover:border-noreja-main/50"
+                    style={{ borderColor: "hsl(var(--border))" }}
+                  >
+                    <span className="mb-2 font-mono text-[0.65rem] uppercase tracking-[0.14em] text-muted-foreground">
+                      {content.area}
+                    </span>
+                    <span className="text-lg font-bold leading-snug text-foreground">{profile.name}</span>
+                    <span className="mb-3 font-mono text-xs text-noreja-main">{profile.abbreviation}</span>
+                    <span className="text-sm leading-relaxed text-muted-foreground">{content.teaser}</span>
+                    <span className="mt-auto pt-4">
+                      <ArrowRight
+                        className="h-4 w-4 text-noreja-main transition-transform group-hover:translate-x-1"
+                        aria-hidden="true"
+                      />
+                    </span>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
         </div>
       </section>
 

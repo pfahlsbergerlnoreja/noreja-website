@@ -24,8 +24,10 @@ import {
   type ProcessImage,
   type ProcessTable,
 } from "@/lib/endToEndProcesses";
+import { getProcessProfileById } from "@/lib/processProfiles";
 import { getRoutePath } from "@/lib/routes";
 import NotFound from "./NotFound";
+import ProcessProfile from "./ProcessProfile";
 
 /**
  * Landing page for one end-to-end process (Lead-to-Activation, …).
@@ -224,7 +226,11 @@ const EndToEndProcess = () => {
     if (!window.location.hash) window.scrollTo(0, 0);
   }, [processSlug]);
 
-  if (!process) return <NotFound />;
+  if (!process) {
+    // Slugs without a demo case may be a process profile (Record-to-Report, …).
+    const profile = processSlug ? getProcessProfileById(processSlug) : undefined;
+    return profile ? <ProcessProfile profile={profile} /> : <NotFound />;
+  }
 
   const text = process.content[language];
   const byFinding = Boolean(text.measures?.items.some((item) => item.finding));

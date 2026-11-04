@@ -324,7 +324,22 @@ Plan-to-Produce is the end-to-end process from production planning to the finish
 
 The page measures at the level of the individual operation and combines three data sources: planned start and end from the routing, actual start and end from shop floor confirmations, and stock values of materials at the work centers. Five findings, all with example values from a synthetic scenario rather than customer production data: 41% of operations start more than one working day late, and the analysis separates start delay (cause before the work center: predecessors, material, capacity) from duration deviation (cause at the work center: standard times, set-up, rework); 78% of the lead time in parts manufacturing and sub-assembly is idle time between work centers, with the longest transition from welding to painting (median 4.6 working days) caused by batching on a shared paint line; about EUR 3.1 million is tied up in work in progress on average, 43% of it in finished sub-assemblies in the buffer area before final assembly, costing around EUR 250,000 a year at an imputed 8% interest rate; in 46% of customer projects final assembly waits for the control cabinet as the last sub-assembly while the others have been finished for a median 8 working days, with late engineering changes as a testable hypothesis; and manufacturing costs per machine are about 7% above preliminary costing because standard times at three work centers are systematically too tight. Measures include managing start delay and duration deviation separately, a fixed paint-run cycle, stock limits per buffer area, backward scheduling of sub-assemblies from the final assembly start and feeding actual times back into routings and costing. The page is marked as work in progress: screenshots from the analysis in Noreja will follow, and there is no Help Center case description yet.
 
-### 13.10 Talk Series: Four Experts, Five Opinions (with Miragon)
+### 13.10 End-to-End Process Profiles
+
+Besides the five demo cases, Noreja publishes process profiles for ten widely used end-to-end processes under the same URL pattern. A profile describes the process in general – scope, phases, business objects, typical source systems, KPIs, typical problems and the questions Noreja answers – and deliberately contains no figures; for worked-through analyses it links to the demo cases that border on it.
+
+- **Record-to-Report (R2R)** – https://noreja.com/en/processes/record-to-report (German: https://noreja.com/de/prozesse/record-to-report). Record-to-report (R2R) is the end-to-end process from recording a business transaction in the general ledger to the finished financial report. It covers master data and the chart of accounts, ongoing posting, reconciliations between general ledger and subledgers, the period-end and year-end close, and consolidation and reporting. Because almost every other process – order-to-cash, purchase-to-pay, hire-to-retire – ends up in the general ledger, R2R decides how quickly and reliably a company knows its numbers. Typical KPIs: days to close, share of manual journals, post-close adjustments, on-time close tasks and open intercompany differences.
+- **Hire-to-Retire (H2R)** – https://noreja.com/en/processes/hire-to-retire (German: https://noreja.com/de/prozesse/hire-to-retire). Hire-to-retire (H2R) is the end-to-end process of the employee lifecycle, from planning a position to an employee leaving or retiring. It covers workforce planning, recruiting, onboarding, development and performance management, time management and payroll, transfers and contract changes, and offboarding. Because almost every step involves several functions – the hiring department, HR, IT and payroll – H2R decides how quickly new employees can actually work and how cleanly changes and departures are carried out. Typical KPIs: time to hire, time to productivity, day-one readiness, payroll corrections, early attrition and access revocation on leaving.
+- **Quote-to-Cash (Q2C)** – https://noreja.com/en/processes/quote-to-cash (German: https://noreja.com/de/prozesse/quote-to-cash). Quote-to-cash (Q2C) is the end-to-end process from a quote to a customer through to incoming payment and the renewal of the contract. It covers product configuration and pricing (CPQ), discount and pricing approvals, contract creation, the order, fulfilment and provisioning, billing including recurring subscriptions, revenue recognition, collections and renewal. Q2C thus connects sales, legal, operations and finance – and decides whether a won deal turns into revenue completely and on time. Typical KPIs: quote cycle time, quote-to-close time, discount deviations, time to first invoice, invoice corrections and renewal rate.
+- **Source-to-Contract (S2C)** – https://noreja.com/en/processes/source-to-contract (German: https://noreja.com/de/prozesse/source-to-contract). Source-to-contract (S2C) is the end-to-end process of strategic sourcing, from analysing demand and spend to a signed contract that operational purchasing can order against. It covers spend analysis and demand aggregation, the sourcing strategy, supplier search and qualification, tenders (RFI, RFP, RFQ), bid evaluation and negotiation, the award, and the creation, approval, signature and maintenance of the contract. S2C determines with which suppliers and on which terms purchase-to-pay later operates. Typical KPIs: sourcing cycle time, contract cycle time, spend under management, competitive award rate and expiring contracts without follow-up.
+- **Acquire-to-Retire (A2R)** – https://noreja.com/en/processes/acquire-to-retire (German: https://noreja.com/de/prozesse/acquire-to-retire). Acquire-to-retire (A2R) is the end-to-end process covering the full lifecycle of a fixed asset – from the capital expenditure request through acquisition, capitalisation and operation to sale or scrapping. It links investment planning, procurement, asset accounting and maintenance: a machine is requested and approved, collected as an asset under construction, capitalised, maintained and depreciated for years and finally retired. Because each of these stages sits in a different function, A2R decides whether the asset register, depreciation and capex budget actually fit together. Typical KPIs: capex request cycle time, time to capitalisation, age of open assets under construction, budget adherence, unplanned maintenance and disposals without approval.
+- **Idea-to-Market (I2M)** – https://noreja.com/en/processes/idea-to-market (German: https://noreja.com/de/prozesse/idea-to-market). Idea-to-market (I2M) is the end-to-end process from capturing a product idea to launching the finished product on the market. It covers idea evaluation and stage gates, concept and business case, design and engineering including engineering changes, validation, testing and certification, industrialisation and the launch itself. Because engineering, quality, procurement, production and sales work on one product for months or years, I2M determines how quickly and at what effort new products reach the market. Typical KPIs: time to market, cycle time per gate, changes after design release, change request cycle time, test repetitions and milestone adherence.
+- **Issue-to-Resolution (I2R)** – https://noreja.com/en/processes/issue-to-resolution (German: https://noreja.com/de/prozesse/issue-to-resolution). Issue-to-resolution (I2R) is the end-to-end process from receiving a customer issue to its final resolution. It covers capture via phone, email, chat or portal, classification and prioritisation, assignment to a team, handling with escalations and hand-offs between support levels, the solution, closure and customer feedback. It includes service requests as well as complaints and warranty claims. Because customers judge service by the outcome and by how long they wait, I2R has a major influence on satisfaction and retention. Typical KPIs: time to resolution, first contact resolution, sLA adherence, reopen rate, hand-offs per ticket and customer satisfaction.
+- **Forecast-to-Plan (F2P)** – https://noreja.com/en/processes/forecast-to-plan (German: https://noreja.com/de/prozesse/forecast-to-plan). Forecast-to-plan (F2P) is the end-to-end process from the demand forecast to the released, agreed business plan. It covers preparing sales and market data, the statistical forecast, aligning with sales in the demand review, checking capacity and material in the supply review, the consensus round in the S&OP or IBP meeting and handing the plan over to materials planning, production and purchasing. The result is a plan that sales, supply chain and finance have committed to – followed by a regular check of how well it matched reality. Typical KPIs: forecast accuracy, forecast bias, forecast value added, on-time planning cycle and plan stability.
+- **Project-to-Profit (PtP)** – https://noreja.com/en/processes/project-to-profit (German: https://noreja.com/de/prozesse/project-to-profit). Project-to-profit (PtP) is the end-to-end process in project business from the project order to the completed final costing. It covers project initiation from an order or opportunity, setting up the work breakdown structure (WBS) and budget, resource planning and staffing, execution with time, expense and material recording, billing by milestone or progress, managing change requests and claims, and project closure. Because costs, work performed and revenue can drift apart over months, PtP decides whether a project ultimately delivers the margin it was calculated with. Typical KPIs: project margin, budget variance, utilisation, unbilled work, on-time milestones and change order rate.
+- **Request-to-Fulfill (R2F)** – https://noreja.com/en/processes/request-to-fulfill (German: https://noreja.com/de/prozesse/request-to-fulfill). Request-to-fulfill (R2F) is the end-to-end process from a request for an IT service to its confirmed delivery. It covers choosing an offering in the service catalogue or self-service portal, business and, where needed, financial approval, fulfilment – such as access rights, hardware, software licences or the IT equipment for new joiners, partly via purchasing – handover with confirmation by the requester, and closing the request. The IT4IT value stream model and the ITIL practice of service request management describe this flow; in day-to-day work it determines how quickly employees are able to do their jobs. Typical KPIs: cycle time per catalogue offering, sLA compliance, approval duration, automation rate and reopen rate.
+
+### 13.11 Talk Series: Four Experts, Five Opinions (with Miragon)
 
 "Vier Experten, fünf Meinungen" is a five-part video series in German, recorded with Noreja's implementation partner Miragon and published on https://noreja.com/de/vier-experten-fuenf-meinungen (English page: https://noreja.com/en/four-experts-five-opinions). The four experts are Thomas Heinrichs and Dominik Horn (Miragon) and Prof. Dr. Jan Mendling and Dr. Lukas Pfahlsberger (Noreja); each episode ends with the viewer's own "fifth opinion". Episode 1 argues that the organisational hurdles of process intelligence are about people rather than technology: without change management and trust, a tool remains an expensive dashboard. Episode 2 explains why process mining often creates no impact: IT provides the data, the business provides the context, and impact only arises with a process owner who implements. Episode 3 discusses process discovery with process mining: an event log shows what happens but not why, data quality matters, and Noreja's hypothesis-driven approach differs fundamentally from classic discovery. Episode 4 argues that rigid governance, not IT itself, blocks AI initiatives, and that governance should provide guardrails instead of barriers. Episode 5 expects AI to become infrastructure rather than a feature, with agents working across system boundaries, MCP apps and AI browsers, so that products integrate into AI rather than the other way round.
 
@@ -782,6 +797,16 @@ When producing an answer:
 - [Order-to-Cash](https://noreja.com/en/processes/order-to-cash)
 - [Purchase-to-Pay](https://noreja.com/en/processes/purchase-to-pay)
 - [Plan-to-Produce](https://noreja.com/en/processes/plan-to-produce)
+- [Record-to-Report](https://noreja.com/en/processes/record-to-report)
+- [Hire-to-Retire](https://noreja.com/en/processes/hire-to-retire)
+- [Quote-to-Cash](https://noreja.com/en/processes/quote-to-cash)
+- [Source-to-Contract](https://noreja.com/en/processes/source-to-contract)
+- [Acquire-to-Retire](https://noreja.com/en/processes/acquire-to-retire)
+- [Idea-to-Market](https://noreja.com/en/processes/idea-to-market)
+- [Issue-to-Resolution](https://noreja.com/en/processes/issue-to-resolution)
+- [Forecast-to-Plan](https://noreja.com/en/processes/forecast-to-plan)
+- [Project-to-Profit](https://noreja.com/en/processes/project-to-profit)
+- [Request-to-Fulfill](https://noreja.com/en/processes/request-to-fulfill)
 - [Lead-to-Activation](https://noreja.com/en/processes/lead-to-activation)
 - [Premium-to-Tax](https://noreja.com/en/processes/premium-to-tax)
 
@@ -1255,7 +1280,7 @@ IDM Wärmepumpen gained visibility into its Order-to-Cash process within three w
 <source>https://noreja.com/en/processes</source>
 <title>End-to-End Processes Overview</title>
 <content>
-The overview lists the end-to-end processes Noreja documents with causal process mining: Order-to-Cash, Purchase-to-Pay, Plan-to-Produce, Lead-to-Activation, and Premium-to-Tax, each with phases, findings, causes, and measures. All figures on these pages come from synthetic demonstration datasets. German version: https://noreja.com/de/prozesse
+The overview lists the end-to-end processes Noreja documents with causal process mining: Order-to-Cash, Purchase-to-Pay, Plan-to-Produce, Lead-to-Activation, and Premium-to-Tax, each with phases, findings, causes, and measures. All figures on these pages come from synthetic demonstration datasets. Below the demo cases, a "More end-to-end processes" section links ten process profiles without figures: Record-to-Report, Hire-to-Retire, Quote-to-Cash, Source-to-Contract, Acquire-to-Retire, Idea-to-Market, Issue-to-Resolution, Forecast-to-Plan, Project-to-Profit and Request-to-Fulfill. German version: https://noreja.com/de/prozesse
 </content>
 </document>
 
@@ -1299,6 +1324,85 @@ The Premium-to-Tax page follows insurance premium tax from the premium transacti
 </content>
 </document>
 
+<document>
+<source>https://noreja.com/en/processes/record-to-report</source>
+<title>Process Profile: Record-to-Report</title>
+<content>
+The Record-to-Report (R2R) profile describes the process in general rather than as a demo case. Start: A business transaction is recorded in the general ledger or a subledger. End: The audited close is reported and the period is locked. It covers the phases master data & posting logic, ongoing posting, reconciliation, period-end close and consolidation & reporting, the business objects journal entry, manual journal, reconciliation, close task, intercompany balance and period and typical KPIs (days to close, share of manual journals, post-close adjustments, on-time close tasks and open intercompany differences). The page contains no figures; for worked-through analyses it links to the demo cases. German version: https://noreja.com/de/prozesse/record-to-report
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/processes/hire-to-retire</source>
+<title>Process Profile: Hire-to-Retire</title>
+<content>
+The Hire-to-Retire (H2R) profile describes the process in general rather than as a demo case. Start: A position is planned or a staffing need is raised. End: The departure is fully processed: final payroll run, access revoked, records archived. It covers the phases workforce planning & demand, recruiting & hiring, onboarding, development, time & payroll and offboarding & leaving, the business objects position, application, employee, personnel action, access & equipment and payroll run and typical KPIs (time to hire, time to productivity, day-one readiness, payroll corrections, early attrition and access revocation on leaving). The page contains no figures; for worked-through analyses it links to the demo cases. German version: https://noreja.com/de/prozesse/hire-to-retire
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/processes/quote-to-cash</source>
+<title>Process Profile: Quote-to-Cash</title>
+<content>
+The Quote-to-Cash (Q2C) profile describes the process in general rather than as a demo case. Start: A quote is configured for a sales opportunity. End: Payment has been received and the contract has been renewed, amended or terminated. It covers the phases quote & configuration, contract & order, fulfilment & provisioning, billing & revenue recognition and renewal & amendment, the business objects quote, pricing approval, contract, order, subscription and invoice & payment and typical KPIs (quote cycle time, quote-to-close time, discount deviations, time to first invoice, invoice corrections and renewal rate). The page contains no figures; for worked-through analyses it links to the demo cases. German version: https://noreja.com/de/prozesse/quote-to-cash
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/processes/source-to-contract</source>
+<title>Process Profile: Source-to-Contract</title>
+<content>
+The Source-to-Contract (S2C) profile describes the process in general rather than as a demo case. Start: A demand or an expiring agreement calls for a sourcing decision. End: The contract is signed and available in the purchasing system as a source of supply for orders. It covers the phases demand & spend analysis, strategy & supplier selection, tender & negotiation, contract signature and contract deployment & maintenance, the business objects sourcing project, supplier, rfx event, bid, contract and outline agreement & catalogue and typical KPIs (sourcing cycle time, contract cycle time, spend under management, competitive award rate and expiring contracts without follow-up). The page contains no figures; for worked-through analyses it links to the demo cases. German version: https://noreja.com/de/prozesse/source-to-contract
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/processes/acquire-to-retire</source>
+<title>Process Profile: Acquire-to-Retire</title>
+<content>
+The Acquire-to-Retire (A2R) profile describes the process in general rather than as a demo case. Start: A need for a capital investment is requested. End: The asset has been disposed of and removed from the asset register. It covers the phases investment planning & approval, acquisition & capitalisation, operation & maintenance, depreciation, revaluation & transfer and retirement, the business objects capex request, purchase order, asset under construction, asset master record, maintenance order and asset transaction and typical KPIs (capex request cycle time, time to capitalisation, age of open assets under construction, budget adherence, unplanned maintenance and disposals without approval). The page contains no figures; for worked-through analyses it links to the demo cases. German version: https://noreja.com/de/prozesse/acquire-to-retire
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/processes/idea-to-market</source>
+<title>Process Profile: Idea-to-Market</title>
+<content>
+The Idea-to-Market (I2M) profile describes the process in general rather than as a demo case. Start: A product idea is captured. End: The product is released, industrialised and launched on the market. It covers the phases idea capture & evaluation, concept & business case, development & engineering, validation & certification and industrialisation & market launch, the business objects idea, development project, requirement, part & bill of materials, engineering change request and test & finding and typical KPIs (time to market, cycle time per gate, changes after design release, change request cycle time, test repetitions and milestone adherence). The page contains no figures; for worked-through analyses it links to the demo cases. German version: https://noreja.com/de/prozesse/idea-to-market
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/processes/issue-to-resolution</source>
+<title>Process Profile: Issue-to-Resolution</title>
+<content>
+The Issue-to-Resolution (I2R) profile describes the process in general rather than as a demo case. Start: A customer raises an issue through a channel and a ticket is created. End: The issue is resolved, the ticket closed and the feedback recorded. It covers the phases capture, classification & assignment, handling & escalation, resolution & closure and feedback & review, the business objects ticket / case, customer & contract, interaction, sla, complaint & warranty claim and credit note / replacement and typical KPIs (time to resolution, first contact resolution, sLA adherence, reopen rate, hand-offs per ticket and customer satisfaction). The page contains no figures; for worked-through analyses it links to the demo cases. German version: https://noreja.com/de/prozesse/issue-to-resolution
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/processes/forecast-to-plan</source>
+<title>Process Profile: Forecast-to-Plan</title>
+<content>
+The Forecast-to-Plan (F2P) profile describes the process in general rather than as a demo case. Start: A new planning cycle starts and sales, inventory and order data are brought together. End: The agreed plan is released, handed over to the executing processes and checked against actuals. It covers the phases data preparation & statistical forecast, demand review, supply review, consensus & S&OP meeting and plan release & plan vs. actual, the business objects forecast, forecast adjustment, plan version, capacity check, s&op decision and planning cycle and typical KPIs (forecast accuracy, forecast bias, forecast value added, on-time planning cycle and plan stability). The page contains no figures; for worked-through analyses it links to the demo cases. German version: https://noreja.com/de/prozesse/forecast-to-plan
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/processes/project-to-profit</source>
+<title>Process Profile: Project-to-Profit</title>
+<content>
+The Project-to-Profit (PtP) profile describes the process in general rather than as a demo case. Start: A customer order or a won opportunity triggers a project. End: The project is finally invoiced, its final costing is complete and it is technically closed. It covers the phases project initiation & structure, resource planning & staffing, execution & recording, changes & billing and project closure & final costing, the business objects project, wbs element, resource assignment, time and cost record, change request / claim and milestone & project invoice and typical KPIs (project margin, budget variance, utilisation, unbilled work, on-time milestones and change order rate). The page contains no figures; for worked-through analyses it links to the demo cases. German version: https://noreja.com/de/prozesse/project-to-profit
+</content>
+</document>
+
+<document>
+<source>https://noreja.com/en/processes/request-to-fulfill</source>
+<title>Process Profile: Request-to-Fulfill</title>
+<content>
+The Request-to-Fulfill (R2F) profile describes the process in general rather than as a demo case. Start: An employee or manager requests a service from the service catalogue. End: The service is delivered, confirmed by the requester and the request is closed. It covers the phases request via service catalogue, approval, fulfilment and handover & closure, the business objects service request, catalogue offering, approval, fulfilment task, purchase order and configuration item and typical KPIs (cycle time per catalogue offering, sLA compliance, approval duration, automation rate and reopen rate). The page contains no figures; for worked-through analyses it links to the demo cases. German version: https://noreja.com/de/prozesse/request-to-fulfill
+</content>
+</document>
 <document>
 <source>https://noreja.com/en/use-cases/supply-chain</source>
 <title>Supply Chain Use Cases</title>

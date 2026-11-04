@@ -1,5 +1,5 @@
 import { SitemapStream, streamToPromise } from 'sitemap';
-import { createWriteStream, readFileSync } from 'fs';
+import { createWriteStream, readdirSync, readFileSync } from 'fs';
 import { resolve } from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
@@ -130,6 +130,18 @@ function extractEndToEndProcessIds(): string[] {
   return ids;
 }
 
+/** Process profiles: one file per profile in src/lib/processProfiles/, id at two-space indentation. */
+function extractProcessProfileIds(): string[] {
+  const dir = resolve(__dirname, '../src/lib/processProfiles');
+  return readdirSync(dir)
+    .filter((file) => file.endsWith('.ts'))
+    .sort()
+    .flatMap((file) => {
+      const match = readFileSync(resolve(dir, file), 'utf-8').match(/^ {2}id: '([^']+)',/m);
+      return match ? [match[1]] : [];
+    });
+}
+
 interface SitemapEntry {
   url: string;
   changefreq: 'always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly' | 'never';
@@ -222,6 +234,12 @@ function generateSitemap() {
   endToEndProcessIds.forEach((processId) => {
     addEntry(`/de/prozesse/${processId}`, 0.8, 'monthly');
     addEntry(`/en/processes/${processId}`, 0.8, 'monthly');
+  });
+
+  // Process profiles share the URL space of the demo cases
+  extractProcessProfileIds().forEach((profileId) => {
+    addEntry(`/de/prozesse/${profileId}`, 0.7, 'monthly');
+    addEntry(`/en/processes/${profileId}`, 0.7, 'monthly');
   });
 
   // Career / job detail pages
