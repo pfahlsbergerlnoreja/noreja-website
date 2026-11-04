@@ -18,10 +18,16 @@ import { getRoutePath } from "@/lib/routes";
  * touching this page. The order below only puts the best-known processes first.
  */
 
-const ORDER = ["order-to-cash", "purchase-to-pay", "lead-to-activation", "premium-to-tax"];
+const ORDER = ["order-to-cash", "purchase-to-pay", "plan-to-produce", "lead-to-activation", "premium-to-tax"];
 
 /** One accent hue per card, all from the brand palette. */
-const ACCENTS = ["var(--noreja-main)", "var(--noreja-tertiary)", "var(--noreja-secondary)", "var(--noreja-main)"];
+const ACCENTS = [
+  "var(--noreja-main)",
+  "var(--noreja-tertiary)",
+  "var(--noreja-secondary)",
+  "var(--noreja-main)",
+  "var(--noreja-tertiary)",
+];
 
 const copy = {
   de: {
@@ -31,13 +37,14 @@ const copy = {
     title: "End-to-End-Prozesse",
     titleSub: "vom ersten Schritt bis zum letzten Euro",
     lead:
-      "Vier Beispiele, durchgängig analysiert: Wie Geschäftsprozesse wirklich ablaufen, wo sie Zeit und Geld verlieren und welche Ursachen dahinterstehen – von der Auftragsabwicklung über den Einkauf bis zur Versicherungsteuer. Dieselbe Analyse funktioniert für jeden weiteren Prozess, der in deinen Systemen Spuren hinterlässt.",
+      "Fünf Beispiele, durchgängig analysiert: Wie Geschäftsprozesse wirklich ablaufen, wo sie Zeit und Geld verlieren und welche Ursachen dahinterstehen – von der Auftragsabwicklung über Einkauf und Fertigung bis zur Versicherungsteuer. Dieselbe Analyse funktioniert für jeden weiteren Prozess, der in deinen Systemen Spuren hinterlässt.",
     whatHeading: "Was ist ein End-to-End-Prozess?",
     what:
       "Ein End-to-End-Prozess umfasst alle Schritte vom auslösenden Ereignis bis zum Ergebnis, das für Kunden oder Unternehmen zählt – über Abteilungs- und Systemgrenzen hinweg. Order-to-Cash beginnt mit dem Kundenauftrag und endet mit dem Zahlungseingang, Purchase-to-Pay reicht vom Bedarf bis zur bezahlten Rechnung. Erst die durchgängige Sicht zeigt, wo eine Verzögerung entsteht und wo sie sich auswirkt.",
     phases: "Phasen",
     facts: "Aus der Analyse",
     open: "Prozess ansehen",
+    workInProgress: "In Arbeit",
     demoNote:
       "Die Kennzahlen stammen aus synthetischen Demonstrationsdatensätzen. Sie veranschaulichen Analysewege und sind keine Produktivkennzahlen eines Kunden.",
     agentsEyebrow: "Minerva Agent Library",
@@ -57,13 +64,14 @@ const copy = {
     title: "End-to-End Processes",
     titleSub: "from the first step to the last euro",
     lead:
-      "Four examples, analyzed end to end: how business processes really run, where they lose time and money and what causes are behind it – from order processing and procurement to insurance premium tax. The same analysis works for any other process that leaves traces in your systems.",
+      "Five examples, analyzed end to end: how business processes really run, where they lose time and money and what causes are behind it – from order processing, procurement and manufacturing to insurance premium tax. The same analysis works for any other process that leaves traces in your systems.",
     whatHeading: "What is an end-to-end process?",
     what:
       "An end-to-end process covers every step from the triggering event to the result that matters to customers or the company – across departments and systems. Order-to-cash starts with the customer order and ends with the incoming payment; purchase-to-pay runs from the requirement to the paid invoice. Only the continuous view shows where a delay arises and where it takes effect.",
     phases: "Phases",
     facts: "From the analysis",
     open: "View process",
+    workInProgress: "Work in progress",
     demoNote:
       "The figures come from synthetic demonstration datasets. They illustrate analysis paths and are not production figures of any customer.",
     agentsEyebrow: "Minerva Agent Library",
@@ -164,7 +172,7 @@ const Processes = () => {
                   "linear-gradient(90deg, transparent, hsl(var(--noreja-main) / 0.7), hsl(var(--noreja-tertiary) / 0.7), transparent)",
               }}
             />
-            <div className="relative grid grid-cols-2 gap-3 md:grid-cols-4">
+            <div className="relative grid grid-cols-2 gap-3 md:grid-cols-5">
               {processes.map((process, index) => (
                 <motion.a
                   key={process.id}
@@ -231,12 +239,22 @@ const Processes = () => {
 
                 <div className="relative grid gap-8 lg:grid-cols-[1.35fr_1fr] lg:gap-12">
                   <div className="flex flex-col gap-4">
-                    <span
-                      className="w-fit rounded-full border px-3 py-1 font-mono text-[0.7rem] uppercase tracking-[0.14em]"
-                      style={{ color: `hsl(${accent})`, borderColor: `hsl(${accent} / 0.35)` }}
-                    >
-                      {content.scenario.replace(/^End-to-End-Prozess · |^End-to-end process · /, "")}
-                    </span>
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span
+                        className="w-fit rounded-full border px-3 py-1 font-mono text-[0.7rem] uppercase tracking-[0.14em]"
+                        style={{ color: `hsl(${accent})`, borderColor: `hsl(${accent} / 0.35)` }}
+                      >
+                        {content.scenario.replace(/^End-to-End-Prozess · |^End-to-end process · /, "")}
+                      </span>
+                      {content.workInProgress && (
+                        <span
+                          className="w-fit rounded-full border border-accent/40 bg-accent/10 px-3 py-1 font-mono text-[0.7rem] uppercase tracking-[0.14em] text-accent"
+                          title={content.workInProgress}
+                        >
+                          {text.workInProgress}
+                        </span>
+                      )}
+                    </div>
                     <h2 className="text-3xl font-extrabold leading-tight tracking-tight text-foreground md:text-4xl lg:text-5xl">
                       <Link to={processPath(process)} className="transition-colors hover:text-noreja-main">
                         {process.name}

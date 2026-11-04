@@ -82,6 +82,8 @@ export interface ProcessContent {
   keywords?: string[];
   /** Sub-headline under the H1. */
   tagline: string;
+  /** Set while a page is still being completed (e.g. screenshots pending); shown in the hero and on the overview. */
+  workInProgress?: string;
   /** Optional thesis between hero and definition: the stance the page argues for. */
   intro?: { heading: string; text: string[]; quote: string };
   /** Answer-first definition of the process — the paragraph answer engines quote. */
@@ -211,8 +213,8 @@ export interface EndToEndProcess {
   id: string;
   /** Process name, used as the H1 in both languages. */
   name: string;
-  /** Full case description in the Help Center. */
-  caseUrl: string;
+  /** Full case description in the Help Center; without one, the case CTA books a demo. */
+  caseUrl?: string;
   /** ISO date of the last content change, for the Article schema. */
   dateModified: string;
   content: Record<Language, ProcessContent>;
@@ -3418,6 +3420,884 @@ export const endToEndProcesses: EndToEndProcess[] = [
         caseText:
           'Event knowledge graph, end-to-end causal perspective, all five findings with their analysis steps, the root cause analysis with Minerva and the path to a risk-based review rule – step by step in the Noreja Help Center (in German).',
         caseCta: 'Read the case in the Help Center',
+      },
+    },
+  },
+  {
+    id: 'plan-to-produce',
+    name: 'Plan-to-Produce',
+    dateModified: '2026-11-04',
+    content: {
+      de: {
+        scenario: 'End-to-End-Prozess · Fertigung im Sondermaschinenbau',
+        metaTitle: 'Plan-to-Produce: Process Mining in der Fertigung im Sondermaschinenbau | Noreja',
+        metaDescription:
+          'Plan-to-Produce vom Produktionsauftrag bis zur Auslieferung: Plan-Ist-Vergleich je Arbeitsplatz, Wartezeiten zwischen Arbeitsplätzen und gebundenes Kapital im Umlaufbestand – Process Mining im Sondermaschinenbau.',
+        keywords: [
+          'Plan-to-Produce',
+          'Process Mining Fertigung',
+          'Process Mining Produktion',
+          'Sondermaschinenbau',
+          'Plan-Ist-Vergleich Fertigung',
+          'Termintreue Arbeitsplatz',
+          'Wartezeitenanalyse',
+          'Liegezeiten Fertigung',
+          'Durchlaufzeit Fertigung',
+          'Work in Progress',
+          'gebundenes Kapital Umlaufbestand',
+        ],
+        tagline:
+          'Vom Produktionsauftrag bis zur ausgelieferten Maschine: wie Process Intelligence Soll- und Ist-Termine je Arbeitsplatz vergleicht, Wartezeiten zwischen Arbeitsplätzen findet und das dabei gebundene Kapital sichtbar macht.',
+        workInProgress:
+          'Diese Seite ist in Arbeit: Screenshots aus der Analyse in Noreja folgen in Kürze. Die Kennzahlen sind Beispielwerte eines synthetischen Szenarios.',
+        definition:
+          'Plan-to-Produce ist der End-to-End-Prozess von der Fertigungsplanung bis zum fertigen Endprodukt. Im Sondermaschinenbau umfasst er Fertigungsplanung und Kalkulation, Produktionsaufträge für Vorfertigung und Unterbaugruppen sowie Endmontage und Auslieferung. Weil jede Maschine ein Kundenprojekt mit Losgröße 1 ist, laufen viele Fertigungsaufträge parallel über gemeinsame Arbeitsplätze und müssen zur Endmontage wieder zusammenkommen. Noreja misst diesen Ablauf auf Ebene des einzelnen Arbeitsgangs: Soll- und Ist-Termine, Wartezeiten zwischen Arbeitsplätzen und das dabei gebundene Kapital.',
+        demoNote:
+          'Hinweis: Alle Kennzahlen sind Beispielwerte eines synthetischen Demonstrationsszenarios. Sie veranschaulichen Analysewege und Methoden und sind keine Produktivkennzahlen eines Kunden.',
+
+        keyFacts: [
+          {
+            value: '41 %',
+            label: 'Arbeitsgänge mit Startverzug',
+            detail: 'beginnen mehr als einen Arbeitstag nach dem Soll-Start laut Arbeitsplan',
+          },
+          {
+            value: '78 %',
+            label: 'Liegezeit in der Durchlaufzeit',
+            detail: 'von Vorfertigung und Baugruppenmontage entfallen auf Warten zwischen Arbeitsplätzen',
+          },
+          {
+            value: '≈ 3,1 Mio. €',
+            label: 'Gebundenes Kapital',
+            detail: 'durchschnittlicher Materialbestand an Arbeitsplätzen und Pufferflächen (Work in Progress)',
+          },
+          {
+            value: '46 %',
+            label: 'Endmontage wartet auf den Schaltschrank',
+            detail: 'der Kundenprojekte, in denen der Schaltschrank als letzte Unterbaugruppe fertig wird',
+          },
+        ],
+
+        phasesHeading: 'Der Prozess in drei Phasen',
+        phasesLead:
+          'Ein Kundenprojekt zerfällt nach der Planung in viele Fertigungsaufträge, die parallel über gemeinsame Arbeitsplätze laufen und sich zur Endmontage wieder treffen. Gemessen wird auf jeder Ebene: Arbeitsgang, Arbeitsplatz, Fertigungsauftrag und Kundenprojekt.',
+        phases: [
+          {
+            title: 'Fertigungsplanung & Kalkulation',
+            summary:
+              'Aus dem freigegebenen Kundenprojekt entstehen Fertigungsstückliste und Arbeitsplan. Die Vorkalkulation bewertet Material und Vorgabezeiten, die Terminierung legt für jeden Arbeitsgang Soll-Start und Soll-Ende am jeweiligen Arbeitsplatz fest. Mit der Freigabe der Produktionsaufträge wird der Plan verbindlich.',
+            steps: [
+              'Kundenprojekt freigegeben',
+              'Fertigungsstückliste erstellt',
+              'Arbeitsplan erstellt',
+              'Vorkalkulation abgeschlossen',
+              'Terminierung & Kapazitätsplanung',
+              'Produktionsauftrag freigegeben',
+            ],
+            objects: ['Kundenprojekt', 'Stückliste', 'Arbeitsplan', 'Arbeitsgang', 'Vorkalkulation', 'Produktionsauftrag'],
+            question: 'Sind die Vorgabezeiten im Arbeitsplan realistisch – und wo werden sie systematisch unterschätzt?',
+          },
+          {
+            title: 'Produktionsauftrag, Vorfertigung & Unterbaugruppen',
+            summary:
+              'Mit der Freigabe der Produktionsaufträge wird Material an die Arbeitsplätze bereitgestellt. Mechanische Teile, Schaltschrank und Unterbaugruppen entstehen in parallelen Strängen, die sich dieselben Arbeitsplätze teilen. Jeder Arbeitsgang wird mit Ist-Start und Ist-Ende zurückgemeldet, jede Materialbewegung verändert den Bestandswert am Arbeitsplatz.',
+            strands: [
+              {
+                name: 'Mechanische Vorfertigung',
+                steps: ['Materialbereitstellung', 'Zuschnitt / Sägen', 'Fräsen am Bearbeitungszentrum', 'Drehen', 'Schweißen', 'Lackieren'],
+              },
+              {
+                name: 'Elektro & Schaltschrank',
+                steps: ['Elektrokonstruktion freigegeben', 'Kommissionierung Elektromaterial', 'Schaltschrankbau', 'Verdrahtung & Prüfung'],
+              },
+              {
+                name: 'Unterbaugruppen',
+                steps: ['Kommissionierung Teile & Zukaufteile', 'Baugruppenmontage', 'Baugruppenprüfung', 'Einlagerung Pufferfläche'],
+              },
+            ],
+            objects: ['Produktionsauftrag', 'Arbeitsgang', 'Arbeitsplatz', 'Rückmeldung', 'Material', 'Bestand', 'Unterbaugruppe', 'Lackiercharge'],
+            question: 'Wo warten Bauteile zwischen zwei Arbeitsplätzen – und wie viel Kapital bindet das?',
+          },
+          {
+            title: 'Endmontage & Auslieferung',
+            summary:
+              'Erst wenn alle Unterbaugruppen bereitstehen, beginnt die Endmontage. Es folgen Inbetriebnahme und Werksabnahme mit dem Kunden, danach wird die Maschine für den Transport vorbereitet und ausgeliefert. Die Nachkalkulation vergleicht die tatsächlichen Kosten mit der Vorkalkulation.',
+            steps: [
+              'Unterbaugruppen vollständig',
+              'Endmontage Start',
+              'Endmontage Ende',
+              'Inbetriebnahme',
+              'Werksabnahme (FAT)',
+              'Verpackung & Versand',
+              'Nachkalkulation',
+            ],
+            objects: ['Endmontageauftrag', 'Unterbaugruppe', 'Abnahmeprotokoll', 'Lieferung', 'Nachkalkulation'],
+            question: 'Welche Unterbaugruppe hält den Start der Endmontage auf – und was bedeutet das für den Liefertermin?',
+          },
+        ],
+        objectsNote:
+          'Ein Kundenprojekt hat viele Fertigungsaufträge, ein Fertigungsauftrag viele Arbeitsgänge, ein Arbeitsplatz bearbeitet Teile aus vielen Projekten, und eine Lackiercharge bündelt Teile aus unterschiedlichen Aufträgen. Genau diese Beziehungen bleiben im Event Knowledge Graph erhalten – nur so lässt sich jede Wartezeit bis zum betroffenen Bauteil und Kundenprojekt zurückverfolgen.',
+
+        contextObjects: {
+          heading: 'Kontext, der die Fertigungsdaten erklärt',
+          lead:
+            'Nicht jede Information, die eine Abweichung erklärt, steht im Produktionsauftrag. Diese Kontextobjekte reichern die Analyse an, ohne Teil des eigentlichen Ablaufs zu sein.',
+          items: [
+            {
+              name: 'Schichtkalender',
+              text: 'Zeigt, ob ein Arbeitsplatz zum Soll-Start überhaupt besetzt war – und trennt Wartezeit aus Kapazitätsmangel von Wartezeit aus Ablaufgründen.',
+            },
+            {
+              name: 'Maschinenstörung',
+              text: 'Stillstände und Wartungsfenster aus der Instandhaltung erklären Dauerabweichungen, die nicht an der Vorgabezeit liegen.',
+            },
+            {
+              name: 'Konstruktionsänderung',
+              text: 'Änderungsaufträge aus dem PLM-System zeigen, welche Fertigungsaufträge nach der Freigabe noch einmal angepasst wurden.',
+            },
+            {
+              name: 'Qualitätsmeldung',
+              text: 'Prüfbefunde und Nacharbeitsaufträge erklären, warum Teile auf einen vorherigen Arbeitsplatz zurückspringen.',
+            },
+            {
+              name: 'Zukaufteil-Bestellung',
+              text: 'Die Verbindung zum Purchase-to-Pay-Prozess zeigt, ob eine Montage auf ein verspätetes Zukaufteil wartet.',
+            },
+            {
+              name: 'Liefertermin',
+              text: 'Der zugesagte Liefertermin des Kundenprojekts macht aus einem Startverzug am Arbeitsplatz ein Terminrisiko für den Kunden.',
+            },
+          ],
+        },
+
+        findingsHeading: 'Fünf Findings: messen, verstehen, optimieren',
+        findingsLead:
+          'Die Anwendungsfälle bauen aufeinander auf: Der Plan-Ist-Vergleich zeigt, wo der Plan nicht hält, die Wartezeitenanalyse, wo Bauteile liegen, und die Bestandswerte, was das kostet. Daraus folgen die Hebel für Endmontage und Kalkulation.',
+        findings: [
+          {
+            area: 'Termintreue',
+            title: 'Verspäteter Start ist nicht dasselbe wie zu lange Bearbeitung',
+            metric: '41 %',
+            metricLabel: 'der Arbeitsgänge beginnen mehr als einen Arbeitstag nach dem Soll-Start',
+            text: [
+              'Für jeden Arbeitsgang stehen im Arbeitsplan Soll-Start und Soll-Ende, aus den Rückmeldungen der Betriebsdatenerfassung kommen Ist-Start und Ist-Ende. Statt nur zu fragen, ob ein Auftrag zu spät fertig wird, zerlegt die Analyse die Abweichung in zwei Größen: den Startverzug (Ist-Start gegenüber Soll-Start) und die Dauerabweichung (Ist-Dauer gegenüber Soll-Dauer).',
+              'Beide Größen verlangen unterschiedliche Maßnahmen. Ein Arbeitsgang, der zu spät beginnt, wartet auf Vorgänger, Material oder Kapazität – die Ursache liegt vor dem Arbeitsplatz. Ein Arbeitsgang, der pünktlich beginnt und zu lange dauert, deutet auf knappe Vorgabezeiten, Rüstaufwand oder Nacharbeit am Arbeitsplatz selbst.',
+              'Im Beispiel zeigen sich genau diese zwei Profile: Das 5-Achs-Bearbeitungszentrum beginnt 58 % seiner Arbeitsgänge verspätet, liegt in der Bearbeitungsdauer aber nur 6 % über Plan. Die Schweißerei startet meist pünktlich, braucht aber im Median 31 % länger als vorgegeben.',
+            ],
+            prompt: 'An welchen Arbeitsplätzen beginnen Arbeitsgänge verspätet, und wo dauert die Bearbeitung länger als im Arbeitsplan vorgesehen?',
+            table: {
+              caption: 'Plan-Ist-Vergleich je Arbeitsplatz (Auswahl, Beispielwerte; AT = Arbeitstage)',
+              head: ['Arbeitsplatz', 'Arbeitsgänge', 'Startverzug > 1 AT', 'Dauer vs. Soll', 'Ende termingerecht'],
+              rows: [
+                ['Zuschnitt / Sägen', '2.910', '22 %', '+4 %', '81 %'],
+                ['5-Achs-Bearbeitungszentrum', '3.420', '58 %', '+6 %', '44 %'],
+                ['Drehen', '2.180', '35 %', '+9 %', '63 %'],
+                ['Schweißerei', '1.640', '18 %', '+31 %', '49 %'],
+                ['Lackierung', '1.210', '64 %', '+3 %', '38 %'],
+                ['Schaltschrankbau', '960', '47 %', '+22 %', '36 %'],
+                ['Baugruppenmontage', '2.650', '39 %', '+12 %', '57 %'],
+              ],
+            },
+            shift: {
+              from: 'Welcher Auftrag ist zu spät?',
+              to: 'Beginnt der Arbeitsgang zu spät oder dauert er zu lange – und liegt die Ursache vor dem Arbeitsplatz oder an ihm?',
+            },
+            note: {
+              title: 'Wie genau sind die Rückmeldezeiten?',
+              text: 'Werden Arbeitsgänge erst am Schichtende gesammelt zurückgemeldet, sehen Prozessfehler und Datenfehler gleich aus. Bevor eine Abweichung als Prozessproblem bewertet wird, wird deshalb geprüft, wie die Ist-Zeiten entstehen – etwa ob sich Rückmeldungen auffällig auf Schichtwechsel häufen.',
+            },
+          },
+          {
+            area: 'Wartezeiten',
+            title: 'Bauteile liegen länger, als sie bearbeitet werden',
+            metric: '78 %',
+            metricLabel: 'der Durchlaufzeit in Vorfertigung und Baugruppenmontage sind Liegezeit zwischen zwei Arbeitsplätzen',
+            text: [
+              'Die Wartezeit zwischen zwei Arbeitsplätzen ergibt sich aus dem Ist-Ende des einen und dem Ist-Start des nächsten Arbeitsgangs. Über alle Übergänge eines Fertigungsauftrags entsteht so ein vollständiges Bild, wo Bauteile im Prozess warten – und wie viel der Durchlaufzeit tatsächlich Bearbeitung ist.',
+              'Im Beispiel liegt der Bearbeitungsanteil der Vorfertigung bei 22 %. Der auffälligste Übergang führt von der Schweißerei zur Lackierung: Geschweißte Teile warten im Median 4,6 Arbeitstage, weil die Lackieranlage in Chargen gefahren wird und erst bei ausreichender Belegung startet.',
+              'Nicht jede Wartezeit hat denselben Grund. Die Analyse unterscheidet, ob ein Bauteil auf Kapazität am nächsten Arbeitsplatz wartet, auf fehlendes Material oder Zukaufteile, auf eine gebündelte Charge oder auf eine Konstruktionsänderung.',
+            ],
+            prompt: 'Zwischen welchen Arbeitsplätzen warten Bauteile am längsten, und worauf warten sie?',
+            table: {
+              caption: 'Längste Übergänge zwischen Arbeitsplätzen (Beispielwerte; AT = Arbeitstage)',
+              head: ['Übergang', 'Fälle', 'Median Wartezeit', 'Hauptgrund'],
+              rows: [
+                ['Schweißerei → Lackierung', '1.180', '4,6 AT', 'Chargenbildung'],
+                ['Vorfertigung → Baugruppenmontage', '2.340', '3,8 AT', 'Fehlende Zukaufteile'],
+                ['Bearbeitungszentrum → Drehen', '960', '2,1 AT', 'Kapazität'],
+                ['Lackierung → Baugruppenmontage', '1.090', '1,9 AT', 'Trocknung & Transport'],
+                ['Zuschnitt → Bearbeitungszentrum', '2.480', '1,7 AT', 'Kapazität'],
+              ],
+            },
+            shift: {
+              from: 'Wie lange dauert die Fertigung?',
+              to: 'Wo wartet ein Bauteil, worauf wartet es – und welcher Übergang verlängert die Durchlaufzeit am stärksten?',
+            },
+            deepDive: {
+              title: 'Eigener Ablauf oder geteilte Ressource?',
+              text: [
+                'Die Lackieranlage ist eine gemeinsame Ressource für Teile aus vielen Fertigungsaufträgen und Kundenprojekten. Ob ein Teil wartet, hängt deshalb nicht von seinem eigenen Auftrag ab, sondern davon, welche anderen Teile denselben Lackierlauf belegen.',
+                'Im Event Knowledge Graph bleibt die Beziehung zwischen Bauteil, Arbeitsgang und Lackiercharge erhalten. Ein flacher Eventlog je Fertigungsauftrag sieht nur, dass das Teil wartet – nicht, auf wen.',
+              ],
+              questions: [
+                'Welche Farbtöne oder Teilegrößen verlängern die Chargenbildung?',
+                'Wäre eine feste Taktung der Lackierläufe besser als eine Mindestbelegung?',
+                'Welche Kundenprojekte verlieren durch die Lackierung ihren Puffer bis zur Endmontage?',
+                'Wie verändert sich die Wartezeit, wenn eilige Teile eigene Läufe bekommen?',
+              ],
+            },
+          },
+          {
+            area: 'Gebundenes Kapital',
+            title: 'Wartende Bauteile binden Kapital – vor allem kurz vor der Endmontage',
+            metric: '≈ 3,1 Mio. €',
+            metricLabel: 'durchschnittlich gebundenes Kapital in Material an Arbeitsplätzen und Pufferflächen',
+            text: [
+              'Mit den Bestandswerten der Materialien an den Arbeitsplätzen wird aus Wartezeit Geld. Für jeden Zeitpunkt ist bekannt, welches Material mit welchem Wert an welchem Arbeitsplatz liegt. Daraus ergibt sich das gebundene Kapital im Umlaufbestand (Work in Progress) – je Arbeitsplatz, je Fertigungsauftrag und je Kundenprojekt.',
+              'Entscheidend ist die Kombination aus Wert und Dauer: Ein Rohteil für 200 €, das zehn Tage liegt, bindet weniger Kapital als eine fertig montierte Baugruppe für 60.000 €, die zwei Tage wartet. Im Beispiel liegen 43 % des gebundenen Kapitals auf der Pufferfläche vor der Endmontage – in fertigen Unterbaugruppen, deren Wert durch Material und bereits geleistete Arbeit am höchsten ist.',
+              'Bei einem kalkulatorischen Zinssatz von 8 % kostet der durchschnittliche Umlaufbestand rund 250.000 € im Jahr – noch ohne Fläche, Handling, Beschädigungsrisiko und Teile, die durch spätere Konstruktionsänderungen obsolet werden.',
+            ],
+            prompt: 'Wie viel Kapital ist an welchen Arbeitsplätzen gebunden, und welcher Anteil davon wartet nur?',
+            table: {
+              caption: 'Gebundenes Kapital nach Bereich (Beispielwerte; AT = Arbeitstage)',
+              head: ['Bereich', 'Ø Bestandswert', 'Anteil', 'Median Liegedauer'],
+              rows: [
+                ['Rohmaterial an Arbeitsplätzen', '0,31 Mio. €', '10 %', '2,4 AT'],
+                ['Teile in der Vorfertigung', '0,62 Mio. €', '20 %', '6,8 AT'],
+                ['Teile vor und nach der Lackierung', '0,38 Mio. €', '12 %', '5,9 AT'],
+                ['Unterbaugruppen in der Montage', '0,46 Mio. €', '15 %', '4,2 AT'],
+                ['Pufferfläche vor der Endmontage', '1,33 Mio. €', '43 %', '9,7 AT'],
+              ],
+            },
+            shift: {
+              from: 'Wie hoch ist der Bestand?',
+              to: 'Welcher Bestand wartet nur – wo, wie lange und mit welchem Wert?',
+            },
+          },
+          {
+            area: 'Endmontage',
+            title: 'Die Endmontage wartet auf die letzte Unterbaugruppe',
+            metric: '46 %',
+            metricLabel: 'der Endmontagen beginnen erst, wenn der Schaltschrank als letzte Unterbaugruppe fertig ist',
+            text: [
+              'Eine Sondermaschine besteht aus mehreren Unterbaugruppen – Grundgestell, Antriebs- und Handhabungseinheiten, Schutzeinhausung, Schaltschrank –, die jeweils eigene Fertigungsaufträge haben. Die Endmontage kann erst beginnen, wenn alle bereitstehen. Ihr Start wird deshalb nicht vom Durchschnitt bestimmt, sondern von der Baugruppe, die als letzte fertig wird.',
+              'Im Beispiel ist das in 46 % der Kundenprojekte der Schaltschrank, in weiteren 21 % eine Baugruppe mit fehlenden Zukaufteilen. Die übrigen Unterbaugruppen sind zu diesem Zeitpunkt im Median seit 8 Arbeitstagen fertig und warten auf der Pufferfläche – genau dort, wo das meiste Kapital gebunden ist.',
+              'Der Hebel liegt daher nicht darin, alle Baugruppen schneller zu fertigen, sondern sie zu synchronisieren: die kritische Baugruppe früher einzuplanen und unkritische Baugruppen später zu starten, damit sie nicht wochenlang auf das letzte Teil warten.',
+            ],
+            prompt: 'Welche Unterbaugruppe ist bei Endmontagebeginn am häufigsten die letzte, und wie lange warten die übrigen?',
+            shift: {
+              from: 'Warum beginnt die Endmontage zu spät?',
+              to: 'Welche Unterbaugruppe bestimmt den Start – und wie lange warten alle anderen auf sie?',
+            },
+            deepDive: {
+              title: 'Warum der Schaltschrank zum Engpass wird',
+              prompt: 'Beginnt der Schaltschrankbau in Projekten mit späten Konstruktionsänderungen später als in Projekten ohne Änderung?',
+              text: [
+                'Der Schaltschrankbau beginnt erst, wenn die Elektrokonstruktion freigegeben ist, und diese hängt an Änderungen aus der mechanischen Konstruktion. Verbindet man die Fertigungsaufträge mit den Änderungsaufträgen aus dem PLM-System, zeigt sich: Projekte mit mindestens einer Konstruktionsänderung nach der Fertigungsfreigabe beginnen den Schaltschrankbau im Median 6 Arbeitstage später.',
+                'Das ist eine Hypothese, noch kein Ursachenbeweis. Sie lässt sich aber prüfen: Wenn späte Änderungen der Treiber sind, müssen Projekte ohne Änderung einen deutlich pünktlicheren Schaltschrankstart zeigen – unabhängig von Maschinentyp und Auslastung.',
+              ],
+            },
+          },
+          {
+            area: 'Kalkulation',
+            title: 'Ist-Zeiten zeigen, wo die Vorkalkulation zu optimistisch ist',
+            metric: '+7 %',
+            metricLabel: 'höhere Fertigungskosten je Maschine als vorkalkuliert, zu zwei Dritteln aus drei Arbeitsplätzen',
+            text: [
+              'Die Vorgabezeiten aus dem Arbeitsplan sind nicht nur Grundlage der Terminierung, sondern auch der Vorkalkulation. Liegen die Ist-Dauern an einzelnen Arbeitsplätzen systematisch über dem Soll, werden Liefertermine und Kosten gleichermaßen unterschätzt.',
+              'Verdichtet über alle Arbeitsgänge liegen die Fertigungskosten je Maschine im Beispiel rund 7 % über der Vorkalkulation. Zwei Drittel der Abweichung entstehen in der Schweißerei, im Schaltschrankbau und in der Baugruppenmontage – also dort, wo der Plan-Ist-Vergleich die größten Dauerabweichungen zeigt.',
+              'Werden die gemessenen Ist-Zeiten je Arbeitsplatz und Maschinentyp in die Arbeitspläne zurückgespielt, rechnen Angebote für neue Sondermaschinen mit realistischen Zeiten, und die Kapazitätsplanung setzt Puffer dort, wo sie tatsächlich gebraucht werden.',
+            ],
+            prompt: 'An welchen Arbeitsplätzen weichen die Ist-Zeiten systematisch von den Vorgabezeiten ab, und was bedeutet das für die Kalkulation neuer Maschinen?',
+            shift: {
+              from: 'Wie hoch war die Abweichung im letzten Projekt?',
+              to: 'Welche Vorgabezeiten sind systematisch zu knapp – und für welche Maschinentypen und Arbeitsplätze gilt das?',
+            },
+            note: {
+              title: 'Abweichung ist nicht automatisch Ineffizienz',
+              text: 'Im Sondermaschinenbau ist jede Maschine ein Stück weit neu. Eine Dauerabweichung kann auf echte Ineffizienz hinweisen, aber auch auf einen Konstruktionsanteil, der in der Vorgabezeit fehlt. Erst der Vergleich über Maschinentypen und Projekte trennt einmalige Effekte von systematischen.',
+            },
+          },
+        ],
+
+        measures: {
+          heading: 'Vom Finding zur Maßnahme',
+          lead:
+            'Aus jedem Finding lässt sich eine Verbesserungsrichtung ableiten. Welche zuerst umgesetzt wird, entscheidet die Fachseite nach Wirkung, Aufwand und Risiko – die Analyse liefert dafür die Grundlage.',
+          items: [
+            {
+              finding: 'Termintreue',
+              measure: 'Startverzug und Dauerabweichung getrennt steuern: Material und Vorgänger vor dem Arbeitsplatzstart prüfen, Vorgabezeiten an Arbeitsplätzen mit Dauerabweichung überarbeiten',
+              benefit: 'Mehr termingerecht beendete Arbeitsgänge, weniger Eilaufträge und Umplanungen',
+            },
+            {
+              finding: 'Wartezeiten',
+              measure: 'Lackierläufe fest takten statt nach Mindestbelegung starten, Fehlteile vor Freigabe der Baugruppenmontage prüfen',
+              benefit: 'Kürzere Durchlaufzeit der Vorfertigung, höherer Bearbeitungsanteil',
+            },
+            {
+              finding: 'Gebundenes Kapital',
+              measure: 'Bestandsobergrenzen je Pufferfläche einführen und gebundenes Kapital je Arbeitsplatz als Kennzahl im Shopfloor-Board verankern',
+              benefit: 'Weniger gebundenes Kapital, geringere Kapitalkosten, weniger Fläche',
+            },
+            {
+              finding: 'Endmontage',
+              measure: 'Unterbaugruppen rückwärts vom Endmontagestart terminieren, Schaltschrankbau früher freigeben und priorisieren',
+              benefit: 'Früherer Endmontagestart, kürzere Liegezeit fertiger Baugruppen, höhere Liefertermintreue',
+            },
+            {
+              finding: 'Kalkulation',
+              measure: 'Gemessene Ist-Zeiten je Arbeitsplatz und Maschinentyp regelmäßig in Arbeitspläne und Vorkalkulation zurückspielen',
+              benefit: 'Realistischere Angebote und Liefertermine, geringeres Margenrisiko',
+            },
+          ],
+          note: 'Priorisierung ist eine fachliche Entscheidung. Minerva kann Analysewege, Kontext und Optionen vorbereiten; Steuerung und Entscheidungshoheit bleiben bei Fertigungsleitung und Fachseite.',
+        },
+
+        loop: {
+          heading: 'Der Loop: Insight → Action → Impact → Feedback',
+          lead:
+            'Nach der Umsetzung wird die Wirkung einer Maßnahme mit denselben Fertigungsdaten erneut gemessen. Minerva Frontier Agents können diesen Loop kontinuierlich begleiten: neue Abweichungen erkennen, Hypothesen weiterentwickeln und die Wirkung umgesetzter Maßnahmen beobachten.',
+          steps: [
+            { step: 'Insight', text: 'Fertige Unterbaugruppen warten im Median 8 Arbeitstage auf den Schaltschrank und binden dabei das meiste Kapital.' },
+            { step: 'Action', text: 'Schaltschrankbau früher freigeben, unkritische Baugruppen rückwärts vom Endmontagestart terminieren.' },
+            { step: 'Impact', text: 'Liegezeit auf der Pufferfläche, gebundenes Kapital und Liefertermintreue erneut messen.' },
+            { step: 'Feedback', text: 'Bestätigt sich die Wirkung nicht, wird die Hypothese angepasst – etwa in Richtung später Konstruktionsänderungen.' },
+          ],
+          questions: [
+            'Sinkt die Liegezeit fertiger Unterbaugruppen vor der Endmontage?',
+            'Sinkt das gebundene Kapital auf der Pufferfläche?',
+            'Beginnt die Endmontage näher am Soll-Start?',
+            'Bleibt die Auslastung der Vorfertigung stabil?',
+            'Verbessert sich die Liefertermintreue gegenüber dem Kunden?',
+            'Bestätigt sich die Hypothese – oder muss sie angepasst werden?',
+          ],
+        },
+
+        analysisQuestions: {
+          heading: 'Weitere Fragen an die Fertigungsdaten',
+          lead: 'Dieselbe Datengrundlage – Arbeitsplan, Rückmeldungen und Bestandswerte – beantwortet weitere Fachfragen:',
+          items: [
+            'Welche Arbeitsplätze sind echte Engpässe, und welche wirken nur so, weil sie auf Vorgänger warten?',
+            'Wie oft springen Teile wegen Nacharbeit auf einen vorherigen Arbeitsplatz zurück?',
+            'Welche Kundenprojekte sind heute schon absehbar terminkritisch?',
+            'Wie wirken sich Eilaufträge auf die Termintreue der übrigen Aufträge aus?',
+            'Welche Maschinentypen haben die stabilsten, welche die unsichersten Durchlaufzeiten?',
+            'Wie viel Kapital würde eine um eine Woche kürzere Liegezeit vor der Endmontage freisetzen?',
+          ],
+        },
+
+        principlesHeading: 'Vier Prinzipien hinter der Analyse',
+        principles: [
+          {
+            title: 'Auf Arbeitsgangebene messen',
+            text: 'Gemessen wird am einzelnen Arbeitsgang und Arbeitsplatz – nicht erst am fertigen Auftrag, an dem sich Verzögerungen längst überlagert haben.',
+          },
+          {
+            title: 'Beziehungen erhalten',
+            text: 'Bauteil, Fertigungsauftrag, Unterbaugruppe, Kundenprojekt und Charge bleiben verbundene Objekte, statt früh in einen flachen Eventlog verdichtet zu werden.',
+          },
+          {
+            title: 'Zeit und Geld zusammen sehen',
+            text: 'Erst mit dem Bestandswert wird Wartezeit steuerbar: Das gebundene Kapital zeigt, welche Liegezeit wirklich teuer ist.',
+          },
+          {
+            title: 'Muster von Ursachen trennen',
+            text: 'Eine Abweichung ist ein Startpunkt der Analyse, noch keine Ursache. Hypothesen werden gegen Vergleichsgruppen geprüft.',
+          },
+        ],
+
+        conclusion: {
+          heading: 'Fazit: Durchlaufzeit entsteht zwischen den Arbeitsplätzen',
+          text: [
+            'Im Sondermaschinenbau entscheidet sich der Liefertermin selten an einem einzelnen Arbeitsplatz. Er entsteht aus vielen kleinen Startverzügen, aus Liegezeiten zwischen Arbeitsplätzen und aus Unterbaugruppen, die aufeinander warten.',
+            'Der Plan-Ist-Vergleich auf Arbeitsgangebene zeigt, wo der Plan nicht hält. Die Wartezeitenanalyse zeigt, wo Bauteile liegen. Die Bestandswerte zeigen, was das kostet. Zusammen ergeben sie eine Steuerungslogik, die nicht „schneller arbeiten“ verlangt, sondern „besser synchronisieren“.',
+          ],
+          claim: 'Plan und Ist vergleichen. Wartezeit sichtbar machen. Kapital freisetzen.',
+        },
+
+        faq: [
+          {
+            question: 'Was ist der Plan-to-Produce-Prozess?',
+            answer:
+              'Plan-to-Produce ist der End-to-End-Prozess von der Fertigungsplanung bis zum fertigen Endprodukt. Im Sondermaschinenbau umfasst er Fertigungsplanung und Kalkulation, Produktionsaufträge für Vorfertigung und Unterbaugruppen sowie Endmontage und Auslieferung. In den operativen Daten besteht er aus Kundenprojekten, Fertigungsaufträgen, Arbeitsgängen, Rückmeldungen und Materialbeständen.',
+          },
+          {
+            question: 'Wie misst man Termintreue in der Fertigung auf Arbeitsplatzebene?',
+            answer:
+              'Für jeden Arbeitsgang werden Soll-Start und Soll-Ende aus dem Arbeitsplan mit Ist-Start und Ist-Ende aus den Rückmeldungen der Betriebsdatenerfassung verglichen. Daraus ergeben sich je Arbeitsplatz der Anteil verspätet begonnener Arbeitsgänge, der Startverzug, die Dauerabweichung und der Anteil termingerecht beendeter Arbeitsgänge.',
+          },
+          {
+            question: 'Was ist der Unterschied zwischen Startverzug und Dauerabweichung?',
+            answer:
+              'Der Startverzug misst, wie viel später ein Arbeitsgang beginnt als geplant – die Ursache liegt meist vor dem Arbeitsplatz, etwa bei Vorgängern, Material oder Kapazität. Die Dauerabweichung misst, wie viel länger die Bearbeitung dauert als vorgegeben – die Ursache liegt meist am Arbeitsplatz selbst, etwa bei Vorgabezeiten, Rüstaufwand oder Nacharbeit.',
+          },
+          {
+            question: 'Wie wird die Wartezeit zwischen Arbeitsplätzen berechnet?',
+            answer:
+              'Die Wartezeit ist die Zeit zwischen dem Ist-Ende eines Arbeitsgangs und dem Ist-Start des folgenden Arbeitsgangs am nächsten Arbeitsplatz. Summiert über alle Übergänge zeigt sie, welcher Anteil der Durchlaufzeit Liegezeit ist. Mit Kontext wie Schichtkalender, Chargen und Zukaufteilen lässt sich unterscheiden, worauf ein Bauteil wartet.',
+          },
+          {
+            question: 'Wie lässt sich gebundenes Kapital in der Fertigung messen?',
+            answer:
+              'Über die Bestandswerte der Materialien an den Arbeitsplätzen: Für jeden Zeitpunkt ist bekannt, welches Material mit welchem Wert wo liegt. Daraus ergibt sich das gebundene Kapital im Umlaufbestand (Work in Progress) je Arbeitsplatz, Fertigungsauftrag und Kundenprojekt. Mit einem kalkulatorischen Zinssatz lassen sich die Kapitalkosten der Wartezeit beziffern.',
+          },
+          {
+            question: 'Welche Daten braucht Noreja für die Analyse eines Fertigungsprozesses?',
+            answer:
+              'Im Kern Produktions- bzw. Fertigungsaufträge mit Arbeitsplan und Arbeitsgängen (Arbeitsplatz, Soll-Start, Soll-Ende), Rückmeldungen mit Ist-Start und Ist-Ende sowie Materialbewegungen oder Bestände mit Werten je Arbeitsplatz. Kontext wie Schichtkalender, Störungen, Konstruktionsänderungen oder Qualitätsmeldungen macht die Analyse erklärungsstärker, ist aber keine Voraussetzung. Ein klassischer flacher Eventlog muss vorher nicht gebaut werden.',
+          },
+          {
+            question: 'Warum eignet sich ein Event Knowledge Graph für den Sondermaschinenbau?',
+            answer:
+              'Weil die entscheidenden Effekte zwischen Objekten entstehen: Viele Fertigungsaufträge laufen über gemeinsame Arbeitsplätze, eine Lackiercharge bündelt Teile aus verschiedenen Aufträgen, und die Endmontage hängt an mehreren Unterbaugruppen zugleich. Der Event Knowledge Graph erhält diese Beziehungen; ein flacher Eventlog je Fall könnte sie nicht erklären.',
+          },
+          {
+            question: 'Stammen die Kennzahlen von einem echten Unternehmen?',
+            answer:
+              'Nein. Alle Kennzahlen sind Beispielwerte eines synthetischen Demonstrationsszenarios. Sie veranschaulichen die Analysemethode und sind keine Produktivkennzahlen eines Kunden.',
+          },
+        ],
+
+        caseHeading: 'Den Case auf deinen Fertigungsdaten sehen',
+        caseText:
+          'Die ausführliche Case-Beschreibung mit Screenshots aus Noreja ist in Arbeit. Bis dahin zeigen wir dir die Analyse gern direkt: Plan-Ist-Vergleich, Wartezeiten und gebundenes Kapital – auf Basis deines Arbeitsplans und deiner Rückmeldedaten.',
+        caseCta: 'Demo buchen',
+      },
+      en: {
+        scenario: 'End-to-end process · Manufacturing in special machine building',
+        metaTitle: 'Plan-to-Produce: Process Mining in Special Machine Manufacturing | Noreja',
+        metaDescription:
+          'Plan-to-produce from production order to delivery: plan vs. actual per work center, waiting times between work centers and capital tied up in work in progress – process mining in special machine building.',
+        keywords: [
+          'Plan-to-Produce',
+          'process mining manufacturing',
+          'process mining production',
+          'special machine building',
+          'plan vs actual manufacturing',
+          'schedule adherence work center',
+          'waiting time analysis',
+          'manufacturing lead time',
+          'work in progress',
+          'tied-up capital WIP',
+        ],
+        tagline:
+          'From production order to delivered machine: how process intelligence compares planned and actual dates per work center, finds waiting times between work centers and makes the capital tied up along the way visible.',
+        workInProgress:
+          'This page is a work in progress: screenshots from the analysis in Noreja will follow shortly. The figures are example values from a synthetic scenario.',
+        definition:
+          'Plan-to-produce is the end-to-end process from production planning to the finished end product. In special machine building it covers production planning and costing, production orders for parts manufacturing and sub-assemblies, and final assembly and delivery. Because every machine is a customer project with a batch size of one, many production orders run in parallel across shared work centers and have to come together again for final assembly. Noreja measures this flow at the level of the individual operation: planned and actual dates, waiting times between work centers and the capital tied up along the way.',
+        demoNote:
+          'Note: All figures are example values from a synthetic demonstration scenario. They illustrate analysis paths and methods and are not production figures of any customer.',
+
+        keyFacts: [
+          {
+            value: '41%',
+            label: 'Operations starting late',
+            detail: 'start more than one working day after the planned start in the routing',
+          },
+          {
+            value: '78%',
+            label: 'Idle time in the lead time',
+            detail: 'of parts manufacturing and sub-assembly lead time is spent waiting between work centers',
+          },
+          {
+            value: '≈ EUR 3.1m',
+            label: 'Tied-up capital',
+            detail: 'average material stock at work centers and buffer areas (work in progress)',
+          },
+          {
+            value: '46%',
+            label: 'Final assembly waits for the control cabinet',
+            detail: 'of customer projects in which the control cabinet is the last sub-assembly to be finished',
+          },
+        ],
+
+        phasesHeading: 'The process in three phases',
+        phasesLead:
+          'After planning, a customer project breaks down into many production orders that run in parallel across shared work centers and meet again for final assembly. Measurement takes place at every level: operation, work center, production order and customer project.',
+        phases: [
+          {
+            title: 'Production planning & costing',
+            summary:
+              'The released customer project yields the manufacturing bill of materials and the routing. Preliminary costing values material and standard times; scheduling sets a planned start and planned end for every operation at its work center. Releasing the production orders makes the plan binding.',
+            steps: [
+              'Customer project released',
+              'Manufacturing BOM created',
+              'Routing created',
+              'Preliminary costing completed',
+              'Scheduling & capacity planning',
+              'Production order released',
+            ],
+            objects: ['Customer project', 'Bill of materials', 'Routing', 'Operation', 'Preliminary costing', 'Production order'],
+            question: 'Are the standard times in the routing realistic – and where are they systematically underestimated?',
+          },
+          {
+            title: 'Production order, parts manufacturing & sub-assemblies',
+            summary:
+              'Once the production orders are released, material is staged at the work centers. Mechanical parts, the control cabinet and sub-assemblies are produced in parallel strands that share the same work centers. Every operation is confirmed with an actual start and actual end, and every material movement changes the stock value at the work center.',
+            strands: [
+              {
+                name: 'Mechanical parts manufacturing',
+                steps: ['Material staging', 'Cutting / sawing', 'Milling on the machining center', 'Turning', 'Welding', 'Painting'],
+              },
+              {
+                name: 'Electrical & control cabinet',
+                steps: ['Electrical design released', 'Picking of electrical material', 'Control cabinet assembly', 'Wiring & testing'],
+              },
+              {
+                name: 'Sub-assemblies',
+                steps: ['Picking of parts & purchased parts', 'Sub-assembly', 'Sub-assembly inspection', 'Storage in buffer area'],
+              },
+            ],
+            objects: ['Production order', 'Operation', 'Work center', 'Confirmation', 'Material', 'Stock', 'Sub-assembly', 'Paint batch'],
+            question: 'Where do parts wait between two work centers – and how much capital does that tie up?',
+          },
+          {
+            title: 'Final assembly & delivery',
+            summary:
+              'Final assembly only starts once all sub-assemblies are available. It is followed by commissioning and the factory acceptance test with the customer; the machine is then prepared for transport and delivered. Final costing compares the actual costs with the preliminary costing.',
+            steps: [
+              'Sub-assemblies complete',
+              'Final assembly start',
+              'Final assembly end',
+              'Commissioning',
+              'Factory acceptance test (FAT)',
+              'Packing & shipping',
+              'Final costing',
+            ],
+            objects: ['Final assembly order', 'Sub-assembly', 'Acceptance report', 'Delivery', 'Final costing'],
+            question: 'Which sub-assembly holds up the start of final assembly – and what does that mean for the delivery date?',
+          },
+        ],
+        objectsNote:
+          'A customer project has many production orders, a production order many operations, a work center processes parts from many projects, and a paint batch bundles parts from different orders. These relationships are preserved in the event knowledge graph – which is the only way to trace every waiting time back to the affected part and customer project.',
+
+        contextObjects: {
+          heading: 'Context that explains the manufacturing data',
+          lead:
+            'Not every piece of information that explains a deviation is part of the production order. These context objects enrich the analysis without being steps of the actual flow.',
+          items: [
+            {
+              name: 'Shift calendar',
+              text: 'Shows whether a work center was staffed at all at the planned start – and separates waiting caused by missing capacity from waiting caused by the flow.',
+            },
+            {
+              name: 'Machine breakdown',
+              text: 'Downtimes and maintenance windows from plant maintenance explain duration deviations that are not caused by the standard time.',
+            },
+            {
+              name: 'Engineering change',
+              text: 'Change orders from the PLM system show which production orders were adjusted again after release.',
+            },
+            {
+              name: 'Quality notification',
+              text: 'Inspection findings and rework orders explain why parts jump back to a previous work center.',
+            },
+            {
+              name: 'Purchased-part order',
+              text: 'The link to the purchase-to-pay process shows whether an assembly is waiting for a late purchased part.',
+            },
+            {
+              name: 'Delivery date',
+              text: 'The delivery date promised for the customer project turns a late start at a work center into a schedule risk for the customer.',
+            },
+          ],
+        },
+
+        findingsHeading: 'Five findings: measure, understand, optimise',
+        findingsLead:
+          'The use cases build on each other: the plan vs. actual comparison shows where the plan does not hold, the waiting time analysis where parts sit, and the stock values what that costs. The levers for final assembly and costing follow from there.',
+        findings: [
+          {
+            area: 'Schedule adherence',
+            title: 'Starting late is not the same as taking too long',
+            metric: '41%',
+            metricLabel: 'of operations start more than one working day after the planned start',
+            text: [
+              'For every operation, the routing holds a planned start and planned end; the confirmations from shop floor data collection provide the actual start and actual end. Instead of only asking whether an order finishes late, the analysis splits the deviation into two measures: the start delay (actual start versus planned start) and the duration deviation (actual duration versus planned duration).',
+              'The two call for different measures. An operation that starts late is waiting for predecessors, material or capacity – the cause lies before the work center. An operation that starts on time and takes too long points to tight standard times, set-up effort or rework at the work center itself.',
+              'The example shows exactly these two profiles: the 5-axis machining center starts 58% of its operations late but is only 6% over plan in processing time. The welding shop mostly starts on time but takes a median 31% longer than planned.',
+            ],
+            prompt: 'At which work centers do operations start late, and where does processing take longer than the routing plans?',
+            table: {
+              caption: 'Plan vs. actual per work center (selection, example values; WD = working days)',
+              head: ['Work center', 'Operations', 'Start delay > 1 WD', 'Duration vs. plan', 'Finished on time'],
+              rows: [
+                ['Cutting / sawing', '2,910', '22%', '+4%', '81%'],
+                ['5-axis machining center', '3,420', '58%', '+6%', '44%'],
+                ['Turning', '2,180', '35%', '+9%', '63%'],
+                ['Welding shop', '1,640', '18%', '+31%', '49%'],
+                ['Paint shop', '1,210', '64%', '+3%', '38%'],
+                ['Control cabinet assembly', '960', '47%', '+22%', '36%'],
+                ['Sub-assembly', '2,650', '39%', '+12%', '57%'],
+              ],
+            },
+            shift: {
+              from: 'Which order is late?',
+              to: 'Does the operation start too late or take too long – and does the cause lie before the work center or at it?',
+            },
+            note: {
+              title: 'How accurate are the confirmation times?',
+              text: 'If operations are only confirmed in bulk at the end of a shift, process errors and data errors look the same. Before a deviation is assessed as a process problem, the analysis therefore checks how the actual times come about – for example whether confirmations cluster conspicuously at shift changes.',
+            },
+          },
+          {
+            area: 'Waiting times',
+            title: 'Parts wait longer than they are worked on',
+            metric: '78%',
+            metricLabel: 'of the lead time in parts manufacturing and sub-assembly is idle time between two work centers',
+            text: [
+              'The waiting time between two work centers is the gap between the actual end of one operation and the actual start of the next. Across all transitions of a production order this gives a complete picture of where parts wait in the process – and how much of the lead time is actually processing.',
+              'In the example, the processing share of parts manufacturing is 22%. The most conspicuous transition runs from the welding shop to the paint shop: welded parts wait a median 4.6 working days because the paint line runs in batches and only starts once it is sufficiently loaded.',
+              'Not every waiting time has the same reason. The analysis distinguishes whether a part is waiting for capacity at the next work center, for missing material or purchased parts, for a batch or for an engineering change.',
+            ],
+            prompt: 'Between which work centers do parts wait longest, and what are they waiting for?',
+            table: {
+              caption: 'Longest transitions between work centers (example values; WD = working days)',
+              head: ['Transition', 'Cases', 'Median waiting time', 'Main reason'],
+              rows: [
+                ['Welding → painting', '1,180', '4.6 WD', 'Batching'],
+                ['Parts manufacturing → sub-assembly', '2,340', '3.8 WD', 'Missing purchased parts'],
+                ['Machining center → turning', '960', '2.1 WD', 'Capacity'],
+                ['Painting → sub-assembly', '1,090', '1.9 WD', 'Drying & transport'],
+                ['Cutting → machining center', '2,480', '1.7 WD', 'Capacity'],
+              ],
+            },
+            shift: {
+              from: 'How long does manufacturing take?',
+              to: 'Where does a part wait, what is it waiting for – and which transition extends the lead time the most?',
+            },
+            deepDive: {
+              title: 'Its own flow or a shared resource?',
+              text: [
+                'The paint line is a shared resource for parts from many production orders and customer projects. Whether a part waits therefore does not depend on its own order but on which other parts occupy the same paint run.',
+                'In the event knowledge graph, the relationship between part, operation and paint batch is preserved. A flat event log per production order only sees that the part is waiting – not what it is waiting for.',
+              ],
+              questions: [
+                'Which colours or part sizes prolong batch formation?',
+                'Would a fixed paint-run cycle work better than a minimum load?',
+                'Which customer projects lose their buffer to final assembly in the paint shop?',
+                'How does waiting time change if urgent parts get runs of their own?',
+              ],
+            },
+          },
+          {
+            area: 'Tied-up capital',
+            title: 'Waiting parts tie up capital – above all just before final assembly',
+            metric: '≈ EUR 3.1m',
+            metricLabel: 'average capital tied up in material at work centers and buffer areas',
+            text: [
+              'With the stock values of the materials at the work centers, waiting time turns into money. For every point in time it is known which material of which value sits at which work center. This yields the capital tied up in work in progress – per work center, per production order and per customer project.',
+              'What matters is the combination of value and duration: a EUR 200 raw part that sits for ten days ties up less capital than a fully assembled EUR 60,000 module that waits for two. In the example, 43% of the tied-up capital sits in the buffer area before final assembly – in finished sub-assemblies whose value, from material and work already done, is highest.',
+              'At an imputed interest rate of 8%, the average work in progress costs around EUR 250,000 a year – before floor space, handling, damage risk and parts made obsolete by later engineering changes.',
+            ],
+            prompt: 'How much capital is tied up at which work centers, and how much of it is just waiting?',
+            table: {
+              caption: 'Tied-up capital by area (example values; WD = working days)',
+              head: ['Area', 'Avg. stock value', 'Share', 'Median idle time'],
+              rows: [
+                ['Raw material at work centers', 'EUR 0.31m', '10%', '2.4 WD'],
+                ['Parts in parts manufacturing', 'EUR 0.62m', '20%', '6.8 WD'],
+                ['Parts before and after painting', 'EUR 0.38m', '12%', '5.9 WD'],
+                ['Sub-assemblies in assembly', 'EUR 0.46m', '15%', '4.2 WD'],
+                ['Buffer area before final assembly', 'EUR 1.33m', '43%', '9.7 WD'],
+              ],
+            },
+            shift: {
+              from: 'How high is the stock?',
+              to: 'Which stock is just waiting – where, for how long and with what value?',
+            },
+          },
+          {
+            area: 'Final assembly',
+            title: 'Final assembly waits for the last sub-assembly',
+            metric: '46%',
+            metricLabel: 'of final assemblies only start once the control cabinet is finished as the last sub-assembly',
+            text: [
+              'A special machine consists of several sub-assemblies – base frame, drive and handling units, safety enclosure, control cabinet – each with its own production orders. Final assembly can only start when all of them are available. Its start is therefore not determined by the average but by the sub-assembly that is finished last.',
+              'In the example, that is the control cabinet in 46% of customer projects and a sub-assembly with missing purchased parts in another 21%. By then, the other sub-assemblies have been finished for a median 8 working days and are waiting in the buffer area – exactly where most capital is tied up.',
+              'The lever is therefore not to build all sub-assemblies faster but to synchronise them: schedule the critical sub-assembly earlier and start non-critical ones later so they do not wait for weeks for the last part.',
+            ],
+            prompt: 'Which sub-assembly is most often the last one when final assembly starts, and how long do the others wait?',
+            shift: {
+              from: 'Why does final assembly start late?',
+              to: 'Which sub-assembly determines the start – and how long do all the others wait for it?',
+            },
+            deepDive: {
+              title: 'Why the control cabinet becomes the bottleneck',
+              prompt: 'Does control cabinet assembly start later in projects with late engineering changes than in projects without a change?',
+              text: [
+                'Control cabinet assembly can only start once the electrical design is released, and that depends on changes from the mechanical design. Linking the production orders with the change orders from the PLM system shows that projects with at least one engineering change after production release start control cabinet assembly a median 6 working days later.',
+                'This is a hypothesis, not yet proof of a cause. But it can be tested: if late changes are the driver, projects without a change must show a markedly more punctual cabinet start – regardless of machine type and utilisation.',
+              ],
+            },
+          },
+          {
+            area: 'Costing',
+            title: 'Actual times show where preliminary costing is too optimistic',
+            metric: '+7%',
+            metricLabel: 'higher manufacturing costs per machine than costed, two thirds of it from three work centers',
+            text: [
+              'The standard times in the routing are the basis not only of scheduling but also of preliminary costing. If actual durations at individual work centers are systematically above plan, delivery dates and costs are underestimated alike.',
+              'Aggregated across all operations, manufacturing costs per machine in the example are around 7% above preliminary costing. Two thirds of the deviation arise in the welding shop, control cabinet assembly and sub-assembly – exactly where the plan vs. actual comparison shows the largest duration deviations.',
+              'If the measured actual times per work center and machine type are fed back into the routings, quotes for new special machines are based on realistic times and capacity planning puts buffers where they are actually needed.',
+            ],
+            prompt: 'At which work centers do actual times deviate systematically from standard times, and what does that mean for costing new machines?',
+            shift: {
+              from: 'How large was the deviation in the last project?',
+              to: 'Which standard times are systematically too tight – and for which machine types and work centers?',
+            },
+            note: {
+              title: 'A deviation is not automatically inefficiency',
+              text: 'In special machine building every machine is new to some extent. A duration deviation can point to real inefficiency, but also to a share of design work missing from the standard time. Only the comparison across machine types and projects separates one-off effects from systematic ones.',
+            },
+          },
+        ],
+
+        measures: {
+          heading: 'From finding to measure',
+          lead:
+            'Each finding suggests a direction for improvement. Which one is implemented first is decided by the business based on impact, effort and risk – the analysis provides the basis for that decision.',
+          items: [
+            {
+              finding: 'Schedule adherence',
+              measure: 'Manage start delay and duration deviation separately: check material and predecessors before the work center starts, revise standard times at work centers with duration deviations',
+              benefit: 'More operations finished on time, fewer rush orders and rescheduling',
+            },
+            {
+              finding: 'Waiting times',
+              measure: 'Run paint batches on a fixed cycle instead of a minimum load, check missing parts before releasing sub-assembly',
+              benefit: 'Shorter lead time in parts manufacturing, higher processing share',
+            },
+            {
+              finding: 'Tied-up capital',
+              measure: 'Introduce stock limits per buffer area and anchor tied-up capital per work center as a KPI on the shop floor board',
+              benefit: 'Less tied-up capital, lower capital costs, less floor space',
+            },
+            {
+              finding: 'Final assembly',
+              measure: 'Schedule sub-assemblies backwards from the final assembly start, release and prioritise control cabinet assembly earlier',
+              benefit: 'Earlier final assembly start, shorter idle time of finished sub-assemblies, better delivery reliability',
+            },
+            {
+              finding: 'Costing',
+              measure: 'Regularly feed measured actual times per work center and machine type back into routings and preliminary costing',
+              benefit: 'More realistic quotes and delivery dates, lower margin risk',
+            },
+          ],
+          note: 'Prioritisation is a business decision. Minerva can prepare analysis paths, context and options; control and decision-making authority stay with production management and the business.',
+        },
+
+        loop: {
+          heading: 'The loop: Insight → Action → Impact → Feedback',
+          lead:
+            'After implementation, the effect of a measure is measured again with the same manufacturing data. Minerva Frontier Agents can accompany this loop continuously: spotting new deviations, developing hypotheses further and observing the effect of implemented measures.',
+          steps: [
+            { step: 'Insight', text: 'Finished sub-assemblies wait a median 8 working days for the control cabinet and tie up most of the capital while doing so.' },
+            { step: 'Action', text: 'Release control cabinet assembly earlier, schedule non-critical sub-assemblies backwards from the final assembly start.' },
+            { step: 'Impact', text: 'Measure idle time in the buffer area, tied-up capital and delivery reliability again.' },
+            { step: 'Feedback', text: 'If the effect is not confirmed, the hypothesis is adjusted – for example towards late engineering changes.' },
+          ],
+          questions: [
+            'Does the idle time of finished sub-assemblies before final assembly fall?',
+            'Does the capital tied up in the buffer area fall?',
+            'Does final assembly start closer to the planned start?',
+            'Does utilisation in parts manufacturing stay stable?',
+            'Does delivery reliability towards the customer improve?',
+            'Is the hypothesis confirmed – or does it need adjusting?',
+          ],
+        },
+
+        analysisQuestions: {
+          heading: 'More questions for the manufacturing data',
+          lead: 'The same data – routing, confirmations and stock values – answers further business questions:',
+          items: [
+            'Which work centers are real bottlenecks, and which only look like one because they wait for predecessors?',
+            'How often do parts jump back to a previous work center because of rework?',
+            'Which customer projects are already foreseeably at risk of missing their date?',
+            'How do rush orders affect the schedule adherence of all other orders?',
+            'Which machine types have the most stable lead times, and which the least predictable?',
+            'How much capital would one week less idle time before final assembly release?',
+          ],
+        },
+
+        principlesHeading: 'Four principles behind the analysis',
+        principles: [
+          {
+            title: 'Measure at operation level',
+            text: 'Measurement happens at the individual operation and work center – not only at the finished order, where delays have long since overlapped.',
+          },
+          {
+            title: 'Keep relationships',
+            text: 'Part, production order, sub-assembly, customer project and batch stay connected objects instead of being condensed early into a flat event log.',
+          },
+          {
+            title: 'See time and money together',
+            text: 'Only the stock value makes waiting time manageable: tied-up capital shows which idle time is really expensive.',
+          },
+          {
+            title: 'Separate patterns from causes',
+            text: 'A deviation is a starting point for analysis, not yet a cause. Hypotheses are tested against comparison groups.',
+          },
+        ],
+
+        conclusion: {
+          heading: 'Conclusion: lead time is lost between the work centers',
+          text: [
+            'In special machine building, the delivery date is rarely decided at a single work center. It results from many small start delays, from idle time between work centers and from sub-assemblies waiting for each other.',
+            'The plan vs. actual comparison at operation level shows where the plan does not hold. The waiting time analysis shows where parts sit. The stock values show what that costs. Together they form a control logic that does not demand “work faster” but “synchronise better”.',
+          ],
+          claim: 'Compare plan and actual. Make waiting visible. Free up capital.',
+        },
+
+        faq: [
+          {
+            question: 'What is the plan-to-produce process?',
+            answer:
+              'Plan-to-produce is the end-to-end process from production planning to the finished end product. In special machine building it covers production planning and costing, production orders for parts manufacturing and sub-assemblies, and final assembly and delivery. In the operational data it consists of customer projects, production orders, operations, confirmations and material stocks.',
+          },
+          {
+            question: 'How do you measure schedule adherence in manufacturing at work center level?',
+            answer:
+              'For every operation, the planned start and planned end from the routing are compared with the actual start and actual end from the shop floor confirmations. This yields, per work center, the share of operations started late, the start delay, the duration deviation and the share of operations finished on time.',
+          },
+          {
+            question: 'What is the difference between start delay and duration deviation?',
+            answer:
+              'The start delay measures how much later an operation starts than planned – the cause usually lies before the work center, for example in predecessors, material or capacity. The duration deviation measures how much longer processing takes than planned – the cause usually lies at the work center itself, for example in standard times, set-up effort or rework.',
+          },
+          {
+            question: 'How is the waiting time between work centers calculated?',
+            answer:
+              'The waiting time is the time between the actual end of one operation and the actual start of the following operation at the next work center. Summed across all transitions, it shows what share of the lead time is idle time. With context such as shift calendars, batches and purchased parts, the analysis can tell what a part is waiting for.',
+          },
+          {
+            question: 'How can tied-up capital in manufacturing be measured?',
+            answer:
+              'Through the stock values of the materials at the work centers: for every point in time it is known which material of which value sits where. This yields the capital tied up in work in progress per work center, production order and customer project. With an imputed interest rate, the capital cost of waiting can be quantified.',
+          },
+          {
+            question: 'What data does Noreja need to analyse a manufacturing process?',
+            answer:
+              'At its core, production orders with routings and operations (work center, planned start, planned end), confirmations with actual start and actual end, and material movements or stocks with values per work center. Context such as shift calendars, breakdowns, engineering changes or quality notifications makes the analysis more explanatory but is not a prerequisite. A traditional flat event log does not have to be built first.',
+          },
+          {
+            question: 'Why is an event knowledge graph suited to special machine building?',
+            answer:
+              'Because the decisive effects arise between objects: many production orders run across shared work centers, a paint batch bundles parts from different orders, and final assembly depends on several sub-assemblies at once. The event knowledge graph preserves these relationships; a flat event log per case could not explain them.',
+          },
+          {
+            question: 'Are the figures from a real company?',
+            answer:
+              'No. All figures are example values from a synthetic demonstration scenario. They illustrate the analysis method and are not production figures of any customer.',
+          },
+        ],
+
+        caseHeading: 'See the case on your own manufacturing data',
+        caseText:
+          'The detailed case description with screenshots from Noreja is in progress. Until then, we are happy to show you the analysis directly: plan vs. actual, waiting times and tied-up capital – based on your routings and confirmation data.',
+        caseCta: 'Book a demo',
       },
     },
   },

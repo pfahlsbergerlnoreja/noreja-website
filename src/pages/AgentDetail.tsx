@@ -72,6 +72,7 @@ const labels = {
 const PROCESS_NAMES: Record<string, string> = {
   "purchase-to-pay": "Purchase-to-Pay",
   "order-to-cash": "Order-to-Cash",
+  "plan-to-produce": "Plan-to-Produce",
   "lead-to-activation": "Lead-to-Activation",
   "premium-to-tax": "Premium-to-Tax",
 };

@@ -76,7 +76,7 @@ export const agentCategories: Record<AgentCategory, Record<Language, { title: st
 export const agentCategoryOrder: AgentCategory[] = ['flow', 'time', 'capital', 'potential'];
 
 /** Slugs of the end-to-end process pages (src/lib/endToEndProcesses.ts) an agent page links to. */
-type ProcessSlug = 'purchase-to-pay' | 'order-to-cash' | 'lead-to-activation' | 'premium-to-tax';
+type ProcessSlug = 'purchase-to-pay' | 'order-to-cash' | 'plan-to-produce' | 'lead-to-activation' | 'premium-to-tax';
 
 export interface AgentContent {
   /** H1. Always contains "Agent". */
@@ -672,7 +672,7 @@ export const agents: Agent[] = [
     id: 'waiting-time',
     category: 'time',
     icon: Hourglass,
-    processes: ['purchase-to-pay', 'lead-to-activation'],
+    processes: ['plan-to-produce', 'purchase-to-pay', 'lead-to-activation'],
     related: ['cycle-time', 'work-in-progress', 'root-cause'],
     content: {
       de: {
@@ -809,7 +809,7 @@ export const agents: Agent[] = [
     id: 'on-time',
     category: 'time',
     icon: CalendarClock,
-    processes: ['order-to-cash', 'lead-to-activation'],
+    processes: ['order-to-cash', 'plan-to-produce', 'lead-to-activation'],
     related: ['cycle-time', 'waiting-time', 'root-cause'],
     content: {
       de: {
@@ -1084,7 +1084,7 @@ export const agents: Agent[] = [
     id: 'work-in-progress',
     category: 'capital',
     icon: Layers,
-    processes: ['lead-to-activation', 'premium-to-tax'],
+    processes: ['plan-to-produce', 'lead-to-activation', 'premium-to-tax'],
     related: ['cycle-time', 'waiting-time', 'on-time'],
     content: {
       de: {

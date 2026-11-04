@@ -5,6 +5,7 @@ import {
   ArrowRight,
   BookOpen,
   ChevronRight,
+  Construction,
   ExternalLink,
   Info,
   Lightbulb,
@@ -16,7 +17,7 @@ import { Button } from "@/components/ui/button";
 import { FinalCTA } from "@/components/FinalCTA";
 import { BreadcrumbSchema, FAQSchema, StructuredData } from "@/components/StructuredData";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { SITE_URL } from "@/lib/config";
+import { SITE_URL, siteConfig } from "@/lib/config";
 import {
   endToEndProcesses,
   getEndToEndProcessById,
@@ -69,6 +70,7 @@ const labels = {
     contact: "Eigenen Prozess analysieren? Sprich mit uns.",
     minervaPrompt: "Fachfrage an Minerva",
     moreProcesses: "Weitere End-to-End-Prozesse",
+    workInProgress: "In Arbeit",
     quote: ["„", "“"],
   },
   en: {
@@ -105,6 +107,7 @@ const labels = {
     contact: "Want to analyse your own process? Talk to us.",
     minervaPrompt: "Business question to Minerva",
     moreProcesses: "More end-to-end processes",
+    workInProgress: "Work in progress",
     quote: ["“", "”"],
   },
 } as const;
@@ -319,13 +322,27 @@ const EndToEndProcess = () => {
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </a>
                 </Button>
-                <Button asChild size="lg" variant="outline" className="bg-background/60">
-                  <a href={process.caseUrl} target="_blank" rel="noopener noreferrer">
-                    <BookOpen className="mr-2 h-4 w-4" />
-                    {l.readCase}
-                  </a>
-                </Button>
+                {process.caseUrl && (
+                  <Button asChild size="lg" variant="outline" className="bg-background/60">
+                    <a href={process.caseUrl} target="_blank" rel="noopener noreferrer">
+                      <BookOpen className="mr-2 h-4 w-4" />
+                      {l.readCase}
+                    </a>
+                  </Button>
+                )}
               </div>
+
+              {text.workInProgress && (
+                <p
+                  role="note"
+                  className="mx-auto mt-8 flex max-w-2xl items-start gap-2 rounded-xl border border-accent/40 bg-accent/10 px-4 py-3 text-left text-sm leading-relaxed text-foreground"
+                >
+                  <Construction className="mt-0.5 h-4 w-4 flex-shrink-0 text-accent" aria-hidden="true" />
+                  <span>
+                    <strong className="font-semibold">{l.workInProgress}:</strong> {text.workInProgress}
+                  </span>
+                </p>
+              )}
             </motion.div>
           </div>
         </section>
@@ -993,7 +1010,7 @@ const EndToEndProcess = () => {
             <h2 className="mb-3 text-2xl font-bold text-foreground md:text-3xl">{text.caseHeading}</h2>
             <p className="mx-auto mb-8 max-w-2xl text-base leading-relaxed text-muted-foreground">{text.caseText}</p>
             <Button asChild size="lg" className="story-cta">
-              <a href={process.caseUrl} target="_blank" rel="noopener noreferrer">
+              <a href={process.caseUrl ?? siteConfig.hubspot.appointmentBooking} target="_blank" rel="noopener noreferrer">
                 {text.caseCta}
                 <ExternalLink className="ml-2 h-4 w-4" />
               </a>

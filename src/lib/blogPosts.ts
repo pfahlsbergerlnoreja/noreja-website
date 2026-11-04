@@ -16,6 +16,14 @@ export interface BlogPost {
 export const blogPosts: Record<'de' | 'en', BlogPost[]> = {
   "de": [
     {
+      "title": "Process Pulse: Oktober 2026",
+      "link": "https://blog.noreja.com/de-de/process-pulse-oktober-2026",
+      "pubDate": "Tue, 03 Nov 2026 08:00:00 GMT",
+      "description": "Willkommen bei Process Pulse, unserem monatlichen Round-up zu dem, was sich in Process Management und Process Mining bewegt hat. Einmal im Monat wählen wir die Ankündigungen, Studien und Forschungserg...",
+      "author": "Lukas Pfahlsberger",
+      "imageUrl": "https://blog.noreja.com/hs-fs/hubfs/blog/featured-images/2026-11-03-news-roundup-process-pulse-october-1.png?width=640&name=2026-11-03-news-roundup-process-pulse-october-1.png"
+    },
+    {
       "title": "Two for One: Wenn Workarounds zum echten Prozess werden",
       "link": "https://blog.noreja.com/de-de/wenn-workarounds-zum-prozess-werden",
       "pubDate": "Tue, 27 Oct 2026 08:00:00 GMT",
@@ -54,24 +62,24 @@ export const blogPosts: Record<'de' | 'en', BlogPost[]> = {
       "description": "Jedes Unternehmen läuft auf Wissen, das nirgends geschrieben steht. Welcher Kunde eine Teillieferung akzeptiert und welcher zum Vorstand eskaliert. Warum die zweite Freigabe bei Aufträgen unter einem ...",
       "author": "Lukas Pfahlsberger",
       "imageUrl": "https://blog.noreja.com/hs-fs/hubfs/blog/featured-images/.png-4.png?width=640&name=.png-4.png"
-    },
-    {
-      "title": "Business Case: Wie du die Onboarding-Zeit neuer Kunden verkürzt",
-      "link": "https://blog.noreja.com/de-de/kunden-onboarding-zeit-verkuerzen",
-      "pubDate": "Tue, 22 Sep 2026 07:00:00 GMT",
-      "description": "Warum Kunden-Onboarding jetzt zählt Willkommen zur neuen Ausgabe von Business Case — dem Format, in dem wir ein realistisches Unternehmen nehmen, ein Prozessproblem mit Zahlen versehen und ausrechnen,...",
-      "author": "Lukas Pfahlsberger",
-      "imageUrl": "https://blog.noreja.com/hs-fs/hubfs/blog/featured-images/.png-3.png?width=640&name=.png-3.png"
     }
   ],
   "en": [
     {
       "title": "Two for One: Why Workarounds Become the Real Process",
       "link": "https://blog.noreja.com/en/why-workarounds-become-the-real-process",
-      "pubDate": "Tue, 27 Oct 2026 08:00:00 GMT",
+      "pubDate": "Tue, 03 Nov 2026 11:28:06 GMT",
       "description": "There is a shortcut worn into the lawn of almost every office park, running diagonally across the grass where the paved path curves the long way around. Nobody planned it, everybody uses it, and the g...",
       "author": "Lukas Pfahlsberger",
       "imageUrl": "https://blog.noreja.com/hs-fs/hubfs/blog/featured-images/2026-10-27-two-for-one-workarounds.png?width=640&name=2026-10-27-two-for-one-workarounds.png"
+    },
+    {
+      "title": "Process Pulse: October 2026",
+      "link": "https://blog.noreja.com/en/process-pulse-october-2026",
+      "pubDate": "Tue, 03 Nov 2026 08:00:00 GMT",
+      "description": "Welcome to Process Pulse, our monthly round-up of what moved in process management and process mining. Once a month we pick the announcements, studies and research results that matter for people who r...",
+      "author": "Lukas Pfahlsberger",
+      "imageUrl": "https://blog.noreja.com/hs-fs/hubfs/blog/featured-images/2026-11-03-news-roundup-process-pulse-october-1.png?width=640&name=2026-11-03-news-roundup-process-pulse-october-1.png"
     },
     {
       "title": "Quick Tips: Why Simplifying Is Harder Than Adding",
@@ -104,14 +112,6 @@ export const blogPosts: Record<'de' | 'en', BlogPost[]> = {
       "description": "Every organisation runs on knowledge that exists nowhere in writing. Which customer accepts a partial delivery and which one escalates to the board. Why the second approval is skipped for orders under...",
       "author": "Lukas Pfahlsberger",
       "imageUrl": "https://blog.noreja.com/hs-fs/hubfs/blog/featured-images/.png-4.png?width=640&name=.png-4.png"
-    },
-    {
-      "title": "Business Case: How to Cut Customer Onboarding Time",
-      "link": "https://blog.noreja.com/en/cut-customer-onboarding-time-saas",
-      "pubDate": "Tue, 22 Sep 2026 07:00:00 GMT",
-      "description": "Why Customer Onboarding Deserves the Attention Now Welcome to this edition of Business Case, the format in which we take a realistic company, put numbers on a process problem, and calculate what doing...",
-      "author": "Lukas Pfahlsberger",
-      "imageUrl": "https://blog.noreja.com/hs-fs/hubfs/blog/featured-images/.png-3.png?width=640&name=.png-3.png"
     }
   ]
 };
