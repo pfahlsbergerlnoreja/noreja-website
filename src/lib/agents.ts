@@ -76,7 +76,13 @@ export const agentCategories: Record<AgentCategory, Record<Language, { title: st
 export const agentCategoryOrder: AgentCategory[] = ['flow', 'time', 'capital', 'potential'];
 
 /** Slugs of the end-to-end process pages (src/lib/endToEndProcesses.ts) an agent page links to. */
-type ProcessSlug = 'purchase-to-pay' | 'order-to-cash' | 'plan-to-produce' | 'lead-to-activation' | 'premium-to-tax';
+type ProcessSlug =
+  | 'purchase-to-pay'
+  | 'order-to-cash'
+  | 'plan-to-produce'
+  | 'lead-to-activation'
+  | 'premium-to-tax'
+  | 'admission-to-discharge';
 
 export interface AgentContent {
   /** H1. Always contains "Agent". */
@@ -251,7 +257,7 @@ export const agents: Agent[] = [
     id: 'rework',
     category: 'flow',
     icon: Repeat,
-    processes: ['purchase-to-pay'],
+    processes: ['purchase-to-pay', 'admission-to-discharge'],
     related: ['structural-deviation', 'root-cause', 'cycle-time'],
     content: {
       de: {
@@ -672,7 +678,7 @@ export const agents: Agent[] = [
     id: 'waiting-time',
     category: 'time',
     icon: Hourglass,
-    processes: ['plan-to-produce', 'purchase-to-pay', 'lead-to-activation'],
+    processes: ['plan-to-produce', 'admission-to-discharge', 'purchase-to-pay', 'lead-to-activation'],
     related: ['cycle-time', 'work-in-progress', 'root-cause'],
     content: {
       de: {
@@ -809,7 +815,7 @@ export const agents: Agent[] = [
     id: 'on-time',
     category: 'time',
     icon: CalendarClock,
-    processes: ['order-to-cash', 'plan-to-produce', 'lead-to-activation'],
+    processes: ['order-to-cash', 'admission-to-discharge', 'plan-to-produce', 'lead-to-activation'],
     related: ['cycle-time', 'waiting-time', 'root-cause'],
     content: {
       de: {
@@ -1222,7 +1228,7 @@ export const agents: Agent[] = [
     id: 'root-cause',
     category: 'potential',
     icon: Microscope,
-    processes: ['order-to-cash', 'purchase-to-pay'],
+    processes: ['order-to-cash', 'purchase-to-pay', 'admission-to-discharge'],
     related: ['structural-deviation', 'rework', 'on-time'],
     content: {
       de: {

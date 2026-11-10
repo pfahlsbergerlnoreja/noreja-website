@@ -115,6 +115,7 @@ export function Footer() {
         { name: t.footer.sections.allProcesses, to: route('processes') },
         { name: 'Order-to-Cash', to: processRoute('order-to-cash') },
         { name: 'Purchase-to-Pay', to: processRoute('purchase-to-pay') },
+        { name: 'Admission-to-Discharge', to: processRoute('admission-to-discharge') },
         { name: 'Plan-to-Produce', to: processRoute('plan-to-produce') },
         { name: 'Lead-to-Activation', to: processRoute('lead-to-activation') },
         { name: 'Premium-to-Tax', to: processRoute('premium-to-tax') }

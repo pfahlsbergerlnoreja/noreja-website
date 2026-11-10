@@ -19,16 +19,17 @@ import { getRoutePath } from "@/lib/routes";
  * touching this page. The order below only puts the best-known processes first.
  */
 
-const ORDER = ["order-to-cash", "purchase-to-pay", "plan-to-produce", "lead-to-activation", "premium-to-tax"];
+const ORDER = [
+  "order-to-cash",
+  "purchase-to-pay",
+  "admission-to-discharge",
+  "plan-to-produce",
+  "lead-to-activation",
+  "premium-to-tax",
+];
 
 /** One accent hue per card, all from the brand palette. */
-const ACCENTS = [
-  "var(--noreja-main)",
-  "var(--noreja-tertiary)",
-  "var(--noreja-secondary)",
-  "var(--noreja-main)",
-  "var(--noreja-tertiary)",
-];
+const ACCENTS = ["var(--noreja-main)", "var(--noreja-tertiary)", "var(--noreja-secondary)"];
 
 const copy = {
   de: {
@@ -38,7 +39,7 @@ const copy = {
     title: "End-to-End-Prozesse",
     titleSub: "vom ersten Schritt bis zum letzten Euro",
     lead:
-      "Fünf Beispiele, durchgängig analysiert: Wie Geschäftsprozesse wirklich ablaufen, wo sie Zeit und Geld verlieren und welche Ursachen dahinterstehen – von der Auftragsabwicklung über Einkauf und Fertigung bis zur Versicherungsteuer. Dieselbe Analyse funktioniert für jeden weiteren Prozess, der in deinen Systemen Spuren hinterlässt.",
+      "Sechs Beispiele, durchgängig analysiert: Wie Prozesse wirklich ablaufen, wo sie Zeit und Geld verlieren und welche Ursachen dahinterstehen – von der Auftragsabwicklung über Einkauf und Fertigung bis zum OP-Patientenpfad im Krankenhaus und zur Versicherungsteuer. Dieselbe Analyse funktioniert für jeden weiteren Prozess, der in deinen Systemen Spuren hinterlässt.",
     whatHeading: "Was ist ein End-to-End-Prozess?",
     what:
       "Ein End-to-End-Prozess umfasst alle Schritte vom auslösenden Ereignis bis zum Ergebnis, das für Kunden oder Unternehmen zählt – über Abteilungs- und Systemgrenzen hinweg. Order-to-Cash beginnt mit dem Kundenauftrag und endet mit dem Zahlungseingang, Purchase-to-Pay reicht vom Bedarf bis zur bezahlten Rechnung. Erst die durchgängige Sicht zeigt, wo eine Verzögerung entsteht und wo sie sich auswirkt.",
@@ -69,7 +70,7 @@ const copy = {
     title: "End-to-End Processes",
     titleSub: "from the first step to the last euro",
     lead:
-      "Five examples, analyzed end to end: how business processes really run, where they lose time and money and what causes are behind it – from order processing, procurement and manufacturing to insurance premium tax. The same analysis works for any other process that leaves traces in your systems.",
+      "Six examples, analyzed end to end: how processes really run, where they lose time and money and what causes are behind it – from order processing, procurement and manufacturing to the surgical patient pathway in hospitals and insurance premium tax. The same analysis works for any other process that leaves traces in your systems.",
     whatHeading: "What is an end-to-end process?",
     what:
       "An end-to-end process covers every step from the triggering event to the result that matters to customers or the company – across departments and systems. Order-to-cash starts with the customer order and ends with the incoming payment; purchase-to-pay runs from the requirement to the paid invoice. Only the continuous view shows where a delay arises and where it takes effect.",
@@ -192,13 +193,13 @@ const Processes = () => {
           <div className="relative mx-auto mt-12 max-w-4xl">
             <div
               aria-hidden="true"
-              className="absolute left-6 right-6 top-1/2 hidden h-px -translate-y-1/2 md:block"
+              className="absolute left-6 right-6 top-1/2 hidden h-px -translate-y-1/2 lg:block"
               style={{
                 background:
                   "linear-gradient(90deg, transparent, hsl(var(--noreja-main) / 0.7), hsl(var(--noreja-tertiary) / 0.7), transparent)",
               }}
             />
-            <div className="relative grid grid-cols-2 gap-3 md:grid-cols-5">
+            <div className="relative grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-6">
               {processes.map((process, index) => (
                 <motion.a
                   key={process.id}

@@ -16,6 +16,14 @@ export interface BlogPost {
 export const blogPosts: Record<'de' | 'en', BlogPost[]> = {
   "de": [
     {
+      "title": "Business Case: Wie du KYC-Prüfungen beschleunigst",
+      "link": "https://blog.noreja.com/de-de/kyc-pruefungen-beschleunigen",
+      "pubDate": "Tue, 10 Nov 2026 08:00:00 GMT",
+      "description": "Warum KYC-Prüfungen jetzt zählen Willkommen zur neuen Ausgabe von Business Case, dem Format, in dem wir ein fiktives, aber realistisches Unternehmen nehmen, beziffern, was sein Prozessproblem pro Jahr...",
+      "author": "Lukas Pfahlsberger",
+      "imageUrl": "https://blog.noreja.com/hs-fs/hubfs/blog/featured-images/2026-11-10-business-case-kyc-compliance-reviews.png?width=640&name=2026-11-10-business-case-kyc-compliance-reviews.png"
+    },
+    {
       "title": "Process Pulse: Oktober 2026",
       "link": "https://blog.noreja.com/de-de/process-pulse-oktober-2026",
       "pubDate": "Tue, 03 Nov 2026 08:00:00 GMT",
@@ -54,17 +62,17 @@ export const blogPosts: Record<'de' | 'en', BlogPost[]> = {
       "description": "Niemand hat je Ärger bekommen, weil er eine Freigabestufe hinzugefügt hat. Diese Asymmetrie — unsichtbare Kosten auf der einen, sichtbare Schuld auf der anderen Seite — ist der Grund, warum Freigabeke...",
       "author": "Lukas Pfahlsberger",
       "imageUrl": "https://blog.noreja.com/hs-fs/hubfs/blog/featured-images/.png-Aug-28-2026-07-39-57-5591-AM.png?width=640&name=.png-Aug-28-2026-07-39-57-5591-AM.png"
-    },
-    {
-      "title": "Quick Tips: Wie du implizites Wissen in Prozesse überführst",
-      "link": "https://blog.noreja.com/de-de/implizites-wissen-in-prozesse-ueberfuehren",
-      "pubDate": "Tue, 29 Sep 2026 07:00:00 GMT",
-      "description": "Jedes Unternehmen läuft auf Wissen, das nirgends geschrieben steht. Welcher Kunde eine Teillieferung akzeptiert und welcher zum Vorstand eskaliert. Warum die zweite Freigabe bei Aufträgen unter einem ...",
-      "author": "Lukas Pfahlsberger",
-      "imageUrl": "https://blog.noreja.com/hs-fs/hubfs/blog/featured-images/.png-4.png?width=640&name=.png-4.png"
     }
   ],
   "en": [
+    {
+      "title": "Business Case: How to Speed Up KYC Compliance Reviews",
+      "link": "https://blog.noreja.com/en/speed-up-kyc-compliance-reviews",
+      "pubDate": "Tue, 10 Nov 2026 08:00:00 GMT",
+      "description": "Why KYC Compliance Reviews Deserve the Attention Now Welcome to the new edition of Business Case, the format in which we take a fictional but realistic company, put a number on what its process proble...",
+      "author": "Lukas Pfahlsberger",
+      "imageUrl": "https://blog.noreja.com/hs-fs/hubfs/blog/featured-images/2026-11-10-business-case-kyc-compliance-reviews.png?width=640&name=2026-11-10-business-case-kyc-compliance-reviews.png"
+    },
     {
       "title": "Two for One: Why Workarounds Become the Real Process",
       "link": "https://blog.noreja.com/en/why-workarounds-become-the-real-process",
@@ -104,14 +112,6 @@ export const blogPosts: Record<'de' | 'en', BlogPost[]> = {
       "description": "Nobody ever got into trouble for adding an approval step. That asymmetry — invisible cost on one side, visible blame on the other — is why approval chains only ever grow. Every incident produces a new...",
       "author": "Lukas Pfahlsberger",
       "imageUrl": "https://blog.noreja.com/hs-fs/hubfs/blog/featured-images/.png-Aug-28-2026-07-39-57-5591-AM.png?width=640&name=.png-Aug-28-2026-07-39-57-5591-AM.png"
-    },
-    {
-      "title": "Quick Tips: Turning Implicit Knowledge Into Process",
-      "link": "https://blog.noreja.com/en/turn-implicit-knowledge-into-processes",
-      "pubDate": "Tue, 29 Sep 2026 07:00:00 GMT",
-      "description": "Every organisation runs on knowledge that exists nowhere in writing. Which customer accepts a partial delivery and which one escalates to the board. Why the second approval is skipped for orders under...",
-      "author": "Lukas Pfahlsberger",
-      "imageUrl": "https://blog.noreja.com/hs-fs/hubfs/blog/featured-images/.png-4.png?width=640&name=.png-4.png"
     }
   ]
 };

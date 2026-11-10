@@ -44,6 +44,33 @@ import impactBoardMatrix from '@/assets/processes/order-to-cash/impact-board-mat
 import impactBoardKanban from '@/assets/processes/order-to-cash/impact-board-kanban.webp';
 import impactBoardQuadrangle from '@/assets/processes/order-to-cash/impact-board-quadrangle.webp';
 import impactBoardRoi from '@/assets/processes/order-to-cash/impact-board-roi.webp';
+import a2dEntityModelDe from '@/assets/processes/admission-to-discharge/entity-model-de.webp';
+import a2dEntityModelEn from '@/assets/processes/admission-to-discharge/entity-model-en.webp';
+import a2dEndToEnd from '@/assets/processes/admission-to-discharge/end-to-end-perspective.webp';
+import a2dPreparation from '@/assets/processes/admission-to-discharge/preparation-perspective.webp';
+import a2dSurgery from '@/assets/processes/admission-to-discharge/surgery-perspective.webp';
+import a2dBedRelease from '@/assets/processes/admission-to-discharge/bed-release-perspective.webp';
+import a2dDashboard from '@/assets/processes/admission-to-discharge/management-dashboard.webp';
+import a2dRawComparisons from '@/assets/processes/admission-to-discharge/raw-comparisons.webp';
+import a2dTeamCCheck from '@/assets/processes/admission-to-discharge/team-c-asa-check.webp';
+import a2dStaffingCheck from '@/assets/processes/admission-to-discharge/recovery-room-staffing-check.webp';
+import a2dCancellationCauses from '@/assets/processes/admission-to-discharge/minerva-cancellation-causes.webp';
+import a2dDocumentedDelays from '@/assets/processes/admission-to-discharge/minerva-documented-delays.webp';
+import a2dFirstCasePunctuality from '@/assets/processes/admission-to-discharge/first-case-punctuality.webp';
+import a2dReworkPattern from '@/assets/processes/admission-to-discharge/preparation-rework-pattern.webp';
+import a2dReworkReasons from '@/assets/processes/admission-to-discharge/preparation-rework-reasons.webp';
+import a2dReworkByWard from '@/assets/processes/admission-to-discharge/preparation-rework-by-ward.webp';
+import a2dBedReleasePaths from '@/assets/processes/admission-to-discharge/bed-release-paths.webp';
+import a2dBedReleaseByWard from '@/assets/processes/admission-to-discharge/minerva-bed-release-by-ward.webp';
+import a2dBedReleaseTimeline from '@/assets/processes/admission-to-discharge/bed-release-timeline.webp';
+import a2dFirstBedRelease from '@/assets/processes/admission-to-discharge/first-bed-release-per-day.webp';
+import a2dForwardCascade from '@/assets/processes/admission-to-discharge/forward-cascade-timeline.webp';
+import a2dForwardCascadeTable from '@/assets/processes/admission-to-discharge/forward-cascade-table.webp';
+import a2dBacklogView from '@/assets/processes/admission-to-discharge/backlog-cascade-view.webp';
+import a2dBacklogCause from '@/assets/processes/admission-to-discharge/backlog-cascade-cause.webp';
+import a2dFourTriggers from '@/assets/processes/admission-to-discharge/minerva-four-triggers.webp';
+import a2dBedReleaseChain from '@/assets/processes/admission-to-discharge/minerva-bed-release-chain.webp';
+import a2dImpactBoard from '@/assets/processes/admission-to-discharge/impact-board-matrix.webp';
 
 /**
  * End-to-end process pages (/de/prozesse/:processSlug, /en/processes/:processSlug).
@@ -71,6 +98,8 @@ export interface ProcessTable {
   head: string[];
   /** The first cell of each row is its row header. */
   rows: string[][];
+  /** Qualitative comparison: cells are left-aligned and wrap instead of being set as numbers. */
+  text?: boolean;
 }
 
 export interface ProcessContent {
@@ -129,15 +158,16 @@ export interface ProcessContent {
     /** A second analysis step within the same finding (drill-down, context, hypothesis test). */
     deepDive?: {
       title: string;
-      /** A business question put to Minerva, shown above the text. */
-      prompt?: string;
+      /** One or more business questions put to Minerva, shown above the text. */
+      prompt?: string | string[];
       text: string[];
       questions?: string[];
       /** Short titled statements, e.g. the rules of a decision hypothesis. */
       points?: Array<{ title: string; text: string }>;
       images?: ProcessImage[];
     };
-    note?: { title: string; text: string };
+    /** A closing statement; without `text`, the title stands alone. */
+    note?: { title: string; text?: string };
   }>;
 
   /** Why AI needs a causal analysis basis: titled blocks that each end in a quote. */
@@ -148,6 +178,9 @@ export interface ProcessContent {
     image?: ProcessImage;
     note?: string;
   };
+
+  /** What the causal analysis changes in this case: numbered lessons after the AI context. */
+  takeaways?: { heading: string; lead: string[]; items: Array<{ title: string; text: string }> };
 
   /** Context objects that enrich the analysis without being happy-path steps. */
   contextObjects?: { heading: string; lead: string; items: Array<{ name: string; text: string }> };
@@ -266,6 +299,33 @@ const IMG = {
   impactBoardKanban: { src: impactBoardKanban, width: 1770, height: 917 },
   impactBoardQuadrangle: { src: impactBoardQuadrangle, width: 972, height: 900 },
   impactBoardRoi: { src: impactBoardRoi, width: 991, height: 1310 },
+  a2dEntityModelDe: { src: a2dEntityModelDe, width: 2000, height: 1617 },
+  a2dEntityModelEn: { src: a2dEntityModelEn, width: 2000, height: 1617 },
+  a2dEndToEnd: { src: a2dEndToEnd, width: 2000, height: 822 },
+  a2dPreparation: { src: a2dPreparation, width: 2000, height: 776 },
+  a2dSurgery: { src: a2dSurgery, width: 2000, height: 926 },
+  a2dBedRelease: { src: a2dBedRelease, width: 1773, height: 1014 },
+  a2dDashboard: { src: a2dDashboard, width: 1240, height: 946 },
+  a2dRawComparisons: { src: a2dRawComparisons, width: 1438, height: 426 },
+  a2dTeamCCheck: { src: a2dTeamCCheck, width: 862, height: 741 },
+  a2dStaffingCheck: { src: a2dStaffingCheck, width: 1076, height: 472 },
+  a2dCancellationCauses: { src: a2dCancellationCauses, width: 1862, height: 775 },
+  a2dDocumentedDelays: { src: a2dDocumentedDelays, width: 715, height: 596 },
+  a2dFirstCasePunctuality: { src: a2dFirstCasePunctuality, width: 837, height: 406 },
+  a2dReworkPattern: { src: a2dReworkPattern, width: 1905, height: 1036 },
+  a2dReworkReasons: { src: a2dReworkReasons, width: 1280, height: 907 },
+  a2dReworkByWard: { src: a2dReworkByWard, width: 618, height: 477 },
+  a2dBedReleasePaths: { src: a2dBedReleasePaths, width: 747, height: 465 },
+  a2dBedReleaseByWard: { src: a2dBedReleaseByWard, width: 282, height: 477 },
+  a2dBedReleaseTimeline: { src: a2dBedReleaseTimeline, width: 1575, height: 765 },
+  a2dFirstBedRelease: { src: a2dFirstBedRelease, width: 612, height: 557 },
+  a2dForwardCascade: { src: a2dForwardCascade, width: 2000, height: 1538 },
+  a2dForwardCascadeTable: { src: a2dForwardCascadeTable, width: 934, height: 859 },
+  a2dBacklogView: { src: a2dBacklogView, width: 1805, height: 1162 },
+  a2dBacklogCause: { src: a2dBacklogCause, width: 667, height: 792 },
+  a2dFourTriggers: { src: a2dFourTriggers, width: 855, height: 657 },
+  a2dBedReleaseChain: { src: a2dBedReleaseChain, width: 707, height: 657 },
+  a2dImpactBoard: { src: a2dImpactBoard, width: 1261, height: 1001 },
 };
 
 export const endToEndProcesses: EndToEndProcess[] = [
@@ -4298,6 +4358,1348 @@ export const endToEndProcesses: EndToEndProcess[] = [
         caseText:
           'The detailed case description with screenshots from Noreja is in progress. Until then, we are happy to show you the analysis directly: plan vs. actual, waiting times and tied-up capital – based on your routings and confirmation data.',
         caseCta: 'Book a demo',
+      },
+    },
+  },
+  {
+    id: 'admission-to-discharge',
+    name: 'Admission-to-Discharge',
+    caseUrl: 'https://docs.noreja.com/de/article/op-patientenpfad-das-symptom-zeigt-sich-im-op-die-ursache-liegt-woanders',
+    dateModified: '2026-11-10',
+    content: {
+      de: {
+        scenario: 'End-to-End-Prozess · OP-Patientenpfad im Krankenhaus',
+        metaTitle: 'Admission-to-Discharge: Process Mining im OP-Patientenpfad | Noreja',
+        metaDescription:
+          'OP-Patientenpfad von der Station über OP-Saal und Aufwachraum bis zur Verlegung: wie Causal Process Mining die Ursachen von OP-Holds, verspäteten Erstfällen und Absetzungen wegen Zeitmangels findet – und warum sie oft nicht im OP liegen.',
+        keywords: [
+          'Admission-to-Discharge',
+          'OP-Patientenpfad',
+          'perioperativer Prozess',
+          'Process Mining im Krankenhaus',
+          'Process Mining im Gesundheitswesen',
+          'OP-Management',
+          'OP-Effizienz',
+          'OP-Kapazität',
+          'OP-Absetzung',
+          'OP-Hold',
+          'Aufwachraum',
+          'Patientenfluss',
+          'Bettenmanagement',
+          'Wechselzeit',
+          'Ursachenanalyse',
+          'KI im Krankenhaus',
+          'Event Knowledge Graph',
+          'Causal Process Mining',
+        ],
+        tagline:
+          'Wie Causal Process Mining verborgene Ursachen zwischen Station, Aufwachraum und OP-Saal sichtbar macht.',
+        intro: {
+          heading: 'Das Symptom zeigt sich im OP. Die Ursache liegt woanders.',
+          text: [
+            'Viele OP-Initiativen verfolgen dieselben Ziele: mehr Planbarkeit, eine bessere Auslastung der OP-Säle und weniger Verzögerungen oder Absetzungen. Pünktlichkeit, Wechselzeiten oder OP-Holds wirken dabei zunächst wie die naheliegenden Steuerungsgrößen.',
+            'Doch gerade im perioperativen Prozess entstehen Verzögerungen oft an ganz anderer Stelle: bei einer unvollständigen Vorbereitung auf der Station, bei einem fehlenden Bett nach dem Aufwachraum oder bei einem Rückstau an gemeinsam genutzten Ressourcen.',
+          ],
+          quote: 'Im OP wird das Problem sichtbar. Die Ursache liegt oft woanders. Wer nur den OP optimiert, behandelt das Symptom.',
+        },
+        definition:
+          'Admission-to-Discharge beschreibt den Weg eines Patienten durch das Krankenhaus – von der Aufnahme bis zur Entlassung. Dieser Case betrachtet den OP-Patientenpfad, auch perioperativer Patientenpfad genannt: den End-to-End-Prozess rund um einen operativen Eingriff mit präoperativer Vorbereitung und Freigabe, Patientenabruf und Transport, Einleitung und Operation, Ausleitung und Saalaustritt, Versorgung im Aufwachraum (AWR) sowie der Verlegung auf Station oder Intensivstation. Auf einer Prozessfolie wirkt der Ablauf linear. In der Realität greifen mehrere Patienten, Teams und gemeinsam genutzte Ressourcen ineinander: Ein OP-Saal wartet auf einen Patienten, ein Patient auf die vollständige Vorbereitung, ein AWR-Platz auf die Verlegung eines Vorgängers und dieser auf ein freies Bett auf Station. Causal Process Mining erhält diese Granularität und die Beziehungen zwischen Patient, OP, Saal, Aufwachraum, Bett und Station.',
+        demoNote:
+          'Hinweis: Die Kennzahlen auf dieser Seite stammen aus einem synthetischen perioperativen Datensatz mit 2.400 OP-Vorgängen. Sie zeigen die Analysemethode und sind keine Produktivkennzahlen eines Krankenhauses.',
+        definitionImage: {
+          ...IMG.a2dEntityModelDe,
+          alt: 'Event Knowledge Graph des OP-Patientenpfads: Aktivitäten aus 26 Tabellen, gruppiert nach vier OP-Sälen, drei Stationen, dem Aufwachraum (AWR), den Absetzungen und den übergreifenden Aktivitäten – von Patientenaufnahme, Checkliste, Prämedikation und Nüchternheit über Patient im Saal und Anästhesie bis zu Verlegungsfreigabe, Bettfreimeldung und Übergabe auf Station',
+          caption:
+            'Event Knowledge Graph des OP-Prozesses: Patient, OP-Fall, Saal, Aufwachraum, Bett und Station bleiben verbunden – Komplexität wird bei der Analyse reduziert, nicht bereits beim Datenimport.',
+        },
+
+        keyFacts: [
+          {
+            value: '67,2 %',
+            label: 'Pünktliche erste Saaleintritte',
+            detail: 'innerhalb von 15 Minuten nach geplantem Saaleintritt',
+          },
+          {
+            value: '431',
+            label: 'OP-Holds',
+            detail: 'Patient kann den Saal nicht verlassen, weil der AWR voll ist',
+          },
+          {
+            value: '143',
+            label: 'Abgesetzte Eingriffe',
+            detail: 'davon 107 wegen Zeitmangels, 36 wegen fehlender Nüchternheit',
+          },
+          {
+            value: '374,1 h',
+            label: 'Blockierte OP-Kapazität',
+            detail: 'kumulierte Hold-Zeit; nicht automatisch 1:1 vermeidbar',
+          },
+          {
+            value: '514',
+            label: 'OPs mit Saalaustritt nach 15:30 Uhr',
+            detail: 'Überzug über das geplante Saalende',
+          },
+          {
+            value: '752',
+            label: 'Nachgeholte Vorbereitungen',
+            detail: '31,3 % aller OP-Vorgänge, im Mittel rund 45 Minuten',
+          },
+          {
+            value: '2.400',
+            label: 'OP-Vorgänge',
+            detail: 'gesamter synthetischer Datenbestand',
+          },
+          {
+            value: '26',
+            label: 'Tabellen aus 5 Systemen',
+            detail: 'im Demo-Setup in einem Event Knowledge Graph zusammengeführt',
+          },
+        ],
+
+        phasesHeading: 'Der Prozess in drei Blöcken',
+        phasesLead:
+          'Die End-to-End Causal Perspective verbindet Station, OP-Saal, Aufwachraum und Bett in einer fachlichen Sicht. Erst für die konkrete Fachfrage entsteht daraus eine passende Causal Perspective – zum Beispiel End-to-End, Vorbereitung, OP, AWR/Bettmeldung oder Saaltag.',
+        phasesImage: {
+          ...IMG.a2dEndToEnd,
+          alt: 'End-to-End Causal Perspective des perioperativen Patientenpfads: von der elektiven Aufnahme oder Notfallaufnahme über die Vorbereitung auf drei Stationen, Patientenabruf, OP-Schleuse und Umlagerung, die Abläufe in den OP-Sälen und die Übergabe an das AWR-Personal oder die Intensivstation bis zu Verlegungsfreigabe, Bettfreimeldung, Abholung aus dem AWR und Übergabe auf Station',
+          caption: 'End-to-End Causal Perspective des OP-Patientenpfads von der Station über den OP bis zur Verlegung.',
+        },
+        phases: [
+          {
+            title: 'Präoperative Vorbereitung & Patientenabruf',
+            summary:
+              'Der Patient wird auf der Station vorbereitet: Aufklärung, Labor, Prämedikation und Checkliste. Erst wenn alle Voraussetzungen erfüllt sind, kann er abgerufen und transportiert werden. Fehlen Schritte, werden sie kurzfristig nachgeholt – der Patient erreicht den Saal später.',
+            steps: [
+              'Patientenfall auf Station aufgenommen',
+              'Vorbereitungsauftrag',
+              'OP-Checkliste abgearbeitet',
+              'Prämedikation verabreicht',
+              'Nüchternheit festgestellt',
+              'Abruf durch OP',
+              'Patient abgeholt',
+              'OP-Schleuse & Identitätskontrolle',
+              'Patient im Saal',
+            ],
+            objects: ['Patient', 'OP-Fall', 'Station', 'Präoperative Vorbereitung', 'Checkliste', 'Aufklärung', 'Labor', 'Prämedikation', 'Patiententransport'],
+            question: 'Welche vorbereitenden Schritte verhindern einen pünktlichen Patientenabruf – und welche davon lassen sich früher oder verlässlicher abschließen?',
+            image: {
+              ...IMG.a2dPreparation,
+              alt: 'Causal Perspective der präoperativen Vorbereitung: elektive Aufnahme oder Notfallaufnahme, je Station 1 bis 3 Patientenfall, Vorbereitungsauftrag, OP-Checkliste, Prämedikation, Nüchternheit, Abruf durch den OP und Patient abgeholt, danach OP-Schleuse, Identitätskontrolle, Umlagerung und Patient im Saal; abzweigend „Vorbereitung nachholen“ sowie die Absetzungen wegen fehlender Nüchternheit und zu späten Saalbeginns',
+              caption: 'Präoperative Vorbereitung, Patientenabruf, Transport und nachgeholte Vorbereitungsschritte.',
+            },
+          },
+          {
+            title: 'Einleitung, Operation & Saalsteuerung',
+            summary:
+              'Patient, OP-Saal, Anästhesieteam und chirurgisches Team treffen zusammen. Auf Einleitung und Eingriff folgen Ausleitung, Saalaustritt und der Wechsel zum nächsten Patienten. Verzögert sich ein früher Fall, kann sich die Abweichung über alle folgenden OPs des Saaltags aufbauen.',
+            steps: [
+              'Patient im Saal',
+              'Lagerung geprüft',
+              'Anästhesiebeginn',
+              'Anästhesiefreigabe',
+              'Team-Time-Out',
+              'Schnitt',
+              'Naht',
+              'Ausleitung',
+              'Anästhesieende',
+              'Saal verlassen',
+              'Saal gereinigt',
+            ],
+            objects: ['Patient', 'OP-Fall', 'OP-Saal', 'Anästhesieteam', 'OP-Team', 'Fachrichtung', 'Vorgänger- und Folgeeingriff'],
+            question: 'Entsteht die Verzögerung tatsächlich im OP-Saal – oder sehen wir dort nur die Auswirkung einer Ursache, die bereits vorher entstanden ist?',
+            image: {
+              ...IMG.a2dSurgery,
+              alt: 'Causal Perspective des Saaltags: vom Saalbeginn über Umlagerung und Patient im Saal in vier parallele Saalstränge mit Lagerung geprüft, Anästhesiebeginn, Anästhesiefreigabe, Team-Time-Out, Schnitt, Naht, Ausleitung und Anästhesieende bis Saal verlassen und Saal gereinigt, anschließend Übergabe an das AWR-Personal oder die Intensivstation und Saalende',
+              caption: 'Einleitung, Operation und Saalbelegung: Auf dem Saaltag bauen sich fallübergreifende Verzögerungskaskaden auf.',
+            },
+          },
+          {
+            title: 'Aufwachraum, Bett & Rückverlegung',
+            summary:
+              'Nach dem Eingriff wird der Patient im Aufwachraum versorgt und anschließend auf Station oder Intensivstation verlegt. Ist er verlegungsbereit, aber noch kein Bett gemeldet, bleibt der AWR-Platz belegt. Ist der AWR voll, kann der nächste Patient den OP-Saal nicht verlassen.',
+            steps: [
+              'Übergabe an AWR-Personal',
+              'Überwachung begonnen',
+              'Schmerztherapie begonnen',
+              'Verlegungsfreigabe',
+              'Bett frei gemeldet',
+              'Abholung aus AWR',
+              'Übergabe Station',
+            ],
+            objects: ['Patient', 'OP-Fall', 'Aufwachraum', 'AWR-Platz', 'Verlegungsfreigabe', 'Stationsbett', 'Station', 'Intensivstation', 'Patiententransport'],
+            question: 'Was hält den Patienten nach der Verlegungsfreigabe tatsächlich im Aufwachraum – das fehlende Bett, der Transport oder ein anderer Engpass?',
+            image: {
+              ...IMG.a2dBedRelease,
+              alt: 'Causal Perspective von Aufwachraum und Bettfreigabe: von Patient im Saal über die Verlegungsfreigabe zu „Bett frei melden“ für Station 1 bis 4 beziehungsweise „Bett frei gemeldet“, weiter zur Abholung aus dem AWR und zur Übergabe auf Station 1 bis 4',
+              caption: 'Rückstau zwischen Aufwachraum, Bettfreimeldung, Patiententransport und OP-Saal.',
+            },
+          },
+        ],
+        objectsNote:
+          'Ein Patient kann mehrere Eingriffe haben, ein OP-Saal versorgt pro Saaltag mehrere Patienten nacheinander, AWR-Plätze und Stationsbetten werden von wechselnden Patienten belegt. Diese gemeinsam genutzten Ressourcen verbinden Fälle über Fallgrenzen hinweg – genau dort entstehen Verzögerungen, die eine reine Einzelfallsicht nicht erklärt.',
+
+        findingsHeading: 'Fünf Findings entlang des OP-Patientenpfads',
+        findingsLead:
+          'Die Findings führen von der Management-Kennzahl über drei widerlegte Verdachtsmomente bis zu den fallübergreifenden Kaskaden. Jedes verschiebt die Frage von „Wo zeigt sich das Problem?“ zu „Wo entsteht es?“.',
+        findings: [
+          {
+            area: 'Kennzahlen',
+            title: 'Die Kennzahlen zeigen das Wo – aber noch nicht das Warum',
+            metric: '67,2 %',
+            metricLabel: 'der ersten OPs eines Saaltags beginnen pünktlich – innerhalb von 15 Minuten nach geplantem Saaleintritt',
+            text: [
+              'Nur 67,2 % der ersten OPs beginnen pünktlich. 431 OPs sind von einem OP-Hold betroffen, insgesamt 374,1 Stunden blockierte OP-Kapazität. 143 Eingriffe werden abgesetzt, davon 107 wegen Zeitmangels.',
+              'Das Problem scheint klar: Der OP verliert Zeit und Kapazität. Die Kennzahlen sagen aber nicht, wo dieser Verlust entsteht.',
+            ],
+            shift: {
+              from: 'Wie wird der OP schneller?',
+              to: 'Wo entsteht der Zeitverlust, der im OP sichtbar wird?',
+            },
+            image: {
+              ...IMG.a2dDashboard,
+              alt: 'Management-Dashboard OP-Bereich „Kapazität sichern. Schnittstellen gemeinsam steuern.“: 67,2 % Erstfälle pünktlich (640 von 952), 431 OPs mit OP-Hold, 374,1 Stunden kumulierte Hold-Zeit, 514 OPs nach 15:30 Uhr fertig und 143 abgesetzte Eingriffe, davon 107 wegen Zeitmangels und 36 wegen fehlender Nüchternheit; darunter die OPs nach 15:30 Uhr je Saal',
+              caption: 'Management-Dashboard: pünktliche Erstfälle, OP-Holds, blockierte Saalzeit, Tagesende und abgesetzte Eingriffe.',
+            },
+          },
+          {
+            area: 'Gegenprüfung',
+            title: 'Drei naheliegende Verdächtige – keiner hält der Gegenprüfung stand',
+            metric: '0 von 3',
+            metricLabel: 'naheliegenden Erklärungen – Anästhesieteam C, Saal 4 und AWR-Personal – halten dem Vergleich vergleichbarer Fälle stand',
+            text: [
+              'Die ersten Analysen zeigen drei auffällige Zusammenhänge. Jeder davon legt eine schnelle Maßnahme nahe: Team C trainieren, Saal 4 optimieren, mehr Personal in den Aufwachraum.',
+              'Die Daten waren korrekt. Die naheliegenden Schlussfolgerungen waren nicht ausreichend begründet.',
+            ],
+            table: {
+              text: true,
+              caption: 'Rohvergleich und Gegenprüfung',
+              head: ['Verdacht', 'Rohvergleich', 'Gegenprüfung'],
+              rows: [
+                [
+                  'Anästhesieteam C ist langsamer',
+                  'Einleitung im Mittel 29,7 min (Team A 18,7, Team B 18,3)',
+                  'Bei vergleichbaren Patienten (ASA) gleich schnell – Team C betreut vor allem die schweren Fälle',
+                ],
+                [
+                  'Saal 4 arbeitet ineffizient',
+                  'Deutlich höherer Median der Wechselzeit',
+                  'Saal 4 übernimmt Fälle aus mehreren Fachrichtungen; die Fachrichtungswechsel kosten Zeit, nicht der Saal',
+                ],
+                [
+                  'Zu wenig Personal im AWR',
+                  'Holdquote 40,5 % bei reduzierter, 14,5 % bei voller Besetzung',
+                  'Der AWR ist belegt, weil Patienten auf ein Bett warten – der Engpass liegt weiter hinten in der Ressourcenkette',
+                ],
+              ],
+            },
+            shift: {
+              from: 'Team C trainieren, Saal 4 optimieren, mehr AWR-Personal',
+              to: 'Hält der Unterschied stand, wenn wir vergleichbare Fälle vergleichen?',
+            },
+            image: {
+              ...IMG.a2dRawComparisons,
+              alt: 'Drei Dashboard-Kacheln mit Rohvergleichen: Anästhesieeinleitung im Mittel 22,1 Minuten bei 1.607 Eingriffen (Team A 18,7, Team B 18,3, Team C 29,7 Minuten), Wechselzeit im Mittel 40,5 Minuten bei einem Median von 28,3 Minuten und 1.305 Wechseln (Saal 4 mit einem Median von 40,8 Minuten gegenüber 26,0 bis 27,6 Minuten in Saal 1 bis 3) sowie eine Holdquote von 14,5 % bei voller und 40,5 % bei reduzierter AWR-Besetzung',
+              caption: 'Auffällige Zusammenhänge im Rohvergleich: Anästhesieteam, Wechselzeit je Saal und Holdquote nach AWR-Besetzung.',
+            },
+            extraImages: [
+              {
+                ...IMG.a2dTeamCCheck,
+                alt: 'Minerva-Antwort zur Einleitungsdauer: Team C betreut zu 88,2 % Patienten der ASA-Klassen III–IV (450 von 510), Team A und B zusammen zu 10,2 % (112 von 1.097); bei vergleichbaren Patientengruppen nach ASA-Klasse und vorhandenem Zugang liegen die Mittelwerte nahe beieinander, etwa 22,4 gegenüber 22,6 Minuten bei ASA III–IV mit vorhandenem Zugang',
+                caption: 'Team C: Der Patientenmix nach ASA-Klasse erklärt den größten Teil der längeren Einleitungsdauer.',
+              },
+              {
+                ...IMG.a2dStaffingCheck,
+                alt: 'Minerva-Tabelle „Warum bleiben AWR-Plätze gebunden?“ für 1.619 Verläufe bei voller und 504 bei reduzierter Besetzung: In beiden Gruppen bleiben verlegungsbereite Patienten im Mittel rund eine Stunde im AWR (66,4 beziehungsweise 61,2 Minuten), der größere Teil davon zwischen Verlegungsfreigabe und Bettfreimeldung',
+                caption: 'AWR-Personal: Verlegungsfähige Patienten bleiben bei voller wie reduzierter Besetzung rund eine Stunde im AWR – vor allem vor der Bettfreimeldung.',
+              },
+            ],
+            deepDive: {
+              title: 'Vom Symptom zur Root-Cause-Analyse',
+              prompt: [
+                'Analysiere, warum Operationen abgesagt wurden.',
+                'Welche Vorgänger-OPs und Ressourcenkonflikte haben zu den 107 wegen Zeitmangels abgesetzten Eingriffen beigetragen?',
+              ],
+              text: [
+                'Von den 143 abgesetzten Eingriffen wurden 107 wegen Zeitmangels abgesetzt. „Zeitmangel“ ist allerdings kein Root Cause, sondern der dokumentierte Anlass am Ende einer Entwicklung.',
+                'Die 107 Fälle verteilen sich auf 95 Saaltage. Um zu verstehen, wie die fehlende Zeit entstanden ist, reicht der Blick auf den abgesetzten Patienten nicht. Die Analyse bezieht die Vorgänger-OPs desselben Saaltags und die gemeinsam genutzten Ressourcen ein. Drei Verzögerungsmuster wiederholen sich:',
+              ],
+              points: [
+                { title: 'Vor dem OP', text: 'Vorbereitungsschritte werden nachgeholt.' },
+                { title: 'Nach dem OP', text: 'Patienten bleiben durch OP-Holds länger im Saal.' },
+                { title: 'Zwischen den Eingriffen', text: 'Verzögerungen aus Vorgängerfällen übertragen sich auf nachfolgende OPs.' },
+              ],
+              images: [
+                {
+                  ...IMG.a2dCancellationCauses,
+                  alt: 'Saaltag-Ansicht, gefiltert auf die 107 wegen Zeitmangels abgesetzten Eingriffe auf 95 Saaltagen, daneben die Minerva-Antwort: Alle Absetzungen betreffen elektive Eingriffe, auf diesen Saaltagen wurden 115 Vorbereitungen nachgeholt, und 39 der Tage haben keine ausgewiesene Startverspätung; als Fehlerbilder folgen nachgeholte Prämedikation (35), fehlendes Labor (28), fehlende Einwilligung (28) und unvollständige Checkliste (24)',
+                  caption: 'Minerva: Ursachen der 107 wegen Zeitmangels abgesetzten Eingriffe – ein verspäteter Tagesbeginn allein erklärt sie nicht.',
+                },
+                {
+                  ...IMG.a2dDocumentedDelays,
+                  alt: 'Minerva-Tabelle zu den Saaleintritten: 144 Vorgänge mit vorgängerbedingter Verzögerung, im Mittel 1 Stunde 55 Minuten, und 57 Vorgänge mit AWR-bedingter Saalblockierung (OP-Hold), im Mittel 1 Stunde 7 Minuten und maximal 2 Stunden 52 Minuten',
+                  caption: 'Minerva: vor- und nachgelagerte Verzögerungen – Vorgängerverspätung und AWR-bedingte OP-Holds.',
+                },
+              ],
+            },
+            note: {
+              title: 'Die Ursache einer abgesetzten OP liegt nicht zwingend im abgesetzten Fall selbst. Sie kann Stunden früher und bei einem anderen Patienten entstanden sein.',
+            },
+          },
+          {
+            area: 'Vorbereitung',
+            title: 'Nachgeholte Vorbereitung lässt den Erstfall platzen',
+            metric: '26,3 % vs. 91,8 %',
+            metricLabel: 'pünktliche erste Saaleintritte mit beziehungsweise ohne nachgeholte Vorbereitung – insgesamt sind es 67,2 %',
+            text: [
+              'In 752 von 2.400 Fällen (31,3 %) wird präoperative Vorbereitung nachgeholt, im Mittel rund 45 Minuten. Die dokumentierten Gründe sind eine unvollständige Checkliste, die Prämedikation, die Aufklärung und das Labor.',
+              'Besonders deutlich wird der Zusammenhang beim ersten Fall des Tages: Mit nachgeholter Vorbereitung beginnen nur 26,3 % pünktlich, ohne nachgeholte Vorbereitung 91,8 % – insgesamt sind es 67,2 %.',
+            ],
+            prompt:
+              'Welche fehlenden Vorbereitungsschritte treiben verspätete erste Saaleintritte? Auf welchen Stationen treten sie besonders häufig auf?',
+            table: {
+              caption: 'Dokumentierte Gründe für nachgeholte Vorbereitung',
+              head: ['Nachholgrund', 'Fälle', 'Anteil'],
+              rows: [
+                ['Checkliste unvollständig', '223', '29,7 %'],
+                ['Prämedikation', '189', '25,1 %'],
+                ['Aufklärung', '187', '24,9 %'],
+                ['Labor', '153', '20,3 %'],
+                ['Gesamt', '752', '100 %'],
+              ],
+            },
+            shift: {
+              from: 'Warum startet der erste OP zu spät?',
+              to: 'Welcher Vorbereitungsschritt fehlt beim Abruf – und auf welcher Station?',
+            },
+            image: {
+              ...IMG.a2dFirstCasePunctuality,
+              alt: 'Saaltag-Ansicht mit Filter auf nachgeholte Vorbereitung und Minerva-Überblick zum OP-Bereich 2025: 261 OP-Tage mit 952 Saaltagen in 4 OP-Sälen und 2.257 durchgeführten Eingriffen; Pünktlichkeit des Tagesstarts 67,2 % gesamt, 26,3 % mit und 91,8 % ohne nachgeholte Vorbereitung; bei 84,3 % der verspäteten Tagesstarts wurde die Vorbereitung der ersten OP nachgeholt',
+              caption: 'Einfluss der Vorbereitung auf die Pünktlichkeit des ersten Saaleintritts.',
+            },
+            extraImages: [
+              {
+                ...IMG.a2dReworkPattern,
+                alt: 'Causal Perspective der Vorbereitung mit aktiviertem Fehlermuster „Nachbearbeitung“: rote Rücksprünge vom angenommenen Abrufauftrag zurück zum Vorbereitungsauftrag – 521 Fälle auf Station 2, 143 auf Station 3 und 88 auf Station 1',
+                caption: 'Fehlermuster „Nachbearbeitung“: Nach dem Abruf springt der Prozess zurück in die Vorbereitung.',
+              },
+              {
+                ...IMG.a2dReworkReasons,
+                alt: 'Detailansicht der Aktivität „Vorbereitung nachholen (Start)“ mit 752 Einträgen: Checkliste unvollständig 29,65 %, Prämedikation fehlt 25,13 %, Einwilligung fehlt 24,87 %, Labor fehlt 20,35 %',
+                caption: 'Nachholgründe aus den Eigenschaften der Aktivität: 752 nachgeholte Vorbereitungen.',
+              },
+              {
+                ...IMG.a2dReworkByWard,
+                alt: 'Minerva-Kreisdiagramm „Nachholvorbereitung nach Herkunftsstation“: Station 2 mit 521 Fällen (69 %), Station 3 mit 143 (19 %) und Station 1 mit 88 (12 %)',
+                caption: 'Minerva: Rund 69 % der nachgeholten Vorbereitungen entfallen auf Station 2.',
+              },
+            ],
+          },
+          {
+            area: 'AWR & Bett',
+            title: 'Der OP ist blockiert, weil die Station kein Bett meldet',
+            metric: '66,9 min',
+            metricLabel: 'vergehen auf Station 2 im Mittel von der Verlegungsfreigabe bis zur Bettfreimeldung – auf Station 1 sind es 19,3 Minuten',
+            text: [
+              'Die Analyse des Pfads Verlegungsfreigabe → Bettfreimeldung → Abholung zeigt deutliche Unterschiede zwischen den Stationen.',
+              'Der anschließende Transport dauert auf allen drei Stationen vergleichbare 15–16 Minuten. Der Engpass ist also nicht die Abholung, sondern die Bettfreimeldung.',
+              'Wird ein verlegungsbereiter Patient nicht weiterverlegt, bleibt sein AWR-Platz belegt. Füllt sich der AWR, reicht der Rückstau bis in den OP.',
+            ],
+            table: {
+              caption: 'Von der Verlegungsfreigabe bis zur Bettfreimeldung je Station',
+              head: ['Station', 'Verlegungsfreigabe bis Bettfreimeldung', 'Erste Bettfreimeldung meist um'],
+              rows: [
+                ['Station 1', '19,3 min', '12:00 Uhr'],
+                ['Station 3', '45,6 min', '13:00 Uhr'],
+                ['Station 2', '66,9 min', '13:30 Uhr'],
+              ],
+            },
+            shift: {
+              from: 'Brauchen wir mehr Personal im Aufwachraum?',
+              to: 'Warum ist der Aufwachraum zum Zeitpunkt des Holds voll?',
+            },
+            image: {
+              ...IMG.a2dBedReleasePaths,
+              alt: 'Causal Perspective von der Verlegungsfreigabe (2.123 Fälle) über „Bett frei melden“ je Station zur Abholung aus dem AWR: Station 2 mit 952 Fällen (45 %) und im Mittel 1 Stunde 6 Minuten, Station 3 mit 727 Fällen (34 %) und 45 Minuten, Station 1 mit 444 Fällen (21 %) und 19 Minuten bis zur Bettfreimeldung; danach jeweils rund 15 Minuten bis zur Abholung',
+              caption: 'Wartezeit zwischen Verlegungsfreigabe, Bettfreimeldung und Abholung nach Station.',
+            },
+            extraImages: [
+              {
+                ...IMG.a2dBedReleaseByWard,
+                alt: 'Minerva-Antwort „Bettfreimeldung: Station 2 wartet am längsten“: im Mittel 19,3 Minuten auf Station 1 (444 Freimeldungen), 45,6 Minuten auf Station 3 (727) und 66,9 Minuten auf Station 2 (952); Station 2 benötigt rund 48 Minuten länger als Station 1, die Transportwartezeit liegt auf allen Stationen bei 15 bis 16 Minuten',
+                caption: 'Minerva: Station 2 benötigt bis zur Bettfreimeldung rund 3,5-mal so lange wie Station 1.',
+              },
+              {
+                ...IMG.a2dBedReleaseTimeline,
+                alt: 'Zeitliche Verteilung der Ereignisse im Tagesverlauf mit eingeblendetem Einzelfall: Patient im Saal, Übergabe an das AWR-Personal, Verlegungsfreigabe, „Bett frei melden (Station 2)“ 2 Stunden 16 Minuten später, Abholung aus dem AWR und Übergabe auf Station 2',
+                caption: 'Einzelfall im Tagesverlauf: Zwischen Verlegungsfreigabe und Bettfreimeldung vergehen über zwei Stunden.',
+              },
+              {
+                ...IMG.a2dFirstBedRelease,
+                alt: 'Minerva-Tabelle „Erste Bettfreimeldung je Kalendertag und Station“ mit dokumentierten Freimeldungen, Kalendertagen, mittlerer und medianer erster Tagesmeldung und häufigster exakter Uhrzeit: Auf Station 2 fällt die erste Meldung an 245 von 257 Tagen (95,3 %) auf dieselbe Uhrzeit, auf Station 3 an 224 von 252 Tagen (88,9 %)',
+                caption: 'Stationsabhängige Muster: Die erste Bettfreimeldung des Tages fällt fast immer auf dieselbe feste Uhrzeit.',
+              },
+            ],
+            note: {
+              title: 'Eine Verzögerung auf der Station wird dort sichtbar, wo man sie zunächst nicht vermutet: im OP-Saal.',
+            },
+          },
+          {
+            area: 'Kaskaden',
+            title: 'Der OP-Stau entsteht zwischen den Fällen',
+            metric: '33 → 74 → 110 min',
+            metricLabel: 'Startverzögerung der ersten drei Eingriffe in Saal 4 am 25.11.2025 – der vierte geplante Eingriff wird wegen Zeitmangels abgesetzt',
+            text: [
+              'Die beiden Hauptmechanismen laufen in entgegengesetzte Richtungen.',
+              'Mit dem Patientenfluss: Nutzen mehrere Eingriffe nacheinander denselben Saal, setzt sich ein später Start von Fall zu Fall fort. In Saal 4 am 25.11.2025 muss beim ersten Eingriff die Checkliste nachgeholt werden. Der Fall startet mit 33 Minuten Verzögerung, der nächste mit 74, der dritte mit 110 Minuten. Der vierte geplante Eingriff wird wegen Zeitmangels abgesetzt.',
+              'Gegen den Patientenfluss: Patienten warten nach der Verlegungsfreigabe auf ein Stationsbett, AWR-Plätze bleiben belegt, im Beispiel kommt eine verspätete Abholung hinzu. Am Ende sind mehrere OP-Säle gleichzeitig betroffen – mit Holds von 59, 42 und 60 Minuten.',
+            ],
+            table: {
+              caption: 'Saal 4 am 25.11.2025: vier Eingriffe, eine Kaskade',
+              head: ['Eingriff', 'Planbeginn', 'Saaleintritt', 'Planabweichung', 'Abgesetzt'],
+              rows: [
+                ['OP 423 · Appendektomie', '08:30:00', '09:03:17', '+33 min', 'nein'],
+                ['OP 2057 · Sigmaresektion', '10:55:26', '12:09:03', '+74 min', 'nein'],
+                ['OP 2119 · Hüft-Endoprothese', '12:34:28', '14:24:56', '+110 min', 'nein'],
+                ['OP 215 · Sigmaresektion', '–', '–', '–', 'ja, 15:30 Uhr'],
+              ],
+            },
+            shift: {
+              from: 'Warum wurde dieser Eingriff abgesetzt?',
+              to: 'Welche früheren Fälle und Ressourcenkonflikte haben die Zeit verbraucht?',
+            },
+            image: {
+              ...IMG.a2dForwardCascade,
+              alt: 'Saaltag-Ansicht von Saal 4 am 25.11.2025, nach Zeit sortiert: Patient 1 im Saal um 09:03 Uhr, Patient 2 um 12:09 Uhr, Patient 3 um 14:24 Uhr; der vierte Eingriff wird um 15:30 Uhr als „OP abgesetzt (Kaskade Saalbeginn zu spät)“ dokumentiert; darunter die Übergaben der Vorgänger an den Aufwachraum, Verlegungsfreigaben, Bettfreimeldungen und Abholungen',
+              caption: 'Vier Eingriffe, eine Kaskade: Saal 4 am 25.11.2025.',
+            },
+            extraImages: [
+              {
+                ...IMG.a2dForwardCascadeTable,
+                alt: 'Minerva-Tabelle Saal 4 am 25.11.2025: OP 423 (Appendektomie) mit nachgeholter, unvollständiger Checkliste startet 33 Minuten nach Plan, OP 2057 (Sigmaresektion) 74 Minuten und OP 2119 (Hüft-Endoprothese) 110 Minuten nach Plan; OP 215 (Sigmaresektion) wird um 15:30 Uhr wegen Zeitmangels abgesetzt, während der Saal noch bis 16:17 Uhr durch OP 2119 belegt ist',
+                caption: 'Verzögerungen am Fall selbst und durch vorherige OPs: Die Kaskade beginnt mit der nachgeholten Checkliste am Morgen.',
+              },
+              {
+                ...IMG.a2dBacklogView,
+                alt: 'Bettenfreigabe-Perspektive am Beispieltag 10.07.2025, gefiltert auf mittlere und lange OP-Holds: acht Verläufe von der Verlegungsfreigabe über „Bett frei gemeldet“ (im Mittel 55 Minuten später) und die Abholung aus dem AWR (weitere 22 Minuten) bis zur Übergabe auf Station; davor die Übergaben aus Saal 1, 3 und 4 an das AWR-Personal',
+                caption: 'Rückstaukette: verspätete Bettfreimeldung und Abholung – AWR-Plätze bleiben belegt.',
+              },
+              {
+                ...IMG.a2dBacklogCause,
+                alt: 'Minerva-Ursachenbild „Warum entsteht der OP-Hold?“: Ein noch nicht gemeldetes Stationsbett (zwei auffällige Wartezeiten zur Station 2 von 2 Stunden 39 Minuten und 3 Stunden 7 Minuten) und eine verzögerte Abholung trotz gemeldetem Bett (59 Minuten zur Station 1) halten verlegungsfähige Patienten im Aufwachraum; die AWR-Kapazität bleibt gebunden, OP-Holds blockieren Saal 1 für 59, Saal 3 für 42 und Saal 4 für 60 Minuten – zusammen 2 Stunden 41 Minuten',
+                caption: 'Ursachenbild: Patienten können den OP-Saal nicht verlassen – Holds von 59, 42 und 60 Minuten.',
+              },
+            ],
+            deepDive: {
+              title: 'Vier Auslöser, eine Folge',
+              prompt: 'Fasse die Ursachen der Absetzungen wegen Zeitmangels zusammen.',
+              text: [
+                'Vier Auslöser führen zur selben Folge: Folgeeingriffe rutschen nach hinten, die verbleibende Tageskapazität nimmt ab. Reicht sie nicht mehr, wird der nächste geplante Eingriff wegen Zeitmangels abgesetzt.',
+              ],
+              points: [
+                { title: 'Unvollständige Vorbereitung', text: 'Nachholen vor Transport oder Saaleintritt → späterer Start.' },
+                { title: 'Belegter AWR / fehlendes Bett', text: 'Patient kann nicht weiterverlegt werden → späterer Saalaustritt.' },
+                { title: 'Notfalleinschub', text: 'Geplante Reihenfolge und verfügbare Kapazität verändern sich.' },
+                { title: 'Gebündelte Bettfreimeldungen', text: 'Verlegungsfähige Patienten bleiben länger im AWR.' },
+              ],
+              images: [
+                {
+                  ...IMG.a2dFourTriggers,
+                  alt: 'Minerva-Ursachendiagramm: Unvollständige Vorbereitung führt über das Nachholen vor Transport oder Saaleintritt zu einem späteren Erst- oder Folgestart, ein belegter AWR über den OP-Hold zu späterem Saalaustritt und Wechsel, ein Notfalleinschub verändert Reihenfolge und Kapazität; alle drei verringern die verbleibende Tageskapazität, bis ein geplanter Eingriff nicht mehr beginnen kann und wegen Zeitmangels abgesetzt wird',
+                  caption: 'Minerva: Auslöser einer Verzögerungskette bis zur Absetzung wegen Zeitmangels.',
+                },
+                {
+                  ...IMG.a2dBedReleaseChain,
+                  alt: 'Minerva-Ursachendiagramm zur Bettfreimeldung: Ein regelmäßig später Meldestart – als mögliche organisatorische Freigabeschwelle oder alternativ als gebündelte Dokumentation oder technische Zeitsetzung – lässt Stationsbetten für verlegungsfähige Patienten fehlen; der Patient bleibt trotz medizinischer Freigabe im AWR, nach der Bettmeldung folgen weitere 15 bis 16 Minuten bis zur Abholung, der AWR-Platz bleibt belegt, die nächste Übernahme aus dem OP muss warten und der Patient verbleibt im OP: Hold und Saalblockade',
+                  caption: 'Minerva: Gebündelte Bettfreimeldungen tragen den Rückstau bis zur Saalblockade.',
+                },
+              ],
+            },
+            note: {
+              title: 'Die Absetzung entsteht am Ende des Tages. Die Kaskade beginnt bereits am Morgen.',
+            },
+          },
+        ],
+
+        aiContext: {
+          heading: 'Warum KI Causal Process Mining braucht',
+          lead:
+            'Generative KI kann Muster schnell zusammenfassen und Maßnahmen formulieren. Im OP-Beispiel hätte sie aus den Rohvergleichen sofort drei Maßnahmen abgeleitet: Team C schulen, Saal 4 optimieren, mehr Personal in den Aufwachraum. Keine davon hätte die Ursache getroffen.',
+          blocks: [
+            {
+              title: 'Prozessdaten allein liefern noch keine Bedeutung',
+              text: [
+                'Systemdaten zeigen Werte und Ereignisse: einen Zeitstempel für die Bettfreimeldung, einen Nachholgrund, eine ASA-Klasse. Sie erklären aber nicht automatisch, was ein Merkmal fachlich bedeutet – etwa dass eine ASA-III/IV-Einleitung länger dauern darf, dass ein Fachrichtungswechsel ein anderes Rüsten verlangt oder dass Stationen ihre Betten nach festen Abläufen freimelden.',
+                'Unternehmenskontext ergänzt diese Bedeutung. Causal Process Mining prüft anschließend, wie Merkmale, Prozessverhalten und Ergebnisse über Fälle und Ressourcen hinweg zusammenhängen. Minerva verbindet diese Ebenen im Dialog und macht die Analyse für den Anwender zugänglich.',
+              ],
+              quote: 'Prozessdaten liefern die Fakten. Unternehmenskontext liefert die Bedeutung. Causal Process Mining prüft die Ursachenhypothesen.',
+            },
+            {
+              title: 'Verändern auf Basis der richtigen Analyse',
+              text: [
+                'Für KI-gestützte Prozessentscheidungen sind deshalb vier Dinge entscheidend: die richtige fachliche Granularität, Beziehungen zwischen Patienten, Ressourcen und Ereignissen, Unternehmenskontext und eine Analyse, die Korrelationen nicht vorschnell als Ursachen interpretiert.',
+              ],
+              quote: 'Einen Prozess auf Basis der falschen Analyse zu verändern, macht ihn nicht besser – nur schneller falsch.',
+            },
+          ],
+          image: {
+            ...IMG.minervaAgentsVsLlm,
+            alt: 'Übersicht „Was Minerva-Agenten leisten, was ein LLM allein nicht kann“: Architektur, Agenten & Skills, Konfigurierbarkeit, belegte Antworten, Governance, Kontext, Kausalität und kontinuierlicher Kreislauf 24/7',
+            caption: 'Was Minerva-Agenten leisten, was ein LLM allein nicht kann.',
+          },
+          note: 'Causal Process Mining schafft die analytische Grundlage. Minerva macht sie im Dialog nutzbar.',
+        },
+
+        takeaways: {
+          heading: 'Was Causal Process Mining hier verändert',
+          lead: [
+            'Klassisches Process Mining zeigt sehr gut, was passiert: Varianten, Durchlaufzeiten, Wartezeiten, Wiederholungen und Abweichungen. Für das Warum braucht es zusätzlich Fachlogik, Kontext und fallübergreifende Beziehungen.',
+            'Der Healthcare-Case zeigt vier Dinge, die eine reine KPI- oder Einzelfallanalyse leicht übersieht:',
+          ],
+          items: [
+            {
+              title: 'Korrelation ist nicht automatisch Ursache',
+              text: 'Team C, Saal 4 und AWR-Personal zeigen, wie verführerisch Rohvergleiche sind.',
+            },
+            {
+              title: 'Der betroffene Fall trägt seine Ursache nicht zwingend selbst',
+              text: 'Die Absetzung kann durch Vorgängerfälle oder andere Patienten vorbereitet worden sein.',
+            },
+            {
+              title: 'Gemeinsam genutzte Ressourcen verbinden Fälle',
+              text: 'Saal, AWR-Platz und Stationsbett erzeugen Abhängigkeiten über Fallgrenzen hinweg.',
+            },
+            {
+              title: 'Nicht jedes Finding braucht eine Maßnahme',
+              text: 'Einige Ursachen werden priorisiert, andere weiter untersucht oder verworfen.',
+            },
+          ],
+        },
+
+        measures: {
+          heading: 'Vom Finding zur priorisierten Maßnahme',
+          lead:
+            'Ein Finding verändert noch keinen Prozess. Nach der Analyse entscheidet der Prozessverantwortliche, welche Erkenntnisse tatsächlich bearbeitet werden sollen. Im Business Impact Board werden Findings nach erwarteter Wirkung, Umsetzungsaufwand, Risiko und Unsicherheit bewertet; Process Excellence und Fachbereich priorisieren gemeinsam, welche Entscheidungshypothese als Pilot umgesetzt wird.',
+          tableHeading: 'Mögliche Verbesserungsrichtungen',
+          items: [
+            {
+              finding: 'Bettfreimeldung und AWR-Rückstau',
+              measure: 'Prozess der Bettfreimeldung gemeinsam mit den Stationen prüfen',
+              benefit: 'OP-Holds, blockierte OP-Kapazität, Absetzungen',
+            },
+            {
+              finding: 'Präoperative Vorbereitung',
+              measure: 'Vorbereitung vor dem Patientenabruf vollständig abschließen',
+              benefit: 'Pünktlichkeit Erstfall, Folgeverzögerungen',
+            },
+            {
+              finding: 'Unvollständige Vorbereitung (31,3 %)',
+              measure: 'Checkliste, Prämedikation, Aufklärung und Labor vor dem Abruf prüfen',
+              benefit: 'Nachholquote, Pflegeaufwand, Pünktlichkeit',
+            },
+            {
+              finding: 'Fachrichtungswechsel in Saal 4',
+              measure: 'Belegung nach Fachrichtung bündeln, unvermeidbare Wechsel realistisch einplanen',
+              benefit: 'Wechselzeit, Saalende, Absetzungen',
+            },
+            {
+              finding: 'Team C und AWR-Personal',
+              measure: 'Keine Maßnahme – Scheinkorrelation; Patientenmix beziehungsweise Bettenengpass weiter beobachten',
+              benefit: 'Unsicherheit',
+            },
+          ],
+          image: {
+            ...IMG.a2dImpactBoard,
+            alt: 'Business Impact Board mit vier Findings aus dem OP-Case in der Impact-/Aufwand-Matrix: F-001 zur Vorbereitung erst am OP-Tag und F-002 zu den 107 wegen Zeitmangels abgesetzten OPs als strategisch, F-004 zu den hohen Saalwechselzeiten in Saal 4 als Quick Win und F-003 „Verdacht erhärtet sich nicht: Team C leitet langsamer ein“ mit niedriger Priorität',
+            caption: 'Business Impact Board: vom Finding zur priorisierten Handlungsoption.',
+          },
+          note: 'Die Priorisierung ist eine fachliche Entscheidung. Minerva bereitet Analysewege, Kontext und Handlungsoptionen vor; Kontrolle und Entscheidungshoheit bleiben jederzeit nachvollziehbar beim Prozessverantwortlichen und Fachbereich.',
+        },
+
+        loop: {
+          heading: 'Der Kreislauf: Insight → Action → Impact → Feedback',
+          lead:
+            'Nach der Priorisierung wird eine Maßnahme als Pilot umgesetzt und ihre Wirkung anhand derselben Prozessdaten erneut gemessen. Minerva Frontier Agents können diesen Regelkreis kontinuierlich begleiten: neue Findings erkennen, Hypothesen weiterentwickeln und die Wirkung umgesetzter Maßnahmen beobachten.',
+          steps: [
+            { step: 'Insight', text: 'Vorbereitung und AWR-/Bett-Mechanismen tragen zu sichtbaren Kapazitätsverlusten im OP bei.' },
+            { step: 'Action', text: 'Vorbereitung vor dem Abruf stabilisieren; Ursache der späten Bettfreimeldung organisatorisch adressieren.' },
+            { step: 'Impact', text: 'Erstfall-Pünktlichkeit, Holds, blockierte OP-Kapazität, Absetzungen und Saalende erneut messen.' },
+            { step: 'Feedback', text: 'Zeigt die Umsetzung nicht die erwartete Wirkung, wird die Ursachenhypothese überprüft und angepasst.' },
+          ],
+          questions: [
+            'Beginnen mehr erste OPs innerhalb von 15 Minuten nach Plan?',
+            'Sinkt die Quote nachgeholter Vorbereitung – und auf welchen Stationen?',
+            'Gehen OP-Holds und blockierte OP-Kapazität zurück?',
+            'Werden weniger Eingriffe wegen Zeitmangels abgesetzt?',
+            'Enden weniger OPs nach dem geplanten Saalende um 15:30 Uhr?',
+            'Verschiebt sich der Engpass nur an eine andere Stelle zwischen Station, OP, Aufwachraum und Bett?',
+          ],
+        },
+
+        principlesHeading: 'Vier Prinzipien für die Analyse',
+        principles: [
+          {
+            title: 'Granularität erhalten',
+            text: 'Patient, Saal, AWR-Platz und Bett bleiben verbunden, statt den Prozess vorab auf einen linearen Fall zu reduzieren.',
+          },
+          {
+            title: 'Mit der Business-Frage beginnen',
+            text: 'Die Causal Perspective wird für die konkrete Fachfrage gebildet – End-to-End, Vorbereitung, OP, AWR/Bett oder Saaltag.',
+          },
+          {
+            title: 'Korrelationen gegenprüfen',
+            text: 'Ein auffälliger Rohvergleich ist ein Ausgangspunkt, noch keine Root Cause.',
+          },
+          {
+            title: 'Über den Einzelfall hinausschauen',
+            text: 'Gemeinsam genutzte Ressourcen verbinden Fälle; die Ursache kann bei einem anderen Patienten liegen.',
+          },
+        ],
+
+        conclusion: {
+          heading: 'Fazit: Wer nur den OP optimiert, behandelt das Symptom',
+          text: [
+            'Auffällige Kennzahlen allein sind keine ausreichende Steuerungslogik. Team C wirkt langsamer, Saal 4 fällt bei den Wechselzeiten auf, reduzierte AWR-Besetzung korreliert mit mehr Holds. Wer daraus sofort Maßnahmen ableitet, optimiert möglicherweise nur das sichtbarste Symptom.',
+            'Causal Process Mining verbindet Prozessdaten, fachliche Beziehungen, gemeinsam genutzte Ressourcen und fallübergreifende Abhängigkeiten. Im OP-Beispiel zeigt sich: Nachgeholte Vorbereitung destabilisiert den Tagesstart. Spät oder gebündelt gemeldete Stationsbetten binden AWR-Plätze und tragen den Rückstau bis in den OP. Verzögerungen setzen sich über Vorgängerfälle von Eingriff zu Eingriff fort.',
+            'Aus „den OP optimieren“ wird damit eine konkretere Aufgabe: Vorbereitung stabilisieren, Bett- und AWR-Prozesse gemeinsam betrachten, fallübergreifende Kaskaden verstehen – und anschließend messen, ob die Maßnahmen tatsächlich mehr Stabilität und Kapazität schaffen.',
+          ],
+          claim: 'Nicht nur sehen, wo die Verzögerung auftritt. Verstehen, wo sie entsteht. Ursachen priorisieren. Wirkung messen.',
+        },
+
+        faq: [
+          {
+            question: 'Was ist Admission-to-Discharge?',
+            answer:
+              'Admission-to-Discharge ist der End-to-End-Prozess eines Patienten im Krankenhaus von der Aufnahme bis zur Entlassung. Noreja zeigt ihn am OP-Patientenpfad: präoperative Vorbereitung auf der Station, Patientenabruf und Transport, Einleitung und Operation, Ausleitung und Saalaustritt, Versorgung im Aufwachraum sowie Verlegung auf Station oder Intensivstation. Patienten, OP-Säle, AWR-Plätze und Stationsbetten sind dabei über gemeinsam genutzte Ressourcen miteinander verbunden.',
+          },
+          {
+            question: 'Was ist der perioperative Patientenpfad?',
+            answer:
+              'Der perioperative Patientenpfad – auch OP-Patientenpfad – beschreibt den End-to-End-Prozess rund um einen operativen Eingriff: präoperative Vorbereitung und Freigabe, Patientenabruf und Transport, Einleitung und Operation, Ausleitung und Saalaustritt, Versorgung im Aufwachraum (AWR) sowie die Verlegung auf Station oder Intensivstation.',
+          },
+          {
+            question: 'Was ist ein OP-Hold?',
+            answer:
+              'Bei einem OP-Hold kann ein Patient den OP-Saal nach dem Eingriff nicht verlassen, weil der Aufwachraum voll ist. Der Saal bleibt gebunden, der nächste Eingriff beginnt später. Im synthetischen Demo-Datensatz sind 431 OPs von einem OP-Hold betroffen, insgesamt 374,1 Stunden blockierte OP-Kapazität – ein Wert, der nicht automatisch 1:1 vermeidbar ist.',
+          },
+          {
+            question: 'Warum werden Operationen wegen Zeitmangels abgesetzt?',
+            answer:
+              '„Zeitmangel“ ist der dokumentierte Anlass, nicht die Ursache. Im OP-Case werden 107 von 143 abgesetzten Eingriffen wegen Zeitmangels abgesetzt, verteilt auf 95 Saaltage. Drei Verzögerungsmuster wiederholen sich: nachgeholte Vorbereitung vor dem OP, OP-Holds nach dem OP und Verzögerungen aus Vorgängerfällen, die sich auf nachfolgende Eingriffe übertragen. Die Ursache kann Stunden früher und bei einem anderen Patienten entstanden sein.',
+          },
+          {
+            question: 'Warum beginnt die erste OP des Tages zu spät?',
+            answer:
+              'Im Demo-Datensatz vor allem, weil Vorbereitung nachgeholt werden muss. Mit nachgeholter Vorbereitung beginnen nur 26,3 % der ersten Eingriffe pünktlich, ohne 91,8 %. Insgesamt wird in 752 von 2.400 Fällen (31,3 %) Vorbereitung nachgeholt, im Mittel rund 45 Minuten; die dokumentierten Gründe sind eine unvollständige Checkliste, Prämedikation, Aufklärung und Labor.',
+          },
+          {
+            question: 'Braucht der Aufwachraum mehr Personal, wenn bei reduzierter Besetzung mehr OP-Holds entstehen?',
+            answer:
+              'Nicht zwingend. Die Holdquote liegt bei reduzierter Besetzung bei 40,5 %, bei voller bei 14,5 %. Die Gegenprüfung zeigt jedoch: Der AWR ist belegt, weil verlegungsbereite Patienten auf ein Stationsbett warten – in beiden Besetzungsgruppen im Mittel rund eine Stunde. Der Engpass liegt weiter hinten in der Ressourcenkette, bei der Bettfreimeldung.',
+          },
+          {
+            question: 'Wie hängen Bettenmanagement und OP-Kapazität zusammen?',
+            answer:
+              'Über den Aufwachraum. Meldet eine Station kein Bett, bleibt ein verlegungsbereiter Patient im AWR; ist der AWR voll, kann der nächste Patient den OP-Saal nicht verlassen. Im Demo-Datensatz vergehen von der Verlegungsfreigabe bis zur Bettfreimeldung auf Station 1 im Mittel 19,3, auf Station 3 45,6 und auf Station 2 66,9 Minuten, während der Transport überall 15–16 Minuten dauert.',
+          },
+          {
+            question: 'Was ist eine Verzögerungskaskade im OP?',
+            answer:
+              'Eine Kaskade entsteht, wenn sich ein später Start von Eingriff zu Eingriff fortsetzt, weil mehrere Eingriffe nacheinander denselben Saal nutzen. Im Beispiel Saal 4 am 25.11.2025 wird beim ersten Eingriff die Checkliste nachgeholt; die Fälle starten mit 33, 74 und 110 Minuten Verzögerung, der vierte geplante Eingriff wird wegen Zeitmangels abgesetzt. Die Absetzung entsteht am Ende des Tages, die Kaskade beginnt am Morgen.',
+          },
+          {
+            question: 'Leitet ein Anästhesieteam mit längeren Einleitungszeiten langsamer ein?',
+            answer:
+              'Im Demo-Datensatz nicht. Team C braucht für die Einleitung im Mittel 29,7 Minuten, Team A 18,7 und Team B 18,3. Team C betreut aber vor allem die schweren Fälle: 88,2 % seiner Patienten gehören zu den ASA-Klassen III–IV. Bei vergleichbaren Patienten nach ASA-Klasse ist Team C gleich schnell – eine Scheinkorrelation, keine Ursache.',
+          },
+          {
+            question: 'Welche Daten braucht die Analyse des OP-Patientenpfads?',
+            answer:
+              'Im Demo-Setup werden 26 Tabellen aus 5 Systemen in einem Event Knowledge Graph zusammengeführt – etwa Patientenfall, Checkliste, Saalbelegung, Anästhesie-Einleitung und -Ausleitung, Patiententransport, Aufwachraum und Bettmeldung. Patient, OP-Fall, Saal, AWR-Platz, Bett und Station bleiben verbunden; erst für die konkrete Fachfrage entsteht eine Causal Perspective.',
+          },
+          {
+            question: 'Welche Rolle spielt der KI-Assistent Minerva?',
+            answer:
+              'Minerva beantwortet Fachfragen im Dialog – etwa „Analysiere, warum Operationen abgesagt wurden.“ –, bildet Vergleichsgruppen, bezieht Vorgänger-OPs und gemeinsam genutzte Ressourcen ein und trennt belegte Befunde von Ursachenhypothesen. Die Entscheidung über Maßnahmen bleibt beim Prozessverantwortlichen und Fachbereich.',
+          },
+          {
+            question: 'Stammen die Kennzahlen aus einem echten Krankenhaus?',
+            answer:
+              'Nein. Alle Kennzahlen stammen aus einem synthetischen perioperativen Datensatz mit 2.400 OP-Vorgängen. Sie zeigen die Analysemethode und sind keine Produktivkennzahlen eines Krankenhauses.',
+          },
+        ],
+
+        caseHeading: 'Die vollständige Case-Beschreibung',
+        caseText:
+          'Event Knowledge Graph, die Causal Perspectives für Vorbereitung, OP und Aufwachraum, alle fünf Findings mit ihren Analyseschritten, die Root-Cause-Analyse der Absetzungen mit Minerva und der Weg ins Business Impact Board – Schritt für Schritt im Noreja Help Center.',
+        caseCta: 'Case im Help Center lesen',
+      },
+
+      en: {
+        scenario: 'End-to-end process · Surgical patient pathway in hospitals',
+        metaTitle: 'Admission-to-Discharge: Hospital & OR Process Mining | Noreja',
+        metaDescription:
+          'The surgical patient pathway from ward to operating room, recovery room and transfer: how causal process mining finds the causes of OR holds, late first cases and cancellations for lack of time – and why they often lie outside the OR.',
+        keywords: [
+          'admission-to-discharge',
+          'surgical patient pathway',
+          'perioperative process',
+          'process mining in healthcare',
+          'hospital process mining',
+          'OR management',
+          'operating room efficiency',
+          'OR capacity',
+          'first case on-time start',
+          'surgery cancellations',
+          'OR hold',
+          'PACU',
+          'patient flow',
+          'bed management',
+          'turnover time',
+          'root cause analysis',
+          'AI in hospitals',
+          'event knowledge graph',
+          'causal process mining',
+        ],
+        tagline:
+          'How causal process mining reveals hidden causes between the ward, the recovery room and the operating room.',
+        intro: {
+          heading: 'The symptom shows in the OR. The cause lies elsewhere.',
+          text: [
+            'Many OR initiatives pursue the same goals: more predictable schedules, better utilisation of the operating rooms and fewer delays or cancellations. On-time starts, turnover times and OR holds look like the obvious levers.',
+            'Yet in the perioperative process, delays often arise somewhere else entirely: in incomplete preparation on the ward, in a missing bed after the recovery room, or in a backlog at shared resources.',
+          ],
+          quote: 'The problem becomes visible in the OR. The cause often lies elsewhere. Optimising only the OR treats the symptom.',
+        },
+        definition:
+          'Admission-to-discharge describes a patient’s path through the hospital, from admission to discharge. This case looks at the surgical patient pathway, also called the perioperative patient pathway: the end-to-end process around a surgical procedure with preoperative preparation and clearance, patient call-up and transport, anaesthesia induction and surgery, emergence and leaving the operating room, care in the recovery room (PACU) and the transfer to a ward or the intensive care unit. On a process slide the flow looks linear. In reality, several patients, teams and shared resources interlock: an operating room waits for a patient, a patient for complete preparation, a PACU bay for the transfer of the previous patient – and that patient for a free bed on the ward. Causal process mining preserves this granularity and the relationships between patient, surgery, operating room, PACU, bed and ward.',
+        demoNote:
+          'Note: the figures on this page come from a synthetic perioperative dataset of 2,400 surgical cases. They illustrate the analysis method and are not production figures of any hospital. Apart from the event knowledge graph, the screenshots show the German user interface.',
+        definitionImage: {
+          ...IMG.a2dEntityModelEn,
+          alt: 'Event knowledge graph of the surgical patient pathway: activities from 26 tables grouped into four operating rooms, three wards, one PACU, cancellations and the holistic cross-cutting activities – from patient admission, checklist, premedication and fasting status through patient in the operating room and anaesthesia to transfer clearance, bed release and handover to the ward',
+          caption:
+            'Event knowledge graph of the OR process: patient, surgical case, operating room, PACU, bed and ward stay connected – complexity is reduced during analysis, not already at data import.',
+        },
+
+        keyFacts: [
+          {
+            value: '67.2%',
+            label: 'First cases on time',
+            detail: 'OR entry within 15 minutes of the planned time',
+          },
+          {
+            value: '431',
+            label: 'OR holds',
+            detail: 'the patient cannot leave the OR because the PACU is full',
+          },
+          {
+            value: '143',
+            label: 'Cancelled procedures',
+            detail: '107 for lack of time, 36 because the patient was not fasting',
+          },
+          {
+            value: '374.1 h',
+            label: 'Blocked OR capacity',
+            detail: 'cumulative hold time; not automatically avoidable one to one',
+          },
+          {
+            value: '514',
+            label: 'Surgeries leaving the OR after 15:30',
+            detail: 'overrun beyond the planned end of the OR day',
+          },
+          {
+            value: '752',
+            label: 'Preparations completed late',
+            detail: '31.3% of all surgical cases, about 45 minutes on average',
+          },
+          {
+            value: '2,400',
+            label: 'Surgical cases',
+            detail: 'entire synthetic dataset',
+          },
+          {
+            value: '26',
+            label: 'Tables from 5 systems',
+            detail: 'combined in one event knowledge graph in the demo setup',
+          },
+        ],
+
+        phasesHeading: 'The process in three blocks',
+        phasesLead:
+          'The end-to-end causal perspective connects ward, operating room, PACU and bed in one business view. Only for the concrete business question is a matching causal perspective derived from it – for example end-to-end, preparation, surgery, PACU and bed release, or the OR day.',
+        phasesImage: {
+          ...IMG.a2dEndToEnd,
+          alt: 'End-to-end causal perspective of the perioperative patient pathway: from elective or emergency admission through preparation on three wards, patient call-up, OR transfer area and transfer to the table, the flows in the operating rooms and the handover to PACU staff or the intensive care unit, to transfer clearance, bed release, collection from the PACU and handover to the ward',
+          caption: 'End-to-end causal perspective of the surgical patient pathway from the ward through the OR to the transfer.',
+        },
+        phases: [
+          {
+            title: 'Preoperative preparation & patient call-up',
+            summary:
+              'The patient is prepared on the ward: informed consent, lab tests, premedication and checklist. Only when all prerequisites are met can the patient be called up and transported. If steps are missing, they are completed at short notice – and the patient reaches the operating room later.',
+            steps: [
+              'Case admitted on ward',
+              'Preparation order',
+              'Surgical checklist completed',
+              'Premedication given',
+              'Fasting status confirmed',
+              'Call-up by the OR',
+              'Patient collected',
+              'OR transfer area & identity check',
+              'Patient in OR',
+            ],
+            objects: ['Patient', 'Surgical case', 'Ward', 'Preoperative preparation', 'Checklist', 'Informed consent', 'Lab tests', 'Premedication', 'Patient transport'],
+            question: 'Which preparatory steps prevent an on-time patient call-up – and which of them can be completed earlier or more reliably?',
+            image: {
+              ...IMG.a2dPreparation,
+              alt: 'Causal perspective of preoperative preparation: elective or emergency admission, then per ward 1 to 3 the patient case, preparation order, surgical checklist, premedication, fasting status, call-up by the OR and patient collected, followed by OR transfer area, identity check, transfer to the table and patient in OR; branching off are “complete preparation later” and the cancellations for missing fasting and a late OR start',
+              caption: 'Preoperative preparation, patient call-up, transport and preparation steps completed late.',
+            },
+          },
+          {
+            title: 'Induction, surgery & OR control',
+            summary:
+              'Patient, operating room, anaesthesia team and surgical team come together. Induction and surgery are followed by emergence, leaving the room and the turnover to the next patient. If an early case is delayed, the deviation can build up across all following surgeries of the OR day.',
+            steps: [
+              'Patient in OR',
+              'Positioning checked',
+              'Anaesthesia start',
+              'Anaesthesia release',
+              'Team time-out',
+              'Incision',
+              'Suture',
+              'Emergence',
+              'Anaesthesia end',
+              'Patient leaves OR',
+              'OR cleaned',
+            ],
+            objects: ['Patient', 'Surgical case', 'Operating room', 'Anaesthesia team', 'Surgical team', 'Specialty', 'Preceding and following procedure'],
+            question: 'Does the delay really arise in the operating room – or do we only see the effect of a cause that arose earlier?',
+            image: {
+              ...IMG.a2dSurgery,
+              alt: 'Causal perspective of the OR day: from the start of the day through transfer to the table and patient in OR into four parallel room strands with positioning checked, anaesthesia start, anaesthesia release, team time-out, incision, suture, emergence and anaesthesia end to patient leaves OR and OR cleaned, followed by handover to PACU staff or the intensive care unit and the end of the day',
+              caption: 'Induction, surgery and room occupancy: cross-case delay cascades build up over the OR day.',
+            },
+          },
+          {
+            title: 'PACU, bed & transfer',
+            summary:
+              'After surgery the patient is cared for in the recovery room (PACU) and then transferred to a ward or the intensive care unit. If the patient is ready for transfer but no bed has been released yet, the PACU bay stays occupied. If the PACU is full, the next patient cannot leave the operating room.',
+            steps: [
+              'Handover to PACU staff',
+              'Monitoring started',
+              'Pain therapy started',
+              'Transfer clearance',
+              'Bed released',
+              'Collection from PACU',
+              'Handover to ward',
+            ],
+            objects: ['Patient', 'Surgical case', 'PACU', 'PACU bay', 'Transfer clearance', 'Ward bed', 'Ward', 'Intensive care unit', 'Patient transport'],
+            question: 'What actually keeps the patient in the PACU after transfer clearance – the missing bed, the transport or another bottleneck?',
+            image: {
+              ...IMG.a2dBedRelease,
+              alt: 'Causal perspective of the PACU and bed release: from patient in the operating room through transfer clearance to “release bed” for wards 1 to 4 or “bed released”, then on to collection from the PACU and handover to wards 1 to 4',
+              caption: 'Backlog between PACU, bed release, patient transport and operating room.',
+            },
+          },
+        ],
+        objectsNote:
+          'A patient can have several procedures, an operating room serves several patients in a row per OR day, and PACU bays and ward beds are occupied by changing patients. These shared resources connect cases across case boundaries – which is exactly where delays arise that a single-case view cannot explain.',
+
+        findingsHeading: 'Five findings along the surgical patient pathway',
+        findingsLead:
+          'The findings lead from the management KPI through three refuted suspicions to the cross-case cascades. Each one shifts the question from “Where does the problem show?” to “Where does it arise?”.',
+        findings: [
+          {
+            area: 'KPIs',
+            title: 'The KPIs show the where – but not yet the why',
+            metric: '67.2%',
+            metricLabel: 'of the first surgeries of an OR day start on time – within 15 minutes of the planned OR entry',
+            text: [
+              'Only 67.2% of first surgeries start on time. 431 surgeries are affected by an OR hold, adding up to 374.1 hours of blocked OR capacity. 143 procedures are cancelled, 107 of them for lack of time.',
+              'The problem seems clear: the OR is losing time and capacity. But the KPIs do not say where this loss arises.',
+            ],
+            shift: {
+              from: 'How do we make the OR faster?',
+              to: 'Where does the time loss that becomes visible in the OR arise?',
+            },
+            image: {
+              ...IMG.a2dDashboard,
+              alt: 'Management dashboard for the OR area, “Secure capacity. Manage interfaces together.”: 67.2% of first cases on time (640 of 952), 431 surgeries with an OR hold, 374.1 hours of cumulative hold time, 514 surgeries finished after 15:30 and 143 cancelled procedures, 107 of them for lack of time and 36 for missing fasting; below, the surgeries ending after 15:30 per operating room',
+              caption: 'Management dashboard: first cases on time, OR holds, blocked OR time, end of day and cancelled procedures.',
+            },
+          },
+          {
+            area: 'Cross-check',
+            title: 'Three obvious suspects – none survives the cross-check',
+            metric: '0 of 3',
+            metricLabel: 'obvious explanations – anaesthesia team C, OR 4 and PACU staffing – hold up when comparable cases are compared',
+            text: [
+              'The first analyses show three conspicuous correlations. Each one suggests a quick measure: train team C, optimise OR 4, add staff to the PACU.',
+              'The data was correct. The obvious conclusions were not sufficiently justified.',
+            ],
+            table: {
+              text: true,
+              caption: 'Raw comparison and cross-check',
+              head: ['Suspicion', 'Raw comparison', 'Cross-check'],
+              rows: [
+                [
+                  'Anaesthesia team C is slower',
+                  'Induction takes 29.7 min on average (team A 18.7, team B 18.3)',
+                  'Equally fast with comparable patients (ASA) – team C mainly cares for the severe cases',
+                ],
+                [
+                  'OR 4 works inefficiently',
+                  'Clearly higher median turnover time',
+                  'OR 4 takes cases from several specialties; the specialty changes cost time, not the room',
+                ],
+                [
+                  'Too few staff in the PACU',
+                  'Hold rate 40.5% with reduced, 14.5% with full staffing',
+                  'The PACU is occupied because patients are waiting for a bed – the bottleneck lies further down the resource chain',
+                ],
+              ],
+            },
+            shift: {
+              from: 'Train team C, optimise OR 4, add PACU staff',
+              to: 'Does the difference hold up when we compare comparable cases?',
+            },
+            image: {
+              ...IMG.a2dRawComparisons,
+              alt: 'Three dashboard tiles with raw comparisons: anaesthesia induction averaging 22.1 minutes over 1,607 procedures (team A 18.7, team B 18.3, team C 29.7 minutes), turnover time averaging 40.5 minutes with a median of 28.3 minutes over 1,305 turnovers (OR 4 with a median of 40.8 minutes versus 26.0 to 27.6 minutes in ORs 1 to 3), and a hold rate of 14.5% with full and 40.5% with reduced PACU staffing',
+              caption: 'Conspicuous correlations in the raw comparison: anaesthesia team, turnover time per room and hold rate by PACU staffing.',
+            },
+            extraImages: [
+              {
+                ...IMG.a2dTeamCCheck,
+                alt: 'Minerva answer on induction time: 88.2% of team C’s patients belong to ASA classes III–IV (450 of 510), compared with 10.2% for teams A and B together (112 of 1,097); in comparable patient groups by ASA class and existing venous access the averages are close, for example 22.4 versus 22.6 minutes for ASA III–IV with access in place',
+                caption: 'Team C: the patient mix by ASA class explains most of the longer induction time.',
+              },
+              {
+                ...IMG.a2dStaffingCheck,
+                alt: 'Minerva table “Why do PACU bays stay tied up?” for 1,619 cases with full and 504 with reduced staffing: in both groups, patients ready for transfer stay in the PACU for about an hour on average (66.4 and 61.2 minutes), most of it between transfer clearance and bed release',
+                caption: 'PACU staffing: patients ready for transfer stay about an hour in the PACU with full and reduced staffing alike – mostly before the bed is released.',
+              },
+            ],
+            deepDive: {
+              title: 'From symptom to root cause analysis',
+              prompt: [
+                'Analyse why surgeries were cancelled.',
+                'Which preceding surgeries and resource conflicts contributed to the 107 procedures cancelled for lack of time?',
+              ],
+              text: [
+                'Of the 143 cancelled procedures, 107 were cancelled for lack of time. “Lack of time”, however, is not a root cause but the documented reason at the end of a development.',
+                'The 107 cases are spread across 95 OR days. To understand how the missing time arose, looking at the cancelled patient is not enough. The analysis includes the preceding surgeries of the same OR day and the shared resources. Three delay patterns recur:',
+              ],
+              points: [
+                { title: 'Before surgery', text: 'Preparation steps are completed late.' },
+                { title: 'After surgery', text: 'Patients stay in the operating room longer because of OR holds.' },
+                { title: 'Between procedures', text: 'Delays from preceding cases carry over to the following surgeries.' },
+              ],
+              images: [
+                {
+                  ...IMG.a2dCancellationCauses,
+                  alt: 'OR-day view filtered on the 107 procedures cancelled for lack of time on 95 OR days, next to the Minerva answer: all cancellations concern elective procedures, 115 preparations were completed late on these days, and 39 of the days show no start delay; the documented error patterns that follow are premedication completed late (35), missing lab tests (28), missing consent (28) and an incomplete checklist (24)',
+                  caption: 'Minerva: causes of the 107 procedures cancelled for lack of time – a late start of the day alone does not explain them.',
+                },
+                {
+                  ...IMG.a2dDocumentedDelays,
+                  alt: 'Minerva table on OR entries: 144 cases with a delay caused by the preceding case, averaging 1 hour 55 minutes, and 57 cases with the room blocked by a full PACU (OR hold), averaging 1 hour 7 minutes and at most 2 hours 52 minutes',
+                  caption: 'Minerva: upstream and downstream delays – late preceding cases and PACU-related OR holds.',
+                },
+              ],
+            },
+            note: {
+              title: 'The cause of a cancelled surgery does not necessarily lie in the cancelled case itself. It may have arisen hours earlier and with a different patient.',
+            },
+          },
+          {
+            area: 'Preparation',
+            title: 'Late preparation derails the first case',
+            metric: '26.3% vs. 91.8%',
+            metricLabel: 'first OR entries on time with and without preparation completed late – 67.2% overall',
+            text: [
+              'In 752 of 2,400 cases (31.3%), preoperative preparation is completed late, taking about 45 minutes on average. The documented reasons are an incomplete checklist, premedication, informed consent and lab tests.',
+              'The link is particularly clear for the first case of the day: with preparation completed late, only 26.3% start on time; without it, 91.8% do – 67.2% overall.',
+            ],
+            prompt:
+              'Which missing preparation steps drive late first OR entries? On which wards do they occur particularly often?',
+            table: {
+              caption: 'Documented reasons for preparation completed late',
+              head: ['Reason', 'Cases', 'Share'],
+              rows: [
+                ['Incomplete checklist', '223', '29.7%'],
+                ['Premedication', '189', '25.1%'],
+                ['Informed consent', '187', '24.9%'],
+                ['Lab tests', '153', '20.3%'],
+                ['Total', '752', '100%'],
+              ],
+            },
+            shift: {
+              from: 'Why does the first surgery start late?',
+              to: 'Which preparation step is missing at call-up – and on which ward?',
+            },
+            image: {
+              ...IMG.a2dFirstCasePunctuality,
+              alt: 'OR-day view filtered on preparation completed late, with a Minerva overview of the OR area in 2025: 261 OR days with 952 room days in 4 operating rooms and 2,257 procedures performed; first-case punctuality of 67.2% overall, 26.3% with and 91.8% without preparation completed late; for 84.3% of late day starts, the preparation of the first surgery was completed late',
+              caption: 'Effect of preparation on the punctuality of the first OR entry.',
+            },
+            extraImages: [
+              {
+                ...IMG.a2dReworkPattern,
+                alt: 'Causal perspective of preparation with the error pattern “rework” switched on: red loops from the accepted call-up order back to the preparation order – 521 cases on ward 2, 143 on ward 3 and 88 on ward 1',
+                caption: 'Error pattern “rework”: after call-up, the process jumps back into preparation.',
+              },
+              {
+                ...IMG.a2dReworkReasons,
+                alt: 'Detail view of the activity “complete preparation later (start)” with 752 entries: incomplete checklist 29.65%, premedication missing 25.13%, consent missing 24.87%, lab tests missing 20.35%',
+                caption: 'Reasons from the activity properties: 752 preparations completed late.',
+              },
+              {
+                ...IMG.a2dReworkByWard,
+                alt: 'Minerva pie chart “Late preparation by ward of origin”: ward 2 with 521 cases (69%), ward 3 with 143 (19%) and ward 1 with 88 (12%)',
+                caption: 'Minerva: about 69% of the preparations completed late fall to ward 2.',
+              },
+            ],
+          },
+          {
+            area: 'PACU & bed',
+            title: 'The OR is blocked because the ward does not release a bed',
+            metric: '66.9 min',
+            metricLabel: 'pass on average on ward 2 between transfer clearance and bed release – on ward 1 it is 19.3 minutes',
+            text: [
+              'Analysing the path transfer clearance → bed release → collection shows clear differences between the wards.',
+              'The subsequent transport takes a comparable 15–16 minutes on all three wards. So the bottleneck is not the collection but the bed release.',
+              'If a patient who is ready for transfer is not moved on, their PACU bay stays occupied. When the PACU fills up, the backlog reaches back into the OR.',
+            ],
+            table: {
+              caption: 'From transfer clearance to bed release per ward',
+              head: ['Ward', 'Transfer clearance to bed release', 'First bed release usually at'],
+              rows: [
+                ['Ward 1', '19.3 min', '12:00'],
+                ['Ward 3', '45.6 min', '13:00'],
+                ['Ward 2', '66.9 min', '13:30'],
+              ],
+            },
+            shift: {
+              from: 'Do we need more staff in the PACU?',
+              to: 'Why is the PACU full at the time of the hold?',
+            },
+            image: {
+              ...IMG.a2dBedReleasePaths,
+              alt: 'Causal perspective from transfer clearance (2,123 cases) through “release bed” per ward to collection from the PACU: ward 2 with 952 cases (45%) and 1 hour 6 minutes on average, ward 3 with 727 cases (34%) and 45 minutes, ward 1 with 444 cases (21%) and 19 minutes until the bed is released; then about 15 minutes each until collection',
+              caption: 'Waiting time between transfer clearance, bed release and collection by ward.',
+            },
+            extraImages: [
+              {
+                ...IMG.a2dBedReleaseByWard,
+                alt: 'Minerva answer “Bed release: ward 2 waits longest”: on average 19.3 minutes on ward 1 (444 releases), 45.6 minutes on ward 3 (727) and 66.9 minutes on ward 2 (952); ward 2 needs about 48 minutes longer than ward 1, while the transport wait is 15 to 16 minutes on every ward',
+                caption: 'Minerva: ward 2 takes about 3.5 times as long as ward 1 to release a bed.',
+              },
+              {
+                ...IMG.a2dBedReleaseTimeline,
+                alt: 'Distribution of events over the day with a single case overlaid: patient in OR, handover to PACU staff, transfer clearance, “release bed (ward 2)” 2 hours 16 minutes later, collection from the PACU and handover to ward 2',
+                caption: 'A single case over the day: more than two hours pass between transfer clearance and bed release.',
+              },
+              {
+                ...IMG.a2dFirstBedRelease,
+                alt: 'Minerva table “First bed release per calendar day and ward” with documented releases, calendar days, mean and median first release of the day and the most frequent exact time: on ward 2 the first release falls on the same time on 245 of 257 days (95.3%), on ward 3 on 224 of 252 days (88.9%)',
+                caption: 'Ward-specific patterns: the first bed release of the day almost always falls on the same fixed time.',
+              },
+            ],
+            note: {
+              title: 'A delay on the ward becomes visible where you would not expect it at first: in the operating room.',
+            },
+          },
+          {
+            area: 'Cascades',
+            title: 'The OR backlog arises between cases',
+            metric: '33 → 74 → 110 min',
+            metricLabel: 'start delay of the first three procedures in OR 4 on 25 November 2025 – the fourth planned procedure is cancelled for lack of time',
+            text: [
+              'The two main mechanisms run in opposite directions.',
+              'With the patient flow: when several procedures use the same operating room one after another, a late start carries over from case to case. In OR 4 on 25 November 2025, the checklist has to be completed late for the first procedure. That case starts 33 minutes late, the next one 74 and the third 110 minutes late. The fourth planned procedure is cancelled for lack of time.',
+              'Against the patient flow: after transfer clearance, patients wait for a ward bed, PACU bays stay occupied, and in the example a late collection adds to it. In the end, several operating rooms are affected at the same time – with holds of 59, 42 and 60 minutes.',
+            ],
+            table: {
+              caption: 'OR 4 on 25 November 2025: four procedures, one cascade',
+              head: ['Procedure', 'Planned start', 'OR entry', 'Deviation', 'Cancelled'],
+              rows: [
+                ['Surgery 423 · Appendectomy', '08:30:00', '09:03:17', '+33 min', 'no'],
+                ['Surgery 2057 · Sigmoid resection', '10:55:26', '12:09:03', '+74 min', 'no'],
+                ['Surgery 2119 · Hip replacement', '12:34:28', '14:24:56', '+110 min', 'no'],
+                ['Surgery 215 · Sigmoid resection', '–', '–', '–', 'yes, 15:30'],
+              ],
+            },
+            shift: {
+              from: 'Why was this procedure cancelled?',
+              to: 'Which earlier cases and resource conflicts used up the time?',
+            },
+            image: {
+              ...IMG.a2dForwardCascade,
+              alt: 'OR-day view of OR 4 on 25 November 2025, sorted by time: patient 1 in the room at 09:03, patient 2 at 12:09, patient 3 at 14:24; the fourth procedure is recorded at 15:30 as “surgery cancelled (cascade, late room start)”; below, the predecessors’ handovers to the PACU, transfer clearances, bed releases and collections',
+              caption: 'Four procedures, one cascade: OR 4 on 25 November 2025.',
+            },
+            extraImages: [
+              {
+                ...IMG.a2dForwardCascadeTable,
+                alt: 'Minerva table for OR 4 on 25 November 2025: surgery 423 (appendectomy) with an incomplete checklist completed late starts 33 minutes behind plan, surgery 2057 (sigmoid resection) 74 minutes and surgery 2119 (hip replacement) 110 minutes behind plan; surgery 215 (sigmoid resection) is cancelled at 15:30 for lack of time while the room is still occupied by surgery 2119 until 16:17',
+                caption: 'Delays in the case itself and from previous surgeries: the cascade begins with the checklist completed late in the morning.',
+              },
+              {
+                ...IMG.a2dBacklogView,
+                alt: 'Bed release perspective on the example day of 10 July 2025, filtered on medium and long OR holds: eight cases from transfer clearance through “bed released” (55 minutes later on average) and collection from the PACU (another 22 minutes) to handover to the ward; before that, the handovers from ORs 1, 3 and 4 to PACU staff',
+                caption: 'Backlog chain: late bed release and collection – PACU bays stay occupied.',
+              },
+              {
+                ...IMG.a2dBacklogCause,
+                alt: 'Minerva cause picture “Why does the OR hold arise?”: a ward bed not yet released (two conspicuous waits for ward 2 of 2 hours 39 minutes and 3 hours 7 minutes) and a delayed collection despite a released bed (59 minutes for ward 1) keep patients ready for transfer in the PACU; PACU capacity stays tied up, and OR holds block OR 1 for 59, OR 3 for 42 and OR 4 for 60 minutes – 2 hours 41 minutes in total',
+                caption: 'Cause picture: patients cannot leave the operating room – holds of 59, 42 and 60 minutes.',
+              },
+            ],
+            deepDive: {
+              title: 'Four triggers, one consequence',
+              prompt: 'Summarise the causes of the cancellations for lack of time.',
+              text: [
+                'Four triggers lead to the same consequence: following procedures slip back and the remaining capacity of the day shrinks. When it is no longer sufficient, the next planned procedure is cancelled for lack of time.',
+              ],
+              points: [
+                { title: 'Incomplete preparation', text: 'Completed before transport or OR entry → later start.' },
+                { title: 'Occupied PACU / missing bed', text: 'The patient cannot be transferred → later exit from the OR.' },
+                { title: 'Emergency add-on case', text: 'The planned sequence and the available capacity change.' },
+                { title: 'Batched bed releases', text: 'Patients ready for transfer stay longer in the PACU.' },
+              ],
+              images: [
+                {
+                  ...IMG.a2dFourTriggers,
+                  alt: 'Minerva cause diagram: incomplete preparation leads, via completion before transport or OR entry, to a later first or follow-up start; an occupied PACU leads, via the OR hold, to a later exit from the room and later turnover; an emergency add-on changes sequence and capacity; all three reduce the remaining capacity of the day until a planned procedure can no longer start and is cancelled for lack of time',
+                  caption: 'Minerva: triggers of a delay chain that ends in a cancellation for lack of time.',
+                },
+                {
+                  ...IMG.a2dBedReleaseChain,
+                  alt: 'Minerva cause diagram on bed release: a regularly late start of bed releases – possibly an organisational release threshold, alternatively batched documentation or a technical time stamp – means ward beds are missing for patients ready for transfer; the patient stays in the PACU despite medical clearance, another 15 to 16 minutes pass after the bed release until collection, the PACU bay stays occupied, the next handover from the OR has to wait and the patient remains in the OR: hold and blocked room',
+                  caption: 'Minerva: batched bed releases carry the backlog all the way to a blocked operating room.',
+                },
+              ],
+            },
+            note: {
+              title: 'The cancellation happens at the end of the day. The cascade begins in the morning.',
+            },
+          },
+        ],
+
+        aiContext: {
+          heading: 'Why AI needs causal process mining',
+          lead:
+            'Generative AI can summarise patterns and formulate measures quickly. In the OR example it would immediately have derived three measures from the raw comparisons: train team C, optimise OR 4, add staff to the PACU. None of them would have hit the cause.',
+          blocks: [
+            {
+              title: 'Process data alone does not provide meaning',
+              text: [
+                'System data shows values and events: a timestamp for the bed release, a reason for late preparation, an ASA class. But it does not automatically explain what a feature means in business terms – for example that an ASA III/IV induction may take longer, that a change of specialty requires a different set-up, or that wards release their beds according to fixed routines.',
+                'Company context adds this meaning. Causal process mining then tests how features, process behaviour and outcomes are connected across cases and resources. Minerva combines these layers in a dialogue and makes the analysis accessible to the user.',
+              ],
+              quote: 'Process data provides the facts. Company context provides the meaning. Causal process mining tests the cause hypotheses.',
+            },
+            {
+              title: 'Changing a process on the basis of the right analysis',
+              text: [
+                'For AI-supported process decisions, four things are therefore decisive: the right business granularity, relationships between patients, resources and events, company context, and an analysis that does not rashly interpret correlations as causes.',
+              ],
+              quote: 'Changing a process on the basis of the wrong analysis does not make it better – only wrong faster.',
+            },
+          ],
+          image: {
+            ...IMG.minervaAgentsVsLlm,
+            alt: 'Overview “What Minerva agents do that an LLM alone cannot”: architecture, agents and skills, configurability, evidenced answers, governance, context, causality and a continuous 24/7 loop',
+            caption: 'What Minerva agents do that an LLM alone cannot.',
+          },
+          note: 'Causal process mining creates the analytical basis. Minerva makes it usable in dialogue.',
+        },
+
+        takeaways: {
+          heading: 'What causal process mining changes here',
+          lead: [
+            'Classic process mining is very good at showing what happens: variants, cycle times, waiting times, repetitions and deviations. The why additionally requires business logic, context and cross-case relationships.',
+            'The healthcare case shows four things that a pure KPI or single-case analysis easily overlooks:',
+          ],
+          items: [
+            {
+              title: 'Correlation is not automatically causation',
+              text: 'Team C, OR 4 and PACU staffing show how tempting raw comparisons are.',
+            },
+            {
+              title: 'The affected case does not necessarily carry its own cause',
+              text: 'The cancellation may have been set up by preceding cases or other patients.',
+            },
+            {
+              title: 'Shared resources connect cases',
+              text: 'Operating room, PACU bay and ward bed create dependencies across case boundaries.',
+            },
+            {
+              title: 'Not every finding needs a measure',
+              text: 'Some causes are prioritised, others investigated further or discarded.',
+            },
+          ],
+        },
+
+        measures: {
+          heading: 'From finding to prioritised measure',
+          lead:
+            'A finding does not change a process yet. After the analysis, the process owner decides which insights are actually worked on. In the Business Impact Board, findings are assessed by expected impact, implementation effort, risk and uncertainty; process excellence and the responsible department jointly prioritise which decision hypothesis is piloted.',
+          tableHeading: 'Possible improvement directions',
+          items: [
+            {
+              finding: 'Bed release and PACU backlog',
+              measure: 'Review the bed release process together with the wards',
+              benefit: 'OR holds, blocked OR capacity, cancellations',
+            },
+            {
+              finding: 'Preoperative preparation',
+              measure: 'Complete preparation fully before the patient is called up',
+              benefit: 'First-case punctuality, knock-on delays',
+            },
+            {
+              finding: 'Incomplete preparation (31.3%)',
+              measure: 'Check checklist, premedication, informed consent and lab tests before call-up',
+              benefit: 'Late-preparation rate, nursing workload, punctuality',
+            },
+            {
+              finding: 'Specialty changes in OR 4',
+              measure: 'Bundle scheduling by specialty and plan unavoidable changes realistically',
+              benefit: 'Turnover time, end of the OR day, cancellations',
+            },
+            {
+              finding: 'Team C and PACU staffing',
+              measure: 'No measure – spurious correlation; keep monitoring the patient mix and the bed bottleneck',
+              benefit: 'Uncertainty',
+            },
+          ],
+          image: {
+            ...IMG.a2dImpactBoard,
+            alt: 'Business Impact Board with four findings from the OR case in the impact/effort matrix: F-001 on preparation only on the day of surgery and F-002 on the 107 surgeries cancelled for lack of time as strategic, F-004 on the high turnover times in OR 4 as a quick win, and F-003 “Suspicion not confirmed: team C induces more slowly” as low priority',
+            caption: 'Business Impact Board: from finding to prioritised option for action.',
+          },
+          note: 'Prioritisation is a business decision. Minerva prepares analysis paths, context and options for action; control and decision-making authority remain traceable with the process owner and the responsible department at all times.',
+        },
+
+        loop: {
+          heading: 'The loop: Insight → Action → Impact → Feedback',
+          lead:
+            'After prioritisation, a measure is piloted and its effect is measured again using the same process data. Minerva Frontier Agents can accompany this control loop continuously: detecting new findings, developing hypotheses further and observing the effect of measures implemented.',
+          steps: [
+            { step: 'Insight', text: 'Preparation and PACU/bed mechanisms contribute to visible capacity losses in the OR.' },
+            { step: 'Action', text: 'Stabilise preparation before call-up; address the cause of late bed releases organisationally.' },
+            { step: 'Impact', text: 'Measure first-case punctuality, holds, blocked OR capacity, cancellations and the end of the OR day again.' },
+            { step: 'Feedback', text: 'If implementation does not show the expected effect, the cause hypothesis is reviewed and adjusted.' },
+          ],
+          questions: [
+            'Do more first surgeries start within 15 minutes of plan?',
+            'Does the share of preparation completed late fall – and on which wards?',
+            'Do OR holds and blocked OR capacity decrease?',
+            'Are fewer procedures cancelled for lack of time?',
+            'Do fewer surgeries end after the planned end of the OR day at 15:30?',
+            'Does the bottleneck merely shift elsewhere between ward, OR, PACU and bed?',
+          ],
+        },
+
+        principlesHeading: 'Four principles for the analysis',
+        principles: [
+          {
+            title: 'Preserve granularity',
+            text: 'Patient, operating room, PACU bay and bed stay connected instead of reducing the process to a linear case up front.',
+          },
+          {
+            title: 'Start with the business question',
+            text: 'The causal perspective is built for the concrete business question – end-to-end, preparation, surgery, PACU and bed, or the OR day.',
+          },
+          {
+            title: 'Cross-check correlations',
+            text: 'A conspicuous raw comparison is a starting point, not yet a root cause.',
+          },
+          {
+            title: 'Look beyond the single case',
+            text: 'Shared resources connect cases; the cause may lie with a different patient.',
+          },
+        ],
+
+        conclusion: {
+          heading: 'Conclusion: optimising only the OR treats the symptom',
+          text: [
+            'Conspicuous KPIs alone are not sufficient steering logic. Team C looks slower, OR 4 stands out for its turnover times, and reduced PACU staffing correlates with more holds. Anyone who derives measures from this straight away may only be optimising the most visible symptom.',
+            'Causal process mining connects process data, business relationships, shared resources and cross-case dependencies. The OR example shows: preparation completed late destabilises the start of the day. Ward beds released late or in batches tie up PACU bays and carry the backlog into the OR. Delays carry over from procedure to procedure through preceding cases.',
+            '“Optimise the OR” thus becomes a more concrete task: stabilise preparation, look at bed and PACU processes together, understand cross-case cascades – and then measure whether the measures actually create more stability and capacity.',
+          ],
+          claim: 'Don’t just see where the delay occurs. Understand where it arises. Prioritise causes. Measure the effect.',
+        },
+
+        faq: [
+          {
+            question: 'What is admission-to-discharge?',
+            answer:
+              'Admission-to-discharge is a patient’s end-to-end process in hospital, from admission to discharge. Noreja shows it on the surgical patient pathway: preoperative preparation on the ward, patient call-up and transport, anaesthesia induction and surgery, emergence and leaving the operating room, care in the recovery room (PACU) and the transfer to a ward or the intensive care unit. Patients, operating rooms, PACU bays and ward beds are connected through shared resources.',
+          },
+          {
+            question: 'What is the perioperative patient pathway?',
+            answer:
+              'The perioperative patient pathway – also called the surgical patient pathway – is the end-to-end process around a surgical procedure: preoperative preparation and clearance, patient call-up and transport, induction and surgery, emergence and leaving the operating room, care in the recovery room (PACU) and the transfer to a ward or the intensive care unit.',
+          },
+          {
+            question: 'What is an OR hold?',
+            answer:
+              'In an OR hold, a patient cannot leave the operating room after surgery because the recovery room (PACU) is full. The room stays tied up and the next procedure starts later. In the synthetic demo dataset, 431 surgeries are affected by an OR hold, adding up to 374.1 hours of blocked OR capacity – a figure that is not automatically avoidable one to one.',
+          },
+          {
+            question: 'Why are surgeries cancelled for lack of time?',
+            answer:
+              '“Lack of time” is the documented reason, not the cause. In the OR case, 107 of 143 cancelled procedures are cancelled for lack of time, spread across 95 OR days. Three delay patterns recur: preparation completed late before surgery, OR holds after surgery, and delays from preceding cases that carry over to the following procedures. The cause may have arisen hours earlier and with a different patient.',
+          },
+          {
+            question: 'Why does the first surgery of the day start late?',
+            answer:
+              'In the demo dataset mainly because preparation has to be completed late. With preparation completed late, only 26.3% of first procedures start on time; without it, 91.8% do. Overall, preparation is completed late in 752 of 2,400 cases (31.3%), taking about 45 minutes on average; the documented reasons are an incomplete checklist, premedication, informed consent and lab tests.',
+          },
+          {
+            question: 'Does the PACU need more staff if more OR holds occur with reduced staffing?',
+            answer:
+              'Not necessarily. The hold rate is 40.5% with reduced and 14.5% with full staffing. The cross-check shows, however, that the PACU is occupied because patients ready for transfer are waiting for a ward bed – for about an hour on average in both staffing groups. The bottleneck lies further down the resource chain, at the bed release.',
+          },
+          {
+            question: 'How are bed management and OR capacity connected?',
+            answer:
+              'Through the recovery room. If a ward does not release a bed, a patient ready for transfer stays in the PACU; if the PACU is full, the next patient cannot leave the operating room. In the demo dataset, it takes 19.3 minutes on average from transfer clearance to bed release on ward 1, 45.6 on ward 3 and 66.9 on ward 2, while the transport takes 15–16 minutes everywhere.',
+          },
+          {
+            question: 'What is a delay cascade in the OR?',
+            answer:
+              'A cascade arises when a late start carries over from procedure to procedure because several procedures use the same operating room one after another. In the example of OR 4 on 25 November 2025, the checklist is completed late for the first procedure; the cases start 33, 74 and 110 minutes late, and the fourth planned procedure is cancelled for lack of time. The cancellation happens at the end of the day, the cascade begins in the morning.',
+          },
+          {
+            question: 'Is an anaesthesia team with longer induction times slower?',
+            answer:
+              'Not in the demo dataset. Team C needs 29.7 minutes on average for induction, team A 18.7 and team B 18.3. But team C mainly cares for the severe cases: 88.2% of its patients belong to ASA classes III–IV. With comparable patients by ASA class, team C is just as fast – a spurious correlation, not a cause.',
+          },
+          {
+            question: 'What data does the analysis of the surgical patient pathway need?',
+            answer:
+              'In the demo setup, 26 tables from 5 systems are combined in one event knowledge graph – for example the patient case, checklist, room occupancy, anaesthesia induction and emergence, patient transport, PACU stay and bed release. Patient, surgical case, operating room, PACU bay, bed and ward stay connected; a causal perspective is only derived for the concrete business question.',
+          },
+          {
+            question: 'What role does the AI assistant Minerva play?',
+            answer:
+              'Minerva answers business questions in dialogue – such as “Analyse why surgeries were cancelled.” –, builds comparison groups, includes preceding surgeries and shared resources, and separates evidenced findings from cause hypotheses. The decision on measures stays with the process owner and the responsible department.',
+          },
+          {
+            question: 'Are the figures from a real hospital?',
+            answer:
+              'No. All figures come from a synthetic perioperative dataset of 2,400 surgical cases. They illustrate the analysis method and are not production figures of any hospital.',
+          },
+        ],
+
+        caseHeading: 'The full case description',
+        caseText:
+          'Event knowledge graph, the causal perspectives for preparation, surgery and PACU, all five findings with their analysis steps, the root cause analysis of the cancellations with Minerva and the way into the Business Impact Board – step by step in the Noreja Help Center (in German).',
+        caseCta: 'Read the case in the Help Center',
       },
     },
   },

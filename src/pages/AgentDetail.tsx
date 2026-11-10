@@ -75,6 +75,7 @@ const PROCESS_NAMES: Record<string, string> = {
   "plan-to-produce": "Plan-to-Produce",
   "lead-to-activation": "Lead-to-Activation",
   "premium-to-tax": "Premium-to-Tax",
+  "admission-to-discharge": "Admission-to-Discharge",
 };
 
 const AgentDetail = () => {

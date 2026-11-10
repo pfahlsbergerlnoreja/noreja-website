@@ -157,16 +157,19 @@ function MinervaPrompt({ prompt, label, quote }: { prompt: string; label: string
   );
 }
 
-/** Key figures as a real table; the first cell of each row is the row header, the rest are numbers. */
+/**
+ * Key figures as a real table; the first cell of each row is the row header, the rest are
+ * numbers – or, for a `text` table, short statements that wrap.
+ */
 function DataTable({ table }: { table: ProcessTable }) {
   return (
     <div className="overflow-x-auto rounded-2xl border border-border/50 bg-card/60 backdrop-blur-sm">
-      <table className="w-full min-w-[420px] text-left text-sm">
+      <table className={`w-full text-left text-sm ${table.text ? "min-w-[560px]" : "min-w-[420px]"}`}>
         <caption className="px-4 pt-4 text-left text-sm font-semibold text-foreground">{table.caption}</caption>
         <thead className="border-b border-border/50 text-xs uppercase tracking-[0.08em] text-muted-foreground">
           <tr>
             {table.head.map((cell, index) => (
-              <th key={cell} scope="col" className={`px-4 py-3 font-semibold ${index > 0 ? "text-right" : ""}`}>
+              <th key={cell} scope="col" className={`px-4 py-3 font-semibold ${index > 0 && !table.text ? "text-right" : ""}`}>
                 {cell}
               </th>
             ))}
@@ -175,9 +178,12 @@ function DataTable({ table }: { table: ProcessTable }) {
         <tbody>
           {table.rows.map(([rowHeader, ...cells]) => (
             <tr key={rowHeader} className="border-b border-border/30 last:border-0">
-              <th scope="row" className="px-4 py-2.5 font-semibold text-foreground">{rowHeader}</th>
+              <th scope="row" className="px-4 py-2.5 align-top font-semibold text-foreground">{rowHeader}</th>
               {cells.map((cell, index) => (
-                <td key={index} className="whitespace-nowrap px-4 py-2.5 text-right text-muted-foreground">
+                <td
+                  key={index}
+                  className={`px-4 py-2.5 text-muted-foreground ${table.text ? "align-top leading-relaxed" : "whitespace-nowrap text-right"}`}
+                >
                   {cell}
                 </td>
               ))}
@@ -190,6 +196,12 @@ function DataTable({ table }: { table: ProcessTable }) {
 }
 
 const principleCols: Record<number, string> = { 3: "lg:grid-cols-3", 5: "lg:grid-cols-5" };
+
+/** Deep-dive statements: two side by side, four in two rows (one row on wide screens), otherwise three. */
+const pointCols: Record<number, string> = { 2: "sm:grid-cols-2", 4: "sm:grid-cols-2 lg:grid-cols-4" };
+
+/** A deep dive may put one question or a short sequence of questions to Minerva. */
+const asList = (prompt?: string | string[]) => (prompt === undefined ? [] : ([] as string[]).concat(prompt));
 
 /** A main figure followed by its extra figures, for FigureGrid. */
 const withExtras = (image?: ProcessImage, extraImages: ProcessImage[] = []) => [
@@ -619,9 +631,11 @@ const EndToEndProcess = () => {
                   {finding.deepDive && (
                     <div className="mt-6 rounded-2xl border border-border/50 bg-card/60 p-6 backdrop-blur-sm md:p-8">
                       <h4 className="mb-3 text-lg font-bold text-foreground">{finding.deepDive.title}</h4>
-                      {finding.deepDive.prompt && (
-                        <div className="mb-4">
-                          <MinervaPrompt prompt={finding.deepDive.prompt} label={l.minervaPrompt} quote={l.quote} />
+                      {asList(finding.deepDive.prompt).length > 0 && (
+                        <div className="mb-4 space-y-3">
+                          {asList(finding.deepDive.prompt).map((prompt) => (
+                            <MinervaPrompt key={prompt} prompt={prompt} label={l.minervaPrompt} quote={l.quote} />
+                          ))}
                         </div>
                       )}
                       <div className="space-y-3">
@@ -642,7 +656,7 @@ const EndToEndProcess = () => {
                         </ul>
                       )}
                       {finding.deepDive.points && (
-                        <ul className={`mt-4 grid gap-3 ${finding.deepDive.points.length === 2 ? "sm:grid-cols-2" : "sm:grid-cols-3"}`}>
+                        <ul className={`mt-4 grid gap-3 ${pointCols[finding.deepDive.points.length] ?? "sm:grid-cols-3"}`}>
                           {finding.deepDive.points.map((point) => (
                             <li key={point.title} className="rounded-xl border border-border/50 bg-background/40 p-4">
                               <p className="mb-1 text-sm font-semibold text-foreground">{point.title}</p>
@@ -661,8 +675,12 @@ const EndToEndProcess = () => {
 
                   {finding.note && (
                     <aside className="mt-4 rounded-2xl border border-accent/30 bg-accent/5 p-5">
-                      <p className="mb-1 text-sm font-semibold text-foreground">{finding.note.title}</p>
-                      <p className="text-sm leading-relaxed text-muted-foreground">{finding.note.text}</p>
+                      <p className={`text-sm font-semibold text-foreground ${finding.note.text ? "mb-1" : ""}`}>
+                        {finding.note.title}
+                      </p>
+                      {finding.note.text && (
+                        <p className="text-sm leading-relaxed text-muted-foreground">{finding.note.text}</p>
+                      )}
                     </aside>
                   )}
                 </motion.article>
@@ -800,6 +818,40 @@ const EndToEndProcess = () => {
                   {text.aiContext.note}
                 </p>
               )}
+            </div>
+          </section>
+        )}
+
+        {/* ------------------------------------------------------- takeaways */}
+        {text.takeaways && (
+          <section className="px-4 py-12 lg:px-8">
+            <div className="mx-auto w-full max-w-6xl">
+              <div className="mx-auto mb-8 max-w-3xl text-center">
+                <h2 className="mb-3 text-2xl font-bold text-foreground md:text-3xl">{text.takeaways.heading}</h2>
+                <div className="space-y-3">
+                  {text.takeaways.lead.map((paragraph) => (
+                    <p key={paragraph} className="text-base leading-relaxed text-muted-foreground">
+                      {paragraph}
+                    </p>
+                  ))}
+                </div>
+              </div>
+              <ol className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                {text.takeaways.items.map((item, index) => (
+                  <motion.li
+                    key={item.title}
+                    {...fadeUp}
+                    transition={{ duration: 0.5, delay: index * 0.08 }}
+                    className="rounded-2xl border border-border/50 bg-card/60 p-5 backdrop-blur-sm"
+                  >
+                    <span className="mb-3 inline-flex h-9 w-9 items-center justify-center rounded-full bg-noreja-main/10 text-sm font-bold text-noreja-main">
+                      {index + 1}
+                    </span>
+                    <h3 className="mb-1 text-base font-semibold text-foreground">{item.title}</h3>
+                    <p className="text-sm leading-relaxed text-muted-foreground">{item.text}</p>
+                  </motion.li>
+                ))}
+              </ol>
             </div>
           </section>
         )}
