@@ -3,7 +3,12 @@ import { StaticRouter } from 'react-router-dom/server';
 import { AppProviders, AppRoutes } from './App';
 import { getLanguageFromPath, translateRoute } from './lib/routes';
 import { getPageMeta, normalizePath } from './lib/pageMeta';
+import { translations } from './lib/translations';
+import { seedTranslations } from './lib/translationsLoader';
 import './index.css';
+
+// The browser loads one language on demand; the prerender renders both.
+seedTranslations(translations);
 
 export interface RenderResult {
   /** Markup for the #root container. */

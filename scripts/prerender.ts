@@ -141,11 +141,24 @@ function createPreloadResolver(manifest: Manifest) {
   const entryFiles = new Set<string>();
   collect('index.html', entryFiles);
 
+  // The UI copy of each language is its own chunk (src/lib/translationsLoader.ts),
+  // and main.tsx waits for it before it renders anything — so it is preloaded
+  // on every page, the home page included.
+  const languageChunk = (route: string) =>
+    manifest[`src/lib/i18n/${route === '/en' || route.startsWith('/en/') ? 'en' : 'de'}.ts`]?.file;
+  if (!languageChunk('/de') || !languageChunk('/en')) {
+    console.warn('⚠️  prerender: language chunks not found in the manifest, no preload for them');
+  }
+
   return (route: string): string[] => {
+    const files: string[] = [];
+    const language = languageChunk(route);
+    if (language && !entryFiles.has(language)) files.push(language);
+
     const match = pageRoutes.find(({ path }) => matchPath({ path, end: true }, route));
-    if (!match?.module) return [];
-    const chunk = manifest[match.module];
-    return chunk && !entryFiles.has(chunk.file) ? [chunk.file] : [];
+    const page = match?.module && manifest[match.module];
+    if (page && !entryFiles.has(page.file)) files.push(page.file);
+    return files;
   };
 }
 

@@ -77,6 +77,14 @@ function seededShuffle<T>(array: T[], seed: number): T[] {
   return arr;
 }
 
+// A logo tile is h-24 plus the gap-4 between tiles.
+const LOGO_PITCH_PX = 112;
+// The tallest column viewport is 520 px: five tiles, plus one so it never runs dry.
+const MIN_LOGOS_PER_COLUMN = 6;
+// Scroll speed of the ticker. It used to be 48 tiles per 70 s; with fewer
+// tiles per column the duration shrinks with them so the speed stays the same.
+const TICKER_PX_PER_SECOND = (48 * LOGO_PITCH_PX) / 70;
+
 function buildRows(all: IntegrationLogo[], rows: number): IntegrationLogo[][] {
   if (all.length === 0) return [];
   
@@ -86,9 +94,12 @@ function buildRows(all: IntegrationLogo[], rows: number): IntegrationLogo[][] {
   // Create rows array
   const result: IntegrationLogo[][] = Array.from({ length: rows }, () => []);
   
-  // Calculate how many logos per column for smooth scrolling (1.5x the total logos)
-  const logosPerColumn = Math.ceil(shuffled.length * 1.5);
-  
+  // Each column shows its own slice of the logos, so together they show every
+  // logo once. A column used to repeat 1.5× the whole set (48 logos, doubled
+  // for the loop) — ~770 DOM elements on desktop for ~5 visible logos per
+  // column. It only needs to be taller than its viewport to loop seamlessly.
+  const logosPerColumn = Math.max(Math.ceil(shuffled.length / rows), MIN_LOGOS_PER_COLUMN);
+
   // Distribute logos across rows using round-robin with offset
   // Each row starts at a different position to spread logos out
   for (let rowIndex = 0; rowIndex < rows; rowIndex++) {
@@ -253,7 +264,8 @@ const VerticalTicker: React.FC<{ items: IntegrationLogo[]; reverse?: boolean }> 
 }) => {
   // Duplicate items for seamless scrolling
   const sequence = React.useMemo(() => [...items, ...items], [items]);
-  
+  const duration = (items.length * LOGO_PITCH_PX) / TICKER_PX_PER_SECOND;
+
   return (
     <div className="relative h-[320px] md:h-[520px] overflow-hidden rounded-xl bg-transparent z-0">
       <div
@@ -261,6 +273,7 @@ const VerticalTicker: React.FC<{ items: IntegrationLogo[]; reverse?: boolean }> 
           "absolute left-0 top-0 flex w-full flex-col gap-4 animate-[marquee_70s_linear_infinite] " +
           (reverse ? "[animation-direction:reverse]" : "")
         }
+        style={{ animationDuration: `${duration.toFixed(1)}s` }}
       >
         {sequence.map((logo, idx) => {
           // Use logo src URL as key (stable since loaded eagerly) + index for uniqueness

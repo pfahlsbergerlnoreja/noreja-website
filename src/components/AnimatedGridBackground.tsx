@@ -147,42 +147,20 @@ export function AnimatedGridBackground({ className = "" }: AnimatedGridBackgroun
       ref={containerRef}
       className={`absolute inset-0 overflow-hidden pointer-events-none z-0 ${className}`}
       style={{
+        // Grid lines as a background pattern: they used to be ~70 SVG <line>
+        // elements per instance (three on the home page). A 0.3 px stroke at
+        // 0.8 opacity renders as a 1 px line at ~0.24 alpha, which is what the
+        // pattern draws.
         backgroundImage: `
           radial-gradient(at 20% 50%, hsl(var(--noreja-main) / 0.05) 0px, transparent 50%),
           radial-gradient(at 80% 20%, hsl(var(--noreja-secondary) / 0.05) 0px, transparent 50%),
-          radial-gradient(at 40% 80%, hsl(var(--noreja-secondary) / 0.05) 0px, transparent 50%)
-        `
+          radial-gradient(at 40% 80%, hsl(var(--noreja-secondary) / 0.05) 0px, transparent 50%),
+          linear-gradient(to right, rgb(69 43 233 / 0.24) 1px, transparent 1px),
+          linear-gradient(to bottom, rgb(69 43 233 / 0.24) 1px, transparent 1px)
+        `,
+        backgroundSize: `auto, auto, auto, ${GRID_SIZE}px ${GRID_SIZE}px, ${GRID_SIZE}px ${GRID_SIZE}px`,
       }}
     >
-      {/* Grid Lines - Direct SVG approach */}
-      <svg className="absolute inset-0 w-full h-full">
-        {/* Draw grid lines directly */}
-        {Array.from({ length: Math.ceil(dimensions.width / GRID_SIZE) }, (_, i) => (
-          <line
-            key={`v-${i}`}
-            x1={i * GRID_SIZE}
-            y1={0}
-            x2={i * GRID_SIZE}
-            y2="200vh"
-            stroke="#452BE9"
-            strokeWidth="0.3"
-            strokeOpacity="0.8"
-          />
-        ))}
-        {Array.from({ length: Math.ceil(2000 / GRID_SIZE) }, (_, i) => (
-          <line
-            key={`h-${i}`}
-            x1={0}
-            y1={i * GRID_SIZE}
-            x2={dimensions.width}
-            y2={i * GRID_SIZE}
-            stroke="#452BE9"
-            strokeWidth="0.3"
-            strokeOpacity="0.8"
-          />
-        ))}
-      </svg>
-
       {/* Animated Points (positions/opacity are driven imperatively per frame) */}
       <div className="absolute inset-0">
         {points.map((point, i) => {

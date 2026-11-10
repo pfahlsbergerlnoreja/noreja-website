@@ -2,7 +2,7 @@ import { AnimatePresence, motion } from "framer-motion";
 
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useCountUp, type LoopLedger } from "@/hooks/use-loop-motion";
-import { formatEuro } from "@/lib/costOfInaction";
+import { formatEuro } from "@/lib/numberFormat";
 import { platformCopy } from "@/lib/platformLoop";
 
 const MINT = "hsl(var(--noreja-tertiary))";

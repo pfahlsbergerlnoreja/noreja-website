@@ -233,7 +233,14 @@
         security_storage: 'granted'
       });
       gtag('js', new Date());
-      gtag('config', 'G-W8W4S9BL46');
+      // gtag.js itself loads late (see the end of <body>). Pin the landing
+      // page here: by the time the tag processes this queue the visitor may
+      // already have navigated client-side, and the initial page_view would
+      // otherwise report the page they went on to.
+      gtag('config', 'G-W8W4S9BL46', {
+        page_location: location.href,
+        page_title: document.title
+      });
     </script>
 
     <!-- Start cookieyes banner (deferred: executes before the app bundle and the
@@ -241,8 +248,8 @@
     <script id="cookieyes" type="text/javascript" defer src="https://cdn-cookieyes.com/client_data/0cfa11eeed66dfc938753166/script.js"></script>
     <!-- End cookieyes banner -->
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-W8W4S9BL46"></script>
+    <!-- Google tag (gtag.js) is loaded late, together with HubSpot: see the
+         end of <body>. -->
   </head>
 
   <body>
@@ -378,7 +385,7 @@
       })();
     </script>
     <script type="module" src="/src/main.tsx"></script>
-    <!-- Start of HubSpot Embed Code, loaded late on purpose.
+    <!-- Start of HubSpot Embed Code and Google tag, loaded late on purpose.
          The tracking code (analytics, collected forms, its banner script) cost
          ~1.5 s of main-thread time on a mid-range phone while the page was
          still starting up, which delayed everything else that needs the main
@@ -392,23 +399,38 @@
          setPath: the automatic initial page view of the tracking code then
          records the page the visitor arrived on. Later navigations are tracked
          by HubSpotPageViewTracker (App.tsx). HubSpot forms load their own
-         script and do not depend on this one. -->
+         script and do not depend on this one.
+         gtag.js (167 kB) is loaded at the same moment for the same reason. Its
+         queue (consent default, config with the landing page) was filled in
+         the head, so nothing is lost; GA4's history-based page views take over
+         from there. If the visitor navigated before it loaded, that page view
+         is queued here. -->
     <script>
       (function () {
         var loaded = false;
         var entryPath = location.pathname + location.search;
+        var entryUrl = location.href;
         var events = ['pointerdown', 'keydown', 'scroll', 'touchstart'];
+        function insertScript(src, id) {
+          var script = document.createElement('script');
+          if (id) script.id = id;
+          script.async = true;
+          script.src = src;
+          document.body.appendChild(script);
+        }
         function load() {
           if (loaded) return;
           loaded = true;
           events.forEach(function (name) { window.removeEventListener(name, load); });
+
+          if (location.href !== entryUrl) {
+            gtag('event', 'page_view', { page_location: location.href, page_title: document.title });
+          }
+          insertScript('https://www.googletagmanager.com/gtag/js?id=G-W8W4S9BL46');
+
           window._hsq = window._hsq || [];
           window._hsq.push(['setPath', entryPath]);
-          var script = document.createElement('script');
-          script.id = 'hs-script-loader';
-          script.async = true;
-          script.src = 'https://js-eu1.hs-scripts.com/144242473.js';
-          document.body.appendChild(script);
+          insertScript('https://js-eu1.hs-scripts.com/144242473.js', 'hs-script-loader');
         }
         events.forEach(function (name) {
           window.addEventListener(name, load, { once: true, passive: true });

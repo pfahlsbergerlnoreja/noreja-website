@@ -42,7 +42,7 @@ src/
 
 ## Multilingual Support
 
-The site supports German and English with URL-based routing (`/de/...`, `/en/...`). Language context is in `src/contexts/LanguageContext.tsx` and translations are in `src/lib/translations.ts`.
+The site supports German and English with URL-based routing (`/de/...`, `/en/...`). Language context is in `src/contexts/LanguageContext.tsx`; the language is always derived from the URL. The `Translations` type lives in `src/lib/translations.ts`, the copy itself in `src/lib/i18n/de.ts` and `en.ts`. The browser loads only the current language (`src/lib/translationsLoader.ts`; `main.tsx` awaits it before mounting, the prerender modulepreloads it), so **import `translations` (both languages) only from code outside the main bundle** — the prerender, `pageMeta.ts`, tests.
 
 ## Common Commands
 

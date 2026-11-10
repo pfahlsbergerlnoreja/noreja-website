@@ -161,7 +161,7 @@ export const imageSizes: Record<string, [number, number]> = {
   'niyi_changeenablers.webp': [300, 353],
   'nordlb_logo_white.webp': [300, 103],
   'noreja_gartner_coolest_vendor_innovation.webp': [400, 233],
-  'noreja_logo_white.webp': [1566, 405],
+  'noreja_logo_white.webp': [640, 166],
   'novofactum_logo.webp': [250, 100],
   'novofactum_white.webp': [250, 100],
   'o2c-causal-perspective.webp': [1995, 706],

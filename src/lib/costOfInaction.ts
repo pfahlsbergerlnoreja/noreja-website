@@ -1,4 +1,5 @@
 import type { Language } from "./translations";
+import { localeFor } from "./numberFormat";
 
 /**
  * Data model and benchmark assumptions for the "Cost of Inaction" calculator.
@@ -1041,25 +1042,8 @@ export const calculateCostOfInaction = (input: CoiInput): CoiResult => {
 /* Formatting                                                                 */
 /* -------------------------------------------------------------------------- */
 
-const localeFor = (language: Language) => (language === "de" ? "de-DE" : "en-US");
-
-export const formatEuro = (value: number, language: Language): string =>
-  new Intl.NumberFormat(localeFor(language), {
-    style: "currency",
-    currency: "EUR",
-    maximumFractionDigits: 0,
-  }).format(value);
-
-export const formatEuroCompact = (value: number, language: Language): string =>
-  new Intl.NumberFormat(localeFor(language), {
-    style: "currency",
-    currency: "EUR",
-    notation: "compact",
-    maximumFractionDigits: value >= 1_000_000 ? 2 : 0,
-  }).format(value);
-
-export const formatNumber = (value: number, language: Language): string =>
-  new Intl.NumberFormat(localeFor(language), { maximumFractionDigits: 0 }).format(value);
+// Kept in ./numberFormat so the home page can use them without this module.
+export { formatEuro, formatEuroCompact, formatNumber } from "./numberFormat";
 
 export const formatDuration = (minutes: number, language: Language): string => {
   if (minutes < 60) {

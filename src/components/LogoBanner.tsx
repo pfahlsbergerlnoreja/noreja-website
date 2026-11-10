@@ -111,9 +111,12 @@ const allLogos: Logo[] = [
 ];
 
 const LogoBanner: React.FC = () => {
-  // Memoize duplicated logos to prevent re-creation on every render
+  // Memoize duplicated logos to prevent re-creation on every render. The strip
+  // only ever moves by a third of its own (viewport-wide) box, so two copies —
+  // ~144 px per logo, ~7,000 px in all — cover even very wide screens. It used
+  // to be four copies, twice the DOM for nothing.
   const duplicatedLogos = useMemo(() => {
-    return [...allLogos, ...allLogos, ...allLogos, ...allLogos];
+    return [...allLogos, ...allLogos];
   }, []);
 
   return (

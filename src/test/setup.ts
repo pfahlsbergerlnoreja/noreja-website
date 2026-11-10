@@ -1,5 +1,10 @@
 import '@testing-library/jest-dom'
 import { vi } from 'vitest'
+import { translations } from '@/lib/translations'
+import { seedTranslations } from '@/lib/translationsLoader'
+
+// The app loads one language on demand (main.tsx); components under test get both.
+seedTranslations(translations)
 
 // Mock window.hbspt for HubSpot tests  
 Object.defineProperty(window, 'hbspt', {

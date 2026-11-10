@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Language, translations, Translations } from '@/lib/translations';
+import type { Language, Translations } from '@/lib/translations';
+import { getLoadedTranslations, loadTranslations } from '@/lib/translationsLoader';
 import { getLanguageFromPath, translateRoute } from '@/lib/routes';
 
 interface LanguageContextType {
@@ -20,28 +21,44 @@ function LanguageProviderInner({ children }: LanguageProviderProps) {
   const location = useLocation();
   const navigate = useNavigate();
   
-  // Detect language from URL path
-  const urlLanguage = getLanguageFromPath(location.pathname);
-  
-  const [language, setLanguageState] = useState<Language>(urlLanguage);
+  // The language is the URL's, and nothing else. It used to be separate state
+  // synced to the URL in an effect: the router commits navigations in a
+  // transition, so during a switch the state ran ahead of the location, the
+  // effect reset it, and the page flashed the old language once in between.
+  const language = getLanguageFromPath(location.pathname);
 
-  // Sync language state with URL changes
+  // Only the language of the entry page is loaded up front (main.tsx). Until
+  // the other one has arrived after a switch, keep showing the copy we have.
+  const [lastLoaded, setLastLoaded] = useState<Translations | undefined>(() =>
+    getLoadedTranslations(language)
+  );
+  const current = getLoadedTranslations(language);
   useEffect(() => {
-    const newLanguage = getLanguageFromPath(location.pathname);
-    if (newLanguage !== language) {
-      setLanguageState(newLanguage);
+    if (current) {
+      setLastLoaded(current);
+      return;
     }
-  }, [location.pathname, language]);
+    let cancelled = false;
+    loadTranslations(language).then((copy) => {
+      if (!cancelled) setLastLoaded(copy);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [language, current]);
 
   const setLanguage = (lang: Language) => {
     if (lang === language) return;
-    
-    setLanguageState(lang);
+
     localStorage.setItem('language', lang);
-    
-    // Navigate to the same page in the new language
-    const newPath = translateRoute(location.pathname, lang);
-    navigate(newPath, { replace: true });
+
+    // Load the other language's copy first, so the page does not show the
+    // new URL with the old language's text in between.
+    loadTranslations(lang).then(() => {
+      // Navigate to the same page in the new language
+      const newPath = translateRoute(location.pathname, lang);
+      navigate(newPath, { replace: true });
+    });
   };
 
   useEffect(() => {
@@ -49,10 +66,15 @@ function LanguageProviderInner({ children }: LanguageProviderProps) {
     document.documentElement.lang = language;
   }, [language]);
 
+  const t = current ?? lastLoaded;
+  if (!t) {
+    throw new Error(`Translations for "${language}" were not loaded before rendering`);
+  }
+
   const value = {
     language,
     setLanguage,
-    t: translations[language]
+    t
   };
 
   return (
