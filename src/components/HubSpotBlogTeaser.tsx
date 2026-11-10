@@ -183,8 +183,11 @@ export function HubSpotBlogTeaser({ maxItems = 3, heading, headingHighlight }: H
                               href={post.link} 
                               className="inline-flex items-center justify-center gap-2"
                             >
-                              {t.blog.readMore}
-                              <ExternalLink className="h-4 w-4" />
+                              <span>
+                                {t.blog.readMore}
+                                <span className="sr-only">: {post.title}</span>
+                              </span>
+                              <ExternalLink className="h-4 w-4" aria-hidden="true" />
                             </a>
                           </Button>
                         </CardContent>
@@ -236,8 +239,14 @@ export function HubSpotBlogTeaser({ maxItems = 3, heading, headingHighlight }: H
                         href={post.link} 
                         className="inline-flex items-center justify-center gap-2"
                       >
-                        {t.blog.readMore}
-                        <ExternalLink className="h-4 w-4" />
+                        <span>
+                          {t.blog.readMore}
+                          {/* The visible label alone is generic link text; the
+                              post title makes the anchor descriptive for search
+                              engines and screen readers. */}
+                          <span className="sr-only">: {post.title}</span>
+                        </span>
+                        <ExternalLink className="h-4 w-4" aria-hidden="true" />
                       </a>
                     </Button>
                   </CardContent>

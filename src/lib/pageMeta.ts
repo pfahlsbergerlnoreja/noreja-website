@@ -138,8 +138,9 @@ const pageTitles: Record<string, Record<Language, string>> = {
  */
 const extraDescriptions: Record<string, Record<Language, string>> = {
   home: {
-    en: 'Noreja is a Generative Process Intelligence platform: it connects directly to your source systems, models processes causally in an Event Knowledge Graph, and combines them with context and generative AI.',
-    de: 'Noreja ist eine Generative-Process-Intelligence-Plattform: direkte Anbindung an Quellsysteme, kausale Prozessmodellierung im Event Knowledge Graph und Analyse mit Kontextwissen und generativer KI.',
+    // Keep at ~155 characters or less, or Google cuts the snippet off.
+    en: 'Noreja is a Generative Process Intelligence platform: direct access to source systems, causal process models in an Event Knowledge Graph and generative AI.',
+    de: 'Generative Process Intelligence: Noreja bindet Quellsysteme direkt an, modelliert Prozesse kausal im Event Knowledge Graph und analysiert sie mit KI.',
   },
   aiAgents: {
     en: 'Minerva Frontier Agents are context-aware AI agents that continuously monitor processes, maintain process models, and flag deviations, data-source changes, and compliance risks.',

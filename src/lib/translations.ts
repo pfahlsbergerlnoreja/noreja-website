@@ -454,6 +454,8 @@ export interface Translations {
     title: string;
     highlight: string;
     subtitle: string;
+    /** Label of the contact button under the heading. */
+    cta: string;
     tapToLearnMore: string;
     features: {
       connectionSpeed: {
@@ -1314,6 +1316,7 @@ export const translations: Record<Language, Translations> = {
       title: "Four strengths —",
       highlight: "one clear advantage",
       subtitle: "These capabilities give you full transparency, greater efficiency, and more control over your processes. Discover the four core areas that make the decisive difference.",
+      cta: "Talk to our experts",
       tapToLearnMore: "Tap to learn more",
       features: {
         connectionSpeed: {
@@ -2175,6 +2178,7 @@ export const translations: Record<Language, Translations> = {
       title: "Vier Stärken —",
       highlight: "ein klarer Vorteil",
       subtitle: "Leistungsmerkmale geben dir volle Transparenz, höhere Effizienz und mehr Kontrolle über deine Prozesse. Entdecke die vier Kernbereiche, die für dich den entscheidenden Unterschied machen.",
+      cta: "Sprich mit unseren Experten",
       tapToLearnMore: "Tippen, um mehr zu erfahren",
       features: {
         connectionSpeed: {

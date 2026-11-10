@@ -197,8 +197,12 @@ const Events = () => {
               asChild
             >
               <a href={event.cta.url} className="flex items-center justify-center gap-2">
-                {event.cta.text}
-                <ExternalLink className="h-4 w-4 group-hover/btn:translate-x-0.5 transition-transform" />
+                <span>
+                  {event.cta.text}
+                  {/* Makes "Learn more" / "Register" a descriptive anchor. */}
+                  <span className="sr-only">: {event.title}</span>
+                </span>
+                <ExternalLink className="h-4 w-4 group-hover/btn:translate-x-0.5 transition-transform" aria-hidden="true" />
               </a>
             </Button>
           )}

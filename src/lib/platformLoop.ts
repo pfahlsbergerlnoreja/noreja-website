@@ -544,7 +544,8 @@ export const homeTeaserCopy = {
     de: "Insights, Action, Impact, Feedback: Vier generische Agententypen drehen den Zyklus von der Ursache eines Prozessproblems bis zum belegten Euro-Effekt — jeder davon auf deine Systeme, Rollen und Richtlinien anpassbar.",
     en: "Insights, action, impact, feedback: four generic agent types turn the cycle from the cause of a process problem to the proven euro effect — each one adaptable to your systems, roles and policies.",
   },
-  cta: { de: "Erfahre mehr", en: "Learn more" },
+  // Descriptive on purpose: "Learn more" is generic link text for crawlers.
+  cta: { de: "So funktioniert der Kreislauf", en: "See how the loop works" },
   ctaHint: {
     de: "Alle vier Phasen im Detail",
     en: "All four phases in detail",

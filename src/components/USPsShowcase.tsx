@@ -208,11 +208,9 @@ export function USPsShowcase() {
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
             {t.usps.subtitle}
           </p>
-          <Link to={getRoutePath('contact', language)}>
-            <Button size="lg" className="gradient-primary glow-primary">
-              {t.hero.ctaSecondary}
-            </Button>
-          </Link>
+          <Button asChild size="lg" className="gradient-primary glow-primary">
+            <Link to={getRoutePath('contact', language)}>{t.usps.cta}</Link>
+          </Button>
         </motion.div>
 
         <div className="relative max-w-6xl mx-auto overflow-visible">
