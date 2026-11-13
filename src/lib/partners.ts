@@ -477,6 +477,21 @@ const partnersBase: PartnerBase[] = [
     },
     quoteAuthor: "Thomas Hofer",
     linkedin: "https://www.linkedin.com/in/thomas-hofer-06944a70/"
+  },
+  {
+    id: "25",
+    name: "Grundeigentümer Versicherung",
+    isPartner: false,
+    partnerType: 'advisorWithQuote',
+    logoFilename: "grundeigentümerversicherung_logo_white.webp",
+    logoSource: 'customers',
+    logoSize: 'medium',
+    personPhotoFilename: "sven_dueerkop_gev.webp",
+    website: "https://www.gev-versicherung.de/",
+    category: null,
+    quote: "Die Zusammenarbeit im Rahmen des Proof of Value zum Thema „Process Mining“ war durchweg positiv. Besonders überzeugt haben uns die hohe fachliche und methodische Expertise sowie das tiefgehende Verständnis für unsere Anforderungen. Die Durchführung anhand eines ausgewählten Beispielprozesses war jederzeit professionell, strukturiert und bestens organisiert. Besonders geschätzt haben wir zudem die offene, partnerschaftliche Kommunikation.",
+    quoteAuthor: "Sven Düerkop, Portfolio- und Projektmanager",
+    linkedin: "https://de.linkedin.com/in/sven-d%C3%BCerkop-4a084a9b"
   }
 ];
 

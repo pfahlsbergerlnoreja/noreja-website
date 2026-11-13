@@ -218,6 +218,7 @@ export const imageSizes: Record<string, [number, number]> = {
   'supplier-performance.webp': [2000, 809],
   'Supply-Chain.webp': [1405, 790],
   'surgery-perspective.webp': [2000, 926],
+  'sven_dueerkop_gev.webp': [300, 300],
   'tabaco_production.webp': [1254, 1254],
   'tatjana_meyer_nordlb.webp': [300, 297],
   'team-c-asa-check.webp': [862, 741],
